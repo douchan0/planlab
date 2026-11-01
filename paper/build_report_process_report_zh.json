@@ -41,20 +41,20 @@
     "weitzman1993",
     "wilcoxon1945"
   ],
-  "built": "2026-11-01T09:23:41Z",
+  "built": "2026-11-01T09:34:12Z",
   "citations_used": 0,
-  "civil_words_body": 0.2,
+  "civil_words_body": 7.5,
   "duplicated_nouns": [],
-  "elapsed_s": 1.37,
+  "elapsed_s": 1.32,
   "equations": 7,
   "figures": 0,
-  "html_bytes": 65537,
+  "html_bytes": 66504,
   "markdown": "3.10.3",
   "missing_captions": [],
   "missing_figure_files": [],
   "missing_table_files": [],
   "pdf": "paper/process_report_zh.pdf",
-  "pdf_bytes": 1157183,
+  "pdf_bytes": 1168360,
   "pdf_pages": 14,
   "python": "3.10.13",
   "sections": {
@@ -65,5 +65,5 @@
   "tables": 0,
   "unresolved_slots": [],
   "words_bibliography": 802,
-  "words_body": 166
+  "words_body": 7526
 }

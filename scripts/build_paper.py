@@ -331,9 +331,13 @@ CAPTION_RE = re.compile(r"^\s*(?:<!--\s*)?cap(?:tion)?\s*:\s*(.+)$", re.I | re.M
 
 def figure_caption(name: str) -> tuple[str, bool]:
     """Caption for a figure: *``paper/figures/<name>.cap``* if present."""
+    suffix = "" if SETTINGS.lang == "en" else f".{SETTINGS.lang}"
     for ext in (".cap", ".caption", ".txt"):
-        p = FIG_DIR / f"{name}{ext}"
+        p = FIG_DIR / f"{name}{suffix}{ext}"
         if p.exists():
+            return p.read_text(encoding="utf-8").strip(), True
+        p = FIG_DIR / f"{name}{ext}"
+        if p.exists() and not suffix:
             return p.read_text(encoding="utf-8").strip(), True
     return f"caption for figure {name} not yet written", False
 
@@ -486,6 +490,10 @@ def extract_floats(src: str, st: BuildState) -> str:
         st.tab_counter += 1  # type: ignore[attr-defined]
         path = find_table(name)
         cap_file = TAB_DIR / f"{name}.cap"
+        if SETTINGS.lang != "en":
+            loc = TAB_DIR / f"{name}.{SETTINGS.lang}.cap"
+            if loc.exists():
+                cap_file = loc
         cap = extract_refs_and_cites(cap_file.read_text(encoding="utf-8").strip(), st) if cap_file.exists() else (
             f"caption for table {name} not yet written"
         )
@@ -1196,7 +1204,9 @@ def word_count(md: str) -> dict[str, int]:
     text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", text)
     text = re.sub(r"^\s*[-*+]\s+|^\s*\d+\.\s+", "", text, flags=re.M)
     words = re.findall(r"[A-Za-z][A-Za-z'’\-]*", text)
-    return {"words": len(words), "chars": len(text)}
+    cjk = re.findall(r"[\u4e00-\u9fff]", text)
+    return {"words": len(words) + len(cjk), "latin_words": len(words),
+            "cjk_chars": len(cjk), "chars": len(text)}
 
 
 # --------------------------------------------------------------------------- #

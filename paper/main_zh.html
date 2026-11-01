@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="planlab build_paper.py">
+<title>陈旧信息即硬约束</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.12/dist/katex.min.css">
+<style>
+:root {
+  --ink: #14171c; --muted: #5b6470; --rule: #d6dae0; --accent: #7a1f2b;
+  --bg: #ffffff; --slotbg: #fdf3d8; --slotbd: #b98a12;
+  --mono: "SF Mono", "Menlo", "Consolas", "PingFang SC", "Hiragino Sans GB", "STHeiti", monospace;
+  --serif: "Charter", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Songti SC", "Songti TC", "Hiragino Sans GB", "STHeiti", "Arial Unicode MS", serif;
+  --width: 46rem;
+}
+* { box-sizing: border-box; }
+html { font-size: 11pt; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0 auto; padding: 2.6rem 1.6rem 4rem; max-width: calc(var(--width) + 3.2rem);
+  background: var(--bg); color: var(--ink); font-family: var(--serif);
+  line-height: 1.78; letter-spacing: .01em; text-rendering: optimizeLegibility;
+  font-kerning: normal; font-variant-ligatures: common-ligatures;
+}
+p { margin: 0 0 0.62rem; text-align: justify; hyphens: auto; -webkit-hyphens: auto;
+    orphans: 3; widows: 3; }
+h1, h2, h3, h4, h5 { font-family: var(--serif); font-weight: 700; line-height: 1.22;
+    break-after: avoid-page; page-break-after: avoid; }
+h1 { font-size: 1.62rem; margin: 0 0 .35rem; letter-spacing: -.01em; text-align: left; }
+h2 { font-size: 1.16rem; margin: 1.9rem 0 .55rem; padding-bottom: .18rem;
+     border-bottom: 1px solid var(--rule); }
+h3 { font-size: 1.02rem; margin: 1.35rem 0 .4rem; }
+h4 { font-size: .96rem; margin: 1.1rem 0 .32rem; font-style: italic; }
+h5 { font-size: .92rem; margin: .9rem 0 .25rem; }
+.secno { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: .28em; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a.xref, a.cite { font-variant-numeric: tabular-nums; }
+code, pre, .eqno, .floatlabel { font-family: var(--mono); }
+code { font-size: .88em; background: #f2f4f7; padding: .06em .28em; border-radius: 3px; }
+pre { background: #f6f8fa; border: 1px solid var(--rule); border-radius: 4px;
+      padding: .7rem .85rem; overflow-x: auto; font-size: .80rem; line-height: 1.45; }
+pre code { background: none; padding: 0; }
+blockquote { margin: .8rem 0 .8rem 1.1rem; padding-left: .9rem;
+             border-left: 2px solid var(--rule); color: #33383f; }
+blockquote p:last-child { margin-bottom: 0; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 1.6rem 0; }
+.pagebreak { break-after: page; page-break-after: always; height: 0; margin: 0; }
+ul, ol { margin: 0 0 .7rem 1.25rem; padding: 0; }
+li { margin: .12rem 0; }
+li > p { margin-bottom: .25rem; }
+
+/* ---------- title block ---------- */
+.titleblock { border-bottom: 2px solid var(--ink); padding-bottom: 1.05rem; margin-bottom: 1.5rem; }
+.kicker { font-family: var(--mono); font-size: .70rem; letter-spacing: .13em;
+          text-transform: uppercase; color: var(--muted); margin-bottom: .7rem; }
+.subtitle { font-size: 1.02rem; font-style: italic; color: #2c3138; margin: .1rem 0 .9rem; }
+.authors { font-size: .95rem; margin: .1rem 0 .18rem; }
+.affil { font-size: .84rem; color: var(--muted); margin: 0 0 .5rem; }
+.meta { font-family: var(--mono); font-size: .74rem; color: var(--muted); }
+.abstract { background: #fafbfc; border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+            padding: .85rem 1.05rem .55rem; margin: 0 0 1.35rem; }
+.abstract h2, .abstract .abshead { font-size: .82rem; text-transform: uppercase; letter-spacing: .10em;
+            border: 0; margin: 0 0 .45rem; color: var(--muted); font-weight: 700; }
+.abstract p { font-size: .94rem; }
+
+/* ---------- floats ---------- */
+figure.float, .tablefloat {
+  margin: 1.15rem 0 1.3rem; padding: 0; break-inside: avoid; page-break-inside: avoid;
+  text-align: center;
+}
+figure.float img { max-width: 100%; height: auto; display: block; margin: 0 auto .45rem; }
+figcaption { font-size: .845rem; line-height: 1.40; text-align: left; color: #2b3037;
+             margin: 0 auto; max-width: 100%; }
+.floatlabel { font-weight: 700; color: var(--ink); }
+figure.float.missing { border: 1px dashed var(--slotbd); background: var(--slotbg);
+             padding: .8rem; border-radius: 4px; }
+.figph { font-family: var(--mono); font-size: .76rem; color: #7a5c00; padding: 1.1rem .5rem;
+         border-bottom: 1px dashed var(--slotbd); margin-bottom: .5rem; }
+.tablefloat .tabbody { overflow-x: auto; }
+table { border-collapse: collapse; margin: .35rem auto .45rem; font-size: .85rem;
+        font-variant-numeric: tabular-nums; width: 100%; }
+thead th { border-top: 1.6px solid var(--ink); border-bottom: .8px solid var(--ink);
+           padding: .34rem .5rem; text-align: left; font-weight: 700; }
+tbody td { padding: .27rem .5rem; border-bottom: .5px solid #eceff3; }
+tbody tr:last-child td { border-bottom: 1.6px solid var(--ink); }
+tbody tr:nth-child(even) { background: #fafbfc; }
+.tabcap { caption-side: top; margin-bottom: .3rem; }
+.tablefloat figcaption { text-align: left; }
+
+/* ---------- maths ---------- */
+.equation { display: flex; align-items: center; gap: .4rem; margin: .95rem 0;
+            break-inside: avoid; page-break-inside: avoid; }
+.equation .eqbody { flex: 1 1 auto; min-width: 0; overflow-x: auto; overflow-y: hidden;
+                    text-align: center; }
+.equation .eqno { flex: 0 0 auto; font-size: .84rem; color: var(--ink); }
+.katex-display { margin: .15rem 0; }
+.katex { font-size: 1.02em; }
+
+/* ---------- boxes ---------- */
+.box { border: 1px solid var(--rule); border-radius: 4px; padding: .75rem .95rem .45rem;
+       margin: 1rem 0 1.15rem; background: #fbfcfd; break-inside: avoid; }
+.box .boxhead { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em;
+       text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+.prop { border-left: 3px solid var(--ink); padding-left: .95rem; margin: 1.1rem 0; }
+.prop .prophead { font-weight: 700; }
+.proof { margin: .4rem 0 .9rem; }
+.proof .proofhead { font-style: italic; }
+.qed { float: right; }
+.proof::after { content: ""; display: block; clear: both; }
+
+/* ---------- slots ---------- */
+.slot { background: var(--slotbg); border: 1px dashed var(--slotbd); border-radius: 3px;
+        padding: 0 .26em; font-family: var(--mono); font-size: .84em; color: #6b4f00;
+        white-space: nowrap; }
+.slot::before { content: "◻ "; color: var(--slotbd); }
+.xref-broken { color: #b3261e; font-weight: 700; }
+
+/* ---------- references ---------- */
+.references { font-size: .90rem; }
+.references p { text-align: left; padding-left: 2.1rem; text-indent: -2.1rem;
+                margin-bottom: .34rem; }
+.references p:target { background: #fff6d6; }
+.unverified { font-family: var(--mono); font-size: .74em; color: #8a4b00;
+              border: 1px solid #d9a441; border-radius: 2px; padding: 0 .22em; }
+
+/* ---------- screen-only nav ---------- */
+nav.toc { border: 1px solid var(--rule); border-radius: 4px; padding: .7rem .9rem;
+          margin: 0 0 1.6rem; font-size: .84rem; background: #fafbfc; }
+nav.toc .tochead { font-family: var(--mono); font-size: .70rem; letter-spacing: .11em;
+          text-transform: uppercase; color: var(--muted); margin-bottom: .35rem; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; }
+nav.toc li { margin: .08rem 0; }
+nav.toc .tocnum { display: inline-block; min-width: 2.4em; color: var(--accent); }
+
+@media print {
+  :root { --width: 44rem; }
+  html { font-size: 10.2pt; }
+  @page { size: A4; margin: 20mm 19mm 18mm; }
+  @page :first { margin-top: 16mm; }
+  body { padding: 0; max-width: none; line-height: 1.62; }
+  nav.toc { display: none; }
+  a { color: inherit; text-decoration: none; }
+  .slot { background: none; border-style: dotted; }
+  .abstract { background: none; }
+  h2 { break-after: avoid; page-break-after: avoid; }
+  figure.float, .tablefloat, .equation, .box { break-inside: avoid; page-break-inside: avoid; }
+  table { font-size: .76rem; }
+  .references { font-size: .84rem; }
+}
+</style>
+</head>
+<body data-built="2026-11-01T09:33:53Z">
+
+<header class="titleblock">
+<div class="kicker">PlanLab · 方法论论文</div>
+<h1>陈旧信息即硬约束</h1>
+<div class="subtitle">信息时滞与协调制度的比较稳定性</div>
+<div class="authors">PlanLab 项目组</div>
+<div class="affil">计划经济的协调机制的可复现计算实验平台</div>
+<div class="meta">version: 1.0 &nbsp;·&nbsp; date: 2026 年 11 月 &nbsp;·&nbsp; status: 工作论文（中文版）</div>
+</header>
+<section class="abstract"><div class="abshead">摘要</div><p>对投入产出经济实行行政协调，其瓶颈与其说在于计算能力，不如说在于所用信息的新鲜程度。本文给出按比例误差校正的一个精确边界：若校正所依据的信息滞后 $k$ 期，则闭环局部稳定的充分必要条件为增益满足 $g &lt; g^\star(k) = 2\sin[\pi/(2(2k+1))] \approx \pi/(2k+1)$，故增益与时滞之积被 $\pi/2$ 所界定，且边界处振荡周期恰为 $2(2k+1)$ 个季度。该边界只对负反馈存在，而反馈的符号是工具的实证属性而非建模选择：提价会降低超额需求，但在产能受约束的 Leontief 经济中提高产出目标会增加中间需求、从而加剧短缺，此类正反馈环路在任何时滞下都不存在可容许的增益。我们把六种协调制度——全知线性规划、物资平衡、按优先级配给、Lange 式试探性定价、竞争性市场与双轨制——置于同一信息滞后、同一冲击流与同一份 20 部门 Eurostat 投入产出数据之上，采用约八千次运行的预注册设计。该边界是精确的，而在真实投入产出经济中很少被触及：所测价格环路增益对多数部门与多数时滞都位于边界之下，余量随时滞延长而收缩，只有沿时滞轴最远端、且对由被强行推高的环路，所测增益才会超过它。行政价格在通常的报告频率下之所以稳定，正因为它微弱到无法出清市场。真正构成约束的是数量环路：在完全没有冲击的情况下，百分之三的测量噪声即令物资平衡损失逾百分之六的产出，而双轨制仅损失百分之零点五；这一损失并非来自修订目标本身，而来自施加于目标之上的单侧劳动力可行性投影——当劳动力余量为百分之五时该损失达产出的百分之十八，而当余量为百分之一百时损失消失。我们不主张任何时滞边界的穿越，因为预注册判据只触发一次、且触发在边界之下；双轨制的内点最优虽然在形式上存在，却小于种子的离散度。因此有一项假设在操作意义上既未被确认也未被否证，另一项仅在设计无法分辨的量级上得到确认。</p></section>
+<p class="keywords"><span class="abshead">关键词</span> 信息时滞；稳定性边界；物资平衡；短缺；双轨制；预注册；投入产出</p>
+<h2 id="sec:intro"><span class="secno">1</span> 引言</h2>
+<p>每一位协调者据以决策的经济图景都已过时。下一季度的计划由上一季度的报表编制而成；构成价格指数的批发价格在指数发布前数月即已采集；告诉一个部委某种商品是否短缺的库存数字，描述的是一个已经过去的时刻。这类滞后通常被当作工程上的麻烦：或用更完善的统计去缩小，或指望既定规则的韧性去吸收。本文持相反的看法。我们把信息的新鲜程度视为一项协调制度的首要属性，并追问：每一种制度为了不致陷入振荡，究竟需要多少新鲜信息。</p>
+<p>这个问题历史悠久，但以往多以静态形式提出。社会主义计算争论的核心，是计划机关能否掌握价格所汇总的知识。Mises 主张，没有生产资料市场便没有价格，而没有价格便无从对备选方案作理性比较 <a class="cite" href="#ref-mises1920">[1]</a>；Hayek 进一步指出，相关知识是分散的、默会的且不断修订的，即便一位完全善意的计划者也来不及把它汇集起来 <a class="cite" href="#ref-hayek1945">[2]</a>。Lange 的回应实际上是说，计划机关根本无须汇集任何东西：它可以像拍卖人一样，依据所观察到的超额需求调整价格，直至经济出清 <a class="cite" href="#ref-lange1936">[3]</a> <a class="cite" href="#ref-lange1937">[4]</a>。这一回应在形式上是成立的，并且是此后大多数「设备足够精良的中心可以协调经济」之论调的智识基础。但它悄然假定拍卖人的观察是即时的。一个只能滞后获知超额需求的拍卖人已不再是拍卖人，而是一个盯着后视镜的驾驶者。</p>
+<p>这一差别正是本文的主题。我们区分了争论所混淆的两种属性。其一是协调规则<strong>使用</strong>多少信息；其二是它需要多少<strong>新鲜</strong>信息才能保持稳定。在静态的配置比较中这一区分不可见，因为就稳态而言两种规则给出同一个计划；而一旦系统受到扰动，区分便成为决定性的：依据所测偏离作出反应的规则，会把自己的时滞转化为一个环路，而该环路是衰减还是棘轮式累积，既取决于反馈的<strong>强度</strong>，也取决于反馈的<strong>符号</strong>。</p>
+<p>符号并非偏好问题，它是规则所处经济环境的一种属性，并且两类经典工具恰好相反。价格高于出清水平会降低超额需求，故价格环路是负反馈，只要推得足够轻缓便可稳定。而在产能受约束的 Leontief 经济中，为应对短缺而提高产出目标并不会减轻短缺：它恰恰增加了那些本就稀缺的商品的中间需求，于是更紧的计划反而产出更差的计划。目标环路是正反馈，而我们将证明，正反馈环路<strong>不存在</strong>任何稳定增益，无论多小、多有耐心。这就是本文所要展开的论点：协调制度在需要多少新鲜信息上各不相同，这一需要由每种制度必须运行的环路增益所支配，而时滞以对增益的硬性预算的形式介入。时滞是制度彼此分离的维度，而它的第一项作用，是决定这些制度究竟能否被运行。</p>
+<p>分析的核心是一个线性差分方程。设某一信号按其与出清水平的偏离成比例地校正，且校正所依据的测量发生在 $k$ 期之前，则偏离 $u_t=\log p_t-\log p^\star$ 满足</p>
+<div class="equation" id="eq-law"><div class="eqbody">$$
+u_{t+1} = u_t - g\,u_{t-k},
+$$</div><div class="eqno">(1)</div></div>
+<p>其中增益 $g&gt;0$ 汇总了调整系数与超额需求的斜率。其特征多项式为 $z^{k+1}-z^{k}+g$。第 <a class="xref" href="#sec:theory">第4节</a> 节证明：零解渐近稳定的充分必要条件为</p>
+<div class="equation" id="eq-boundary"><div class="eqbody">$$
+0 \;<\; g \;<\; g^\star(k) \;:=\; 2\sin\!\left[\frac{\pi}{2(2k+1)}\right],
+$$</div><div class="eqno">(2)</div></div>
+<p>而在边界上，存活根恰好落在单位圆上的 $e^{\pm i\theta_0}$ 处，$\theta_0=\pi/(2k+1)$，故边界处的振荡周期恰为 $2(2k+1)$ 个季度。前几个值为 $g^\star(0)=2$、$g^\star(1)=1$、$g^\star(2)=(\sqrt{5}-1)/2\approx0.618$ 与 $g^\star(3)\approx0.445$；渐近地 $g^\star(k)\sim\pi/(2k+1)$。以下三条推论至关重要。其一，周期大致与时滞成正比（约四倍），这使得时滞可以在价格的谱特征中被观察到，而不只是被推断出来。其二，$k\,g^\star(k)$ 递增趋于 $\pi/2$，故 $g\,k$——协调者每季度消除的偏离比例乘以他所落后的季度数——存在上界：时滞不只是让协调变慢，它对协调可以被尝试得多快设定了一份预算。其三，该边界只对负反馈存在。若环路为正，即更高的工具值使所测偏离上升而非下降，则特征多项式在 $z=1$ 处取值 $-|g|$ 并随 $z$ 无界增长，因而对任何正增益都有一个模大于 1 的实根：正反馈环路在任何增益、任何时滞下都不稳定，不存在安全的工作点。这一不对称——而非任何系数的大小——才是价格法与计划目标的分别所在，也是本文把边界的实证检验放在价格上、而给目标单独立一项假设的原因。</p>
+<p>这一结果刻意地朴素，本身并不给出制度的排序。它所做的是更有用的事：指出排序应当依据哪一个量。必须以较快的步伐推动价格方能出清市场的制度，在时滞面前是脆弱的；配置规则具有惯性的制度则不然，但它的免疫要以别处的错配为代价。为使这一权衡具有共同的度量基准，我们搭建了一个只让规则变化的实验室。PlanLab 是一个可切换机制的投入产出经济模拟器，二十个部门共享同一份校准自 2020 年 EU-27 对称投入产出表的 Eurostat 技术 <a class="cite" href="#ref-eurostat_naio">[5]</a> <a class="cite" href="#ref-eurostat_manual">[6]</a>、同一套会计稽核与同一个随机环境。每一种制度都接收同一个观察对象：由 $k$ 个季度之前的数据构造、并经乘性测量噪声污染；每一种制度也面对同一批冲击实现，因为外生流由同一随机种子派生。因此结果差异可归因于协调规则，而不归因于数据、技术或运气。设计以预注册方式固定为 B1 至 B6 六个区块，涵盖校准、时滞与机制的网格、部门冲击的传导、配给与影子价格的对比、双轨制份额以及稳健性检验，按所声明的因子计算约为八千次运行。</p>
+<p>论证是累积的而非逐点罗列的。第 <a class="xref" href="#sec:related">第2节</a> 节把计算争论、物资平衡传统、短缺文献与时滞稳定性文献彼此对置，说明它们的交集近乎为空：尚无人以共同的基础比较协调制度，并把信息时滞当作处理变量而不是讨厌的参数。第 <a class="xref" href="#sec:model">第3节</a> 节规定基础、观察对象与六种制度。第 <a class="xref" href="#sec:theory">第4节</a> 节给出分析：除边界本身之外，它还确立三件事——正反馈环路不存在可容许增益；模型的一期映射在紧格上是单调的，故即便该计划并不稳定，平稳计划依然存在；以及平衡的计划并不能消除短缺，因为缺口由交付前沿而非由平衡程序决定。第 <a class="xref" href="#sec:design">第5节</a> 节给出经修订的实验设计，说明模拟器报告时滞与理论有效时滞之间的对应关系，并给出一项功效计算，表明长时滞下临近阈值的失稳增长过慢，无法在预注册期限内由振幅检出，这正是谱判据承担推断重量的原因。第 <a class="xref" href="#sec:results">第6节</a> 节报告结果，并以三项不依赖主网格的结果开篇：识别假设的验证、仅有测量噪声时各制度支付的信息租金，以及表明租金源自目标修订与库存平衡之交互而非任一单独程序的分解。 本文如今知道四件事。它知道比例校正规则失稳的精确增益 $g^\star(k)=2\sin[\pi/(2(2k+1))]$，并经三条独立的数值路径确认至 $10^{-11}$。它知道一个制度可以在既无冲击又无时滞的情况下支付巨额信息租金：百分之三的测量噪声令物资平衡损失逾百分之六的产出，而双轨制仅损失百分之零点五。它知道该租金何时被收取、由何收取：损失由目标修订与单侧可行性投影的交互所创造，并以劳动力余量为条件——余量百分之五时代价达产出的百分之十八，百分之百时消失。它还报告两项在通常意义上不构成确认的结果：不主张任何时滞边界的穿越，因为预注册判据只触发一次且触发在边界之下；双轨制的内点最优在形式上存在，却小于种子离散度。故有一项假设在操作意义上既未被确认也未被否证，另一项仅在设计无法分辨的量级上被确认。</p>
+<p>设计中有三点值得一开始就强调，因为它们正是本项工作区别于「模拟器演示」之处。其一，分析结果在任何模拟运行之前导出，并被用来<strong>预测</strong>实证失稳边界的位置；若偏差超过一个时滞周期，则机制被否证，预注册文件在事前即如此规定。其二，制度间的比较是同一经济在不同规则下的比较，而非不同模型之间的比较，这正是「制度绩效」一词得以有意义的原因。其三，福利数字不被当作对真实经济的排序。它们是受控实验的结果，其中规范性权重是显式参数，并在 B6 中上下浮动百分之五十重新运行，且与分配、计划完成率以及计划本身的运算努力并列报告，因为同一总量产出可以掩盖截然相反的分配结果。</p>
+<h2 id="sec:related"><span class="secno">2</span> 相关工作</h2>
+<h3><span class="secno">2.1</span> 作为信息问题的计算争论</h3>
+<p>关于计划的现代论证始于 Mises：社会主义共同体缺乏经济计算所需的价格。这一主张首见于 1920 年，并经 Hayek 于 1935 年所编文集以英文流传 <a class="cite" href="#ref-mises1920">[1]</a>。Hayek 的贡献把论题从价格的缺失转移到知识的分散：与配置相关的数据只以特定主体局部的、瞬时的方式存在，任何中央机关都无法把它们汇集为可用于计划的形式 <a class="cite" href="#ref-hayek1945">[2]</a>。两种论证都是信息性的，而且严格说来都关乎<strong>时间</strong>：所需的知识不仅分散，而且在能够被集中之前就已过时。这一时间性要素很少被明确表述，而它恰恰是本文所要形式化的东西。</p>
+<p>Lange 的回应分两部分发表，它接受了制度层面的挑战，却以规则、而非计算来作答：中央计划委员会设定价格、观察超额需求并加以调整，在极限上其配置复现竞争性结果 <a class="cite" href="#ref-lange1936">[3]</a> <a class="cite" href="#ref-lange1937">[4]</a>。该规则是一个比例控制器，而其稳定性性质从未被分析。这正是本文所补的空白。需要说明此处争的是什么、不争的是什么。本文并不否认：当信息即时，Lange 式委员会会收敛——命题 <a class="xref" href="#prop:delay">命题 1</a> 确认，只要增益低于 $g^\star(0)=2$ 便如此。问题在于，当委员会的观察滞后 $k$ 期时，这种收敛会变成什么；而答案是一个大致按 $1/k$ 下降的边界。</p>
+<h3><span class="secno">2.2</span> 物资平衡与投入产出传统</h3>
+<p>苏联式计划的会计技术是物资平衡（material balance）：一组以实物或价值单位表示的物资平衡表，每张表断言某种商品的来源等于其用途，通过在层级中自下而上逐级迭代调整求得，其中最重要的商品最先平衡 <a class="cite" href="#ref-ellman2014">[7]</a> <a class="cite" href="#ref-ericson1991">[8]</a>。Ericson 的论述尤其有用，因为它强调程序而非意识形态：古典体制是一种按优先级排序的、以数量配给的机制，其输出是计划而非价格，其典型失效方式不是静态意义上的低效率，而是短缺的系统性再生产 <a class="cite" href="#ref-ericson1991">[8]</a>。</p>
+<p>分析工具来自两个方向。Leontief 的投入产出会计使部门间的相互依赖显式化，并把平衡变成线性方程组 <a class="cite" href="#ref-leontief1936">[9]</a> <a class="cite" href="#ref-leontief1941">[10]</a>；包含产能约束以及数量体系与价格体系之关系的现代处理见 Miller 与 Blair <a class="cite" href="#ref-miller_blair2009">[11]</a>。Kantorovich 1939 年的专著经 1960 年英译而为西方所知，它把计划重述为线性规划，从而使最优化、而非平衡，成为判准 <a class="cite" href="#ref-kantorovich1960">[12]</a>；苏联经济学界吸收该思想之前的漫长延误，由 Belykh 记录 <a class="cite" href="#ref-belykh2024">[13]</a>。von Neumann 的增长模型给出了平衡路径的对偶刻画 <a class="cite" href="#ref-neumann1945">[14]</a>。这一传统从未追问的是：当平衡表的右端——需求、产能、库存——以滞后方式被观察时，平衡程序的行为如何。它是一门被按季度施用的静态技术。</p>
+<h3><span class="secno">2.3</span> 短缺、配给与非均衡传统</h3>
+<p>Kornai 的贡献在于坚持：短缺不是残差，而是特定制度构型的均衡现象，由父爱主义与软预算约束所维系 <a class="cite" href="#ref-kornai1992">[15]</a> <a class="cite" href="#ref-kornai1986">[16]</a> <a class="cite" href="#ref-kornai_maskin_roland2003">[17]</a>。其形式对应物是固定价格均衡理论：由数量而非价格出清市场，主体在短边被配给 <a class="cite" href="#ref-dreze1975">[18]</a> <a class="cite" href="#ref-barro_grossman1971">[19]</a>；Kornai 与 Weibull 给出了买方市场与卖方市场的议价理论基础 <a class="cite" href="#ref-kornai_weibull1983">[20]</a>。这一文献提供了本模型所需的物件——索取向量、配给规则、优先顺序与短缺度量——但它几乎完全是静态的。其均衡以固定价格为参数，而不是以在陈旧信息下被调整的价格为参数，因而无从讨论时滞所产生的振荡行为。反之，研究振荡的文献很少涉及配给。两种传统恰好在本文所占据之处相遇。</p>
+<h3><span class="secno">2.4</span> 时滞、周期与差分方程的稳定性</h3>
+<p>时滞经济学始于蛛网模型：供给对上一期价格作出反应，所得二阶差分方程只有在需求与供给斜率之比有利时才稳定 <a class="cite" href="#ref-ezekiel1938">[21]</a>；适应性预期推广了该机制 <a class="cite" href="#ref-nerlove1958">[22]</a>，非线性版本则生成内生波动与混沌 <a class="cite" href="#ref-hommes1994">[23]</a>。这些都是时滞为一阶（$k=1$）的特例。一般情形的数学理论是经典的：泛函微分方程见 Hale <a class="cite" href="#ref-hale1977">[24]</a>，含时滞的差分方程见 Elaydi <a class="cite" href="#ref-elaydi2005">[25]</a>，而线性时滞差分方程本身由 Levin 与 May 在一则短记中处理，那是命题 <a class="xref" href="#prop:delay">命题 1</a> 最接近的前身 <a class="cite" href="#ref-levin_may1976">[26]</a>。本文的新意不在稳定性代数，而在其用法：把一个代数边界当作模拟的<strong>预注册预测</strong>（而该模拟中线性化只是局部的），并进而依据各制度所需的增益来解读制度。</p>
+<h3><span class="secno">2.5</span> 计算计划与计划经济模拟</h3>
+<p>关于计算能否消解计算问题，已有相当数量的文献。Cockshott 与 Cottrell 主张，求解物资平衡体系的计算复杂性完全在现代机器能力之内，真正的障碍是制度性的而非技术性的 <a class="cite" href="#ref-cockshott_cottrell1993">[27]</a>；Dapprich 与 Greenwood 综述了该论证的近期复兴及其批评者 <a class="cite" href="#ref-dapprich_greenwood2024">[28]</a>。智利 Cybersyn 项目是唯一一次持续尝试建立实时计划系统的努力，Medina 的记述明确指出，其设计中有多大一部分是用于管理厂级事件与中央决策之间的时滞 <a class="cite" href="#ref-medina2011">[29]</a>。对苏联经济的定量研究大多是回溯性的与结构性的，用新古典增长框架分解工业化的来源，而不是为协调机制本身建模 <a class="cite" href="#ref-cheremukhin2017">[30]</a>。这一空白是系统性的：据我们所知，尚无对同一技术、同一滞后数据、同一冲击下的备选协调制度的受控比较。本设计所提供的正是这一比较。</p>
+<h3><span class="secno">2.6</span> 改革与双轨制</h3>
+<p>中国的双轨制改革是让两种协调机制并行运转的最大规模自然实验。Sicular 记录了农产品流通中计划价格与市场价格如何相互作用 <a class="cite" href="#ref-sicular1988">[31]</a>；Lau、Qian 与 Roland 给出了双轨制的经典解读，说明按行政价格运行的计划轨如何保护既有租金，而边际上的市场轨如何配置新增产出 <a class="cite" href="#ref-lau_qian_roland2000">[32]</a>。Murphy、Shleifer 与 Vishny 此前曾警告：当国有部门仍优先获得投入时，局部改革可能劣于任一极端 <a class="cite" href="#ref-murphy_shleifer_vishny1992">[33]</a>；Weitzman 对理论可否迁移至转型的怀疑，是对过度自信的比较静态的有益矫正 <a class="cite" href="#ref-weitzman1993">[34]</a>。双轨制在本设计中以一个真正参数化的制度出现——一个计划份额 $\theta$——从而使内点最优问题得以作为一项可检验的假设提出，而不是一段叙述。</p>
+<h3><span class="secno">2.7</span> 定位</h3>
+<p>三个文献传统提供了本文的构件，却没有一个提供综合。计算争论提供了问题，但它把信息视为应当占有的存量，而不是带有时滞的流量。物资平衡与短缺文献提供了制度与会计，却是静态的。时滞与稳定性文献提供了数学，但其应用对象是市场与种群，而不是协调规则的比较研究。本文的贡献在于：把一个关于比例校正的精确稳定性边界置于制度受控比较的中心，并论证制度彼此分野的轴线，是其决策规则所要求的信息新鲜程度。</p>
+<h2 id="sec:model"><span class="secno">3</span> 模型</h2>
+<h3><span class="secno">3.1</span> 基础</h3>
+<p>经济有 $n=20$ 个部门，记为 $i,j=1,\dots,n$，以季度为期，$t=1,\dots,T$。所有数量均以源表的固定价格价值单位计：部门的产出 $x_i$ 是一个价值量，直接投入系数 $A_{ij}=Z_{ij}/x_j$ 是单位价值的产品 $j$ 中所含产品 $i$ 的价值，期内不作价格与数量变动的分离。矩阵 $A$ 取自 2020 年 EU-27 基本价格对称投入产出表，并依据一份有记录的映射由 64 部门聚合为 20 部门 <a class="cite" href="#ref-eurostat_naio">[5]</a> <a class="cite" href="#ref-eurostat_manual">[6]</a>。一个完全给定的合成生成器用作离线替代基础，并在稳健性区块中充当第二基础；它在代码库中有文档，不用于任何主要结果。</p>
+<p>技术是 Leontief 式的：投入之间不存在替代，规模报酬不变，资本产出比 $\kappa_i$ 固定，故产能为 $\bar x_i=K_i/\kappa_i$。单位产出的劳动需求 $\ell_i$ 被校准为使基年工资总额耗尽增加值，这使 $A$ 的列和严格小于一，从而保证 $A$ 是生产性的：其谱半径满足 $\rho(A)&lt;1$，且 $(I-A)^{-1}\ge0$ 存在且元素非负。这一性质在第 <a class="xref" href="#sec:theory">第4节</a> 节被反复使用，并在技术装载时予以检验，而非假定。</p>
+<p>每一期施加两项会计纪律。其一，部门平衡</p>
+<div class="equation" id="eq-balance"><div class="eqbody">$$
+S^{0}_{i} + x_i + M_i + \text{spoilage}_i \;=\; \sum_{j=1}^{n} Z_{ij} + C_i + G_i + I_i + S^{\mathrm{end}}_{i}
+$$</div><div class="eqno">(3)</div></div>
+<p>须在尺度 $10^{-8}$ 之内成立，其中 $S^{0}<em i>{i}$ 为期初库存，$M_i$ 为进口（除非情景启用贸易，否则为零），$C_i$ 为居民消费，$G_i$ 为政府及其他最终需求，$I_i$ 为投资，$S^{\mathrm{end}}</em>$ 为期末库存。溢损（spoilage，不可售产出）项记录被销毁、因而既未交付也未留存的数量；它是在第 <a class="xref" href="#sec:theory">第4节</a> 节讨论的可行性投影之下出现的，其量在受影响单元中约占供给的百分之一到三，并被单独凿录。完整的恒等式与单一的规范稽核记录在架构文件中，其采用过程记录为修订 4；省略该项的外部复现者会在平衡式中看到一处泄漏。任何超出容差的残差都会抛出错误并中止运行；它不会被容忍，也不会被修补。其二，任何配置都必须可行，即没有部门获得超过其存在的商品数量，这由下文所述短边映射予以强制，而不是事后裁剪。</p>
+<h3><span class="secno">3.2</span> 一期之内</h3>
+<p>每一期按固定次序执行，而该次序属于模型本身，而非实现细节，因为它决定了每一项决策作出时可以获知什么。抽取冲击，确定产能、居民需求与政府需求；由 $k$ 期之前的数据构造观察对象，并施加乘性噪声；机制形成计划；名义供给由期初库存加计划产出构成；机制按其自身的优先规则，把该供给在索取者之间配置——中间使用者、居民、政府、投资与库存缓冲；随后引擎求解实际总产出，作为配置的短边不动点，计算并稽核会计恒等式，最后向机制索取下一期使用的价格向量。指标在期末记录。</p>
+<p>第五、六步是经济学之所在。机制可以任意索取，但产出由引擎决定：</p>
+<div class="equation" id="eq-shortside"><div class="eqbody">$$
+x_j \;=\; \min\left\{\, \bar x_j,\ \ell\text{-bound},\ \min_{i:\,A_{ij}>0}\frac{\left(S^{0}_{i}+x_i-e_i-\sum_{l\ne j}A_{il}x_l\right)^{+}}{A_{ij}} \,\right\},
+$$</div><div class="eqno">(4)</div></div>
+<p>自 $x^{(0)}=\min(\text{目标},\text{产能})$ 迭代。此处 $e_i$ 汇总已获准的对产品 $i$ 的非中间索取。部门不能生产超过其产能所允许的数量，也不能生产超过其最紧缺投入在他人取用之后所允许的数量；该陈述的不动点，即是与已获准索取相一致的最大产出向量。短缺在一个部门经由这一渠道传导至其使用者，这也正是模型能够表现古典计划失效模式的原因。达到不动点所需的迭代次数被记录下来，作为计划努力的度量予以报告，而不是当作诊断信息丢弃。</p>
+<h3><span class="secno">3.3</span> 信息</h3>
+<p>协调者从不观察当前状态。它所看到的是一个观察对象</p>
+<div class="equation" id="eq-observation"><div class="eqbody">$$
+\tilde o_t \;=\; o_{t-k}\odot\varepsilon_t,\qquad \log\varepsilon_{t,i}\sim\mathcal{N}\!\left(-\tfrac{1}{2}\sigma^{2},\,\sigma^{2}\right),
+$$</div><div class="eqno">(5)</div></div>
+<p>其中 $o$ 遍取需求、产能、库存、积压、价格与劳动，$\odot$ 为逐元素乘积。乘性形式保持观察为正，并使 $\sigma$ 近似为变异系数；均值中的修正项使观察在水准上无偏。时滞 $k$ 是整数的季度数，是处理变量而非校准参数。噪声 $\sigma$ 本身在稳健性区块中是处理变量，在其他地方为零，以便分离纯粹的时滞效应。</p>
+<p>这一点必须精确，因为此处一个周期的差错会使与第 <a class="xref" href="#sec:theory">第4节</a> 节的整个比较失效。已实现的结果不可能在它发生的那一期之前被报告，因此即使完全知情的协调者，也是对上一期的缺口的作出反应。模拟器参数 $\ell$（<code>info.lag</code>）计的是<strong>报告时滞</strong>——事件与观察之间隔着多少个完整的、额外的发布或传输延迟——而理论的时滞是总量：$k_{\mathrm{eff}}=\ell+1$。故时滞为零并非全知，而是物理上可达到的最早情形；理论上的无时滞基准 $k=0$ 在模拟器中不可达到，任何实验所能呈现的最小值为 $k_{\mathrm{eff}}=1$。本文所有表格与图形报告的都是 $k_{\mathrm{eff}}$，并如此标注。</p>
+<p>观察对象一方面刻意贫乏，另一方面刻意丰富。贫乏在于它是<strong>总量</strong>的向量：协调者知道对某种商品的总需求，却不知道是谁提出的。丰富在于同一个对象被交给每一种制度，市场也不例外。这是整个设计的识别性假设所在。制度之间的差别在于它们如何运用观察，而从不在于被允许看到什么。若市场能看到当期的价格而计划委员会不能，那便不是制度的比较，而是信息集的比较。</p>
+<h3><span class="secno">3.4</span> 制度</h3>
+<p>六种协调机制针对同一抽象接口实现三项决策：形成计划、在索取者之间配置供给、设定下一期的价格。其概要见表 <a class="xref" href="#tab-mechanisms">表1</a>，细则见附录 <a class="xref" href="#sec:appendix_mech">Appendix B</a>。</p>
+<div class="tablefloat" id="tab-mechanisms"><figcaption class="tabcap"><span class="floatlabel">表 1.</span> 六种协调制度。全部接收同一观察对象、运行于同一技术之上，仅规则不同。线性规划作为绩效上界而非候选政策纳入，因为它是唯一被允许精确知道当前需求的制度。</figcaption><div class="tabbody"><table>
+<thead>
+<tr>
+<th style="text-align: left;">id</th>
+<th style="text-align: left;">institution</th>
+<th style="text-align: left;">information used</th>
+<th style="text-align: left;">allocation rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>lp_central</code></td>
+<td style="text-align: left;">omniscient central linear programme</td>
+<td style="text-align: left;">latest observation of demand and capacity</td>
+<td style="text-align: left;">optimal plan of $\max w\cdot y$ subject to $(I-A)x\ge y$, $x\le\bar x$; pro-rata fulfilment</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>material_balance</code></td>
+<td style="text-align: left;">resource–need balancing, $R$ rounds, priority tier first</td>
+<td style="text-align: left;">plan targets and observed stocks</td>
+<td style="text-align: left;">proportional within priority tier</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rationing_priority</code></td>
+<td style="text-align: left;">administrative quotas, tier 1 before tier 2</td>
+<td style="text-align: left;">observation</td>
+<td style="text-align: left;">quota per claimant in priority order</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>tatonnement</code></td>
+<td style="text-align: left;">Langean price board, $p\leftarrow p+\eta z$</td>
+<td style="text-align: left;">observation and own prices</td>
+<td style="text-align: left;">willingness-to-pay order</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>market</code></td>
+<td style="text-align: left;">within-period Walrasian tâtonnement</td>
+<td style="text-align: left;">current prices within the period</td>
+<td style="text-align: left;">market clearing</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>hybrid_dual_track</code></td>
+<td style="text-align: left;">plan track at administered price, share $\theta$; market track, $1-\theta$</td>
+<td style="text-align: left;">mixed</td>
+<td style="text-align: left;">two-tier</td>
+</tr>
+</tbody>
+</table></div></div>
+<p>线性规划被作为上界而非候选政策纳入：它精确知道当前的需求向量，精确求解计划者的问题，因而报告的是若信息约束被解除所能达到的结果。它的作用是标定福利尺度，而更重要的是度量<strong>约束的代价</strong>：它在第 $k$ 期与次优制度绩效之间的差距，即是对新鲜信息之价值的一个估计。</p>
+<h3><span class="secno">3.5</span> 福利、价格与指标</h3>
+<p>福利是消费的对数加总的贴现和，</p>
+<div class="equation" id="eq-welfare"><div class="eqbody">$$
+W \;=\; \sum_{t=1}^{T}\beta^{\,t-1}\sum_{i=1}^{n} w_i\log\!\left(C_{i,t}+c_{0,i}\right), \qquad \beta=0.98,
+$$</div><div class="eqno">(6)</div></div>
+<p>其中 $c_{0,i}$ 取部门 $i$ 基年最终消费的 $10^{-3}$，以使某种商品完全不可得时对数仍有定义；权重 $w_i=1$，必需品为 $1.2$。权重是一种规范性的选择，按情景参数处理而非当作真理；稳健性区块在短缺与库存惩罚上下各浮动百分之五十后重新运行每一项主要结果。下界 $c_0$ 的作用比表面上更重要：它使福利函数有下界，从而使某种商品的完全短缺造成巨大但有限的损失，而不是无穷大，避免单一灾难性部门主导一切比较。</p>
+<p>此处有一项性质必须说明，因为它颠倒了本文每一列福利的自然读法。带下界的对数型加总是跨部门不平等厌恶的，其取值由最差部门-期交付了多少所主导，而不是由交付总量所主导。在六种制度的比较中，平均对数福利与平均消费的相关系数为 $-0.44$，而与「交付低于基年消费百分之十的部门-季度数」的相关系数为 $-0.92$：当<strong>缺口</strong>变得稀少时，福利上升，即便消费总量下降。物资平衡的六种制度中平均消费最低，为 $9.29$ 百万，平均对数福利却最高，为 $249.09$，而线性规划为 $10.18$ 百万与 $248.81$。两种排序都不错，也都不是对方的排序；它们回答的是不同的问题，读者若把福利列当作消费排序，便会得出与该函数所编码的结论相反的结论。因此本文每一张结果表都把消费与福利并列报告；凡福利单独出现处，其题注均说明它是哪一类对象。</p>
+<p>价格是以基年为 $1.0$ 的指数，由六种制度中的四种行政设定，另两种由拍卖人设定。报告的价格统计量包括跨部门离散度 $\mathrm{sd}(\log p)$、波动率 $\mathrm{sd}(\Delta\log p)$，以及核心检验的对象——平均对数价格对其自身二十期移动平均的偏离，连同其一至四阶自相关。计划完成率、库存比率、产能利用率、恢复半衰期与跨部门短缺 Gini 作为次要结果报告。总量产出被计算，但从不单独报告，理由见第 <a class="xref" href="#sec:design">第5节</a> 节：两个总产出相同的经济，其短缺承担者的分布可以完全相反。</p>
+<h3><span class="secno">3.6</span> 何者被固定</h3>
+<p>识别性主张是：结果的差异可归因于协调规则。值得注意的是，这一主张并非仅被宣称，而是被验证的：在零时滞、零噪声、无冲击的条件下，六种制度都以六位小数复现基年，故仪器本身不会制造差异，第 <a class="xref" href="#sec:results">第6节</a> 节把该验证作为第一项结果报告。这一主张的强度取决于固定了哪些东西，因此清单是显式的：技术在各制度间共享；观察对象每期构造一次并传递给任一在役制度，故同一时滞、同一噪声抽取与同一数据年代适用于全部六种；外生冲击流由（情景标识、种子）对确定性地派生，故同一种子在各制度下产生同一冲击路径；福利权重、贴现因子与会计容差为情景参数；非制度性的居民侧参数——未满足需求的结转、库存目标比率、目标修订的上下界——在六种机制间完全相同。跨机制比较中仅有的自由参数是制度性的。</p>
+<p>不能被固定、也不应被固定的，是各制度内部状态的丰度：试探性定价的委员会携带一个价格向量，物资平衡办公室携带一份计划，市场携带一本委托簿。制度在规则上不同，也在记忆上不同，而这一差异本身正是被测定的对象之一，而不是待消除的混杂。其后果在附录 <a class="xref" href="#sec:app:differences">第B.3节</a> 中明说：两个制度之间的绩效差异不能归因于单一标量，设计所能做到的极限，是测出每一个所运行的增益，并把该测量与理论相对照。</p>
+<h2 id="sec:theory"><span class="secno">4</span> 理论</h2>
+<h3><span class="secno">4.1</span> 调整规则</h3>
+<p>考虑一个协调者依据<strong>已经观察到的</strong>缺口而按比例修订的信号。有两种情形要紧，而它们正是行政协调的两类经典工具。其一是行政价格，$\log p_{t}=\log p_{t-1}+\eta\,s_{t-k}$，其中 $s$ 为观察到的短缺率或超额需求。其二是产出目标，$\log T_{t}=\log T_{t-1}+\eta\,s_{t-k}$，即为应对观察到的短缺而向上修订计划。两种情形下修订系数均为 $\eta&gt;0$，观察均滞后 $k$ 期；两条规则只在闭环经济反应的<strong>符号</strong>上不同。</p>
+<p>设 $u_t$ 表示工具对其平稳值的对数偏离，并设缺口按 $s_t=-b\,u_t+O(u_t^{2})$ 局部响应。系数 $b$ 不是模型的自由参数，而是一个均衡对象，其符号是经济的属性而非行政者的属性。对价格而言 $b&gt;0$：较高的价格通过居民需求弹性及由此引致的替代降低超额需求。而在产能受约束的 Leontief 经济中，对产出目标而言 $b&lt;0$：更高的计划产出抬高了那些本已稀缺商品的中间需求，于是所观察到的短缺不降反升。把局部响应代入修订规则，得到价格环路的</p>
+<div class="equation" id="eq-law2"><div class="eqbody">$$
+u_{t+1} = u_t - g\,u_{t-k}, \qquad g := \eta b,
+$$</div><div class="eqno">(7)</div></div>
+<p>而目标环路满足同一方程但 $g&lt;0$。分析之所以是局部的正在于此：<a class="xref" href="#eq-law2">(7)</a> 是一条非线性规则在稳态附近的线性化，而稳态、弹性 $b$ 与有效增益 $g$ 都在完整模型中数值计算。<a class="xref" href="#eq-law2">(7)</a> 中的 $k$ 是环路的<strong>有效</strong>时滞，与模拟器报告时滞 $\ell$ 的关系为 $k=\ell+1$，如第 <a class="xref" href="#sec:model">第3节</a> 节所述；无时滞情形 $k=0$ 是任何协调者都无法达到的理论基准，保留它是为了使边界公式在端点处可读。</p>
+<p>三点限定了讨论的范围。其一，线性化针对的是<strong>偏离</strong>而非技术：$A$、产能与配给规则都通过 $b$ 以及通过平稳点的位置进入。其二，规则是比例的，而非积分或微分；对缺口的<strong>变化</strong>而非其水平作出反应的协调者面对不同的特征多项式，本文不分析该情形。其三，时滞被当作确定性的。随机时滞会模糊边界而不是移动边界，留待后续工作。而 $b$ 的<strong>符号</strong>不是一个可以放松的假定：它恰是接下来两小节所围绕的对象。</p>
+<h3><span class="secno">4.2</span> 稳定性边界</h3>
+<div class="prop" id="prop:delay">
+<p><strong>命题 1（时滞失稳阈值）</strong>. 设 $k\in\mathbb{N}$、$g&gt;0$，考虑</p>
+<div class="equation" id="eq-prop1"><div class="eqbody">$$
+u_{t+1}=u_t-g\,u_{t-k}.
+$$</div><div class="eqno">(8)</div></div>
+<p>零解渐近稳定的充分必要条件为 $0&lt;g&lt;g^\star(k)$，其中</p>
+<div class="equation" id="eq-gstar"><div class="eqbody">$$
+g^\star(k) := 2\sin\!\left[\frac{\pi}{2(2k+1)}\right],
+$$</div><div class="eqno">(9)</div></div>
+<p>而当 $g&gt;g^\star(k)$ 时不稳定。在 $g=g^\star(k)$ 处，特征多项式的一对共轭根落在单位圆上的 $e^{\pm i\theta_0}$，$\theta_0=\pi/(2k+1)$，其余根严格位于圆内，任一解有界并振荡但并不收敛。</p>
+</div>
+<p><em>证明.</em> 记 $P_k(z,g)=z^{k+1}-z^{k}+g$，于是 <a class="xref" href="#eq-prop1">(8)</a> 的解是各 $z^{t}$ 在 $P_k(\cdot,g)$ 的根上的组合。证明分三步：定出根可能穿越单位圆的增益值；证明每次穿越都是向外的；然后计数。</p>
+<p><em>第一步，穿越值.</em> 设 $P_k(z,g)=0$ 且 $|z|=1$，写 $z=e^{i\theta}$，$\theta\in(0,2\pi)$。则 $z^{k}(z-1)=-g$，取模得 $g=|z-1|=2\sin(\theta/2)$，其中正弦为正用到了 $\theta\in(0,2\pi)$。取辐角，并利用 $z-1=2\sin(\theta/2)\,e^{i(\theta/2+\pi/2)}$，</p>
+<div class="equation"><div class="eqbody">$$
+z^{k}(z-1) \;=\; 2\sin(\theta/2)\,\exp\!\left\{i\left[\left(k+\tfrac{1}{2}\right)\theta+\tfrac{\pi}{2}\right]\right\},
+$$</div><div class="eqno">(10)</div></div>
+<p>而由于 $-g$ 是负实数，相位必须模 $2\pi$ 等于 $\pi$，即</p>
+<div class="equation" id="eq-phase"><div class="eqbody">$$
+\left(k+\tfrac{1}{2}\right)\theta \;\equiv\; \tfrac{\pi}{2}\pmod{2\pi}.
+$$</div><div class="eqno">(11)</div></div>
+<p><a class="xref" href="#eq-phase">(11)</a> 的解为 $\theta_m=\pi(1+4m)/(2k+1)$，$m\ge0$ 为整数，而要求 $\theta_m&lt;2\pi$ 给出 $1+4m&lt;4k+2$，即 $m\le k$。每个 $\theta_m$ 给出增益 $g_m=2\sin[\pi(1+4m)/(2(2k+1))]$。序列 $x_m=\pi(1+4m)/(2(2k+1))$ 随 $m$ 自 $x_0=\pi/(4k+2)$ 递增至 $x_k=\pi-x_0$，而正弦关于 $\pi/2$ 对称且在 $(0,\pi/2)$ 上递增，故对范围内一切 $m$ 有 $\sin x_m\ge\sin x_0$。因此 $g^\star(k)=g_0$ 是 $P_k$ 在单位圆上有根的最小增益，且仅在 $m=0$ 与 $m=k$ 处取到，二者给出同一数值。</p>
+<p><em>第二步，每次穿越都是向外的.</em> 设 $z(g)$ 为在穿越处满足 $z(g_0)=e^{i\theta_0}$ 的一支光滑根。对 $P_k(z(g),g)=0$ 求导得 $z'=-1/P_{k,z}$，其中 $P_{k,z}=z^{k-1}\big((k+1)z-k\big)$，它在 $|z|=1$ 上不可能为零：其在闭单位圆内唯一的零点为 $z=k/(k+1)$，模小于一。利用根处的 $z^{k+1}=z^{k}-g$，分母化简为 $z^{k}\big((k+1)z-k\big)=z^{k}-(k+1)g$。由于 $|z|=1$ 有 $\bar z=1/z$，故</p>
+<div class="equation" id="eq-crossdir"><div class="eqbody">$$
+\frac{d\,|z|^{2}}{dg} \;=\; 2\,\mathrm{Re}\!\left(\bar z z'\right) \;=\; -2\,\frac{\cos(k\theta)-(k+1)g}{\left|z^{k}-(k+1)g\right|^{2}}.
+$$</div><div class="eqno">(12)</div></div>
+<p>在穿越处 $g=g_m\ge g^\star(k)$，因此</p>
+<div class="equation"><div class="eqbody">$$
+\cos(k\theta_m)\;\le\;1\;<\;(k+1)\,g^\star(k)\;\le\;(k+1)\,g_m,
+$$</div><div class="eqno">(13)</div></div>
+<p>其中严格不等式来自初等界 $g^\star(k)\ge 2/(2k+1)$，该界由 $[0,\pi/2]$ 上的 $\sin x\ge 2x/\pi$ 得到，从而 $(k+1)g^\star(k)\ge 2(k+1)/(2k+1)&gt;1$。故 <a class="xref" href="#eq-crossdir">(12)</a> 的分子严格为负，$d|z|^{2}/dg&gt;0$：随 $g$ 增大，每次穿越单位圆都是向外的。由于分母不为零，每个穿越根都是单根，隐函数定理适用，恰有两个根由内向外通过——当穿越根为实数时（如 $k=0$ 处的 $z=-1$），只有一个。</p>
+<p><em>第三步，计数.</em> 设 $N(g)$ 为开单位圆内的根数。根随 $g$ 连续变化，且只有穿过圆周才可能离开圆盘。由第一步，在 $g\in(0,g^\star)$ 上圆上没有根，故 $N$ 在该区间为常数。对充分小的 $g&gt;0$，$P_k$ 的根位于 $z^{k}(z-1)$ 的根附近，即 $z=1$（一重）与 $z=0$（$k$ 重）；$1$ 附近的根为 $1-g+O(g^{2})$，对小的正 $g$ 位于圆内，而 $0$ 附近的 $k$ 个根其模约为 $g^{1/k}$。故在 $(0,g^\star)$ 上 $N(g)=k+1$，谱半径严格小于一，零解渐近稳定。在 $g=g^\star$ 处一对共轭根到达圆周，由第二步对 $g&gt;g^\star$ 移出圆外；此后再无穿越能把根带回圆内，因为由第二步，可行集内的每次穿越都是向外的，故 $N$ 单调不增，对一切 $g&gt;g^\star$ 有 $N<k+1$。因此对每个 $g>g^\star$ 谱半径都大于一，零解不稳定。在 $g=g^\star$ 处，圆周上的根为单根、其余根严格在圆内，故任一解是若干有界振荡模态之和，收敛到非零周期分量：它有界但非渐近稳定。$\blacksquare$</p>
+<p>三个小情形使公式获得具体的质感。$k=0$ 时无时滞，$P_0(z)=z-1+g$，根为 $1-g$，稳定性要求 $|1-g|&lt;1$，即 $0&lt;g&lt;2=g^\star(0)$。$k=1$ 时 $P_1(z)=z^{2}-z+g$，其根为 $\tfrac{1}{2}\big(1\pm\sqrt{1-4g}\big)$；两根之积为 $g$，故稳定性要求 $g&lt;1=g^\star(1)$。$k=2$ 时 $g^\star(2)=2\sin(\pi/10)=(\sqrt{5}-1)/2$，恰为黄金比的倒数——这是巧合而非结构性事实。表 <a class="xref" href="#tab-stability_boundary">表2</a> 与图 <a class="xref" href="#fig-stability_boundary">图1</a> 展示了边界、其角度与周期。</p>
+<div class="tablefloat" id="tab-stability_boundary"><figcaption class="tabcap"><span class="floatlabel">表 2.</span> 行政价格调整规则 $u_{t+1}=u_t-g\,u_{t-k}$ 的局部稳定性边界（命题 1）。对每个时滞 $k$，临界增益为 $g^\star(k)=2\sin[\pi/(2(2k+1))]$，在一对辐角为 $\theta_0=\pi/(2k+1)$ 的单位圆共轭根处取到，故边界处的振荡周期为 $2(2k+1)$ 个季度（推论 1）。倒数第二列为大 $k$ 渐近式 $\pi/(2k+1)$，末列为其与精确值之比。这里 $k$ 是有效时滞，与报告时滞的关系为 $k=\ell+1$。</figcaption><div class="tabbody"><table><thead><tr><th>k_effective</th><th>g_star</th><th>period_theory</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>6</td></tr><tr><td>2</td><td>0.6180339887</td><td>10</td></tr><tr><td>3</td><td>0.4450418679</td><td>14</td></tr><tr><td>4</td><td>0.3472963553</td><td>18</td></tr><tr><td>5</td><td>0.2846296765</td><td>22</td></tr><tr><td>6</td><td>0.2410733605</td><td>26</td></tr><tr><td>7</td><td>0.2090569265</td><td>30</td></tr><tr><td>8</td><td>0.1845367189</td><td>34</td></tr></tbody></table></div></div>
+<figure class="float" id="fig-stability_boundary"><img src="figures/stability_boundary.png" alt="stability_boundary"><figcaption><span class="floatlabel">图 1.</span> 迟滞比例校正的稳定性边界。面板 (a) 把临界增益 $g^\star(k)=2\sin[\pi/(2(2k+1))]$ 对信息时滞 $k$ 作图；虚线为大 $k$ 渐近式 $\pi/(2k+1)$，空心标记为无时滞情形 $g^\star(0)=2$。面板 (b) 给出 $z^{k+1}-z^{k}+g$ 在 $(g,k)$ 平面上的谱半径，并叠加解析边界：跨过粗线处的颜色变化正是命题 1 所确立的穿越。边界大致按 $1/k$ 下降，故协调者把信息年限加倍，他所能运行的最大增益便减半。此处 $k$ 是环路的有效时滞，与模拟器报告时滞的关系为 $k=\ell+1$；$k=0$ 是无时滞的理论基准，任何机制都无法达到。</figcaption></figure>
+<h3><span class="secno">4.3</span> 边界的含义</h3>
+<div class="prop" id="cor:period" markdown="1">
+<p><strong>推论 1（边界处的周期）</strong>. 在 $g=g^\star(k)$ 处，主导根为 $e^{\pm i\theta_0}$，$\theta_0=\pi/(2k+1)$。<a class="xref" href="#eq-prop1">(8)</a> 的每个实解都是 $\rho^{t}\cos(t\theta)$ 与 $\rho^{t}\sin(t\theta)$ 在诸根 $\rho e^{\pm i\theta}$ 上的实线性组合；在边界上存活的这一对给出周期 $2\pi/\theta_0$ 的正弦分量，其余模态衰减。故边界处的振荡周期恰为</p>
+<div class="equation" id="eq-period"><div class="eqbody">$$
+\Pi(k) \;=\; 2(2k+1) \;=\; 4k+2 \ \text{个季度},
+$$</div><div class="eqno">(14)</div></div>
+<p>与 $g$、技术与福利权重无关。</p>
+</div>
+<p><em>证明.</em> 由命题 <a class="xref" href="#prop:delay">命题 1</a> 与角频率的定义立得：根 $e^{i\theta}$ 贡献周期 $2\pi/\theta$ 的分量，而 $\theta_0=\pi/(2k+1)$。$\blacksquare$</p>
+<p>推论使时滞成为可观测量。纯粹的局部稳定性检验只告诉我们某处存在边界；周期则告诉我们应当在谱密度的何处寻找，并且它预测一个随对数时滞线性增长、斜率为四的量。若在实证边界处所模拟的周期并不近似等于 $4k+2$ 个季度，则产生振荡的机制便不是该线性机制，无论其他方面如何。这正是理论可被模拟否证、而不只是被模拟图解的意义所在。图 <a class="xref" href="#fig-delay_response">图2</a> 使该预测可视化：在临界增益的九成处，脉冲响应衰减，但它是以推论所指名的周期振荡着衰减的。</p>
+<figure class="float" id="fig-delay_response"><img src="figures/delay_response.png" alt="delay_response"><figcaption><span class="floatlabel">图 2.</span> 命题 1 与推论 1 所蕴含的动力学。面板 (a)：在临界增益九成处 $u_{t+1}=u_t-g\,u_{t-k}$ 的脉冲响应，$k=1,2,4$，各自归一到单位最大值；收敛是振荡式的，周期为 $4k+2$ 个季度，如推论所述。面板 (b)：对每个 $k$，谱半径恰在 $g=g^\star(k)$ 处穿过一，且穿越的斜率随 $k$ 上升而下降。这正是长时滞下临近阈值的失稳需要数百个季度才在振幅上显现的原因，也是 5.7 节把推断建立在自相关函数而非振幅之上的原因。</figcaption></figure>
+<div class="prop" id="cor:budget">
+<p><strong>推论 2（增益-时滞预算）</strong>. 对一切 $k\ge0$，</p>
+<div class="equation" id="eq-budget"><div class="eqbody">$$
+k\,g^\star(k) \;<\; \frac{\pi}{2}, \qquad\text{且}\qquad \lim_{k\to\infty} k\,g^\star(k)=\frac{\pi}{2}.
+$$</div><div class="eqno">(15)</div></div>
+</div>
+<p><em>证明.</em> 利用 $x\ge0$ 时 $\sin x\le x$，得 $k\,g^\star(k)=2k\sin[\pi/(2(2k+1))]\le 2k\cdot\pi/(2(2k+1))=k\pi/(2k+1)&lt;\pi/2$。极限由 $\sin x/x\to1$ 与 $x=\pi/(2(2k+1))$ 得：$k\,g^\star(k)=2kx\,(\sin x/x)\to 2k\pi/(2(2k+1))\to\pi/2$。$\blacksquare$</p>
+<p>推论 <a class="xref" href="#cor:budget">推论 2</a> 是本文论点量的形式。增益的单位是「每季度消除的偏离比例」，时滞的单位是季度，二者之积无量纲，且被 $\pi/2\approx1.57$ 所界定。若一位行政者希望每季度消除偏离的百分之十——$g=0.1$——他可以容忍约十五个季度的测量时滞，这是宽裕的。若他必须每季度消除一半——$g=0.5$——则只能容忍三个季度。这份预算不是关于协调者技能或技术的陈述，而是关于闭环的陈述；凡依据所测偏离作出反应的规则，无论由部委、价格委员会还是拍卖人实施，都受其约束。</p>
+<p>推论 <a class="xref" href="#cor:budget">推论 2</a> 有一个值得陈述的对偶，因为它正是这一结果作用于测量的形式。由于 $g^\star(k)$ 单调下降趋于零，<strong>没有任何固定增益能对任意长的时滞保持安全</strong>：对每个 $g&gt;0$ 存在一个临界时滞 $k^{\dagger}(g)=\min{k: g^{\star}(k)\le g}$，超过它环路便不稳定，而由推论 <a class="xref" href="#cor:budget">推论 2</a> 的渐近式，该值约为 $\pi/(2g)$ 个季度。一个在增益 $0.02$ 下运行的环路，对约七十八个季度以下的时滞稳定，超过则不稳定；同一环路若在 $0.13$ 下运行，其转折点约为十二个季度。这一对偶在两个方向上都有力。它说明为什么任何稳定性主张都必须连同其所覆盖的时滞范围一起报告；它也说明为什么一个极慢的报告系统不会仅仅因为慢而安全：时滞以每单位增益约一个半季度的速率，消耗掉弱反馈所留下的余量。</p>
+<p>它也解释了第 <a class="xref" href="#sec:intro">第1节</a> 节所区分的两种属性为何不同。一种制度可以使用大量信息，却仍只需要极少的<strong>新鲜</strong>信息，只要其规则具有惯性；反之，一种制度可以使用极少的信\u200b息却要求其新鲜，只要其规则足够激进。这份预算只约束第二种属性，因此制度在时滞下分野所沿的轴线，是第二种属性而非第一种。</p>
+<p>命题 <a class="xref" href="#prop:delay">命题 1</a> 假定 $g&gt;0$，即负反馈。互补的情形不是镜像，而它恰是支配实物计划修订的那一种。</p>
+<div class="prop" id="cor:posloop">
+<p><strong>推论 4（正反馈环路没有可容许增益）</strong>. 设 $b&lt;0$ 使环路为正，并记 $G=\eta|b|&gt;0$。则 <a class="xref" href="#eq-law2">(7)</a> 的特征多项式为 $Q_k(z,G)=z^{k+1}-z^{k}-G$，零解对一切 $G&gt;0$ 与一切 $k\ge0$ 都不稳定。不存在任何修订系数——无论多小——能使正反馈环路稳定。</p>
+</div>
+<p><em>证明.</em> 在 $z=1$ 处取值：$Q_k(1,G)=1-1-G=-G&lt;0$。而沿实轴 $z\to+\infty$ 时 $Q_k(z,G)\to+\infty$，由介值定理存在实根 $r&gt;1$。故谱半径对一切 $G&gt;0$ 都大于一，零解不稳定。$\blacksquare$</p>
+<p>该推论是关于比例规则<strong>整类</strong>的陈述，而不是关于某一校准的：对正反馈环路，可容许的增益集为空，故「计划者必须多轻缓地修订」这个问题，除「完全不修订」之外没有答案。这比「短缺下计划困难」这一熟悉的观察更为尖锐。它说，在<strong>线性近似</strong>之内、在触及任何非线性或产能约束之前，紧计划的修订即已自我挫败，而其失败与调参无关。</p>
+<p>该推论是一个蕴含式而非断言，其前件是实证问题。数学本身并不强制 $b&lt;0$；强制它的是计划步骤的架构。该步骤是一次向上修订与一次只能向下的投影的复合，而投影提供了负响应：它只能削减，削减在劳动最密集之处最重，而被削去的部分不会被补回。当该投影被关闭时，增益为一的修订不付出任何代价，环路事实上是敞开的，推论便无从适用，第 <a class="xref" href="#sec:res-decomp">第6.3节</a> 节直接展示这一对比的两面。因此该推论同时做两件事：它指出<strong>为何</strong>闭环一旦形成便代价高昂——不存在小到安全的增益，故代价从第一个增量开始且永不回头；而由于它是条件性的，它把责任定位于投影而非修订。表 <a class="xref" href="#tab-pilot_loop_sign">表3</a> 给出试点运行中的经验对应物：平均与峰值短缺随修订增益单调上升，福利单调下降，恰如 $b&lt;0$ 且无可容许增益的环路所预测。</p>
+<div class="tablefloat" id="tab-pilot_loop_sign"><figcaption class="tabcap"><span class="floatlabel">表 3.</span> 环路的符号。在 20 部门 Eurostat 2020 基础上、有效时滞两季度、部门 <code>c12</code> 遭受 40% 产能冲击、三颗种子的试点运行中，变动按所观察短缺修订产出目标的增益。平均与峰值短缺自第一个增量起即上升，福利下降：计划修订环路为正，而推论 4 指出任何正增益都不可能稳定。来源：<code>docs/AMENDMENTS.md</code> 修订 1 的校准记录。</figcaption><div class="tabbody"><table>
+<thead>
+<tr>
+<th style="text-align: right;">revision gain</th>
+<th style="text-align: right;">mean shortage</th>
+<th style="text-align: right;">peak shortage</th>
+<th style="text-align: right;">mean welfare</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0173</td>
+<td style="text-align: right;">0.0415</td>
+<td style="text-align: right;">258.931</td>
+</tr>
+<tr>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.0179</td>
+<td style="text-align: right;">0.0486</td>
+<td style="text-align: right;">258.935</td>
+</tr>
+<tr>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.0203</td>
+<td style="text-align: right;">0.0412</td>
+<td style="text-align: right;">258.289</td>
+</tr>
+<tr>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">0.0577</td>
+<td style="text-align: right;">0.0447</td>
+<td style="text-align: right;">257.019</td>
+</tr>
+<tr>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.0685</td>
+<td style="text-align: right;">0.1184</td>
+<td style="text-align: right;">256.140</td>
+</tr>
+<tr>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">0.0846</td>
+<td style="text-align: right;">0.1721</td>
+<td style="text-align: right;">255.379</td>
+</tr>
+<tr>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">0.1066</td>
+<td style="text-align: right;">0.2496</td>
+<td style="text-align: right;">254.556</td>
+</tr>
+</tbody>
+</table></div></div>
+<p>两种环路之间的不对称是本文论点的分析性表达，值得用一句话概括。价格委员会是一种环路为负、因而其可容许增益是一个正数且被时滞削小的制度；计划目标则是一种环路为正、因而其可容许增益为零的制度。时滞对二者的作用并不对称——在第一种情形它把宽裕的余量变为紧窄的余量，在第二种情形它无关紧要，因为从来就没有余量。</p>
+<h3><span class="secno">4.4</span> 平稳计划的存在性</h3>
+<p>第二项分析结果针对计划环路所试图寻找的对象。推论 <a class="xref" href="#cor:posloop">推论 4</a> 指出，在产能受约束的 Leontief 经济中，按比例修订产出目标不可能稳定；随之而来的问题是：系统究竟是否存在平稳计划，还是修订只是漫游。答案是：平稳计划存在，并且是一个单调映射的最大不动点，尽管它并非吸引的。两条引理确立单调性。</p>
+<p>引擎并不通过按比例削减的级联来计算实际产出。它求解一个小的线性规划问题：由物资平衡与产能界共同允许的最大产出向量，</p>
+<div class="equation" id="eq-shortside-lp"><div class="eqbody">$$
+R(\bar x,r,\rho)\;=\;\arg\max\Big\{\textstyle\sum_{j}x_j \;:\; Ax-x\le r-\rho,\ \ 0\le x\le\bar x,\ \ \ell\cdot x\le L\Big\},
+$$</div><div class="eqno">(16)</div></div>
+<p>其中 $\bar x$ 为目标向量，$r$ 为可用库存，$\rho$ 为必须留作最终交付的储备，$\ell$ 为劳动需求，$L$ 为可用劳动。这是标准的非替代短边配置：产出受物资平衡所限，而不是受某条比例经验规则所限，而该规划问题规模足够小，精确求解比迭代逼近更便宜。</p>
+<div class="prop" id="lem:mono">
+<p><strong>引理 A（短边的单调性）</strong>. <a class="xref" href="#eq-shortside-lp">(16)</a> 的算子 $R$ 对目标向量 $\bar x$ 与库存向量 $r$ 均单调不减。</p>
+</div>
+<p><em>证明.</em> $\bar x$ 与 $r$ 只通过约束集进入该规划问题，$\bar x$ 经由上界、$r$ 经由物资平衡的右端。逐分量扩大其一会扩大可行集，而最大化问题的最优值在可行集扩大时不可能下降。取按字典序打破平局的最小最优解，可使该选择函数单调。$\blacksquare$</p>
+<div class="prop" id="lem:ration">
+<p><strong>引理 B（配给的单调性与守恒性）</strong>. 固定索取与优先级。按优先次序填充的规则 $G$ 对供给向量单调不减，且逐分量满足 $\sum_j G_j(s)\le s$。</p>
+</div>
+<p><em>证明.</em> 每一索取者按商品逐一获得 $\min{1,\,\text{剩余}/\text{索取}}$ 乘以其索取量，而「剩余」恰按已授予量减少。供给增加会提高每一索取者的乘数而索取量不变，故每笔授予不减。某一商品的授予总量不超过该商品的供给，因为乘数不超过一且剩余量从不为负。$\blacksquare$</p>
+<div class="prop" id="prop:stationary">
+<p><strong>命题 2（平稳计划的存在性）</strong>. 考虑一期映射 $\Psi$：它把目标向量 $T_t$ 映射为下一期的目标——经 <a class="xref" href="#eq-shortside-lp">(16)</a> 实现产出、由引理 <a class="xref" href="#lem:ration">引理 B</a> 配给、观察由此产生的缺口并按 $\Psi(T)=T\odot\big(1+\eta\,s(T)\big)^{+}$ 修订。则 $\Psi$ 在紧格 $[0,(1+\eta)T_{\max}]^{n}$ 上单调不减，把该格映入自身，并拥有最大不动点 $T^{\star}$ 与最小不动点 $T_{\star}$，分别由自顶向下的递减迭代与自底向上的递增迭代得到。</p>
+</div>
+<p><em>证明.</em> 由引理 <a class="xref" href="#lem:mono">引理 A</a>，实际产出对目标单调不减；由引理 <a class="xref" href="#lem:ration">引理 B</a>，授予量、从而所观察到的缺口 $s$，对实际产出与供给单调不减。故修订因子 $\big(1+\eta s\big)^{+}$ 对 $T$ 单调不减，且非负，从而与 $T$ 的乘积对 $T$ 单调不减。像落在 $[0,(1+\eta)T_{\max}]^{n}$ 内，由该界之构造可知。完全格到自身的单调映射其不动点集非空且为完全格，此即 Knaster–Tarski 定理 <a class="cite" href="#ref-tarski1955">[35]</a>；而陈述中命名的两个迭代分别收敛到其最大元与最小元，因为自顶的轨道递减、自底的轨道递增，且各自收敛到一个不动点，该不动点分别支配或被支配于其余一切不动点。$\blacksquare$</p>
+<p>命题 <a class="xref" href="#prop:stationary">命题 2</a> 与推论 <a class="xref" href="#cor:posloop">推论 4</a> 必须并读，二者的对照正是要点。平稳计划的存在性是有关单调映射的格论事实：它与反馈的符号无关，而正是它使模型得以落定在一个良定义的状态而不是漫游。该计划的稳定性是另一回事，由线性化的谱半径支配，而由推论 <a class="xref" href="#cor:posloop">推论 4</a>，计划环路对每一正增益都不通过该检验。因此一个计划机关可以拥有一个它永远无法通过修订到达的、良定义的平稳计划。这是对「短缺经济再生产短缺」这一古典直觉更为精确的表述：这种再生产是<strong>制度</strong>的稳定不动点，而不是修订规则的稳定不动点。</p>
+<h3><span class="secno">4.5</span> 为何平衡的计划并不消除短缺</h3>
+<div class="prop" id="prop:shortside">
+<p><strong>命题 3（短边）</strong>. 设 $A\ge0$ 且 $\rho(A)&lt;1$，$\bar x&gt;0$ 为产出界 $\min(\text{目标},\text{产能})$，$s\ge0$ 为期初库存，$e\ge0$ 为索取向量。定义交付前沿 $\bar y:=(I-A)\bar x+s$。则可达交付向量的集合为</p>
+<div class="equation" id="eq-attainable"><div class="eqbody">$$
+Y=\left\{\,d\ge0 \;:\; d\le\bar y\,\right\},
+$$</div><div class="eqno">(17)</div></div>
+<p>它是按逐分量取大封闭的完全格。短边规则交付 $d^\star=\min(e,\bar y)$，即 $Y$ 中不超过 $e$ 的最大元，且产品 $i$ 出现短缺 $d^{\star}_{i}<e_i$ 当且仅当 $e_i>\bar y_i$。</p>
+</div>
+<p><em>证明.</em> 向量 $d\ge0$ 可达，若存在 $x$ 使 $0\le x\le\bar x$ 且 $(I-A)x\ge d-s$。由于 $\rho(A)&lt;1$ 且 $A\ge0$，逆矩阵 $(I-A)^{-1}$ 存在且非负，故 $(I-A)x\ge d-s$ 当且仅当 $x\ge(I-A)^{-1}(d-s)$。这样的 $x$ 在界内存在，当且仅当 $(I-A)^{-1}(d-s)\le\bar x$，左乘非负矩阵 $I-A$ 得 $d-s\le(I-A)\bar x$，即 $d\le\bar y$。集合 $Y$ 是区间的乘积，因而为完全格；又因 $d,d'\le\bar y$ 时 $\max(d,d')\le\bar y$，它对逐分量取大封闭。$Y$ 中不超过 $e$ 的最大元即逐分量最小值 $\min(e,\bar y)$，而 $\min(e_i,\bar y_i)<e_i$ 恰在 $e_i>\bar y_i$ 时成立。$\blacksquare$</p>
+<p>前沿 $\bar y$ 正是 <a class="xref" href="#eq-shortside-lp">(16)</a> 在计划按界实现时所计算的对象，故命题 <a class="xref" href="#prop:shortside">命题 3</a> 刻画了引擎线性规划从中选取的交付向量集合。该命题是短缺文献以非形式方式提出的主张的形式版本，且具有明确的政策内容。物资平衡保证<strong>计划</strong>内部一致：在目标向量处来源等于用途。它并不、也不能保证目标向量大到足以满足索取；而当其不足时，缺口为 $\max(0,e-\bar y)$，仅取决于交付前沿与索取向量。平衡程序无论运行多少轮、其优先级排得多么巧妙，都不能改变该总量。它所能改变的是由谁来承担。</p>
+<div class="prop" id="cor:priority">
+<p><strong>推论 3（优先级重新分配，而不创造短缺）</strong>. 设对每种商品的索取都超过前沿，$e&gt;\bar y$ 逐分量成立，并设配置规则耗尽每种商品的可用数量。则在此类任何规则下总交付 $\sum_i d_i$ 都等于 $\sum_i\bar y_i$，总短缺率等于 $\sum_i(e_i-\bar y_i)/\sum_i e_i$，与优先次序无关。优先次序只决定部门间的承担 $d_i$。故以总量短缺比较制度，度量的是其交付前沿；而以短缺分布比较制度，度量的是其优先级；混淆二者即是设定误差。</p>
+</div>
+<p><em>证明.</em> 若每种商品的可用数量 $\bar y_i$ 在该商品的索取者之间被完全分配，则不论服务顺序如何都有 $\sum_i d_i=\sum_i\bar y_i$，短缺率由总索取与总前沿决定。部门分布 $d_i$ 随次序变化，可由同一商品的两位不同优先等级索取者看出。$\blacksquare$</p>
+<p>推论 <a class="xref" href="#cor:priority">推论 3</a> 正是第 <a class="xref" href="#sec:design">第5节</a> 节在报告平均短缺率之外还要报告跨部门短缺 Gini 的原因，也是预注册文件禁止单独报告总量产出的原因。它同时约束了对机制排序的解读：若两种制度产生同一前沿而仅在优先级上不同，则其平均短缺率按构造必然相同，二者之间任何福利差异都完全来自短缺在部门之间、以及在居民与非居民索取者之间的分布。</p>
+<h3><span class="secno">4.6</span> 适用范围与理论所不能说的</h3>
+<p>三点局限应当明白陈述。分析是局部的：<a class="xref" href="#eq-law">(1)</a> 是线性化，边界是关于线性映射谱半径的陈述，而非线性系统可能在线性失稳显现之前就已离开稳态邻域，或落定于线性理论称之为不稳定的有界循环。在模型中，产能约束与短边映射正是这样的非线性，故 B2 中解析边界与模拟边界的比较，是对局部近似能否在与之接触后存活的真实检验，而不是同义反复。增益不是原初量：它是 $\eta a$，而 $a$ 取决于配给规则、库存位置与优先结构，故必须在完整模型中数值测量，本文把 $g$ 当作带抽样分布的估计对象而非已知常数。理论对福利一无所知：它辨识出约束；至于该约束对某一制度是否比对另一制度更紧，以及这以消费为代价究竟几何，是一个实证问题，第 <a class="xref" href="#sec:design">第5节</a> 节的设计正是为回答它而搭建。</p>
+<p>分析中最具后果的对象是 $b$ 的符号，而它无法由理论给出。提价会降低超额需求，这是关于需求弹性的陈述；提高目标会加剧短缺，这是关于单侧投影以及关于最终由谁吸收被削去部分的陈述。二者都必须从被校准的经济中确立而非假定，本文因此把符号当作被测量的量，并预先声明哪一项假设在哪一个环路上检验：价格环路（$b&gt;0$）上检验边界，目标环路（$b&lt;0$）上则是一个独立的假设——可容许增益集为空。</p>
+<p>量值同样重要，而本文的第二项结论正取决于此。增益是调整系数与响应系数之积，二者在真实经济中都很小：行政价格对市场的推动是微弱的，而对实物目标的修订，除经由平衡步骤之外，对物资平衡的推动也是微弱的。因此命题 <a class="xref" href="#prop:delay">命题 1</a> 有两种截然不同的经验命运，而只有其中一种是约束。一个增益比 $g^\star$ 低两个数量级的环路，其稳定如同重门之关闭：边界在数学上是精确的，在行为上则无关紧要，而该制度是惰性的，而不是安全的。第 <a class="xref" href="#sec:results">第6节</a> 节报告二者之间的距离，因为不加此距离而引用一项稳定性结果，会在令人安心的方向上产生误导。</p>
+<h2 id="sec:design"><span class="secno">5</span> 实验设计</h2>
+<h3><span class="secno">5.1</span> 预注册与其状态</h3>
+<p>设计在任何结果产生之前即已冻结，其协议命名了五项假设、六个实验区块、六项结果指标、五项统计程序以及八类效度威胁及其缓解办法。假设以可否证预测的形式陈述，并附明确的否证条件。H1 断言试探性定价存在临界时滞，且模拟边界在一个时滞周期之内与解析边界相符，若 $k\ge k^\star$ 处的振荡振幅不以单侧 Mann–Whitney 检验在 $\alpha=0.05$ 下显著大于 $k=0$ 处，则被否证。H2 断言时滞下的福利损失按所需信息的新鲜程度排序，线性规划最大、物资平衡最小，若福利损失对 $k$ 的斜率并非以 <code>lp_central</code> 为最大则被否证。H3 断言物资平衡并不消除短缺，若在部门产能冲击下平均短缺率低于 $0.5\%$ 则被否证；协议命名的是百分之三十的冲击，修订 2 将其替换为持续八个季度的百分之五十削减，故否证条件依修订后的标准冲击评估，该修订与其余修订一并记录在同一文件中。H4 断言单一部门产能冲击的下游放大超过一，并随前向关联系数上升。H5 断言双轨制份额存在内点最优。对协议的偏离连同日期与理由记录在案，凡未经预先指定的结果，在出现之处一律标注为探索性的。</p>
+<p>本文是依照协议、而非事后写成的。第 <a class="xref" href="#sec:model">第3节</a> 与 <a class="xref" href="#sec:theory">第4节</a> 节依据冻结文件起草；<a class="xref" href="#prop:delay">命题 1</a> 中的边界独立于模拟器导出，并被用来<strong>预测</strong>实证边界的位置；以下设计是转写而非重建。凡分析超出协议之处——第 <a class="xref" href="#sec:measuring_gain">第5.6节</a> 节的有效增益测量与第 <a class="xref" href="#sec:power">第5.7节</a> 节的功效计算——该增补在此标注并记录为偏离，因为向预注册分析中增添一个派生量与预注册所要防止的悄然漂移正是同一类事情。</p>
+<p>在主网格运行之前作了三项修订，其日期、理由与证据均记录在修订文件中，该文件与本文并列阅读。第一项是实质性的，也正是推论 <a class="xref" href="#cor:posloop">推论 4</a> 的由来：试点表明产出目标所承载的环路是<strong>正</strong>的，故预注册的边界检验不能施加于计划修订机制。H1 因此改在试探性定价的价格环路上检验，其反馈经居民需求弹性而为负；而一项伴随假设 H1' 则在物资平衡的目标环路上以同等显著性报告，其形式是第 <a class="xref" href="#sec:res-decomp">第6.3节</a> 节分解所支持的那一种：噪声的代价来自目标修订与库存平衡的交互，而非来自修订本身。第二项修订依据试点校准确定冲击与缓冲参数：期初库存比率取 $0.10$，标准产能冲击取第四十期开始的、持续八个季度的百分之五十削减，因为试点表明冲击的代价更多地取决于其持续时间相对于库存缓冲之比，而非其深度。第三项为 B2 增添增益轴，因为检验边界需要改变增益，而预注册设计只改变了时滞。三项修订均未改变结果指标、统计程序或随机种子，且无一在主运行开始之后作出。</p>
+<h3><span class="secno">5.2</span> 区块</h3>
+<p>实验分为六个区块，概要见表 <a class="xref" href="#tab-blocks">表4</a>。区块 B1 为校准与验证，是确定性的：它确立在无冲击、无噪声、零时滞下，经济以会计容差之内的精度复现其基年投入产出表，且六种机制在信息完美时达到同一稳态。区块 B2 是本文的核心，且经修订后为三因子设计：增益——试探性定价用 <code>price_gain</code>，修订目标的制度用 <code>revision_gain</code>——与报告时滞 $\ell\in{0,\dots,6}$ 以及六种制度交叉，增益网格为 ${0.05,0.1,0.2,0.3,0.4,0.6,0.8,1.0,1.2,1.6}$。由于有效时滞为 $k=\ell+1$，B2 中的时滞对应 $k\in{1,\dots,7}$：理论上的无时滞情形不出现，正如它不可能出现；实验中最小的时滞，是协调者看到上一期结果的那一个。所述因子给出 $10\times7\times6=420$ 个单元，按每单元预注册的二十颗种子计为 8,400 次运行；不过最终计数的权威是清单，而不是这句话。区块 B3 固定三种机制，依次冲击二十个部门，以度量传导与放大。B4 在三个冲击规模上比较配给与影子价格。B5 在两个时滞上扫描双轨制份额 $\theta$ 的十一个水平。B6 在替代基础、调整系数、噪声水平与 $A$ 的百分之五随机扰动下重复一部分单元，全部主要论断的稳健性在此确立。</p>
+<p>标准情景为八十个季度，前三十期作为预热期丢弃，第四十期施加持续八个季度的产能冲击，期初库存比率 $0.10$，B3 中冲击规模 $0.50$。期限之所以长于原先的六十个季度、冲击之所以更晚且更长，理由见第 <a class="xref" href="#sec:power">第5.7节</a> 节与修订记录：临近阈值的振荡需要时间才显现，而持续时间相对于库存缓冲过短的冲击会在传导之前即被吸收。</p>
+<div class="tablefloat" id="tab-blocks"><figcaption class="tabcap"><span class="floatlabel">表 4.</span> 经修订的实验区块。由于有效时滞为 $k=\ell+1$，B2 所用报告时滞 $\ell=0,\dots,6$ 对应有效时滞 $k=1,\dots,7$；理论上的无时滞情形不可达到，故不予表示。B2、B4、B5 每单元二十颗种子，B3、B6 每单元十颗。标准情景为 $T=80$ 个季度、丢弃三十期预热、第四十期施加持续八个季度的产能冲击、期初库存比率 0.10、冲击规模 0.50。运行总数是所声明因子之积；最终计数以区块清单为准，不以本表为准。来源：预注册文件与 <code>docs/AMENDMENTS.md</code>。</figcaption><div class="tabbody"><table>
+<thead>
+<tr>
+<th style="text-align: left;">block</th>
+<th style="text-align: left;">what varies</th>
+<th style="text-align: left;">levels</th>
+<th style="text-align: right;">cells</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">B1 calibration and validation</td>
+<td style="text-align: left;">nothing (deterministic)</td>
+<td style="text-align: left;">2 scenarios, 1 seed</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;">B2 gain × lag × institution</td>
+<td style="text-align: left;">gain grid of 10, reporting lag $\ell=0,\dots,6$, 6 institutions</td>
+<td style="text-align: left;">10 × 7 × 6</td>
+<td style="text-align: right;">420</td>
+</tr>
+<tr>
+<td style="text-align: left;">B3 shock propagation</td>
+<td style="text-align: left;">shocked sector (20), 3 institutions</td>
+<td style="text-align: left;">60</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr>
+<td style="text-align: left;">B4 rationing versus shadow price</td>
+<td style="text-align: left;">institution (2), shock size (3)</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">B5 dual track</td>
+<td style="text-align: left;">$\theta\in{0,0.1,\dots,1}$, $\ell\in{0,3}$</td>
+<td style="text-align: left;">22</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr>
+<td style="text-align: left;">B6 robustness</td>
+<td style="text-align: left;">substrate, $\eta$, $\sigma$, $A$-perturbation</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: right;">12</td>
+</tr>
+</tbody>
+</table></div></div>
+<h3><span class="secno">5.3</span> 共同随机数</h3>
+<p>外生环境是（情景、种子）对的函数，别无其他。需求噪声、产能冲击与测量噪声都从由该对确定性派生的流中抽取，故同一情景、同一种子而机制不同的两次运行，看到同一冲击路径、同一产能抽取与同一测量误差。这不是便利，而是使比较成为配对比较的东西。在共同随机数下，两机制之<strong>差</strong>的方差通常远小于二者方差之和，因为共享的环境相互抵消，而协议规定的配对 Wilcoxon 检验正利用这一点。该不变性在测试套件中被断言，因为一个核心识别主张会在重构中被破坏的设计一文不值。</p>
+<h3><span class="secno">5.4</span> 估计量与检验</h3>
+<p>分析单位是运行，而不是期。一期之内的各期序列相关，把它们合并会把有效样本量放大六十倍，同时假装单条轨迹含有六十个独立观测。故先对每次运行形成主要结果的平均值，全部推断都在这些运行级均值上进行：平均短缺率、累积贴现福利、相对基准的福利损失、振荡统计量、B3 中的放大比以及平均计划完成率。两机制比较使用配对差、Wilcoxon 符号秩检验与一万次重抽样的自助置信区间；多机制比较使用 Kruskal–Wallis 检验，随后作 Holm 校正的成对 Mann–Whitney 检验 <a class="cite" href="#ref-wilcoxon1945">[36]</a> <a class="cite" href="#ref-holm1979">[37]</a> <a class="cite" href="#ref-davison_hinkley1997">[38]</a>。时滞效应以运行级结果对 $k$ 与 $k^{2}$ 的回归估计，含机制固定效应与按种子聚类的稳健标准误。效应量总是报告，以 Cliff's $\delta$ 或以基准标准差为单位的配对均值差，因为没有效应量的 $p$ 值不成其为结果。</p>
+<h3 id="sec:invariance"><span class="secno">5.5</span> 为何单看短缺率会误导</h3>
+<p>设计中有一种特征值得在任何结果报告之前先行辩护，因为它看似弱点，实则是需求系统所施加的约束。在仅有噪声的实验中，六种制度中有五种的平均短缺率仅在百分之零点零八的范围内变动，从 $1.56\%$ 到 $1.65\%$，而产出变动 $2.4$ 个百分点、福利变动 $2.1$。只看到第一项统计量的读者会得出「制度无关紧要」的结论。</p>
+<p>那是错的，而原因在于机制而非统计。模型中的居民需求是收入弹性的：因产出下降而买不到商品的居民，其已实现收入同样下降，需求因此相应缩小，所记录的短缺也随之缩小。故一个摧毁了十分之一产出的制度，同时摧毁了相当一部分本会把该摧毁记录为短缺的需求。短缺率在各制度之间近乎不变，是<strong>需求系统构造的产物</strong>，而不是因为制度彼此等价；这一不变性属于测量，而非属于经济。</p>
+<p>由此得出两项后果，且二者都对分析具有约束力。其一，任何关于制度绩效的结论都不得仅凭短缺率得出。这正是预注册结果指标在短缺之外还包含累积福利及其分布的原因，是本文报告产出损失、计划完成率、库存比率、产能利用率与短缺 Gini 的原因，也是协议禁止单独报告任何单一总量的原因。其二，该不变性必须被展示而非被断言，因为它是读者有权怀疑的那类主张：第 <a class="xref" href="#sec:res-noise">第6.2节</a> 节的仅有噪声实验展示了产出与福利的完整展开而短缺几乎不变，表 <a class="xref" href="#tab-noise_only">表7</a> 把它们并列报告，从而使这一对照可见而不只是被论证。</p>
+<p>还有第三项后果，属于理论而非报告规则。一个把产出损失对短缺统计隐藏起来的需求系统，同样把它对修订规则隐藏起来，因为修订正是对短缺统计作出反应。一个削减了自身计划、从而压制了那个本会叫它停下的读数的制度，处境恰如传感器安装在其执行器下游的控制器。第 <a class="xref" href="#sec:res-decomp">第6.3节</a> 节所诊断的失效正是这一形状，也是该处损失表现为持续而非均值回归的原因。</p>
+<h3 id="sec:measuring_gain"><span class="secno">5.6</span> 测量有效增益</h3>
+<p><a class="xref" href="#prop:delay">命题 1</a> 以环路增益表述，而它不是任何机制的参数。在理论能被带向数据之前，必须测量两个量。其一是修订系数 $\eta$，它是规则的参数，由构造可知。其二是响应系数 $b$，它是均衡对象：所观察缺口对工具之导数在平稳点处的负值。其估计办法是：把修订系数设为零，对某一部门的工具施加小幅位移，运行至新的平稳点，然后对缺口作差。环路增益随即为 $g=\eta b$，其<strong>符号</strong>即 $b$ 的符号，而价格环路之量值把 <a class="xref" href="#prop:delay">命题 1</a> 的边界转换为调整系数的可容许区间 $\eta^{\star}(k)=g^{\star}(k)/b_p$，其中 $b_p$ 为所测价格响应。</p>
+<p>估计必须以外生位移完成，绝不能对已实现数据作回归，这一点值得作为方法论警告而非细节陈述。把所观察到的短缺对已实现工具路径作回归，所得系数受联立性污染：工具正是<strong>因为</strong>观察到了短缺才被修订，故回归元是它所要解释之误差的函数，所得估计依两个环路的相对速度而偏向零或偏向错误符号。唯一干净的设计是关闭反馈、由外部位移工具、并在新的平稳点读数。本文报告的每一个增益都是如此测得的。</p>
+<p>该测量并非形式性的，因为 $b$ 的符号在各制度间不同，而理论对两种情形给出不同预测。对试探性定价 $b_p&gt;0$，预测的边界是一个随时滞下降的正数。对修订目标的制度 $b_T&lt;0$，推论 <a class="xref" href="#cor:posloop">推论 4</a> 适用，预测的不是边界而是边界之不存在：每一正修订增益都应加剧短缺。报告带有跨种子标准差的所估 $b$，而非假定任一符号，正是使推论 <a class="xref" href="#cor:posloop">推论 4</a> 的检验成为检验而非复述的原因，也是使所测 $|g|k$ 与推论 <a class="xref" href="#cor:budget">推论 2</a> 的 $\pi/2$ 预算得以比较的原因。该程序是对预注册分析的增补，记录为偏离。</p>
+<h3 id="sec:power"><span class="secno">5.7</span> 定位边界，以及期限为何如此</h3>
+<p>协议把实证稳定性边界规定为：使价格偏离的一阶自相关超过 $0.5$ <strong>且</strong>振荡振幅超过 $k=0$ 处振幅三个标准差的最小 $k$。这一合取值得推敲，因为其两支的检出力差异极大，而该差异由命题 <a class="xref" href="#prop:delay">命题 1</a> 而非任何具体实现所决定。</p>
+<p>在边界之上但靠近边界处，发散率取决于谱半径超出多少，而超出量很小。对线性系统，增益为 $g=(1+\delta)g^\star(k)$ 处的半径约为 $1+c(k)\delta$，其中 $c$ 随 $k$ 递减；数值上，$k=1$ 且 $g=1.04\,g^\star$ 时 $\rho-1\approx0.020$，扰动在冲击后的四十个季度内增长为 $2.2$ 倍；而 $k=4$ 且同样相对超出量时 $\rho-1\approx0.0063$，同窗口增长仅 $1.28$ 倍，e 折时间约 $160$ 个季度。$k=8$ 且超出百分之二时，四十个季度增长 $1.07$ 倍，e 折时间约 $600$ 个季度。在超出百分之二且 $k=4$ 时增长为 $1.13$ 倍。这些数字由 <code>paper/make_figures.py</code> 从特征多项式计算，不依赖模拟器。其含义毫不含糊：对四个季度以上的时滞，仅高于阈值百分之几的失稳不会在冲击后窗口内产生可检出的振幅增长，故预注册判据的振幅支恰在理论预测有趣之处几乎无效力。</p>
+<p>自相关支则不同。略高于或略低于一的谱半径都会产生接近一的一阶自相关，信息存在于<strong>符号模式</strong>中：临近时滞边界的系统，其自相关函数以 $4k+2$ 为周期振荡，故其第一个负谷出现在该周期之半附近，无论振幅在增长还是衰减。判别性统计量是自相关函数的形状，而非其尺度。这就是 B2 对每次运行记录一至四阶自相关而不只记录振幅的原因，也是本文把两支分开报告、而不作为一个只有较易满足者才能被满足的合取条件的原因。对边界的独立验证报告称，在所检验范围内，实测与预测的边界周期之差在一个四分之一周期之内（附录 <a class="xref" href="#sec:app:numeric">第A.3节</a>），故周期预测足够精确，可在实验所及的时滞处充当判别统计量。</p>
+<p>判据还可能有第二个不触发的理由，它比功效更为根本。边界是否可<strong>触及</strong>取决于环路增益的大小，而环路增益是调整系数与一个理论无法给出的响应系数之积。若响应系数很小，整个可容许的调整系数范围都远在边界之下，而一个功效充足的检验将返回一个精确的零结果。这一可能性无法由设计解决，只能被测量，第 <a class="xref" href="#sec:measuring_gain">第5.6节</a> 节描述了测量办法。在此提出它的意义在于：H1 的零结果必须对照所测得的与边界之距离来解读，而不能当作边界不存在的证据；两种读法由第 <a class="xref" href="#sec:measuring_gain">第5.6节</a> 节的估计量区分，本文两者都报告。</p>
+<p>这是对预注册判据的一处偏离，并作为偏离记录在案，记于修订文件与本处。预注册把实证边界定义为两支<strong>皆</strong>触发的最大时滞，这就使检出力不足的振幅支成为检出任何长时滞现象的必要条件。两支分开报告、并在 $k\ge4$ 处把推断建立在谱与周期特征之上，是分析上的改变而非仅仅是呈现上的选择，而它是在主网格运行之前、依据一个不使用主网格任何数据的论证作出的：上文各增长因子仅由特征多项式导出。对振幅支的要求作为报告结果予以保留，但它不再能否决谱的结果。</p>
+<h3><span class="secno">5.8</span> 稳健性与效度</h3>
+<p>协议所列的效度威胁由设计而非由免责声明应对。计算可行性未被混同于制度可行性，因为计划者从不看见当前数据，且计划努力作为结果而非诊断被报告。福利权重是规范性的，故每项主要结果都在短缺与库存惩罚上下浮动百分之五十后于 B6 中重跑。单位约定为固定价格价值，作为局限陈述而不作辩护。校准依赖单一年份的单一份投入产出表，故 B6 在合成基础与 $A$ 的百分之五随机扰动上重复核心单元。机制混杂由共同的观察对象与共同的冲击流应对，其残余影响在附录 <a class="xref" href="#sec:app:differences">第B.3节</a> 中说明。多重性由各区块内 $\alpha=0.05$ 的 Holm 校正应对，检验数目事先声明。</p>
+<h2 id="sec:results"><span class="secno">6</span> 结果</h2>
+<p>结果按预注册的假设顺序报告，只有一处例外由设计所迫：识别假设的验证放在最先，因为其余一切皆依赖它。数据附跨种子离散度者一并给出，本节每一个数字都可追溯至 <code>paper/tables/</code> 或 <code>results/</code> 下的文件；表格与正文不一致时，以表格为记录。</p>
+<p>六项预注册假设中有两项未获支持，它们在报告之处即如此标注，而不是一笔带过。表 <a class="xref" href="#tab-hypothesis_adjudication">表5</a> 在任何证据之前给出全部六项连同 H1' 的裁定。</p>
+<div class="tablefloat" id="tab-hypothesis_adjudication"><figcaption class="tabcap"><span class="floatlabel">表 5.</span> 对全部预注册假设在冻结网格上的裁定，按检验顺序排列。其中两项未获其作者原意上的支持：H1，因为边界只在时滞轴最远端可接近，而操作判据在该处并不特异；H5，被一个小于单单元抽样误差的内点最大值在形式上满足。H1' 是修订 1 所增设的假设，与五项预注册假设并列裁定。由 <code>results/tables/t00_hypotheses.csv</code> 与 <code>results/B3/aggregate.csv</code> 生成；H3 行因结果层未予裁定而在此补入。来源：<code>reference_results/</code>。</figcaption><div class="tabbody"><table><thead><tr><th>hypothesis</th><th>prediction</th><th>outcome</th><th>key_statistic</th></tr></thead><tbody><tr><td>H1</td><td>The measured critical price gain tracks $g^\star(m)/b_p$ and the period approaches $2(2m+1)$</td><td>Not supported: no crossing claimed</td><td>1 of 18 tests survives Holm; the rule fires at 57 per cent of the predicted gain in the one reachable cell, so it is not specific</td></tr><tr><td>H1'</td><td>Taut plans are self-defeating: shortage rises and welfare falls with the revision gain</td><td>Supported</td><td>Spearman rho(gain, shortage) = 0.952, Holm p = 6.8e-5; gain 1.6 vs 0.05 = +7.8 pp, p = 9.9e-22, Cliff delta = 1.00</td></tr><tr><td>H2</td><td>Welfare loss rises fastest with the reporting lag for the institution needing the freshest information</td><td>Supported</td><td>Welfare-loss slope per quarter: 0.00452 (lp_central, SE 6.8e-5), 0.00415 (rationing), 0.00061 (material balance), 0.00039 (tatonnement); 6 of 7 tests survive Holm</td></tr><tr><td>H3</td><td>Material balance does not eliminate shortage: falsified if mean shortage under a capacity shock is below 0.5 per cent</td><td>Supported: falsifier not triggered in any of twenty cells</td><td>Mean shortage 1.16 to 6.04 per cent, mean 2.93 per cent across the twenty shocked sectors, i.e. 2.3 to 12.1 times the falsification threshold</td></tr><tr><td>H4</td><td>A single-sector shock amplifies above one and amplification rises with forward-linkage centrality</td><td>Supported for two of three institutions, the third marginal after Holm</td><td>Mean output amplification 7.9 to 9.5, p = 9.5e-6; rho(forward linkage, output loss) = +0.513 (p = 0.021), +0.567 (p = 0.009), +0.414 (p = 0.070)</td></tr><tr><td>H5</td><td>The dual track has an interior optimum in the plan share</td><td>Formally met, not economically detectable</td><td>Welfare maximum at theta = 0.9 but the whole range is 0.122 against across-seed standard deviations of 0.067 to 0.146</td></tr></tbody></table></div></div>
+<h3 id="sec:res-validation"><span class="secno">6.1</span> 识别假设的验证</h3>
+<p>设计立足于一项主张：六种制度只在协调规则上不同。而这类识别性假设，除非代码使之成真，否则一文不值。使之成真本身即是一项设计决定。决定未满足需求、库存目标与目标修订界的居民侧参数，在早期构建中曾允许在机制之间不同，这意味着本来会被读作制度差异的某些东西，实际上是校准差异。它们现在为六者共有，而跨机制比较中仅有的自由参数是制度性的。</p>
+<p>在零产能冲击、零测量噪声、零报告时滞下，六种机制在两个基础上都精确复现基年：总产出对基年产出之比为 $1.000000$，平均短缺率为 $0.000000$，平均福利在二十部门表上对每种制度均为 $259.568805$（累积贴现福利 $12{,}978.440262$），在六部门夹具上为 $22.431906$。线性规划、物资平衡办公室、配给当局、价格委员会、市场与双轨制在会计稽核的精度上彼此一致。</p>
+<p>这应当被读作实质性结果而非零结果。这些机制彼此结构迥异：一个求解线性规划，一个对着可行性前沿迭代计划，一个出清委托簿。内部机理如此不同的制度在信息完美时以六位小数吻合、而只在信息退化时才分化，这正是此后一切比较得以成立的前提。本节其余部分所报告的任一差异，都是制度上的差异，而不是会计、技术、福利权重、外生环境或居民侧校准上的差异。表 <a class="xref" href="#tab-calibration">表6</a> 报告确立此点的逐机制复现检验。</p>
+<div class="tablefloat" id="tab-calibration"><figcaption class="tabcap"><span class="floatlabel">表 6.</span> 识别假设的验证。在无产能冲击、无测量噪声、报告时滞为零时，各制度在基年技术上运行，其实际总产出与基年产出向量相比较。表中报告每机制的实际与基年产出之比、平均短缺率、全部期内的最大绝对会计残差与基年复现误差，覆盖六部门夹具与真实二十部门 Eurostat 基础。六个比值均为 1.000000、六个短缺率均为 0.000000，累积贴现福利为 259.568805（双轨制 259.568804）：在信息完美时各制度精确一致，这正是此后各项比较得以成立的前提。</figcaption><div class="tabbody"><table><thead><tr><th>mechanism</th><th>substrate</th><th>output_base</th><th>shortage</th><th>welfare</th></tr></thead><tbody><tr><td>hybrid_dual_track</td><td>eurostat</td><td>1</td><td>0</td><td>259.5688052</td></tr><tr><td>lp_central</td><td>eurostat</td><td>1</td><td>0</td><td>259.5688052</td></tr><tr><td>market</td><td>eurostat</td><td>1</td><td>0</td><td>259.5688052</td></tr><tr><td>material_balance</td><td>eurostat</td><td>1</td><td>0</td><td>259.5688052</td></tr><tr><td>rationing_priority</td><td>eurostat</td><td>1</td><td>0</td><td>259.5688052</td></tr><tr><td>tatonnement</td><td>eurostat</td><td>1</td><td>0</td><td>259.5688052</td></tr><tr><td>hybrid_dual_track</td><td>toy6</td><td>1</td><td>0</td><td>22.4319064</td></tr><tr><td>lp_central</td><td>toy6</td><td>1</td><td>0</td><td>22.4319064</td></tr><tr><td>market</td><td>toy6</td><td>1</td><td>0</td><td>22.4319064</td></tr><tr><td>material_balance</td><td>toy6</td><td>1</td><td>0</td><td>22.4319064</td></tr><tr><td>rationing_priority</td><td>toy6</td><td>1</td><td>0</td><td>22.4319064</td></tr><tr><td>tatonnement</td><td>toy6</td><td>1</td><td>0</td><td>22.4319064</td></tr></tbody></table></div></div>
+<h3 id="sec:res-noise"><span class="secno">6.2</span> 无冲击时的信息租金</h3>
+<p>对本文论点最纯粹的检验根本不需要冲击。把报告时滞设为零，使协调者的图景新鲜到极致，把每个部门的产能保持在基年水平，只以测量误差退化信息：观测上百分之三的乘性噪声，加上持续性 $0.3$、新息尺度 $0.02$ 的自回归需求过程。这个经济中什么都没有发生。没有可传导的短缺，也没有可损失的产能。产出仍然下降，且下降幅度取决于制度。</p>
+<p>每个机制二十颗种子给出清晰的排序。双轨制保留基年产出的 $0.99513$（跨种子标准差 $0.00094$），平均短缺率 $1.63\%$；试探性定价 $0.99378$（$0.00101$）与 $1.56\%$；市场 $0.99080$（$0.00160$）与 $1.62\%$；优先级配给 $0.98221$（$0.00233$）与 $1.65\%$；中央线性规划 $0.97096$（$0.00224$）与 $1.64\%$；物资平衡 $0.93708$（$0.00866$）与 $4.69\%$。表 <a class="xref" href="#tab-noise_only">表7</a> 报告完整集合连同离散度与溢损率。</p>
+<div class="tablefloat" id="tab-noise_only"><figcaption class="tabcap"><span class="floatlabel">表 7.</span> 无任何冲击时的信息租金：测量噪声 $\sigma=0.03$ 与 AR(1) 需求噪声，报告时滞为零，二十颗种子。各制度在<strong>记录的短缺</strong>上难以区分（六者中有五者在 1.56%--1.65% 之间），而在所浪费的<strong>产出</strong>上判然有别。</figcaption><div class="tabbody"><table><thead><tr><th>mechanism</th><th>output_base</th><th>output_base_sd</th><th>shortage</th><th>shortage_sd</th><th>welfare</th><th>welfare_sd</th><th>spoilage_rate</th><th>iterations</th></tr></thead><tbody><tr><td>hybrid_dual_track</td><td>0.9951313621</td><td>0.0009359568237</td><td>0.01628305957</td><td>0.001101289285</td><td>259.2909046</td><td>0.03425551762</td><td>0</td><td>1</td></tr><tr><td>tatonnement</td><td>0.9937821328</td><td>0.001013234776</td><td>0.01563897373</td><td>0.001082305224</td><td>257.2239637</td><td>0.05630702729</td><td>0.0185988921</td><td>1</td></tr><tr><td>market</td><td>0.990797324</td><td>0.001604566129</td><td>0.01619122356</td><td>0.001089218499</td><td>259.1968645</td><td>0.05499962983</td><td>0</td><td>1</td></tr><tr><td>rationing_priority</td><td>0.9822133766</td><td>0.002328963923</td><td>0.01645817966</td><td>0.001182334443</td><td>259.0174872</td><td>0.05367534299</td><td>0</td><td>1</td></tr><tr><td>lp_central</td><td>0.9709578281</td><td>0.002240761498</td><td>0.01642536239</td><td>0.001101635471</td><td>258.7797287</td><td>0.05830740777</td><td>0</td><td>1</td></tr><tr><td>material_balance</td><td>0.9370831353</td><td>0.008661798156</td><td>0.04692045499</td><td>0.008396064127</td><td>256.8228175</td><td>0.2762417212</td><td>0.01226184056</td><td>1</td></tr></tbody></table></div></div>
+<p>该排序有两个特征承载论证。其一是量级。物资平衡把百分之三的测量噪声转换为逾基年产出百分之六的损失，且无冲击、无时滞、无产能约束捆绑；双轨制把同一噪声转换为百分之零点五的损失，且离散度为六者最小。这种规模的信息租金，由一个从未见过危机的制度所支付，在任何于信息完美下进行的比较中都是不可见的——而多数比较正是如此。这也意味着五种表现良好的制度之间的差异虽然真实，但相对于它们与物资平衡之间的距离而言是小的。</p>
+<p>第二个特征在于各制度<strong>不分</strong>之处，它因约束了这些数字所能支持的说法而在第 <a class="xref" href="#sec:invariance">第5.5节</a> 节单独处理。六者之中有五者的平均短缺率落在 $1.56\%$ 与 $1.65\%$ 之间，而产出变动 $2.4$ 个百分点。</p>
+<p>排序还把中央线性规划置于产出倒数第二，为 $0.97096$，而它恰恰是决策规则使用信息最多的制度。这一位置与基于信息<strong>数量</strong>的直觉恰好相反，构成与 H2 相关的证据，而 H2 的预测——最需要当前信息的制度在信息被撤回时退化最快——并不区分撤回是由于时滞还是由于不准确。线性规划精确地优化，并且是对着一幅错误的图景优化；对错误图景的精确优化并不等于稳健，而模型给了这一区分一个数字。</p>
+<p>表中还有一个细节值得注意，因为它同样推翻了相反的直觉。试探性定价保留 $99.38\%$ 的产出，为六者第二，却在五种表现良好的制度中记录了最低的福利，$257.22$，而市场的产出略低（$99.08\%$）却达 $259.20$。产出与福利也不是同一个统计量，其原因在于分配：同一总量可以以极不相同的价格与极不相同的承担结构交付。这是本文不单独报告任何单一总量的第三个理由，也是无法由第 <a class="xref" href="#sec:invariance">第5.5节</a> 节的短缺-产出对照论证的那一个，因为它的方向相反。</p>
+<h3 id="sec:res-decomp"><span class="secno">6.3</span> 损失来自何处</h3>
+<p>物资平衡所付租金的量级，引出这样一个问题：其两项独特程序中，究竟哪一项应负其责——是对观察到的缺口按比例修订目标，还是把这些目标对着可行集作平衡？区分二者的实验在同一个仅有噪声的环境中让修订增益与平衡轮数交叉，而答案是：二者皆非单独为因。</p>
+<p>任何一项单独都不改变产出。平衡轮数为零时，增益为一的修订使产出留在 $0.99990$，与完全不修订的 $0.99990$ 无从区分；增益为零时，三轮平衡同样把它留在该数值。损失只在组合中出现，并沿两个方向增长：增益 $0.1$ 配三轮平衡的代价为百分之一的五百分之一，增益 $0.3$ 配一轮为 $5.3\%$，增益为一配三轮为 $12.6\%$，产出降至 $0.87384$。交互是现象的全部，表 <a class="xref" href="#tab-balance_decomposition">表8</a> 报告十二个单元及其识别渠道的成因列。</p>
+<p>渠道是劳动可行性，值得沿三个环节追溯，因为其中第一个并非经济学家会猜到的那个。测量噪声使居民在某些季度低报，于是计划者记录到短缺，而修订增益把目标向量向上棘轮化。这是一条面对正读数时的比例规则的寻常行为。使之昂贵的，是所产生的计划所需劳动超出经济所拥有的量，故计划不可行，而平衡轮是发现此事的步骤。</p>
+<p>回到可行集上的投影是单侧的——可行性算子返回一个被其目标所支配的向量——故平衡步骤只能削减。由于它最大化的是总产出而非任何平衡度量，它削减劳动密集部门最重，从而扭曲了计划的<strong>构成</strong>而非按比例缩放其规模。被扭曲的构成随后进入短边配置，产出下降。处于优先级阶梯底部的投资吸收了缺口，而资本是净投资的积分，故资本存量单调衰减：计划错误是暂时的，产能损失则不是。</p>
+<p>条件是劳动力余量，而这是本节最锐利的一点，因为它说明紧计划究竟<strong>在何时</strong>自我挫败，而不是说它总是如此。保持其余一切不变而提高劳动供给因子，增益为一、三轮平衡的损失从因子 $1.05$ 时的 $18.5\%$（产出比 $0.81512$，短缺 $9.30\%$）降到 $1.15$ 时的 $14.6\%$（$0.85396$），到 $1.40$ 时的百分之零点四（$0.99637$），到 $2.00$ 时的零（$0.99994$）。对照组的表现正合机制所要求：在任何因子下，增益为一而无平衡、以及三轮平衡而无修订，都使产出留在四位小数的 $1.0000$，唯在 $1.05$ 处平衡本身已造成百分之四的代价（$0.95929$），因为百分之五的余量下基年计划本身即接近劳动约束。劳动是捆绑的边际，而紧计划的代价是经济拥有多少余量的函数——这正是有关苏联式经济中劳动短缺与囤积的历史文献会导向的预期。</p>
+<p>相反，库存渠道在运行区间内基本为零，这一点值得记录，因为它是人们首先想到的解释。使库存估计无噪声、完全移除库存估计、或把库存比率设为零或二分之一，都使损失在零点几个百分点之内不变；而在基年目标处，可行性规划问题根本不捆绑，即便在基年库存的一半处仍原样返回目标，因为 $(A-I)x_{\text{base}}=-y_{\text{base}}\le0$ 对任意缩放成立。库存悲观并不是渠道。计划与供给之间错配的可见印记是溢损——不可售产出——它在物资平衡下占供给的 $1.23\%$、在试探性定价下占 $1.86\%$，而在计划不针对可行集作投影的四种制度中恰为零。</p>
+<div class="tablefloat" id="tab-balance_decomposition"><figcaption class="tabcap"><span class="floatlabel">表 8.</span> 产生租金的交互作用，附实测成因列。修订增益与平衡轮数在 6.2 节的仅有噪声环境中交叉，每单元十六颗种子。任一因子单独都不改变产出；唯一在组合中出现，并沿两个方向增长，增益为一配三轮时降至 0.8738。机制是劳动可行性，成因列即说明此点：随增益上升，计划步骤在 80 个季度中有 0 至 66 个季度下调至少一个目标，投资自基年的 0.0500 降至 0.0434，期末资本存量为基年的 0.903，劳动利用率自 0.870 降至 0.710，溢损自供给的 0.1% 升至 2.9%。库存渠道缺席：使库存估计无噪声、移除它、或把库存比率设为零或二分之一，损失皆不变。</figcaption><div class="tabbody"><table><thead><tr><th>revision_gain</th><th>balance_rounds</th><th>output_base</th><th>output_base_sd</th><th>shortage</th><th>shortage_sd</th><th>spoilage_rate</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0.9998957132</td><td>0.0002903895978</td><td>0.01611205665</td><td>0.001100534041</td><td>0.0008561910161</td></tr><tr><td>0</td><td>1</td><td>0.9998957132</td><td>0.0002903895978</td><td>0.01611205665</td><td>0.001100534041</td><td>0.0008561910161</td></tr><tr><td>0</td><td>3</td><td>0.9998957132</td><td>0.0002903895978</td><td>0.01611205665</td><td>0.001100534041</td><td>0.0008561910161</td></tr><tr><td>0.1</td><td>0</td><td>0.9998957132</td><td>0.0002903895978</td><td>0.01611205665</td><td>0.001100534041</td><td>0.0008561910161</td></tr><tr><td>0.1</td><td>1</td><td>0.9998332194</td><td>0.0003509263896</td><td>0.01610321312</td><td>0.00109076659</td><td>0.0008581467301</td></tr><tr><td>0.1</td><td>3</td><td>0.9995099515</td><td>0.0006324476521</td><td>0.01607439959</td><td>0.001085767222</td><td>0.0008501507651</td></tr><tr><td>0.3</td><td>0</td><td>0.9998957132</td><td>0.0002903895978</td><td>0.01611205665</td><td>0.001100534041</td><td>0.0008561910161</td></tr><tr><td>0.3</td><td>1</td><td>0.9467326568</td><td>0.007209797446</td><td>0.03624355447</td><td>0.006468980593</td><td>0.009950615564</td></tr><tr><td>0.3</td><td>3</td><td>0.9333162715</td><td>0.01044207195</td><td>0.04636130623</td><td>0.008051668126</td><td>0.01235708628</td></tr><tr><td>1</td><td>0</td><td>0.9998957132</td><td>0.0002903895978</td><td>0.01611205665</td><td>0.001100534041</td><td>0.0008561910161</td></tr><tr><td>1</td><td>1</td><td>0.8868580147</td><td>0.002468163056</td><td>0.04234895471</td><td>0.003955876617</td><td>0.0218253107</td></tr><tr><td>1</td><td>3</td><td>0.8738377163</td><td>0.002624905972</td><td>0.05933865732</td><td>0.007466063718</td><td>0.0293581089</td></tr></tbody></table></div></div>
+<div class="tablefloat" id="tab-labour_slack"><figcaption class="tabcap"><span class="floatlabel">表 9.</span> 紧计划的代价以劳动力余量为条件。在 6.2 节的仅有噪声环境中，修订增益固定为一、平衡轮数固定为三，变动劳动供给因子。较基年多百分之十五的劳动力时，同一计划规则使产出损失百分之十八点五；多百分之四十时为百分之零点八；劳动力加倍时损失消失。劳动是捆绑的边际——平均利用率为 0.9913、最大值 1.0000，而物资平衡紧张度从未超过捆绑水平的四分之一——而当余量恢复时损失消失，这正是劳动力可行性渠道区别于「仅仅是浪费的计划规则」之处。</figcaption><div class="tabbody"><table><thead><tr><th>labour_supply_factor</th><th>revision_gain</th><th>balance_rounds</th><th>output_base</th><th>output_base_sd</th><th>shortage</th></tr></thead><tbody><tr><td>1.05</td><td>0</td><td>3</td><td>0.9592884063</td><td>0.03092812511</td><td>0.01545678989</td></tr><tr><td>1.05</td><td>1</td><td>0</td><td>0.9998621658</td><td>0.0004198919617</td><td>0.01663804267</td></tr><tr><td>1.05</td><td>1</td><td>3</td><td>0.8151172845</td><td>0.006714324791</td><td>0.09298894363</td></tr><tr><td>1.15</td><td>0</td><td>3</td><td>0.9997956195</td><td>0.0005726638407</td><td>0.01566929562</td></tr><tr><td>1.15</td><td>1</td><td>0</td><td>0.9999634289</td><td>5.53418024e-05</td><td>0.01584690861</td></tr><tr><td>1.15</td><td>1</td><td>3</td><td>0.8539559532</td><td>0.006622668141</td><td>0.05563449712</td></tr><tr><td>1.4</td><td>0</td><td>3</td><td>0.9999671883</td><td>5.368970124e-05</td><td>0.01627462896</td></tr><tr><td>1.4</td><td>1</td><td>0</td><td>0.999807415</td><td>0.0004217169805</td><td>0.01652833437</td></tr><tr><td>1.4</td><td>1</td><td>3</td><td>0.9963740442</td><td>0.005012037905</td><td>0.01612832937</td></tr><tr><td>2</td><td>0</td><td>3</td><td>0.9999669507</td><td>9.218498743e-05</td><td>0.01669335559</td></tr><tr><td>2</td><td>1</td><td>0</td><td>0.9999996013</td><td>1.260771382e-06</td><td>0.01571349476</td></tr><tr><td>2</td><td>1</td><td>3</td><td>0.9999448278</td><td>0.0001611425661</td><td>0.01555970193</td></tr></tbody></table></div></div>
+<p>这也重新表述了 H1'，而这一表述更为具体而非更弱。主张不是任何正的目标增益都自我挫败，因为把平衡步骤去掉后增益为一不付代价，而劳动力余量足够时也不付代价。主张是：<strong>平衡程序为测量噪声定价，而按比例修订是不断使计划暴露于该定价的机制</strong>——修订不制造损失，它只是不断提出被投影削去的计划。Gosplan 传统的独特工具是针对可行性前沿运行的物资平衡，而不是一般意义上的数量计划，而负责任的是平衡。</p>
+<h3 id="sec:res-delay"><span class="secno">6.4</span> 时滞网格，以及失败的假设</h3>
+<p>本文的核心解析预测是：依据 $m$ 期之前的测量作校正的行政者，在增益 $2\sin[\pi/(2(2m+1))]$ 处失稳。这一预测在数学上是确定的（附录 <a class="xref" href="#sec:app:numeric">第A.3节</a>）。它在本经济中不可达到，而它失败的方式比一次证实更有信息量。</p>
+<p>所测响应系数很小，且如机制所要求，对价格弹性线性：以外生位移、关闭反馈测得，弹性 $0.4$ 时 $b_p=0.197$，$0.8$ 时 $0.342$。乘以网格所允许的最大调整系数，得最大环路增益 $0.316$ 与 $0.548$，而边界自一个季度时滞处的 $1.00$ 降至七个季度处的 $0.209$。因此机制所能运行的最大增益在较低弹性下要到 $m\ge5$ 才越过边界，在较高弹性下要到 $m\ge3$。边界是可接近的，但只在时滞轴的最远端，且只对需求响应被调得足够强的价格环路。</p>
+<p>可接近不等于可识别，而预注册规则救不了它。该规则——自相关高于 $0.5$，且振幅超过无修订基准三个标准差——在所检验的十八个单元中恰好触发一次，位于七个季度的时滞与较低弹性处，而在该单元中所测临界增益为 $0.60$，预测为 $1.06$：规则在边界<strong>之下</strong>触发，为预测值的$57$ 个百分之一。一个只触发一次、且触发在错误位置上的判据，不构成对穿越的证据，我们不主张任何穿越。该单元所展示的是操作判据的局限，而不是定理的局限：振幅支无法把一条邻近的边界与一次大幅但有界的振荡区分开，而自相关支到处触发。</p>
+<p>后一点应当明白陈述，因为它是预注册设计的一处缺陷，由数据所暴露。自相关条件在本经济中是退化的：在参考增益下，一阶自相关在全部制度、全部时滞上从 $0.65$ 变动到 $0.95$，包括四种完全不设价格的制度——对它们而言，该统计量定义在计划之上。一条由自回归需求驱动、平滑的季度序列，无论是否有环路临近边界，都是自相关的。因此振幅支是唯一的判别者，而它并不随时滞上升：在参考增益下，去趋势振幅从两种不携带价格的制度的恰为零，到最波动单元——市场——的 $0.170$，其中试探性定价在 $0.118$ 与 $0.152$ 之间，物资平衡在 $0.017$ 与 $0.018$ 之间。字面地读该判据，会在每个单元都宣告失稳。我们所报告的零结果建立在振幅支上，而该判据是在看到其第一支无法判别之后被重新解读的。</p>
+<p>该零结果是在参考增益处陈述的，而诚实的报告必须补上方向相反的那一行。在增益网格顶端，时滞效应是被检出的：对增益 $1.6$ 的试探性定价，六个报告时滞相对零时滞的配对比较给出 Wilcoxon 统计量 $817$、$p=4.5\times10^{-12}$，即一次显著支持时滞效应的拒绝。在参考增益 $0.3$ 处，同一比较不拒绝。只报告后者而不报告前者是本末倒置，因为二者合起来恰是一条可触及的边界从下方看起来的样子：在弱增益下时滞无关紧要，在强增益下则不然。边界并非不可触及；它由把环路强行推高而触及，这正是可达性表所言，也是一篇论证时滞只在增益之上才构成约束的论文所应预测的。</p>
+<p>这一观察比它所带来的安慰更为锋利，因为推论 <a class="xref" href="#cor:budget">推论 2</a> 的对偶：固定增益不会随着时滞变长而保持安全——临界时滞约为 $\pi/(2g)$ 个季度，故在以所测中位增益运行的环路，其转折点将超出网格所覆盖的期限。实验所确立的，不是行政价格对时滞免疫，而是它们在季度报告频率下所享有的免疫，是用那个使它们无法出清市场的弱点换来的。会使价格环路振荡的系数，正是会使它起作用的系数。</p>
+<p>相比之下 H2 获得支持，且是本文最干净的一次确认。预注册的预测是：福利损失随报告时滞上升得最快的，应是信息需求最强的制度。把运行级福利损失对报告时滞回归、含机制固定效应，得斜率：中央线性规划每季度 $0.00452$（按种子聚类的稳健标准误 $6.8\times10^{-5}$），优先级配给 $0.00415$，物资平衡 $0.00061$，试探性定价 $0.00039$。那个没有当前数据便无法行动的制度，其每季度福利损失比那两个从库存与价格构建计划的制度高出两个数量级。H2 的七项检验中有六项通过 Holm 校正。试探性定价是反方向的例外：其产出在整个时滞范围内基本持平，正是一个不追逐陈旧信号的机制所应有的表现。</p>
+<p>表 <a class="xref" href="#tab-lag_grid_reference">表10</a> 报告网格的参考增益切片——每机构、每价格弹性、每报告时滞在 $\eta=0.30$ 处一行，每单元二十颗种子——图 <a class="xref" href="#fig-welfare_vs_lag">图3</a> 画出产出损失对报告时滞的关系。此处需作一项披露，因为数据发布中存在两个相似的对象：<code>paper/tables/lag_grid_reference.csv</code> 是本文所报告的参考增益切片，而 <code>results/tables/t03_lag_mechanism.csv</code> 汇总全部十个增益水平，因而对两个遍历增益的制度带有二百颗种子。对四种固定增益的制度，二者精确到机器精度一致；对物资平衡与试探性定价则不一致，因为汇总在增益轴上取了平均。复现本表的读者应使用参考增益文件，而汇总版本在此点名，以免有人必须自行发现这一差别。完整的二百单元增益网格存于数据发布中，不在正文之内。</p>
+<div class="tablefloat" id="tab-lag_grid_reference"><figcaption class="tabcap"><span class="floatlabel">表 10.</span> 时滞-机制网格的参考增益切片：每制度、每价格弹性、每报告时滞在 $\eta=0.30$ 处一行，每单元二十颗种子。两个试探性定价弹性分开保留，因为环路增益是弹性与调整系数之积，合并它们便合并了两个不同的环路。<strong>披露：</strong>数据发布中另有 <code>results/tables/t03_lag_mechanism.csv</code>，它汇总全部十个增益水平，故对两个遍历增益的制度带有二百颗种子；对四种固定增益的制度二者精确到机器精度一致，对物资平衡与试探性定价则不一致，因为汇总在增益轴上取了平均。本表是参考增益切片，而非汇总对象。来源：<code>reference_results/</code>。</figcaption><div class="tabbody"><table><thead><tr><th>mechanism</th><th>price_elasticity</th><th>lag_reporting</th><th>k_effective</th><th>output_base</th><th>shortage</th><th>welfare</th><th>amplitude</th><th>acf_lag1</th></tr></thead><tbody><tr><td>lp_central</td><td>0.4</td><td>0</td><td>1</td><td>0.950204</td><td>0.0238869</td><td>253.623</td><td>0</td><td>0</td></tr><tr><td>lp_central</td><td>0.4</td><td>1</td><td>2</td><td>0.946908</td><td>0.0304586</td><td>252.054</td><td>0</td><td>0</td></tr><tr><td>lp_central</td><td>0.4</td><td>2</td><td>3</td><td>0.943955</td><td>0.0365612</td><td>250.815</td><td>0</td><td>0</td></tr><tr><td>lp_central</td><td>0.4</td><td>3</td><td>4</td><td>0.941189</td><td>0.0418186</td><td>249.775</td><td>0</td><td>0</td></tr><tr><td>lp_central</td><td>0.4</td><td>4</td><td>5</td><td>0.938706</td><td>0.0462987</td><td>248.84</td><td>0</td><td>0</td></tr><tr><td>lp_central</td><td>0.4</td><td>6</td><td>7</td><td>0.934797</td><td>0.0539925</td><td>247.032</td><td>0</td><td>0</td></tr><tr><td>material_balance</td><td>0.4</td><td>0</td><td>1</td><td>0.958698</td><td>0.0320699</td><td>250.581</td><td>0.017819</td><td>0.94212</td></tr><tr><td>material_balance</td><td>0.4</td><td>1</td><td>2</td><td>0.951939</td><td>0.0356149</td><td>250.34</td><td>0.0176981</td><td>0.943683</td></tr><tr><td>material_balance</td><td>0.4</td><td>2</td><td>3</td><td>0.947323</td><td>0.0406117</td><td>250.155</td><td>0.0175574</td><td>0.945023</td></tr><tr><td>material_balance</td><td>0.4</td><td>3</td><td>4</td><td>0.944517</td><td>0.0454611</td><td>250.022</td><td>0.0175181</td><td>0.946109</td></tr><tr><td>material_balance</td><td>0.4</td><td>4</td><td>5</td><td>0.943152</td><td>0.0508379</td><td>249.937</td><td>0.0174228</td><td>0.946606</td></tr><tr><td>material_balance</td><td>0.4</td><td>6</td><td>7</td><td>0.944122</td><td>0.0575933</td><td>249.878</td><td>0.0174399</td><td>0.949556</td></tr><tr><td>rationing_priority</td><td>0.4</td><td>0</td><td>1</td><td>0.96081</td><td>0.0357431</td><td>250.853</td><td>0</td><td>0</td></tr><tr><td>rationing_priority</td><td>0.4</td><td>1</td><td>2</td><td>0.957329</td><td>0.0409764</td><td>249.699</td><td>0</td><td>0</td></tr><tr><td>rationing_priority</td><td>0.4</td><td>2</td><td>3</td><td>0.954126</td><td>0.0455074</td><td>248.543</td><td>0</td><td>0</td></tr><tr><td>rationing_priority</td><td>0.4</td><td>3</td><td>4</td><td>0.951401</td><td>0.0494879</td><td>247.512</td><td>0</td><td>0</td></tr><tr><td>rationing_priority</td><td>0.4</td><td>4</td><td>5</td><td>0.948765</td><td>0.0531188</td><td>246.502</td><td>0</td><td>0</td></tr><tr><td>rationing_priority</td><td>0.4</td><td>6</td><td>7</td><td>0.944574</td><td>0.0597266</td><td>244.576</td><td>0</td><td>0</td></tr><tr><td>hybrid_dual_track</td><td>0.4</td><td>0</td><td>1</td><td>0.970407</td><td>0.0305347</td><td>252.374</td><td>0.0206124</td><td>0.906518</td></tr><tr><td>hybrid_dual_track</td><td>0.4</td><td>1</td><td>2</td><td>0.969878</td><td>0.0339521</td><td>252.105</td><td>0.0216216</td><td>0.911449</td></tr><tr><td>hybrid_dual_track</td><td>0.4</td><td>2</td><td>3</td><td>0.969273</td><td>0.036578</td><td>251.873</td><td>0.022286</td><td>0.915477</td></tr><tr><td>hybrid_dual_track</td><td>0.4</td><td>3</td><td>4</td><td>0.968545</td><td>0.0387833</td><td>251.685</td><td>0.0228051</td><td>0.918455</td></tr><tr><td>hybrid_dual_track</td><td>0.4</td><td>4</td><td>5</td><td>0.967894</td><td>0.0407535</td><td>251.548</td><td>0.0230958</td><td>0.922119</td></tr><tr><td>hybrid_dual_track</td><td>0.4</td><td>6</td><td>7</td><td>0.967302</td><td>0.0441532</td><td>251.378</td><td>0.0237633</td><td>0.932049</td></tr><tr><td>market</td><td>0.4</td><td>0</td><td>1</td><td>0.970661</td><td>0.0275578</td><td>252.601</td><td>0.123579</td><td>0.645688</td></tr><tr><td>market</td><td>0.4</td><td>1</td><td>2</td><td>0.970619</td><td>0.0316215</td><td>252.325</td><td>0.150062</td><td>0.722077</td></tr><tr><td>market</td><td>0.4</td><td>2</td><td>3</td><td>0.970589</td><td>0.0343134</td><td>252.1</td><td>0.162399</td><td>0.784612</td></tr><tr><td>market</td><td>0.4</td><td>3</td><td>4</td><td>0.97024</td><td>0.036303</td><td>251.942</td><td>0.166422</td><td>0.787725</td></tr><tr><td>market</td><td>0.4</td><td>4</td><td>5</td><td>0.969899</td><td>0.0381284</td><td>251.805</td><td>0.167526</td><td>0.784407</td></tr><tr><td>market</td><td>0.4</td><td>6</td><td>7</td><td>0.969707</td><td>0.0411993</td><td>251.616</td><td>0.169646</td><td>0.792879</td></tr><tr><td>tatonnement</td><td>0.4</td><td>0</td><td>1</td><td>0.942822</td><td>0.0234648</td><td>247.293</td><td>0.138409</td><td>0.93379</td></tr><tr><td>tatonnement</td><td>0.4</td><td>1</td><td>2</td><td>0.94388</td><td>0.0260082</td><td>247.043</td><td>0.139973</td><td>0.933344</td></tr><tr><td>tatonnement</td><td>0.4</td><td>2</td><td>3</td><td>0.944981</td><td>0.0285788</td><td>246.773</td><td>0.142913</td><td>0.935737</td></tr><tr><td>tatonnement</td><td>0.4</td><td>3</td><td>4</td><td>0.946167</td><td>0.0310303</td><td>246.689</td><td>0.144939</td><td>0.937998</td></tr><tr><td>tatonnement</td><td>0.4</td><td>4</td><td>5</td><td>0.947449</td><td>0.0327392</td><td>246.682</td><td>0.146269</td><td>0.940812</td></tr><tr><td>tatonnement</td><td>0.4</td><td>6</td><td>7</td><td>0.950099</td><td>0.0352335</td><td>246.601</td><td>0.152041</td><td>0.947418</td></tr><tr><td>tatonnement</td><td>0.8</td><td>0</td><td>1</td><td>0.944921</td><td>0.0192231</td><td>244.65</td><td>0.117858</td><td>0.924748</td></tr><tr><td>tatonnement</td><td>0.8</td><td>1</td><td>2</td><td>0.9465</td><td>0.02186</td><td>244.255</td><td>0.120321</td><td>0.925318</td></tr><tr><td>tatonnement</td><td>0.8</td><td>2</td><td>3</td><td>0.947995</td><td>0.0244976</td><td>244.245</td><td>0.121788</td><td>0.928354</td></tr><tr><td>tatonnement</td><td>0.8</td><td>3</td><td>4</td><td>0.948872</td><td>0.0273011</td><td>243.811</td><td>0.127034</td><td>0.932947</td></tr><tr><td>tatonnement</td><td>0.8</td><td>4</td><td>5</td><td>0.950178</td><td>0.0289085</td><td>243.77</td><td>0.129998</td><td>0.937285</td></tr><tr><td>tatonnement</td><td>0.8</td><td>6</td><td>7</td><td>0.952477</td><td>0.0314175</td><td>243.315</td><td>0.140723</td><td>0.945149</td></tr></tbody></table></div></div>
+<figure class="float" id="fig-welfare_vs_lag"><img src="figures/welfare_vs_lag.png" alt="welfare_vs_lag"><figcaption><span class="floatlabel">图 3.</span> 每季度时滞所损失的产出，在参考增益 0.30 处。每条序列为一种制度，对报告时滞 $\ell$ 作图，轴上同时标出有效时滞 $k=\ell+1$，因为理论中的 $g^\star(k)$ 指的是 $k$。必须依据当前数据方能行动的制度——中央线性规划、物资平衡与优先级配给——每季度时滞所损失的产出比那两个从库存与价格构建计划的制度高一个数量级。试探性定价持平甚至略升，正是一个不追逐陈旧信号的机制所应有的表现。由 <code>paper/make_figures.py</code> 从 <code>paper/tables/main_lag_grid.csv</code> 生成。</figcaption></figure>
+<h3 id="sec:res-shock"><span class="secno">6.5</span> 传导</h3>
+<p>单一部门的产能冲击不会停留在其部门内，而其去向取决于该部门在网络中的位置而非其规模。在二十个受冲击部门与二十颗种子下，给定规模冲击所导致的总产出损失，在物资平衡下从 $0.0133$ 至 $0.1430$，在试探性定价下从 $0.0091$ 至 $0.1276$，在优先级配给下从 $0.0194$ 至 $0.1533$，最重与最轻部门之间相差八至十四倍。平均产出放大依制度在 $7.9$ 与 $9.5$ 之间（$p=9.5\times10^{-6}$），故 H4 的前半被确认。</p>
+<p>后半则取决于关联系数如何测量，而其答案在预注册未曾预料的意义上是定义依赖的。本文的前向关联系数是中间使用份额，$(Ax)_i/x_i$：一个部门的产出中被其他部门作为投入吸收、而非交付最终需求的份额。以此度量，它预测了损失——物资平衡下 Spearman $\rho=+0.513$（$p=0.021$），试探性定价 $+0.567$（$p=0.009$），优先级配给 $+0.414$（$p=0.070$）。若改以 $A$ 的行和度量——教科书的定义，也是审稿人心中所想的那个——相关系数降至 $+0.329$、$+0.313$ 与 $+0.311$，$p$ 约为 $0.16$、$0.18$ 与 $0.18$。</p>
+<p>预注册规则对整个 B3 区块施加 Holm 校正，而依该规则三者皆不存活：校正后的值为 $0.166$、$0.082$ 与 $0.489$。若把多重比较族缩窄为「每机构一项检验」，则物资平衡与试探性定价会成为边缘存活者；但多重比较族是事先固定的，而非由分析者选择，故我们报告预注册的校正而非缩窄的那一个。<strong>因此联接性发现在方向上是受支持的，但不能通过多重性校正</strong>——这比读者可能期待的句子更弱。</p>
+<p>在两种定义下，后向乘数都不预测任何东西：$\rho=+0.020$、$+0.017$ 与 $-0.041$，$p$ 皆大于 $0.86$。下游依赖会传导，上游依赖不会，这与基于乘数的直觉相反，也只有当设计逐一冲击各部门时才可见。物资平衡与试探性定价下最重的部门是 $c05$、$c20$、$c02$ 与 $c12$；在优先级配给下排序改变，前四为 $c20$、$c19$、$c05$ 与 $c02$，故即便相关物不变，排序也依制度而异。最轻的部门 $c04$ 在物资平衡下损失 $0.0133$。</p>
+<p>主要统计量因此是 <code>shock_output_loss</code> 而非比值，因为放大比除以受冲击部门自身的产出份额，从而过度加权小部门：部门 <code>c02</code> 仅占产出 $0.27\%$，却达其自身产能损失的八十七倍，这是小分母假象而非发现。表 <a class="xref" href="#tab-propagation">表12</a> 报告损失与比值，并在题注中附此告诫。</p>
+<p>短缺的承担结构，是模型确实测量索取者分解的唯一之处，而结果鲜明。在两种计划制度下，被配给数量中的中间使用份额恰为零：中间使用者优先获得服务，负担落在居民身上的份额为 $71\%$ 至 $79\%$，落在政府与投资上的为 $21\%$ 至 $29\%$。这是推论 <a class="xref" href="#cor:priority">推论 3</a> 的具体化——总量由交付前沿固定，而阶梯决定谁承担——也是表 <a class="xref" href="#tab-ladder">表11</a> 所比较的两条阶梯除总量之外处处分歧的原因。</p>
+<div class="tablefloat" id="tab-ladder"><figcaption class="tabcap"><span class="floatlabel">表 11.</span> 优先级阶梯是决定谁承担短缺的制度边际。两条阶梯在两个报告时滞下比较，每单元二十颗种子：一条先服务消费后服务生产，一条相反。总量在二者之间几乎不变，这是推论 3 在模型中的事实表述；而产出、计划完成率与恢复半衰期则分歧显著。</figcaption><div class="tabbody"><table><thead><tr><th>ladder</th><th>k_eff</th><th>shortage</th><th>peak</th><th>W_loss</th><th>x/base</th><th>fulfil</th><th>half_life</th></tr></thead><tbody><tr><td>consumption_first</td><td>1</td><td>0.1734</td><td>1</td><td>0.1074</td><td>0.7472</td><td>0.66</td><td>4.25</td></tr><tr><td>production_first</td><td>1</td><td>0.0326</td><td>0.1863</td><td>0.03909</td><td>0.9563</td><td>0.7866</td><td>1.85</td></tr><tr><td>consumption_first</td><td>2</td><td>0.1856</td><td>1</td><td>0.1081</td><td>0.7492</td><td>0.6492</td><td>3.5</td></tr><tr><td>production_first</td><td>2</td><td>0.0369</td><td>0.1883</td><td>0.03987</td><td>0.9488</td><td>0.7747</td><td>2</td></tr><tr><td>consumption_first</td><td>3</td><td>0.2003</td><td>1</td><td>0.1094</td><td>0.7423</td><td>0.6376</td><td>3.35</td></tr><tr><td>production_first</td><td>3</td><td>0.04126</td><td>0.1899</td><td>0.04034</td><td>0.9451</td><td>0.7696</td><td>1.7</td></tr><tr><td>consumption_first</td><td>5</td><td>0.2218</td><td>1</td><td>0.1116</td><td>0.7437</td><td>0.6346</td><td>3.3</td></tr><tr><td>production_first</td><td>5</td><td>0.05067</td><td>0.1907</td><td>0.04081</td><td>0.9429</td><td>0.7674</td><td>1.1</td></tr></tbody></table></div></div>
+<p>H3 是预注册的一项检验，用以确认模型不是一个披着计划者外衣的最优化器，而它从容通过。在二十个受冲击部门上，物资平衡的平均短缺率从 $1.16\%$ 到 $6.04\%$，均值为 $2.93\%$，是那会否证该假设的 $0.5\%$ 的 $2.3$ 至 $12.1$ 倍：否证条件在一个单元中都不触发。这个数字本身并不惊人——计划当然不会消灭短缺——但它是现有最廉价的证据，表明计划制度是在表现不良，而不是在别的什么事情上取得了成功。</p>
+<div class="tablefloat" id="tab-propagation"><figcaption class="tabcap"><span class="floatlabel">表 12.</span> 部门冲击的传导。主要统计量是持续八个季度的百分之五十产能削减所导致的总产出损失；放大比并列报告，并附告诫：它除以受冲击部门自身的产出份额，因而过度加权小部门。</figcaption><div class="tabbody"><table><thead><tr><th>mechanism</th><th>shock_sector</th><th>output_loss</th><th>output_loss_sd</th><th>output_amplification</th><th>shortage_amplification</th><th>peak_shortage</th><th>recovery_half_life</th></tr></thead><tbody><tr><td>material_balance</td><td>c05</td><td>0.1430311507</td><td>0.03926816218</td><td>22.29563997</td><td>42.02616335</td><td>0.269606547</td><td>2.7</td></tr><tr><td>material_balance</td><td>c20</td><td>0.1264250499</td><td>0.000132678191</td><td>1.793060185</td><td>3.344976081</td><td>0.2358475032</td><td>2.35</td></tr><tr><td>material_balance</td><td>c02</td><td>0.1190350781</td><td>0.0003851965874</td><td>87.0092859</td><td>160.6962866</td><td>0.2198442939</td><td>1.85</td></tr><tr><td>material_balance</td><td>c12</td><td>0.09969879172</td><td>0.0009319433989</td><td>5.697214932</td><td>10.83428569</td><td>0.1895953032</td><td>1.6</td></tr><tr><td>material_balance</td><td>c19</td><td>0.08303345863</td><td>0.002070706431</td><td>1.25996109</td><td>2.235897063</td><td>0.1473492061</td><td>2.35</td></tr><tr><td>material_balance</td><td>c08</td><td>0.07989488218</td><td>0.0006885882736</td><td>9.078596857</td><td>19.11004787</td><td>0.1681752199</td><td>2.35</td></tr><tr><td>material_balance</td><td>c09</td><td>0.07957647309</td><td>0.0006090107345</td><td>5.432352704</td><td>10.56059629</td><td>0.1546981671</td><td>1.8</td></tr><tr><td>material_balance</td><td>c18</td><td>0.07728515763</td><td>0.0003672206376</td><td>1.248752298</td><td>2.555339147</td><td>0.15814969</td><td>3.85</td></tr><tr><td>material_balance</td><td>c15</td><td>0.07649547637</td><td>0.001359446951</td><td>2.677818675</td><td>4.34763856</td><td>0.1241961175</td><td>1.75</td></tr><tr><td>material_balance</td><td>c14</td><td>0.06534219981</td><td>0.0004390846123</td><td>1.25186334</td><td>3.025584551</td><td>0.1579232685</td><td>4.05</td></tr><tr><td>material_balance</td><td>c10</td><td>0.04931328992</td><td>0.0006469114363</td><td>1.253266885</td><td>2.53185449</td><td>0.09962289436</td><td>3.25</td></tr><tr><td>material_balance</td><td>c13</td><td>0.04492299258</td><td>0.000549426927</td><td>1.254703925</td><td>2.715290312</td><td>0.09721733085</td><td>3.35</td></tr><tr><td>material_balance</td><td>c17</td><td>0.03478843986</td><td>0.0008272589709</td><td>1.266284982</td><td>2.995320683</td><td>0.0822899544</td><td>3.85</td></tr><tr><td>material_balance</td><td>c01</td><td>0.02701379864</td><td>0.004356634884</td><td>2.961934509</td><td>4.426450002</td><td>0.04037065259</td><td>2.842105263</td></tr><tr><td>material_balance</td><td>c03</td><td>0.02682535107</td><td>0.002738211067</td><td>1.297473828</td><td>3.08137003</td><td>0.0637075146</td><td>3.25</td></tr><tr><td>material_balance</td><td>c07</td><td>0.02038094249</td><td>0.005231176719</td><td>1.469438674</td><td>3.68634138</td><td>0.05112912366</td><td>3.263157895</td></tr><tr><td>material_balance</td><td>c11</td><td>0.01688192875</td><td>0.006879713417</td><td>1.821406409</td><td>4.670652448</td><td>0.04329051522</td><td>3.578947368</td></tr><tr><td>material_balance</td><td>c16</td><td>0.01596452309</td><td>0.006095907224</td><td>1.7276775</td><td>4.592684082</td><td>0.04243848234</td><td>3.315789474</td></tr><tr><td>material_balance</td><td>c06</td><td>0.01409422159</td><td>0.00907723446</td><td>3.488340456</td><td>7.195190875</td><td>0.02907130649</td><td>2.263157895</td></tr><tr><td>material_balance</td><td>c04</td><td>0.0133466075</td><td>0.00898258485</td><td>3.963495921</td><td>7.557813214</td><td>0.02545004928</td><td>1.947368421</td></tr><tr><td>rationing_priority</td><td>c20</td><td>0.1532809499</td><td>0.007989395618</td><td>2.173951829</td><td>3.097115665</td><td>0.2183713662</td><td>6.8</td></tr><tr><td>rationing_priority</td><td>c19</td><td>0.1514690457</td><td>0.003148485062</td><td>2.298412074</td><td>2.349564891</td><td>0.1548400984</td><td>2.65</td></tr><tr><td>rationing_priority</td><td>c05</td><td>0.1435565731</td><td>0.005900865445</td><td>22.37754261</td><td>42.93755157</td><td>0.2754532912</td><td>4.2</td></tr><tr><td>rationing_priority</td><td>c02</td><td>0.1403488569</td><td>0.005335363124</td><td>102.5886992</td><td>162.6467779</td><td>0.2225127089</td><td>4.75</td></tr><tr><td>rationing_priority</td><td>c12</td><td>0.1155657175</td><td>0.008215281214</td><td>6.603918867</td><td>10.98354107</td><td>0.1922072076</td><td>3.9</td></tr><tr><td>rationing_priority</td><td>c08</td><td>0.09956293281</td><td>0.004332641496</td><td>11.31351226</td><td>19.72370487</td><td>0.1735756198</td><td>3.2</td></tr><tr><td>rationing_priority</td><td>c09</td><td>0.09716130907</td><td>0.003513282766</td><td>6.632795846</td><td>10.83254131</td><td>0.1586817865</td><td>4.1</td></tr><tr><td>rationing_priority</td><td>c15</td><td>0.09397052578</td><td>0.004970188705</td><td>3.289554374</td><td>4.451373688</td><td>0.1271594503</td><td>4.5</td></tr><tr><td>rationing_priority</td><td>c18</td><td>0.09093326082</td><td>0.002234996226</td><td>1.469274591</td><td>2.674572118</td><td>0.165529007</td><td>4.2</td></tr><tr><td>rationing_priority</td><td>c14</td><td>0.08706065468</td><td>0.002467021422</td><td>1.667957954</td><td>3.091881678</td><td>0.1613837102</td><td>4.25</td></tr><tr><td>rationing_priority</td><td>c10</td><td>0.06392908519</td><td>0.002733143109</td><td>1.624718318</td><td>2.661806848</td><td>0.1047362333</td><td>4.25</td></tr><tr><td>rationing_priority</td><td>c13</td><td>0.0592665486</td><td>0.002266689713</td><td>1.655320958</td><td>2.849270821</td><td>0.1020143234</td><td>4.6</td></tr><tr><td>rationing_priority</td><td>c17</td><td>0.05069802816</td><td>0.002704335767</td><td>1.845387489</td><td>3.157006873</td><td>0.08673193262</td><td>4.55</td></tr><tr><td>rationing_priority</td><td>c03</td><td>0.03897326468</td><td>0.002300825596</td><td>1.885037433</td><td>3.322133264</td><td>0.06868530925</td><td>4.45</td></tr><tr><td>rationing_priority</td><td>c01</td><td>0.03815193652</td><td>0.002531417224</td><td>4.18317834</td><td>5.050760232</td><td>0.04606456337</td><td>4.3</td></tr><tr><td>rationing_priority</td><td>c07</td><td>0.03095156482</td><td>0.002391648456</td><td>2.231566396</td><td>4.021346171</td><td>0.05577560092</td><td>4.7</td></tr><tr><td>rationing_priority</td><td>c16</td><td>0.02620392283</td><td>0.002521484644</td><td>2.835783295</td><td>5.072584196</td><td>0.04687297689</td><td>4.55</td></tr><tr><td>rationing_priority</td><td>c11</td><td>0.02600062978</td><td>0.002407763245</td><td>2.805231227</td><td>5.139283799</td><td>0.04763408239</td><td>4.6</td></tr><tr><td>rationing_priority</td><td>c06</td><td>0.01977367489</td><td>0.001945146101</td><td>4.894013455</td><td>8.109451407</td><td>0.03276526661</td><td>1.95</td></tr><tr><td>rationing_priority</td><td>c04</td><td>0.01944324426</td><td>0.001916740081</td><td>5.773993079</td><td>8.759834849</td><td>0.02949771611</td><td>1.45</td></tr><tr><td>tatonnement</td><td>c05</td><td>0.1275530287</td><td>0.0008300962196</td><td>19.88291635</td><td>40.64439923</td><td>0.2607422438</td><td>2.75</td></tr><tr><td>tatonnement</td><td>c20</td><td>0.1264894119</td><td>0.001508367596</td><td>1.793973018</td><td>3.132314297</td><td>0.2208531506</td><td>2.6</td></tr><tr><td>tatonnement</td><td>c02</td><td>0.1202569391</td><td>0.0007494178313</td><td>87.90241131</td><td>152.3268038</td><td>0.2083942282</td><td>2.5</td></tr><tr><td>tatonnement</td><td>c12</td><td>0.1003983527</td><td>0.00117151351</td><td>5.737190833</td><td>10.01116353</td><td>0.1751910221</td><td>2</td></tr><tr><td>tatonnement</td><td>c08</td><td>0.08202379327</td><td>0.001040167253</td><td>9.320508792</td><td>18.29656967</td><td>0.1610163224</td><td>2.65</td></tr><tr><td>tatonnement</td><td>c19</td><td>0.08176401649</td><td>0.0009086120075</td><td>1.240698401</td><td>1.985673604</td><td>0.1308590784</td><td>2.2</td></tr><tr><td>tatonnement</td><td>c09</td><td>0.08136055095</td><td>0.001003992228</td><td>5.554144232</td><td>10.01984167</td><td>0.146776858</td><td>2.5</td></tr><tr><td>tatonnement</td><td>c18</td><td>0.07816924999</td><td>0.0008812026587</td><td>1.263037218</td><td>2.412242408</td><td>0.1492934469</td><td>3.15</td></tr><tr><td>tatonnement</td><td>c15</td><td>0.07571127155</td><td>0.001967993311</td><td>2.650366616</td><td>3.776603922</td><td>0.1078837483</td><td>2</td></tr><tr><td>tatonnement</td><td>c14</td><td>0.06729048865</td><td>0.001041975308</td><td>1.289189774</td><td>2.896580523</td><td>0.1511897803</td><td>3.45</td></tr><tr><td>tatonnement</td><td>c10</td><td>0.05092457821</td><td>0.0009952168714</td><td>1.294216784</td><td>2.344021872</td><td>0.09223209478</td><td>2.8</td></tr><tr><td>tatonnement</td><td>c13</td><td>0.04681349674</td><td>0.0007613262727</td><td>1.307505905</td><td>2.537576984</td><td>0.09085454327</td><td>3.05</td></tr><tr><td>tatonnement</td><td>c17</td><td>0.03721420602</td><td>0.0008390527231</td><td>1.354581878</td><td>2.841796553</td><td>0.07807221112</td><td>3.35</td></tr><tr><td>tatonnement</td><td>c01</td><td>0.03236573427</td><td>0.0008950077143</td><td>3.548748789</td><td>3.590778304</td><td>0.032749057</td><td>2.6</td></tr><tr><td>tatonnement</td><td>c03</td><td>0.02862811848</td><td>0.0007675144235</td><td>1.384669091</td><td>2.860370491</td><td>0.05913833554</td><td>3</td></tr><tr><td>tatonnement</td><td>c06</td><td>0.02780367438</td><td>0.001067455152</td><td>6.881450073</td><td>6.684915022</td><td>0.02700959806</td><td>2.25</td></tr><tr><td>tatonnement</td><td>c11</td><td>0.02496808687</td><td>0.001519048091</td><td>2.693829249</td><td>4.387525912</td><td>0.04066632218</td><td>3.2</td></tr><tr><td>tatonnement</td><td>c07</td><td>0.02082618067</td><td>0.0008168899478</td><td>1.501539751</td><td>3.464183839</td><td>0.04804782455</td><td>3.2</td></tr><tr><td>tatonnement</td><td>c16</td><td>0.01488220316</td><td>0.000826621073</td><td>1.610549053</td><td>4.255122094</td><td>0.03931925659</td><td>2.9</td></tr><tr><td>tatonnement</td><td>c04</td><td>0.009056296469</td><td>0.000754685184</td><td>2.689417076</td><td>6.833217761</td><td>0.02301005911</td><td>1.35</td></tr></tbody></table></div></div>
+<div class="tablefloat" id="tab-incidence"><figcaption class="tabcap"><span class="floatlabel">表 13.</span> 短缺的承担结构。中间使用、居民与政府投资的份额是被配给数量的分解。在计划制度下中间使用份额恰为零：中间使用者优先获得服务，负担落在居民（71%--79%）与政府投资（21%--29%）之上。这是推论 3 的具体化——总量由交付前沿固定，阶梯只决定由谁承担。</figcaption><div class="tabbody"><table><thead><tr><th>mechanism</th><th>shocked_sector</th><th>n_seeds</th><th>household_unmet_rate_mean</th><th>household_unmet_rate_peak</th><th>share_of_household_shortage_borne_by_shocked_sector</th><th>household_share_of_rationed</th><th>intermediate_share_of_rationed</th><th>gov_invest_share_of_rationed</th><th>intermediate_service_rate</th><th>intermediate_plan_gap_rate</th><th>x_ratio_min</th></tr></thead><tbody><tr><td>material_balance</td><td>c01</td><td>20</td><td>0.326802</td><td>1</td><td>0.248764</td><td>0.793386</td><td>0</td><td>0.206614</td><td>0.778112</td><td>0.221888</td><td>0.496904</td></tr><tr><td>material_balance</td><td>c02</td><td>20</td><td>0.323946</td><td>1</td><td>0.00134136</td><td>0.419128</td><td>0</td><td>0.580872</td><td>0.7703</td><td>0.2297</td><td>0.490049</td></tr><tr><td>material_balance</td><td>c03</td><td>20</td><td>0.163498</td><td>0.697449</td><td>0.459799</td><td>0.743945</td><td>0</td><td>0.256055</td><td>0.871734</td><td>0.128266</td><td>0.497292</td></tr><tr><td>material_balance</td><td>c04</td><td>20</td><td>0.169799</td><td>0.709846</td><td>0.12111</td><td>0.752983</td><td>0</td><td>0.247017</td><td>0.865805</td><td>0.134195</td><td>0.499564</td></tr><tr><td>material_balance</td><td>c05</td><td>20</td><td>0.324656</td><td>1</td><td>0.0300596</td><td>0.748798</td><td>0</td><td>0.251202</td><td>0.774154</td><td>0.225846</td><td>0.491269</td></tr><tr><td>material_balance</td><td>c06</td><td>20</td><td>0.304385</td><td>0.995291</td><td>0.178613</td><td>0.821921</td><td>0</td><td>0.178079</td><td>0.836162</td><td>0.163838</td><td>0.499467</td></tr><tr><td>material_balance</td><td>c07</td><td>20</td><td>0.222107</td><td>0.842906</td><td>0.38345</td><td>0.781969</td><td>0</td><td>0.218031</td><td>0.85111</td><td>0.14889</td><td>0.498174</td></tr><tr><td>material_balance</td><td>c08</td><td>20</td><td>0.337754</td><td>1</td><td>0.0562796</td><td>0.728265</td><td>0</td><td>0.271735</td><td>0.81489</td><td>0.18511</td><td>0.494641</td></tr><tr><td>material_balance</td><td>c09</td><td>20</td><td>0.342437</td><td>1</td><td>0.111279</td><td>0.73522</td><td>0</td><td>0.26478</td><td>0.788408</td><td>0.211592</td><td>0.493576</td></tr><tr><td>material_balance</td><td>c10</td><td>20</td><td>0.148748</td><td>0.660948</td><td>0.600613</td><td>0.728394</td><td>0</td><td>0.271606</td><td>0.874606</td><td>0.125394</td><td>0.494874</td></tr><tr><td>material_balance</td><td>c11</td><td>20</td><td>0.260492</td><td>0.916273</td><td>0.326021</td><td>0.808306</td><td>0</td><td>0.191694</td><td>0.849506</td><td>0.150494</td><td>0.498778</td></tr><tr><td>material_balance</td><td>c12</td><td>20</td><td>0.312061</td><td>1</td><td>0.142943</td><td>0.771461</td><td>0</td><td>0.228539</td><td>0.773738</td><td>0.226262</td><td>0.490802</td></tr><tr><td>material_balance</td><td>c13</td><td>20</td><td>0.16222</td><td>0.704154</td><td>0.58369</td><td>0.74231</td><td>0</td><td>0.25769</td><td>0.869021</td><td>0.130979</td><td>0.495336</td></tr><tr><td>material_balance</td><td>c14</td><td>20</td><td>0.243348</td><td>0.899582</td><td>0.690895</td><td>0.793215</td><td>0</td><td>0.206785</td><td>0.830775</td><td>0.169225</td><td>0.493117</td></tr><tr><td>material_balance</td><td>c15</td><td>20</td><td>0.303565</td><td>1</td><td>0.311816</td><td>0.77802</td><td>0</td><td>0.22198</td><td>0.780719</td><td>0.219281</td><td>0.49092</td></tr><tr><td>material_balance</td><td>c16</td><td>20</td><td>0.166896</td><td>0.701258</td><td>0.314567</td><td>0.767245</td><td>0</td><td>0.232755</td><td>0.856126</td><td>0.143874</td><td>0.498807</td></tr><tr><td>material_balance</td><td>c17</td><td>20</td><td>0.239815</td><td>0.8839</td><td>0.530278</td><td>0.782042</td><td>0</td><td>0.217958</td><td>0.842252</td><td>0.157748</td><td>0.496377</td></tr><tr><td>material_balance</td><td>c18</td><td>20</td><td>0.190092</td><td>0.775936</td><td>0.736527</td><td>0.758687</td><td>0</td><td>0.241313</td><td>0.851782</td><td>0.148218</td><td>0.491838</td></tr><tr><td>material_balance</td><td>c19</td><td>20</td><td>0.126942</td><td>0.501169</td><td>0.711593</td><td>0.460523</td><td>0</td><td>0.539477</td><td>0.831037</td><td>0.168963</td><td>0.476871</td></tr><tr><td>material_balance</td><td>c20</td><td>20</td><td>0.288555</td><td>1</td><td>0.454381</td><td>0.777832</td><td>0</td><td>0.222168</td><td>0.787013</td><td>0.212987</td><td>0.487566</td></tr><tr><td>rationing_priority</td><td>c01</td><td>20</td><td>0.339061</td><td>1</td><td>0.248042</td><td>0.801509</td><td>0</td><td>0.198491</td><td>0.960034</td><td>0.0399661</td><td>0.485725</td></tr><tr><td>rationing_priority</td><td>c02</td><td>20</td><td>0.330933</td><td>1</td><td>0.00130901</td><td>0.437431</td><td>0</td><td>0.562569</td><td>0.902973</td><td>0.0970266</td><td>0.478017</td></tr><tr><td>rationing_priority</td><td>c03</td><td>20</td><td>0.198235</td><td>0.715198</td><td>0.501708</td><td>0.771725</td><td>0</td><td>0.228275</td><td>0.981777</td><td>0.0182226</td><td>0.484721</td></tr><tr><td>rationing_priority</td><td>c04</td><td>20</td><td>0.204794</td><td>0.727417</td><td>0.138429</td><td>0.777765</td><td>0</td><td>0.222235</td><td>0.983183</td><td>0.0168175</td><td>0.485235</td></tr><tr><td>rationing_priority</td><td>c05</td><td>20</td><td>0.331086</td><td>1</td><td>0.0301679</td><td>0.760882</td><td>0</td><td>0.239118</td><td>0.947825</td><td>0.0521751</td><td>0.483146</td></tr><tr><td>rationing_priority</td><td>c06</td><td>20</td><td>0.334182</td><td>0.999505</td><td>0.193171</td><td>0.83671</td><td>0</td><td>0.16329</td><td>0.994518</td><td>0.00548246</td><td>0.487608</td></tr><tr><td>rationing_priority</td><td>c07</td><td>20</td><td>0.25861</td><td>0.856332</td><td>0.418658</td><td>0.803634</td><td>0</td><td>0.196366</td><td>0.988115</td><td>0.0118852</td><td>0.48713</td></tr><tr><td>rationing_priority</td><td>c08</td><td>20</td><td>0.335551</td><td>1</td><td>0.0502705</td><td>0.738422</td><td>0</td><td>0.261578</td><td>0.932161</td><td>0.0678393</td><td>0.481459</td></tr><tr><td>rationing_priority</td><td>c09</td><td>20</td><td>0.33468</td><td>1</td><td>0.0958268</td><td>0.741825</td><td>0</td><td>0.258175</td><td>0.946782</td><td>0.0532178</td><td>0.484585</td></tr><tr><td>rationing_priority</td><td>c10</td><td>20</td><td>0.182739</td><td>0.675821</td><td>0.638967</td><td>0.758628</td><td>0</td><td>0.241372</td><td>0.978289</td><td>0.0217108</td><td>0.4848</td></tr><tr><td>rationing_priority</td><td>c11</td><td>20</td><td>0.291886</td><td>0.929632</td><td>0.352223</td><td>0.824826</td><td>0</td><td>0.175174</td><td>0.995067</td><td>0.00493315</td><td>0.485793</td></tr><tr><td>rationing_priority</td><td>c12</td><td>20</td><td>0.331443</td><td>1</td><td>0.153028</td><td>0.784732</td><td>0</td><td>0.215268</td><td>0.965913</td><td>0.0340868</td><td>0.479572</td></tr><tr><td>rationing_priority</td><td>c13</td><td>20</td><td>0.197658</td><td>0.717536</td><td>0.624799</td><td>0.768187</td><td>0</td><td>0.231813</td><td>0.982243</td><td>0.017757</td><td>0.483264</td></tr><tr><td>rationing_priority</td><td>c14</td><td>20</td><td>0.273301</td><td>0.906405</td><td>0.716855</td><td>0.809964</td><td>0</td><td>0.190036</td><td>0.993595</td><td>0.00640545</td><td>0.481485</td></tr><tr><td>rationing_priority</td><td>c15</td><td>20</td><td>0.32821</td><td>1</td><td>0.383601</td><td>0.794066</td><td>0</td><td>0.205934</td><td>0.973818</td><td>0.0261824</td><td>0.481825</td></tr><tr><td>rationing_priority</td><td>c16</td><td>20</td><td>0.20071</td><td>0.7202</td><td>0.348753</td><td>0.789058</td><td>0</td><td>0.210942</td><td>0.997363</td><td>0.00263732</td><td>0.483607</td></tr><tr><td>rationing_priority</td><td>c17</td><td>20</td><td>0.273393</td><td>0.896125</td><td>0.565827</td><td>0.801767</td><td>0</td><td>0.198233</td><td>0.986886</td><td>0.0131141</td><td>0.483616</td></tr><tr><td>rationing_priority</td><td>c18</td><td>20</td><td>0.226196</td><td>0.7883</td><td>0.76533</td><td>0.782986</td><td>0</td><td>0.217014</td><td>0.98465</td><td>0.0153496</td><td>0.482557</td></tr><tr><td>rationing_priority</td><td>c19</td><td>20</td><td>0.121578</td><td>0.509053</td><td>0.640033</td><td>0.734452</td><td>0</td><td>0.265548</td><td>0.983</td><td>0.0170002</td><td>0.481247</td></tr><tr><td>rationing_priority</td><td>c20</td><td>20</td><td>0.309809</td><td>1</td><td>0.613471</td><td>0.800368</td><td>0</td><td>0.199632</td><td>0.983206</td><td>0.0167942</td><td>0.477372</td></tr><tr><td>tatonnement</td><td>c01</td><td>20</td><td>0.363013</td><td>1</td><td>0.223686</td><td>0.707499</td><td>0</td><td>0.292501</td><td>0.956324</td><td>0.0436765</td><td>0.496273</td></tr><tr><td>tatonnement</td><td>c02</td><td>20</td><td>0.451868</td><td>1</td><td>0.0017128</td><td>0.31381</td><td>0</td><td>0.68619</td><td>0.878086</td><td>0.121914</td><td>0.489368</td></tr><tr><td>tatonnement</td><td>c03</td><td>20</td><td>0.148515</td><td>0.674365</td><td>0.388646</td><td>0.670363</td><td>0</td><td>0.329637</td><td>0.945257</td><td>0.0547428</td><td>0.495995</td></tr><tr><td>tatonnement</td><td>c04</td><td>20</td><td>0.151283</td><td>0.686411</td><td>0.090686</td><td>0.675444</td><td>0</td><td>0.324556</td><td>0.950007</td><td>0.0499926</td><td>0.497941</td></tr><tr><td>tatonnement</td><td>c05</td><td>20</td><td>0.388979</td><td>1</td><td>0.0341801</td><td>0.656741</td><td>0</td><td>0.343259</td><td>0.922583</td><td>0.0774169</td><td>0.490545</td></tr><tr><td>tatonnement</td><td>c06</td><td>20</td><td>0.337465</td><td>0.994744</td><td>0.153051</td><td>0.754061</td><td>0</td><td>0.245939</td><td>0.988116</td><td>0.0118839</td><td>0.497822</td></tr><tr><td>tatonnement</td><td>c07</td><td>20</td><td>0.225106</td><td>0.831428</td><td>0.33229</td><td>0.713915</td><td>0</td><td>0.286085</td><td>0.965258</td><td>0.0347424</td><td>0.496722</td></tr><tr><td>tatonnement</td><td>c08</td><td>20</td><td>0.440627</td><td>1</td><td>0.0613465</td><td>0.646652</td><td>0</td><td>0.353348</td><td>0.919784</td><td>0.0802157</td><td>0.49344</td></tr><tr><td>tatonnement</td><td>c09</td><td>20</td><td>0.400685</td><td>1</td><td>0.10775</td><td>0.632826</td><td>0</td><td>0.367174</td><td>0.926457</td><td>0.0735429</td><td>0.492557</td></tr><tr><td>tatonnement</td><td>c10</td><td>20</td><td>0.1308</td><td>0.635202</td><td>0.526044</td><td>0.64864</td><td>0</td><td>0.35136</td><td>0.932212</td><td>0.0677878</td><td>0.49399</td></tr><tr><td>tatonnement</td><td>c11</td><td>20</td><td>0.274352</td><td>0.909707</td><td>0.283056</td><td>0.74257</td><td>0</td><td>0.25743</td><td>0.988074</td><td>0.0119256</td><td>0.497231</td></tr><tr><td>tatonnement</td><td>c12</td><td>20</td><td>0.350544</td><td>1</td><td>0.156412</td><td>0.68561</td><td>0</td><td>0.31439</td><td>0.930618</td><td>0.0693818</td><td>0.490119</td></tr><tr><td>tatonnement</td><td>c13</td><td>20</td><td>0.145279</td><td>0.681373</td><td>0.511719</td><td>0.662296</td><td>0</td><td>0.337704</td><td>0.943966</td><td>0.0560344</td><td>0.494308</td></tr><tr><td>tatonnement</td><td>c14</td><td>20</td><td>0.254117</td><td>0.892678</td><td>0.664487</td><td>0.72684</td><td>0</td><td>0.27316</td><td>0.981757</td><td>0.0182435</td><td>0.492037</td></tr><tr><td>tatonnement</td><td>c15</td><td>20</td><td>0.337212</td><td>1</td><td>0.360893</td><td>0.696505</td><td>0</td><td>0.303495</td><td>0.948223</td><td>0.0517771</td><td>0.491132</td></tr><tr><td>tatonnement</td><td>c16</td><td>20</td><td>0.149443</td><td>0.677636</td><td>0.250805</td><td>0.697379</td><td>0</td><td>0.302621</td><td>0.993804</td><td>0.00619641</td><td>0.497301</td></tr><tr><td>tatonnement</td><td>c17</td><td>20</td><td>0.250537</td><td>0.875902</td><td>0.490402</td><td>0.71271</td><td>0</td><td>0.28729</td><td>0.959655</td><td>0.0403451</td><td>0.495034</td></tr><tr><td>tatonnement</td><td>c18</td><td>20</td><td>0.181204</td><td>0.758692</td><td>0.68526</td><td>0.685769</td><td>0</td><td>0.314231</td><td>0.951012</td><td>0.0489876</td><td>0.491323</td></tr><tr><td>tatonnement</td><td>c19</td><td>20</td><td>0.0655666</td><td>0.455168</td><td>0.497911</td><td>0.545645</td><td>0</td><td>0.454355</td><td>0.934551</td><td>0.0654485</td><td>0.491509</td></tr><tr><td>tatonnement</td><td>c20</td><td>20</td><td>0.316989</td><td>1</td><td>0.526381</td><td>0.703816</td><td>0</td><td>0.296184</td><td>0.951088</td><td>0.0489119</td><td>0.487513</td></tr></tbody></table></div></div>
+<h3 id="sec:res-rationing"><span class="secno">6.6</span> 冲击下的配给与影子价格</h3>
+<p>关于计划的论文最常被追问的比较，是扰动下配给与价格的对比，而它并不给出固定的排序。三个预注册冲击规模是产能<strong>乘数</strong> $0.1$、$0.3$ 与 $0.5$，故实际产能损失为 $90\%$、$70\%$ 与 $50\%$；表格所报告的是实际损失，这是读者所需的。</p>
+<p>在百分之五十的损失下，配给交付基年产出的 $0.9541$，短缺率 $4.53\%$，福利 $248.72$；试探性定价交付 $0.9451$，短缺率 $2.89\%$，福利 $246.79$：计划机制交付更多产出与更高福利，却记录更高的短缺率。在百分之七十处，产出排序反转，配给为 $0.8591$、试探性定价为 $0.8926$，尽管福利仍偏向配给，$238.64$ 对 $231.70$。在百分之九十处，产出差距进一步向试探性定价倾斜，$0.7591$ 对 $0.8088$，而福利仍偏向配给，$233.08$ 对 $224.55$。</p>
+<p>诚实的读法是：两种制度不能被任何单一指标排序，而扰动的深度改变了计划者会偏好哪一个。配给保护福利，并通过阶梯分散负担；价格机制在损失深重时出清更多市场，却交付更少居民所看重的东西。只报告短缺率会使试探性定价在每一深度上都显得更好；只报告产出则会使它在百分之五十之上显得更好；二者都不是排序。这就是第 <a class="xref" href="#sec:invariance">第5.5节</a> 节论证的实践形式。</p>
+<div class="tablefloat" id="tab-rationing_shadow"><figcaption class="tabcap"><span class="floatlabel">表 14.</span> 三个扰动深度下的配给与影子价格。产能损失为百分之十、三十与五十；每单元二十颗种子。两种制度不能被任何单一指标排序：在最深冲击处配给交付更多产出与更高福利、却记录更高短缺率，而在最浅冲击处交付更少产出。</figcaption><div class="tabbody"><table><thead><tr><th>mechanism</th><th>shock_size</th><th>capacity_loss</th><th>n_seeds</th><th>mean_shortage_rate_mean</th><th>mean_shortage_rate_sd</th><th>mean_welfare_mean</th><th>mean_welfare_sd</th><th>output_ratio_mean_mean</th><th>mean_spoilage_rate_mean</th></tr></thead><tbody><tr><td>rationing_priority</td><td>0.5</td><td>50</td><td>20</td><td>0.04533847817478169</td><td>0.00130255377536831</td><td>248.72461759578914</td><td>0.2617795281345202</td><td>0.9541080560675235</td><td>6.357052852865073e-05</td></tr><tr><td>rationing_priority</td><td>0.3</td><td>70</td><td>20</td><td>0.1393673972784685</td><td>0.002743920282680217</td><td>238.63692679048842</td><td>0.5799185817555687</td><td>0.8591414167042248</td><td>0.014161269425517705</td></tr><tr><td>rationing_priority</td><td>0.1</td><td>90</td><td>20</td><td>0.19367215690641934</td><td>0.003331863899727765</td><td>233.08006577210114</td><td>0.1766963445930335</td><td>0.7590839083071879</td><td>0.019205562538957</td></tr><tr><td>tatonnement</td><td>0.5</td><td>50</td><td>20</td><td>0.02894959223164778</td><td>0.0011729561737627095</td><td>246.79241175106569</td><td>0.560134588333395</td><td>0.9451090712991445</td><td>0.01607297874738093</td></tr><tr><td>tatonnement</td><td>0.3</td><td>70</td><td>20</td><td>0.10933603253350037</td><td>0.0020769650015235153</td><td>231.70273434150923</td><td>0.2920861686426012</td><td>0.892625674022066</td><td>0.0656956680179737</td></tr><tr><td>tatonnement</td><td>0.1</td><td>90</td><td>20</td><td>0.17082789174282553</td><td>0.0043109673941890735</td><td>224.55002021215256</td><td>1.050753095698734</td><td>0.8087645488151243</td><td>0.09603966600645918</td></tr></tbody></table></div></div>
+<h3 id="sec:res-dual"><span class="secno">6.7</span> 双轨制：形式上成立，经济上不可辨</h3>
+<p>H5 预测双轨制计划份额存在内点最优。最终扫描找到了一个，其意义是预注册所允许的最弱一种：在零报告时滞下，福利自 $\theta=0$ 的 $252.2143$ 升至 $\theta=0.5$ 的 $252.331$，回落至 $\theta=0.8$ 的 $252.305$，在 $\theta=0.9$ 达到 $252.336$ 的峰值，再降至计划轨独占端点 $\theta=1$ 的 $252.326$。最大值是内点，剖面非单调，故预注册的预测在形式上被满足，而两项 H5 检验中有一项在 $p=0.0045$ 处通过 Holm 校正。</p>
+<p>把它报告为经济学发现则是错的。十一个单元的全部跨度是 $0.122$，而同一批单元的跨种子标准差从 $0.067$ 到 $0.146$：最优与最劣制度参数化之差，小于单个单元的抽样误差。$\theta=0.9$ 处最大值与 $\theta=1$ 端点之间百分之三的差异，不是本设计所能看见的差异；而最大值的位置随时滞移动，正是排序噪声的样子。可以站得住的句子是：扫描检出非单调性，却未检出有经济意义的内点最优；一两个十分之一福利点的混合优势不构成政策余地。</p>
+<p>方向的稳定性并不跨测量它的人工制品而成立，而这种不稳定比任何单一标准误都更有价值。同一参数现在存在三次扫描。此处报告的参考表轻微上升。一次基于 $c12$ 冲击的单种子笔记本扫描单调下降，自 $\theta=0$ 的 $247.44$ 降至 $\theta=1$ 的 $247.19$，把最大值放在相反的边界上。早先的参考运行与最终区块在符号与最大值位置上皆不一致。当三件人工制品一致表明某现象存在时，它们是证据；当它们只一致表明剖面不平、却在斜率方向上相悖时，其发现便是该设计未能分辨该参数。我们报告这一分歧，而不是它的平均；笔记本扫描存于代码库中，供任何人检验这个三角形的第三个角。</p>
+<p>扫描中有一处属于假象，并如此标注。市场轨价格波动率单调下降至 $\theta=1$ 处的恰为零，但在 $\theta=1$ 处市场轨在经济中已无份额，也没有市场可供波动。该下降在其端点处是定义性的；该列的有信息部分，是自 $\theta=0.1$ 的 $0.0100$ 到 $\theta=0.9$ 的 $0.0074$ 的平缓下降，而不是那一步到零的跃落。</p>
+<p>表 <a class="xref" href="#tab-dual_track">表15</a> 报告两个时滞下的扫描。</p>
+<div class="tablefloat" id="tab-dual_track"><figcaption class="tabcap"><span class="floatlabel">表 15.</span> 两个报告时滞下的双轨制份额 $\theta$，每单元二十颗种子。预注册的内点最优预测<strong>未</strong>获支持，附着于其上的否证条件亦未获满足：福利对 $\theta$ 既非单调也非单峰，全扫描跨度（零时滞 $0.122$、三时滞 $0.099$）不大于同一批单元的跨种子标准差（零时滞 $0.067$ 至 $0.146$）。最大值位置在两个时滞之间由 $\theta=0.9$ 移到 $\theta=1.0$，这正是排序噪声的样子。扫描确实确立的，是关于量级的否定结果：若混合最优存在，其福利内容小于二十颗种子的实验所能分辨。市场轨价格波动率在 $\theta=1$ 处按定义恰为零，因为市场轨在那里已无份额。</figcaption><div class="tabbody"><table><thead><tr><th>theta</th><th>lag_reporting</th><th>welfare</th><th>welfare_sd</th><th>shortage</th><th>output_base</th><th>price_volatility</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>252.214296</td><td>0.06955676075</td><td>0.0296703605</td><td>0.9672200134</td><td>0.009538155621</td></tr><tr><td>0</td><td>3</td><td>251.6449476</td><td>0.05526001331</td><td>0.03775212061</td><td>0.9660133823</td><td>0.009997068</td></tr><tr><td>0.1</td><td>0</td><td>252.2195192</td><td>0.06703514306</td><td>0.02995054097</td><td>0.9679677349</td><td>0.009993423133</td></tr><tr><td>0.1</td><td>3</td><td>251.6521401</td><td>0.0549961225</td><td>0.03793246817</td><td>0.9665575254</td><td>0.01033793432</td></tr><tr><td>0.2</td><td>0</td><td>252.2566844</td><td>0.07249748566</td><td>0.03025679067</td><td>0.9687787445</td><td>0.009956596989</td></tr><tr><td>0.2</td><td>3</td><td>251.6703852</td><td>0.05961368265</td><td>0.03819335783</td><td>0.9671931228</td><td>0.01031925392</td></tr><tr><td>0.3</td><td>0</td><td>252.290145</td><td>0.08235662706</td><td>0.03046404428</td><td>0.9693992969</td><td>0.009843722991</td></tr><tr><td>0.3</td><td>3</td><td>251.6757551</td><td>0.05439854331</td><td>0.03847575136</td><td>0.9677770518</td><td>0.01024317968</td></tr><tr><td>0.4</td><td>0</td><td>252.3158875</td><td>0.08965774322</td><td>0.03068494783</td><td>0.9699761477</td><td>0.009682025881</td></tr><tr><td>0.4</td><td>3</td><td>251.6754839</td><td>0.05605955669</td><td>0.0387085138</td><td>0.9682305643</td><td>0.0101386079</td></tr><tr><td>0.5</td><td>0</td><td>252.3311133</td><td>0.1030028668</td><td>0.03095665608</td><td>0.9705451584</td><td>0.009473031213</td></tr><tr><td>0.5</td><td>3</td><td>251.6658605</td><td>0.06103718878</td><td>0.03892267816</td><td>0.9686237737</td><td>0.01000812715</td></tr><tr><td>0.6</td><td>0</td><td>252.3283842</td><td>0.1249734024</td><td>0.03124323037</td><td>0.9711612433</td><td>0.009213964527</td></tr><tr><td>0.6</td><td>3</td><td>251.6688608</td><td>0.0514538312</td><td>0.03911425804</td><td>0.9688623509</td><td>0.009853037523</td></tr><tr><td>0.7</td><td>0</td><td>252.3176286</td><td>0.1460431994</td><td>0.03124370142</td><td>0.9711338727</td><td>0.008917720508</td></tr><tr><td>0.7</td><td>3</td><td>251.6626055</td><td>0.04199088967</td><td>0.03899001654</td><td>0.9682526489</td><td>0.009710271664</td></tr><tr><td>0.8</td><td>0</td><td>252.3047256</td><td>0.1395510204</td><td>0.03125276077</td><td>0.9709567225</td><td>0.008575215546</td></tr><tr><td>0.8</td><td>3</td><td>251.6476706</td><td>0.03163016418</td><td>0.03887737427</td><td>0.9676429111</td><td>0.009439918075</td></tr><tr><td>0.9</td><td>0</td><td>252.3364958</td><td>0.1332911718</td><td>0.0312189108</td><td>0.971337079</td><td>0.007435156201</td></tr><tr><td>0.9</td><td>3</td><td>251.6547414</td><td>0.02682789342</td><td>0.03879285752</td><td>0.9678495141</td><td>0.008412857862</td></tr><tr><td>1</td><td>0</td><td>252.3256352</td><td>0.1242941955</td><td>0.03215005055</td><td>0.971547275</td><td>0</td></tr><tr><td>1</td><td>3</td><td>251.7439418</td><td>0.04324071521</td><td>0.03812986958</td><td>0.9674989811</td><td>0</td></tr></tbody></table></div></div>
+<h3 id="sec:res-robust"><span class="secno">6.8</span> 稳健性</h3>
+<p>三项稳健性主张已经足够，而区块支持它们。第一，模型的脆弱性属于观测而非技术：提高观测噪声使产出降至 $0.7863$，而参考水平为 $0.9437$、无观测噪声时为 $0.9640$，故几乎全部变异都是由计划者图景的质量而非生产的物理所买来的。第二，排序不是某一份投入产出表的属性：在合成基础上物资平衡的产出比为 $0.9307$，而 Eurostat 表为 $0.9437$，故租金在技术完全更换后依然存在，而其量级移动约一个百分点。第三，第 <a class="xref" href="#sec:res-decomp">第6.3节</a> 节的劳动力条件在稳健性区块中复现：增益 $0.30$ 配平衡，在劳动供给因子 $1.05$ 时使产出降至 $0.8291$，$1.15$ 时 $0.8751$，$1.40$ 时 $0.9961$，$2.00$ 时 $1.0000$，而对照组全程为 $1.0000$。投入产出矩阵本身的扰动使产出在两个方向上移动都不足一个百分点。</p>
+<div class="tablefloat" id="tab-robustness"><figcaption class="tabcap"><span class="floatlabel">表 16.</span> 主要排序的稳健性。二十六个单元，覆盖替代基础、观测噪声水平、劳动供给因子、调整系数、福利权重、平衡轮数与扰动的投入产出矩阵。模型的脆弱性属于观测而非技术，排序在基础完全更换后依然成立，而 6.3 节的劳动力条件在此复现。</figcaption><div class="tabbody"><table><thead><tr><th>variant</th><th>n_seeds</th><th>substrate</th><th>lag_reporting</th><th>revision_gain</th><th>sigma_obs</th><th>sigma_demand</th><th>labour_supply_factor</th><th>mean_labour_utilisation</th><th>mean_investment_ratio</th><th>a_perturbation</th><th>mean_shortage_rate</th><th>mean_shortage_rate_sd</th><th>peak_shortage_rate</th><th>mean_welfare_loss</th><th>mean_x_over_base</th><th>shock_output_amplification</th><th>recovery_half_life</th></tr></thead><tbody><tr><td>sigma_high</td><td>20</td><td>eurostat</td><td>3</td><td>0.3</td><td>0.02</td><td>0.06</td><td>1.15</td><td>0.65487</td><td>0.0403757</td><td>0</td><td>0.18682</td><td>0.0512226</td><td>0.571908</td><td>0.0696104</td><td>0.773988</td><td>42.9349</td><td>2.55</td></tr><tr><td>obs_noise_high</td><td>20</td><td>eurostat</td><td>3</td><td>0.3</td><td>0.1</td><td>0.01</td><td>1.15</td><td>0.654089</td><td>0.0413582</td><td>0</td><td>0.173314</td><td>0.0602305</td><td>0.468156</td><td>0.0592136</td><td>0.78632</td><td>31.7131</td><td>1.94737</td></tr><tr><td>labour105_taut</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>1.05</td><td>0.701363</td><td>0.0432759</td><td>0</td><td>0.132353</td><td>0.0147418</td><td>0</td><td>0.0323785</td><td>0.829086</td><td>0</td><td>0</td></tr><tr><td>eta_high</td><td>20</td><td>eurostat</td><td>3</td><td>0.6</td><td>0.02</td><td>0.01</td><td>1.15</td><td>0.756091</td><td>0.0428537</td><td>0</td><td>0.0661888</td><td>0.0105707</td><td>0.157145</td><td>0.0394921</td><td>0.903598</td><td>7.44916</td><td>1.89474</td></tr><tr><td>synthetic</td><td>20</td><td>synthetic</td><td>3</td><td>0.3</td><td>0.02</td><td>0.01</td><td>1.15</td><td>0.797406</td><td>0.0450602</td><td>0</td><td>0.0657482</td><td>0.00966111</td><td>0.239774</td><td>0.0350289</td><td>0.930727</td><td>8.3512</td><td>1.05</td></tr><tr><td>labour114_taut</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>1.15</td><td>0.710553</td><td>0.0434285</td><td>0</td><td>0.0631953</td><td>0.00835101</td><td>0</td><td>0.0199365</td><td>0.875094</td><td>0</td><td>0</td></tr><tr><td>a_perturb_2</td><td>20</td><td>eurostat</td><td>3</td><td>0.3</td><td>0.02</td><td>0.01</td><td>1.15</td><td>0.8039</td><td>0.0453624</td><td>0.05</td><td>0.0509698</td><td>0.00882053</td><td>0.195127</td><td>0.0458884</td><td>0.939421</td><td>6.50971</td><td>1.35</td></tr><tr><td>a_perturb_1</td><td>20</td><td>eurostat</td><td>3</td><td>0.3</td><td>0.02</td><td>0.01</td><td>1.15</td><td>0.804315</td><td>0.0453558</td><td>0.05</td><td>0.0503655</td><td>0.00862472</td><td>0.196075</td><td>0.0444133</td><td>0.939815</td><td>6.38255</td><td>1.35</td></tr><tr><td>balance_rounds_6</td><td>20</td><td>eurostat</td><td>3</td><td>0.3</td><td>0.02</td><td>0.01</td><td>1.15</td><td>0.806751</td><td>0.0454063</td><td>0</td><td>0.0468112</td><td>0.00884878</td><td>0.188913</td><td>0.0406342</td><td>0.942643</td><td>5.71338</td><td>1.45</td></tr><tr><td>weights_high</td><td>20</td><td>eurostat</td><td>3</td><td>0.3</td><td>0.02</td><td>0.01</td><td>1.15</td><td>0.808186</td><td>0.0454947</td><td>0</td><td>0.0456723</td><td>0.00799767</td><td>0.18929</td><td>0.0405253</td><td>0.943748</td><td>5.70308</td><td>1.4</td></tr><tr><td>reference</td><td>20</td><td>eurostat</td><td>3</td><td>0.3</td><td>0.02</td><td>0.01</td><td>1.15</td><td>0.808186</td><td>0.0454947</td><td>0</td><td>0.0456723</td><td>0.00799767</td><td>0.18929</td><td>0.0405253</td><td>0.943748</td><td>5.70308</td><td>1.4</td></tr><tr><td>weights_low</td><td>20</td><td>eurostat</td><td>3</td><td>0.3</td><td>0.02</td><td>0.01</td><td>1.15</td><td>0.808186</td><td>0.0454947</td><td>0</td><td>0.0456723</td><td>0.00799767</td><td>0.18929</td><td>0.0405253</td><td>0.943748</td><td>5.70308</td><td>1.4</td></tr><tr><td>sigma_low</td><td>20</td><td>eurostat</td><td>3</td><td>0.3</td><td>0.02</td><td>0.005</td><td>1.15</td><td>0.81619</td><td>0.0457919</td><td>0</td><td>0.0390135</td><td>0.00586409</td><td>0.190015</td><td>0.0399446</td><td>0.949092</td><td>5.676</td><td>1.25</td></tr><tr><td>balance_rounds_0</td><td>20</td><td>eurostat</td><td>3</td><td>0.3</td><td>0.02</td><td>0.01</td><td>1.15</td><td>0.84632</td><td>0.0481729</td><td>0</td><td>0.0373301</td><td>0.00131549</td><td>0.191263</td><td>0.0380594</td><td>0.969778</td><td>5.66403</td><td>1.3</td></tr><tr><td>eta_low</td><td>20</td><td>eurostat</td><td>3</td><td>0.15</td><td>0.02</td><td>0.01</td><td>1.15</td><td>0.843629</td><td>0.0481016</td><td>0</td><td>0.0370243</td><td>0.00126043</td><td>0.191263</td><td>0.0382188</td><td>0.968041</td><td>5.66403</td><td>1.3</td></tr><tr><td>obs_noise_zero</td><td>20</td><td>eurostat</td><td>3</td><td>0.3</td><td>0</td><td>0.01</td><td>1.15</td><td>0.837075</td><td>0.0475236</td><td>0</td><td>0.033698</td><td>0.000636294</td><td>0.188968</td><td>0.0387751</td><td>0.964042</td><td>5.67065</td><td>1.3</td></tr><tr><td>labour140_taut</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>1.4</td><td>0.70961</td><td>0.0497481</td><td>0</td><td>0.0161571</td><td>0.000990593</td><td>0</td><td>0.00232257</td><td>0.996113</td><td>0</td><td>0</td></tr><tr><td>labour140_no_rev</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>1.4</td><td>0.71426</td><td>0.05</td><td>0</td><td>0.0161058</td><td>0.000952532</td><td>0</td><td>0.00187654</td><td>0.999964</td><td>0</td><td>0</td></tr><tr><td>labour114_rev_only</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>1.15</td><td>0.869534</td><td>0.05</td><td>0</td><td>0.0161058</td><td>0.000952532</td><td>0</td><td>0.00187654</td><td>0.999964</td><td>0</td><td>0</td></tr><tr><td>labour200_no_rev</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>2</td><td>0.499982</td><td>0.05</td><td>0</td><td>0.0161058</td><td>0.000952532</td><td>0</td><td>0.00187654</td><td>0.999964</td><td>0</td><td>0</td></tr><tr><td>labour200_rev_only</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>2</td><td>0.499982</td><td>0.05</td><td>0</td><td>0.0161058</td><td>0.000952532</td><td>0</td><td>0.00187654</td><td>0.999964</td><td>0</td><td>0</td></tr><tr><td>labour200_taut</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>2</td><td>0.499982</td><td>0.05</td><td>0</td><td>0.0161058</td><td>0.000952532</td><td>0</td><td>0.00187654</td><td>0.999964</td><td>0</td><td>0</td></tr><tr><td>labour114_no_rev</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>1.15</td><td>0.869534</td><td>0.05</td><td>0</td><td>0.0161058</td><td>0.000952532</td><td>0</td><td>0.00187654</td><td>0.999964</td><td>0</td><td>0</td></tr><tr><td>labour105_rev_only</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>1.05</td><td>0.952347</td><td>0.05</td><td>0</td><td>0.0161058</td><td>0.000952532</td><td>0</td><td>0.00187654</td><td>0.999964</td><td>0</td><td>0</td></tr><tr><td>labour105_no_rev</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>1.05</td><td>0.952347</td><td>0.05</td><td>0</td><td>0.0161058</td><td>0.000952532</td><td>0</td><td>0.00187654</td><td>0.999964</td><td>0</td><td>0</td></tr><tr><td>labour140_rev_only</td><td>20</td><td>eurostat</td><td>0</td><td>0.3</td><td>0.03</td><td>0.02</td><td>1.4</td><td>0.71426</td><td>0.05</td><td>0</td><td>0.0161058</td><td>0.000952532</td><td>0</td><td>0.00187654</td><td>0.999964</td><td>0</td><td>0</td></tr></tbody></table></div></div>
+<h2 id="sec:discussion"><span class="secno">7</span> 讨论</h2>
+<p>这些结果支持一种对计算争论的解读，它比争论本身所提供的更狭窄，而在我们看来也更有用。协调一个经济的信息成本，并没有出现在参与者寻找它的地方。Mises 与 Hayek 争论的是理性计算是否可能，Lange 以一个收敛故事作答；而这个模型说：价格机制从容地收敛，并且正因如此而无法出清市场；取而代之的数量机制则以一种与收敛毫不相干、而与可行性检验的单侧性全然相关的方式失稳。代价表现为从未被生产出来的产出，而不是短缺；它由一套具体的会计程序榨取，而非由一般意义上的计划；它以经济拥有多少余量为条件，因此是历史的变量而非制度的常数。</p>
+<p>由此得出三点关于如何开展这场争论的后果。第一，一个制度的信息需求不是一个可以从其规则中读出的标量；它是该规则必须运行的增益，而该增益是一个有待测量的均衡对象。一个在代数上看起来信息饥渴的制度，其运行增益可能低到使时滞对它无关紧要。第二，两种工具的相关失效方式并不对称。价格环路以惰性失效，数量环路以棘轮化失效，而二者在文献最常报告的统计量中都不可见，因为收入弹性的需求系统把产出损失转换为更小的短缺读数。第三，混合所得少于双轨制的理论文献所许诺的：本文的双轨制在仅有噪声的实验中表现最好，而在扫描中并未显示出内点最优，这提醒我们，混合工具的理由也许在于分配与政治，而非在于一个数据会为我们画出的福利-波动前沿。</p>
+<p>最有希望的扩展，正是劳动力条件所开启的那一个。若紧计划的代价是劳动力余量的函数，那么短缺文献所描述的现象——囤积、棘轮、软预算——在劳动市场上而非在商品市场上具有可观察的经验印记；一个带有显式劳动-闲暇边际与进入退出决策的模型，将使这一条件被估计而不是被模拟。这超出一份投入产出表与一个机械居民部门所能承载的范围，也是我们下一步所去之处。</p>
+<h2 id="sec:limitations"><span class="secno">8</span> 局限</h2>
+<p>本研究的局限是实质性的，以下按其相对于结论的重要性、而非按最有利于自身的顺序陈述。</p>
+<p>单位约定是第一位且最严重的一条。所有数量都是固定价格的价值量，故某种商品的「短缺」是价值意义上的缺口，无法区分「正确商品的短缺」与「错误商品的短缺」。一个以正确总量、错误构成生产的经济，会与一个以正确构成生产的经济显得一样好，而对数福利函数只部分缓解这一点。实物量的异质性超出范围。</p>
+<p>校准依赖单一年份的单一份投入产出表，且技术是 Leontief 式的，因而僵硬：生产中没有替代，没有技术变化，运行期内也没有资本在部门之间的再配置。在一篇主题是短缺经由网络的传导的论文中，缺乏替代是一个实质性假定，因为替代正是真实经济吸收部门冲击的主要渠道。合成基础与 B6 中的扰动矩阵检验了对系数的敏感性，却没有检验对「缺乏替代」本身的敏感性，后者留待后续工作。</p>
+<p>模型中属于短边可行性规划问题的一项性质应当列入此表，因为它塑造结果而非仅仅限制结果。该规划问题在可行性约束下最大化总产出，而在劳动约束下，这一目标把削减集中在劳动密集部门：本文所报告运行中的最低填充比为 $0.23$。这是目标函数的性质而非制度的性质——一个 maximin 目标，或一个惩罚部门离散度的目标，会把同一总量削减分散到各部门，从而改变损失的构成，尽管未必改变其规模。我们没有改变目标，读者也不应把损失的部门分布读作物资平衡计划的属性，当它部分地是最大化对象的属性时。</p>
+<p>模型中没有货币与金融。价格是指数；没有现金先行约束，没有信贷，也没有名义调整与实际调整的区分。投资是一个需求类别而非一项决策，居民也不作跨期优化。行为完全是机械的：居民不学习、不预期政策，也不对配给作策略性反应。特别地，没有任何激励或博弈行为——没有隐藏产能，没有虚假报表，没有棘轮效应——尽管激励短缺机制的软预算文献在很大程度上正是关于这些行为的 <a class="cite" href="#ref-kornai_maskin_roland2003">[17]</a>。因此模型捕捉了软预算的<strong>会计</strong>后果，却没有捕捉其<strong>行为</strong>起因；任何由模型得出、关于软预算福利成本的结论，都应被读作下界。</p>
+<p>信息处理刻意狭窄。时滞是确定性的且对各变量相同；噪声是乘性的、对数正态的，且跨部门与跨期独立。真实的统计体系具有异质时滞、相关修订与系统偏误，而计划者可能知道某些序列比另一些更可靠，并据此加权。这些都没有建模。策略维度也没有：观察对象对每种制度相同，这是比较得以干净的原因，但它同时排除了某一制度投资于更好数据的可能，也排除了主体向该制度作策略性报告的可能。</p>
+<p>最后，福利函数的规范内容不应被误认为福利经济学。权重、贴现因子与惩罚系数都是为合理而选取、随后加以变动的参数；它们不是社会福利函数的估计，任何结果都不应被读作关于社会应当偏好什么的断言。本文的主张是比较性的与条件性的：给定这些权重，各制度如何排序，以及该排序是否依赖时滞。拒绝这些权重的读者可以重跑。</p>
+<h2 id="sec:repro"><span class="secno">9</span> 可复现性</h2>
+<p>本文每一个数字都由代码库中的代码生成，而由主张到脚本的映射写在主张附近，而不是集中在附录里。模拟核心、机制、实验网格、聚合与图形生成是接口明确的独立模块，而本文档的构建本身也是一个脚本。</p>
+<p>中文版与本论文的英文版由同一个 <code>scripts/build_paper.py</code> 构建，该脚本把 <code>paper/main.md</code> 或 <code>paper/main_zh.md</code> 转换为独立 HTML 文档——数学由内容分发网络上的 KaTeX 在浏览器中排版，章节、图、表与公式自动编号，交叉引用自动解析——随后以 Microsoft Edge 的无头模式打印为 PDF。<code>--lang zh</code> 开关追加中文字体回退、把文档语言设为 <code>zh-CN</code>、并提高行距与字距，因为中文在 11 磅处比拉丁文更紧更高，否则版面会显得局促；英文构建的字节级输出未因该开关而改变。不需要 LaTeX 安装，也不需要 pandoc，这是一个刻意的选择：管道必须能在一台只装了浏览器的干净机器上运行。解析图形与边界表由 <code>paper/make_figures.py</code> 生成，它直接由特征多项式实现命题 <a class="xref" href="#prop:delay">命题 1</a>，并从头重算第 <a class="xref" href="#sec:theory">第4节</a> 与 <a class="xref" href="#sec:design">第5节</a> 节所引用的每一个数字；该脚本断言其所依赖的恒等式，故使闭合形式失效的代数改动会响亮地失败，而不是悄然无声。模拟结果由区块运行器产生、由实验模块聚合，每个区块写出清单，记录提交、Python 与 NumPy、SciPy 版本、情景哈希、种子表、运行实际耗时与时间戳。</p>
+<p>确定性是被强制而非被期待的。所有随机性都经 NumPy 的生成器接口，由（情景、种子）对播种；模拟路径上不存在全局随机状态，也不存在任何未播种的调用。同一情景、同一种子的两次运行在各机制下产生比特一致的外生流，这在测试套件中被断言，而配对设计正依赖该断言。会计稽核不是可以关闭的诊断：超出尺度 $10^{-8}$ 的残差会抛出错误并中止运行，故一次完成的运行已在其每一期通过全部恒等式检验。</p>
+<p>模型描述遵循模拟模型 ODD 协议的第二版修订，该协议规定了关于目的、实体、状态变量、过程概览与调度、设计概念、初始化、输入数据与子模型的结构化叙述 <a class="cite" href="#ref-grimm2020">[39]</a>。第 <a class="xref" href="#sec:model">第3节</a> 与 <a class="xref" href="#sec:appendix_mech">Appendix B</a> 节的编排即为提供上述要素，而子模型规格给出的每项制度决策规则，其细节足以在不参照源代码的情况下重新实现。一次独立验证重跑了随机抽取的单元并重算了命题 <a class="xref" href="#prop:delay">命题 1</a> 的解析边界；其报告是单独的产物，凡有分歧之处予以报告，而不作悄然调和。</p>
+<p>教学笔记本套件中的两项结果值得作为比清单更强一类的可复现性证据记录在此。笔记本 03 仅凭第 <a class="xref" href="#sec:model">第3节</a> 节所写的规格重推单期——不导入引擎的期间函数——并逐比特复现每一个数组，最大绝对误差为 $0.0$，平衡残差为 $2.4\times10^{-17}$。笔记本 06 由存储结果重新生成时滞-机制表与时滞网格图：表格数值上被复原，图形逐像素复原，最大 RGB 绝对差为 $0$。一份能被第二个实现逐比特复现的规格，是比一份记录第一个实现所作所为的清单更强的主张。</p>
+<p>有两件事在狭义上刻意不可复现。种子到单元的指派由协议固定，故分析者无法挑选有利的种子子集；假设连同其否证条件事先陈述，故未通过检验的结果被报告为失败。因此代码库中负面结果与正面结果同样醒目，而对这类论文而言，这是可复现一词唯一的意义所在。</p>
+<h2 class="appendix" id="sec:appendix_a"><span class="secno">Appendix A</span> 支撑论证</h2>
+<h3 id="sec:app:lin"><span class="secno">A.1</span> 从 Lange 式规则到线性形式</h3>
+<p>把描述性规则化归为 <a class="xref" href="#eq-law">(1)</a> 的做法用于第 <a class="xref" href="#sec:theory">第4节</a> 节，其完整推导在此给出。设 $D(p,\cdot)$ 为某商品超额需求，作为其行政价格与其余状态的函数。设存在稳态 $(p^\star,\cdot)$ 使 $D(p^\star,\cdot)=0$，并设 $D$ 连续可微，在稳态处 $\partial D/\partial\log p=-a$，$a&gt;0$；符号是通常的那个，超额需求随行政价格上升而下降。协调者以 $k$ 期时滞观察超额需求，并施加比例规则 $\log p_{t+1}=\log p_t+\eta\widehat{D}<em t_1="t+1">{t-k}$，其中 $\widehat{D}$ 为所测超额需求。代入一阶展开 $D(p,\cdot)\approx-a(\log p-\log p^\star)$ 并写 $u_t=\log p_t-\log p^\star$，得 $u</em>$，即 $g=\eta a$ 时的 <a class="xref" href="#eq-law">(1)</a>。}=u_t-\eta a\,u_{t-k</p>
+<p>该化归有两点值得说明。弹性 $a$ 不是自然的常数：它取决于配给规则、库存位置与优先结构，故同一位行政者以同一 $\eta$ 在不同世界状态下面对不同的有效增益。这就是本文测量增益而非假定增益的原因。而所测超额需求与真实值之差，正是 <a class="xref" href="#eq-observation">(5)</a> 的测量噪声；线性分析视噪声为零，而 B6 中的噪声处理确立其存在时边界移动多少。</p>
+<h3 id="sec:app:crossing"><span class="secno">A.2</span> 穿越条件的代数</h3>
+<p>第 <a class="xref" href="#sec:theory">第4节</a> 节用到两个值得记录的恒等式。其一，对 $\theta\in(0,2\pi)$，</p>
+<div class="equation"><div class="eqbody">$$
+e^{i\theta}-1 \;=\; e^{i\theta/2}\left(e^{i\theta/2}-e^{-i\theta/2}\right) \;=\; 2i\sin(\theta/2)\,e^{i\theta/2} \;=\; 2\sin(\theta/2)\,e^{i(\theta/2+\pi/2)},
+$$</div><div class="eqno">(18)</div></div>
+<p>它同时给出模 $|e^{i\theta}-1|=2\sin(\theta/2)$ 与证明第一步所用的辐角。其二，导数分母的化简：在 $P_k(\cdot,g)$ 的根处有 $z^{k+1}=z^{k}-g$，故</p>
+<div class="equation"><div class="eqbody">$$
+z^{k}\big((k+1)z-k\big) \;=\; (k+1)z^{k+1}-kz^{k} \;=\; (k+1)(z^{k}-g)-kz^{k} \;=\; z^{k}-(k+1)g,
+$$</div><div class="eqno">(19)</div></div>
+<p>即 <a class="xref" href="#eq-crossdir">(12)</a> 所用的形式。由于 $|z|=1$ 有 $\bar z=1/z$ 与 $\mathrm{Re}(\bar z z')=-\mathrm{Re}\big(1/[z^{k}((k+1)z-k)]\big)$；把分子分母同乘 $z^{k}-(k+1)g$ 的共轭，得实部 $-(\cos k\theta-(k+1)g)/|z^{k}-(k+1)g|^{2}$，即所引的表达式。</p>
+<p>初等不等式 $2x/\pi\le\sin x\le x$（$x\in[0,\pi/2]$）被用到两次：第一步中用以从下方界定穿越值，推论 <a class="xref" href="#cor:budget">推论 2</a> 中用以得到 $kg^\star(k)&lt;\pi/2$。第一次需要的是在点 $x=\pi/(2(2k+1))\le\pi/2$ 处较弱的方向，该点对一切 $k\ge0$ 成立；第二次需要同一点处较强的方向，连同 $x\to0$ 时 $\sin x/x\to1$ 的极限。</p>
+<h3 id="sec:app:numeric"><span class="secno">A.3</span> 边界的数值验证</h3>
+<p>该命题经独立于代数的求根予以验证。对每个 $k\le12$ 以及增益 $0.999\,g^\star(k)$ 与 $1.001\,g^\star(k)$，数值计算 $z^{k+1}-z^{k}+g$ 的根并报告谱半径。这是真正的检验而非复述：边界公式不用于求根，只用于选取两个增益，故错误的闭合形式会把根置于错误的一侧。验证脚本断言：在该范围内每个 $k$ 上，较低增益处半径小于一、较高增益处大于一；$g=g^\star(k)$ 处单位圆上的根其辐角与 $\pi/(2k+1)$ 之差在 $10^{-9}$ 以内；由模拟脉冲响应估计的振幅增长率与谱半径之差在 $10^{-6}$ 以内。第二条断言把代数与可观测动力学联系起来：它检验推论 <a class="xref" href="#cor:period">推论 1</a> 所引的周期是否确为时间序列中出现的周期，而这正是模拟被要求确认的预测。</p>
+<p>一份独立实现的 <code>verification/check1_theorem.py</code> 在未参照本文推导的情况下编写，经三条互不共用代码的路径对 $k=0,\dots,30$ 确认该结果：一是以 Schur–Cohn 反射递推在不计算任何根的情况下判定稳定性，并先在四百个随机多项式上对照谱半径自检；二是伴随矩阵的特征值；三是度量模拟轨迹增长指数与周期的时域估计。由无根 Schur 判据定位的边界与 $2\sin[\pi/(2(2k+1))]$ 在整个范围内吻合到 $2.9\times10^{-11}$；边界处谱半径与一的偏差至多 $2.7\times10^{-15}$；单位圆恒等式的最大残差为 $2.1\times10^{-16}$；边界周期对 $k=1,\dots,12$ 与 $2(2k+1)$ 之差在一个四分之一周期之内。三条独立路径得到同一组数字，其中一条根本不计算根——这就是本文其余部分所遵循的标准。</p>
+<h2 class="appendix" id="sec:appendix_mech"><span class="secno">Appendix B</span> 机制规格</h2>
+<h3 id="sec:app:interface"><span class="secno">B.1</span> 共同接口</h3>
+<p>每项制度针对同一接口实现三项决策，并被禁止改动共享状态。在计划步骤中，它接收 <a class="xref" href="#eq-observation">(5)</a> 的观察对象，返回总产出目标、意图最终交付、可选的优先级向量与一份诊断记录。在配置步骤中，它接收同一观察、状态与计划，连同名义供给向量——期初库存加计划产出——并返回中间投入配置矩阵、最终、政府、投资与库存配置向量，以及未满足居民需求向量。在价格步骤中，它接收观察、状态、计划、配置与一份只读的当期实现视图，返回下一期的价格向量。引擎掌管全部会计与全部可行性；超额索取的机制其索取会被按比例缩小且该事件被记录，而出厂实现在测试套件中被断言在平稳条件下不会触发该路径。</p>
+<h3 id="sec:app:rules"><span class="secno">B.2</span> 各制度的规则</h3>
+<p>线性规划在 Leontief 约束与产能界下最大化最终交付的加权和，即在 $(I-A)x\ge y$ 与 $x\le\bar x$ 下最大化 $w\cdot y$，使用所观察的需求与产能；其解是衡量其他制度的上界，其履行规则是向索取者按比例分摊。物资平衡按观察到的短缺成比例地修订产出目标，以修订系数为其增益参数，并在优先级阶层内按比例配置，其中优先阶层优先得到服务。其实际产出并非由按比例削减的级联产生：引擎精确求解短边规划问题 <a class="xref" href="#eq-shortside-lp">(16)</a>，那才是产能受约束的 Leontief 经济的正确短边，而级联仅作为计划努力的诊断保留。这正是推论 <a class="xref" href="#cor:posloop">推论 4</a> 预测无任何修订系数可容许的制度。优先级配给按优先级阶层发放行政配额，先耗尽较高阶层再及较低阶层，并在每一层内按比例配置。试探性定价按支付意愿配置，并以 <a class="xref" href="#eq-law2">(7)</a> 的 Lange 式规则、以调整系数 $\eta$ 更新价格。市场在期内以当前价格向量作瓦尔拉斯试错出清，是唯一被允许在<strong>期内</strong>迭代价格的制度；这是它的制度特权，而非实现上的意外。双轨制把每种商品分为按行政价格、份额为 $\theta$ 的计划轨，与按出清价格、份额为 $1-\theta$ 的市场轨，计划轨优先服务，市场轨出清剩余。</p>
+<div class="tablefloat" id="tab-parameters"><figcaption class="tabcap"><span class="floatlabel">表 17.</span> 固定参数与处理范围。标为可变者在稳健性区块 B6 中重新估计或扰动；其余参数在本文所报告的运行中固定。资本产出比在投入产出系数允许时取自系数，否则取平坦值 2.5，该回退办法在数据层中有文档记录。</figcaption><div class="tabbody"><table>
+<thead>
+<tr>
+<th style="text-align: left;">parameter</th>
+<th style="text-align: left;">meaning</th>
+<th style="text-align: left;">value or range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">$T$</td>
+<td style="text-align: left;">periods per run</td>
+<td style="text-align: left;">60</td>
+</tr>
+<tr>
+<td style="text-align: left;">burn-in</td>
+<td style="text-align: left;">periods discarded from statistics</td>
+<td style="text-align: left;">30</td>
+</tr>
+<tr>
+<td style="text-align: left;">$n$</td>
+<td style="text-align: left;">sectors</td>
+<td style="text-align: left;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;">$k$</td>
+<td style="text-align: left;">information lag, quarters</td>
+<td style="text-align: left;">0–6, treatment</td>
+</tr>
+<tr>
+<td style="text-align: left;">$\sigma$</td>
+<td style="text-align: left;">measurement noise, coefficient of variation</td>
+<td style="text-align: left;">0 unless varied in B6</td>
+</tr>
+<tr>
+<td style="text-align: left;">$\eta$</td>
+<td style="text-align: left;">tâtonnement adjustment coefficient</td>
+<td style="text-align: left;">calibrated; varied in B6</td>
+</tr>
+<tr>
+<td style="text-align: left;">$R$</td>
+<td style="text-align: left;">material-balance rounds</td>
+<td style="text-align: left;">3 primary; effort recorded</td>
+</tr>
+<tr>
+<td style="text-align: left;">$\theta$</td>
+<td style="text-align: left;">dual-track plan share</td>
+<td style="text-align: left;">0 to 1 in steps of 0.1</td>
+</tr>
+<tr>
+<td style="text-align: left;">$\beta$</td>
+<td style="text-align: left;">welfare discount factor</td>
+<td style="text-align: left;">0.98</td>
+</tr>
+<tr>
+<td style="text-align: left;">$w_i$</td>
+<td style="text-align: left;">welfare weights</td>
+<td style="text-align: left;">1.0; essentials 1.2</td>
+</tr>
+<tr>
+<td style="text-align: left;">$c_0$</td>
+<td style="text-align: left;">welfare floor</td>
+<td style="text-align: left;">$10^{-3}$ of base final demand</td>
+</tr>
+<tr>
+<td style="text-align: left;">$\kappa_i$</td>
+<td style="text-align: left;">capital–output ratio</td>
+<td style="text-align: left;">from input–output coefficients, else 2.5</td>
+</tr>
+</tbody>
+</table></div></div>
+<h3 id="sec:app:differences"><span class="secno">B.3</span> 各制度所不共享者</h3>
+<p>声称六种实现只在一个标量上不同，是不诚实的——尽管它们的<strong>参数</strong>如今确实如此。参数方面，设计已紧到不能再紧：早期构建中曾允许在机制之间漂移的居民侧设置——未满足需求的结转率、库存目标比率与目标修订的上下界——在六者间完全相同，故跨机制比较中仅有的自由参数是制度性的。不能等同的是记忆。线性规划携带需求向量与矩阵的逆；物资平衡携带一份计划与一个优先顺序；试探性定价携带一个价格向量及其自身历史；市场携带一本委托簿；双轨制携带计划与价格二者。因此这些制度在规则之外还于其所维持的状态上不同，而信息处理只固定了<strong>观察</strong>，并未固定内部记忆。这是被比较对象的一个特征——一个制度部分地就是它的记忆——但它确实意味着，两个制度在给定时滞下的绩效差异不能归因于单一参数。第 <a class="xref" href="#sec:measuring_gain">第5.6节</a> 节的有效增益测量，是设计所能接近「隔离相关维度」的最近一步，而它是一种测量，不是一种识别策略。本文所捍卫的主张因此是比较性的与条件性的：给定这些就是那些制度，给定时滞就是那个处理，它们绩效的排序由各自规则所需信息的新鲜程度所预测。</p>
+<h2 class="unnumbered" id="sec:references">参考文献</h2>
+<div class="references">
+<p id="ref-mises1920"><span class="refnum">[1]</span> von Mises, Ludwig (1920). Die Wirtschaftsrechnung im sozialistischen Gemeinwesen. First published in <em>Archiv für Sozialwissenschaft und Sozialpolitik</em>; English translation, "Economic Calculation in the Socialist Commonwealth", in <em>Classics in Austrian Economics</em>, vol. 3, London: Routledge, 2–31. doi:<a href="https://doi.org/10.4324/9781003547952-2">10.4324/9781003547952-2</a></p>
+<p id="ref-hayek1945"><span class="refnum">[2]</span> Hayek, Friedrich A. (1945). The Use of Knowledge in Society. <em>American Economic Review</em>, 35(4). Reprinted in <em>Classics in Austrian Economics</em>, vol. 3, London: Routledge, 258–271. doi:<a href="https://doi.org/10.4324/9781003547952-12">10.4324/9781003547952-12</a></p>
+<p id="ref-lange1936"><span class="refnum">[3]</span> Lange, Oskar (1936). On the Economic Theory of Socialism: Part One. <em>The Review of Economic Studies</em>, 4(1), 53. doi:<a href="https://doi.org/10.2307/2967660">10.2307/2967660</a></p>
+<p id="ref-lange1937"><span class="refnum">[4]</span> Lange, Oskar (1937). On the Economic Theory of Socialism: Part Two. <em>The Review of Economic Studies</em>, 4(2), 123. doi:<a href="https://doi.org/10.2307/2967609">10.2307/2967609</a> ## Shortage, rationing and disequilibrium</p>
+<p id="ref-eurostat_naio"><span class="refnum">[5]</span> Eurostat (2024). <em>Symmetric input–output table at basic prices (naio_10_cp1700)</em>. Eurostat database, reference year 2020, EU-27. Consulted through the Eurostat data browser: <a href="https://ec.europa.eu/eurostat/databrowser/view/naio_10_cp1700/default/table">naio_10_cp1700</a></p>
+<p id="ref-eurostat_manual"><span class="refnum">[6]</span> Eurostat (2008). <em>Eurostat Manual of Supply, Use and Input–Output Tables</em>. Luxembourg: Office for Official Publications of the European Communities. Methodology pages: <a href="https://ec.europa.eu/eurostat/web/esa-supply-use-input-tables/methodology">ESA supply, use and input–output tables</a></p>
+<p id="ref-ellman2014"><span class="refnum">[7]</span> Ellman, Michael (2014). <em>Socialist Planning</em>, 3rd edition. Cambridge: Cambridge University Press. doi:<a href="https://doi.org/10.1017/CBO9781139871341">10.1017/CBO9781139871341</a></p>
+<p id="ref-ericson1991"><span class="refnum">[8]</span> Ericson, Richard E. (1991). The Classical Soviet-Type Economy: Nature of the System and Implications for Reform. <em>Journal of Economic Perspectives</em>, 5(4), 11–27. doi:<a href="https://doi.org/10.1257/jep.5.4.11">10.1257/jep.5.4.11</a> ## The socialist calculation debate</p>
+<p id="ref-leontief1936"><span class="refnum">[9]</span> Leontief, Wassily (1936). Quantitative Input and Output Relations in the Economic Systems of the United States. <em>The Review of Economics and Statistics</em>, 18(3), 105. doi:<a href="https://doi.org/10.2307/1927837">10.2307/1927837</a></p>
+<p id="ref-leontief1941"><span class="refnum">[10]</span> Leontief, Wassily (1941). <em>The Structure of American Economy, 1919–1929: An Empirical Application of Equilibrium Analysis</em>. Cambridge, MA: Harvard University Press, xi + 181 pp. Metadata verified against the review in <em>The Journal of Economic History</em> 1(2), 246, doi:<a href="https://doi.org/10.1017/S0022050700053158">10.1017/S0022050700053158</a></p>
+<p id="ref-miller_blair2009"><span class="refnum">[11]</span> Miller, Ronald E. and Peter D. Blair (2009). <em>Input–Output Analysis: Foundations and Extensions</em>, 2nd edition. Cambridge: Cambridge University Press. doi:<a href="https://doi.org/10.1017/CBO9780511626982">10.1017/CBO9780511626982</a></p>
+<p id="ref-kantorovich1960"><span class="refnum">[12]</span> Kantorovich, Leonid V. (1960). Mathematical Methods of Organizing and Planning of Production. <em>Management Science</em>, 6(4), 366–422. (English translation of the 1939 Leningrad monograph.) doi:<a href="https://doi.org/10.1287/mnsc.6.4.366">10.1287/mnsc.6.4.366</a></p>
+<p id="ref-belykh2024"><span class="refnum">[13]</span> Belykh, Andrey A. (2024). Leonid Kantorovich's Economic Ideas and Their Perception in the USSR and the West. <em>AlterEconomics</em>, 21(1), 82–102. doi:<a href="https://doi.org/10.31063/altereconomics/2024.21-1.6">10.31063/altereconomics/2024.21-1.6</a></p>
+<p id="ref-neumann1945"><span class="refnum">[14]</span> von Neumann, John (1945). A Model of General Economic Equilibrium. <em>The Review of Economic Studies</em>, 13(1), 1. doi:<a href="https://doi.org/10.2307/2296111">10.2307/2296111</a></p>
+<p id="ref-kornai1992"><span class="refnum">[15]</span> Kornai, János (1992). <em>The Socialist System: The Political Economy of Communism</em>. Princeton: Princeton University Press, 644 pp. doi:<a href="https://doi.org/10.1515/9780691228020">10.1515/9780691228020</a></p>
+<p id="ref-kornai1986"><span class="refnum">[16]</span> Kornai, János (1986). The Soft Budget Constraint. <em>Kyklos</em>, 39(1), 3–30. doi:<a href="https://doi.org/10.1111/j.1467-6435.1986.tb01252.x">10.1111/j.1467-6435.1986.tb01252.x</a></p>
+<p id="ref-kornai_maskin_roland2003"><span class="refnum">[17]</span> Kornai, János, Eric Maskin and Gérard Roland (2003). Understanding the Soft Budget Constraint. <em>Journal of Economic Literature</em>, 41(4), 1095–1136. doi:<a href="https://doi.org/10.1257/jel.41.4.1095">10.1257/jel.41.4.1095</a></p>
+<p id="ref-dreze1975"><span class="refnum">[18]</span> Drèze, Jacques H. (1975). Existence of an Exchange Equilibrium under Price Rigidities. <em>International Economic Review</em>, 16(2), 301. doi:<a href="https://doi.org/10.2307/2525813">10.2307/2525813</a></p>
+<p id="ref-barro_grossman1971"><span class="refnum">[19]</span> Barro, Robert J. and Herschel I. Grossman (1971). A General Disequilibrium Model of Income and Employment. <em>American Economic Review</em>, 61(1), 82–93. Record consulted: <a href="https://openalex.org/works?filter=title.search:a%20general%20disequilibrium%20model%20of%20income%20and%20employment">OpenAlex</a> ## Delay, cycles and the stability of difference equations</p>
+<p id="ref-kornai_weibull1983"><span class="refnum">[20]</span> Kornai, János and Jörgen W. Weibull (1983). Paternalism, Buyers' and Sellers' Market. <em>Mathematical Social Sciences</em>, 6(2), 153–169. doi:<a href="https://doi.org/10.1016/0165-4896(83">10.1016/0165-4896(83)90003-3</a>90003-3)</p>
+<p id="ref-ezekiel1938"><span class="refnum">[21]</span> Ezekiel, Mordecai (1938). The Cobweb Theorem. <em>The Quarterly Journal of Economics</em>, 52(2), 255. doi:<a href="https://doi.org/10.2307/1881734">10.2307/1881734</a></p>
+<p id="ref-nerlove1958"><span class="refnum">[22]</span> Nerlove, Marc (1958). Adaptive Expectations and Cobweb Phenomena. <em>The Quarterly Journal of Economics</em>, 72(2), 227. doi:<a href="https://doi.org/10.2307/1880597">10.2307/1880597</a></p>
+<p id="ref-hommes1994"><span class="refnum">[23]</span> Hommes, Cars H. (1994). Dynamics of the Cobweb Model with Adaptive Expectations and Nonlinear Supply and Demand. <em>Journal of Economic Behavior and Organization</em>, 24(3), 315–335. doi:<a href="https://doi.org/10.1016/0167-2681(94">10.1016/0167-2681(94)90039-6</a>90039-6) ## Reform, transition and the dual track</p>
+<p id="ref-hale1977"><span class="refnum">[24]</span> Hale, Jack K. (1977). <em>Theory of Functional Differential Equations</em>. New York: Springer. doi:<a href="https://doi.org/10.1007/978-1-4612-9892-2">10.1007/978-1-4612-9892-2</a></p>
+<p id="ref-elaydi2005"><span class="refnum">[25]</span> Elaydi, Saber N. (2005). <em>An Introduction to Difference Equations</em>, 3rd edition. New York: Springer. doi:<a href="https://doi.org/10.1007/0-387-27602-5">10.1007/0-387-27602-5</a></p>
+<p id="ref-levin_may1976"><span class="refnum">[26]</span> Levin, Simon A. and Robert M. May (1976). A Note on Difference-Delay Equations. <em>Theoretical Population Biology</em>, 9(2), 178–187. doi:<a href="https://doi.org/10.1016/0040-5809(76">10.1016/0040-5809(76)90043-5</a>90043-5)</p>
+<p id="ref-cockshott_cottrell1993"><span class="refnum">[27]</span> Cockshott, W. Paul and Allin Cottrell (1993). Calculation, Complexity and Planning: The Socialist Calculation Debate Once Again. <em>Review of Political Economy</em>, 5(1), 73–112. doi:<a href="https://doi.org/10.1080/09538259300000005">10.1080/09538259300000005</a></p>
+<p id="ref-dapprich_greenwood2024"><span class="refnum">[28]</span> Dapprich, Jan Philipp and Dan Greenwood (2024). Cybersocialism and the Future of the Socialist Calculation Debate. <em>Erasmus Journal for Philosophy and Economics</em>, 17(1). doi:<a href="https://doi.org/10.23941/ejpe.v17i1.781">10.23941/ejpe.v17i1.781</a></p>
+<p id="ref-medina2011"><span class="refnum">[29]</span> Medina, Eden (2011). <em>Cybernetic Revolutionaries: Technology and Politics in Allende's Chile</em>. Cambridge, MA: MIT Press. doi:<a href="https://doi.org/10.7551/mitpress/8417.001.0001">10.7551/mitpress/8417.001.0001</a> ## Statistical and simulation methodology</p>
+<p id="ref-cheremukhin2017"><span class="refnum">[30]</span> Cheremukhin, Anton, Mikhail Golosov, Sergei Guriev and Aleh Tsyvinski (2016/2017). The Industrialization and Economic Development of Russia through the Lens of a Neoclassical Growth Model. <em>The Review of Economic Studies</em>, 84(2). doi:<a href="https://doi.org/10.1093/restud/rdw026">10.1093/restud/rdw026</a> ## Computational planning and the simulation of planned economies</p>
+<p id="ref-sicular1988"><span class="refnum">[31]</span> Sicular, Terry (1988). Plan and Market in China's Agricultural Commerce. <em>Journal of Political Economy</em>, 96(2), 283–307. doi:<a href="https://doi.org/10.1086/261537">10.1086/261537</a></p>
+<p id="ref-lau_qian_roland2000"><span class="refnum">[32]</span> Lau, Lawrence J., Yingyi Qian and Gérard Roland (2000). Reform without Losers: An Interpretation of China's Dual-Track Approach to Transition. <em>Journal of Political Economy</em>, 108(1), 120–143. doi:<a href="https://doi.org/10.1086/262113">10.1086/262113</a></p>
+<p id="ref-murphy_shleifer_vishny1992"><span class="refnum">[33]</span> Murphy, Kevin M., Andrei Shleifer and Robert W. Vishny (1992). The Transition to a Market Economy: Pitfalls of Partial Reform. <em>The Quarterly Journal of Economics</em>, 107(3), 889–906. doi:<a href="https://doi.org/10.2307/2118367">10.2307/2118367</a></p>
+<p id="ref-weitzman1993"><span class="refnum">[34]</span> Weitzman, Martin L. (1993). Economic Transition: Can Theory Help? <em>European Economic Review</em>, 37(2–3), 549–555. doi:<a href="https://doi.org/10.1016/0014-2921(93">10.1016/0014-2921(93)90044-B</a>90044-B)</p>
+<p id="ref-tarski1955"><span class="refnum">[35]</span> Tarski, Alfred (1955). A Lattice-Theoretical Fixpoint Theorem and Its Applications. <em>Pacific Journal of Mathematics</em>, 5(2), 285–309. doi:<a href="https://doi.org/10.2140/pjm.1955.5.285">10.2140/pjm.1955.5.285</a></p>
+<p id="ref-wilcoxon1945"><span class="refnum">[36]</span> Wilcoxon, Frank (1945). Individual Comparisons by Ranking Methods. <em>Biometrics Bulletin</em>, 1(6), 80. doi:<a href="https://doi.org/10.2307/3001968">10.2307/3001968</a></p>
+<p id="ref-holm1979"><span class="refnum">[37]</span> Holm, Sture (1979). A Simple Sequentially Rejective Multiple Test Procedure. <em>Scandinavian Journal of Statistics</em>, 6, 65–70. doi:<a href="https://doi.org/10.2307/4615733">10.2307/4615733</a></p>
+<p id="ref-davison_hinkley1997"><span class="refnum">[38]</span> Davison, Anthony C. and David V. Hinkley (1997). <em>Bootstrap Methods and Their Application</em>. Cambridge: Cambridge University Press. doi:<a href="https://doi.org/10.1017/CBO9780511802843">10.1017/CBO9780511802843</a></p>
+<p id="ref-grimm2020"><span class="refnum">[39]</span> Grimm, Volker, Steven F. Railsback, Christian E. Vincenot and Uta Berger (2020). The ODD Protocol for Describing Agent-Based and Other Simulation Models: A Second Update to Improve Clarity, Replication, and Structural Realism. <em>Journal of Artificial Societies and Social Simulation</em>, 23(2). doi:<a href="https://doi.org/10.18564/jasss.4259">10.18564/jasss.4259</a> ## Data and measurement standards</p>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.12/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.12/dist/contrib/auto-render.min.js"></script>
+
+
+<script>
+  window.__mathRendered = false;
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof renderMathInElement !== "function") { return; }
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "\\[", right: "\\]", display: true},
+        {left: "$",  right: "$",  display: false},
+        {left: "\\(", right: "\\)", display: false}
+      ],
+      throwOnError: false,
+      strict: false,
+      trust: false,
+      macros: {"\\R": "\\mathbb{R}", "\\N": "\\mathbb{N}", "\\E": "\\mathbb{E}"},
+      ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+    });
+    window.__mathRendered = true;
+    document.body.setAttribute("data-math", "done");
+  });
+</script>
+
+</body></html>
