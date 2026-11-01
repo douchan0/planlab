@@ -1,7 +1,7 @@
 # Tutorial 06 — reproducing a paper table (and a figure)
 
 **Notebook:** [`notebooks/06_reproduce_a_paper_table.ipynb`](../../notebooks/06_reproduce_a_paper_table.ipynb)
-· **Runtime:** ~3 s (longer if `results/` is large) · **Prerequisites:** tutorials 01–05, and a populated `results/`
+· **Runtime:** ~4 s (longer if `results/` is large) · **Prerequisites:** tutorials 01–05, and a populated `results/`
 
 ## Learning objectives
 

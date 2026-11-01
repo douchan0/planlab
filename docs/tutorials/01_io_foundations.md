@@ -1,7 +1,7 @@
 # Tutorial 01 — input–output foundations
 
 **Notebook:** [`notebooks/01_io_foundations.ipynb`](../../notebooks/01_io_foundations.ipynb)
-· **Runtime:** ~2 s · **Prerequisites:** none
+· **Runtime:** ~3 s · **Prerequisites:** none
 
 ## Learning objectives
 

@@ -1,7 +1,7 @@
 # Tutorial 03 — one period, opened up
 
 **Notebook:** [`notebooks/03_one_period_walkthrough.ipynb`](../../notebooks/03_one_period_walkthrough.ipynb)
-· **Runtime:** ~2 s · **Prerequisites:** tutorial 01 (the technology and the identity)
+· **Runtime:** ~3 s · **Prerequisites:** tutorial 01 (the technology and the identity)
 
 This is the flagship notebook of the suite. Its promise: **every number is computed
 twice** — once by the engine, once by explicit code you can read — and the two must

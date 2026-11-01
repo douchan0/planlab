@@ -605,42 +605,64 @@ def _audit_tables(res: CheckResult) -> None:
         if where is not None:
             summary = summary.query(where)
             published = published.query(where)
-        # the laminar key is never a grouping key
-        keys = [k for k in keys if k in summary.columns and k in published.columns]
+        # the published table may rename the lag column; canonicalise before keying
+        pub = published.rename(columns={"lag_reporting": "lag", "lag_effective": "m"})
+        keys = [k for k in keys if k in summary.columns and k in pub.columns]
         if not keys:
             res.note(f"5d: {table_name}: no shared keys")
-            continue
-        # tolerate renamed keys in the published table
-        rename = {"lag_reporting": "lag", "lag": "lag_reporting"}
-        pub_keys = list(keys)
-        for k in list(keys):
-            alt = rename.get(k)
-            if k not in published.columns and alt in published.columns:
-                pub_keys[pub_keys.index(k)] = alt
-        if any(k not in published.columns for k in pub_keys):
             continue
         agg = summary.groupby(keys).agg(**{
             new: (col, stat) for new, (col, stat) in mapping.items()
             if col in summary.columns
         }).reset_index()
-        pub = published.rename(columns={alt: k for k, alt in zip(keys, pub_keys)})
-        merged = agg.merge(pub, on=keys, how="inner", suffixes=("_mine", ""))
-        if merged.empty:
-            res.note(f"5d: {table_name}: no matching rows after the join")
-            continue
         tables_seen += 1
+        # A published table without a cell identifier (e.g. the task's elasticity
+        # dimension) can have several rows per key.  In that case compare the *sorted*
+        # values within each key: the question is whether the table's numbers come from
+        # these results, not which row is which.
+        dup = pub.groupby(keys).size()
+        has_dups = bool((dup > 1).any())
+        if has_dups:
+            res.note(f"5d: {table_name}: {int((dup > 1).sum())} key group(s) have several rows "
+                     f"(a dimension of the design is not recorded in the table); comparing "
+                     f"sorted values within each key")
         for new in mapping:
+            if new not in pub.columns:
+                continue
             mine_col = f"{new}_mine"
-            if mine_col not in merged or new not in merged:
-                continue
-            mine = merged[mine_col].to_numpy(dtype=float)
-            pub_vals = merged[new].to_numpy(dtype=float)
-            ok = np.isfinite(mine) & np.isfinite(pub_vals)
-            if not ok.any():
-                continue
-            err = np.abs(mine[ok] - pub_vals[ok]) / np.maximum(1.0, np.abs(pub_vals[ok]))
-            e = float(np.max(err))
-            checked += int(ok.sum())
+            if has_dups:
+                errs = []
+                n_cmp = 0
+                for key, grp in agg.groupby(keys):
+                    try:
+                        sub = pub.groupby(keys).get_group(key if len(keys) > 1 else key)
+                    except KeyError:
+                        continue
+                    a = np.sort(grp[mine_col].to_numpy(dtype=float))
+                    b = np.sort(sub[new].to_numpy(dtype=float))
+                    if a.size != b.size:
+                        res.note(f"5d: {table_name}:{new}: row count mismatch at {key}")
+                        continue
+                    ok = np.isfinite(a) & np.isfinite(b)
+                    if ok.any():
+                        errs.append(np.abs(a[ok] - b[ok]) / np.maximum(1.0, np.abs(b[ok])))
+                        n_cmp += int(ok.sum())
+                if not errs:
+                    continue
+                e = float(np.max(np.concatenate(errs)))
+                checked += n_cmp
+            else:
+                merged = agg.merge(pub, on=keys, how="inner", suffixes=("_mine", ""))
+                if merged.empty or mine_col not in merged or new not in merged:
+                    continue
+                mine = merged[mine_col].to_numpy(dtype=float)
+                pub_vals = merged[new].to_numpy(dtype=float)
+                ok = np.isfinite(mine) & np.isfinite(pub_vals)
+                if not ok.any():
+                    continue
+                e = float(np.max(np.abs(mine[ok] - pub_vals[ok])
+                                 / np.maximum(1.0, np.abs(pub_vals[ok]))))
+                checked += int(ok.sum())
             if e > worst:
                 worst, worst_where = e, f"{table_name}:{new}"
             res.check(e <= 2e-6,
