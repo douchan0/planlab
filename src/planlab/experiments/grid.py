@@ -1141,7 +1141,10 @@ def _build_b7() -> list[Cell]:
     comparison ``price_gain*(m) = g*(m)/b_p`` instead of a story about amplitude.
     """
     cells: list[Cell] = []
-    for eps in (0.2, HIGH_ELASTICITY, 2.0):
+    # 0.4 is the standard environment of the mechanism comparison (B2/B3/B4/B5), so
+    # b_p must be measured there too; 0.2 and 2.0 bracket it and 0.8 is the
+    # price-loop regime the Lead asked for.
+    for eps in (0.2, STANDARD_ELASTICITY, HIGH_ELASTICITY, 2.0):
         for sector in _sector_names():
             for delta in (-0.05, 0.05):
                 cell_id = _cell_id("B7", f"eps{eps}", sector, f"d{delta:+.2f}")

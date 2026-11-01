@@ -166,7 +166,8 @@ state = pd.DataFrame({"inventory S0": S0, "capacity": CAP, "plan target x*": TAR
 print("\nthis period's state:")
 print(state.to_string())
 print(f"\nplan is taut: targets exceed capacity for "
-      f"{list(np.array(GOODS)[TARGETS > CAP])} by {np.round((TARGETS - CAP)[TARGETS > CAP], 1)}")
+      f"{[str(g) for g in np.array(GOODS)[TARGETS > CAP]]} "
+      f"by {[float(v) for v in (TARGETS - CAP)[TARGETS > CAP]]}")
 '''),
     ("md", r'''
 ## 2 · 观察与计划：机制看到的不是现在
@@ -271,7 +272,7 @@ inter_planned = (A_toy * TARGETS.reshape(1, -1)).T
 claims_planned, tiers, labels = build_claims(inter_planned, DEMAND, GOV, INVEST, STOCK, toy.essentials)
 print("claims submitted by the mechanism (row = claimant, column = good):")
 print(pd.DataFrame(claims_planned, index=labels, columns=GOODS).round(2).to_string())
-print("\ntiers:", dict(zip(labels, tiers.astype(int))))
+print("\ntiers:", {lab: int(t) for lab, t in zip(labels, tiers)})
 print("\nrow sums of the intermediate block = A @ targets:",
       np.round(claims_planned[:3].sum(axis=0), 2))
 
@@ -308,9 +309,8 @@ lhs["<= S0"] = S0
 print(lhs.to_string())
 print("\nWritten out:")
 for i, g in enumerate(GOODS):
-    terms = " + ".join(f"{A_toy[i, j]:+.1f} x_{GOODS[j]}" for j in range(3) if A_toy[i, j] != 0)
-    print(f"  good {g}: {terms} - x_{g} <= {S0[i]:.0f}    ->    "
-          f"({A_toy[i].sum():.1f} - 1) x_{g} + ... <= {S0[i]:.0f}")
+    terms = " + ".join(f"{A_toy[i, j]:.1f} x_{GOODS[j]}" for j in range(3) if A_toy[i, j] != 0)
+    print(f"  good {g}:  ({terms}) - x_{g} <= S0_{g} = {S0[i]:.0f}")
 print("\nBy hand: good b is the only scarcer-than-needed one.")
 print("  x_a <= 100, x_b <= 60 (capacity), x_c <= 300;")
 print("  good b needs 0.1 x_a + 0.1 x_b + 0.2 x_c <= S0_b + x_b = 10 + x_b")
@@ -644,6 +644,7 @@ print(f"  allocation: {probe.log['alloc'].claims.shape[0]} claimants x {n} goods
 print(f"  engine iterations in this period: {audit_sim.captured['engine_output'][7]}")
 print(f"  shortage rate this period: {audited.records[TARGET-1].metrics['shortage_rate']:.4f}")
 ledger.check("instrumentation is behaviour-neutral", same)
+print("(the ledger below records this check)")
 '''),
     ("md", r'''
 ### 6.1 · 计划是"紧绷"的
@@ -668,8 +669,13 @@ ratio = plan.targets / np.maximum(cap, 1e-12)
 print(f"\ntarget/capacity: min {ratio.min():.3f}, max {ratio.max():.3f}, "
       f"median {np.median(ratio):.3f}")
 print(f"sectors asked for strictly more than capacity: {int((ratio > 1 + 1e-9).sum())} of {n}")
-print(f"the target is capped by the plan's own max_target_ratio (2.5x base output): "
-      f"{int(np.isclose(plan.targets, 2.5 * x0).sum())} sectors sit at that cap")
+at_base_cap = int(np.isclose(plan.targets, 2.5 * x0, rtol=1e-9).sum())
+at_obs_cap = int(np.isclose(plan.targets, np.maximum(obs.capacity, 0.0) * 1.5 + 1e-12,
+                            rtol=1e-9).sum())
+print(f"binding caps of the plan: {at_base_cap} sectors at 2.5x base output, "
+      f"{at_obs_cap} sectors at 1.5x *observed* capacity")
+print("The second number matters: the ceiling is built from a stale capacity estimate, so")
+print("measurement error enters the plan directly through the cap, not only through the revision.")
 print("\nA taut plan is not an error: it is the institution's behaviour, and the engine")
 print("keeps it honest by capping the upper bound at the actual capacity.")
 '''),
@@ -873,9 +879,19 @@ ax.set_ylabel("household unmet / demand (%)")
 ax.set_title("Who bears the shortage")
 fig.tight_layout()
 plt.show()
-worst = np.argsort(-unmet_rate)[:4]
-print("hardest-hit sectors:", [(tech.sectors[i], f"{100*unmet_rate[i]:.1f}%") for i in worst])
-print("Note that the shocked sector c12 is not necessarily the one whose households lose most;")
+unmet_rate_v = np.asarray(unmet_rate, dtype=float)
+unmet_value = auction["unmet"].to_numpy(dtype=float)
+share = unmet_value / unmet_value.sum()
+worst_rate = np.argsort(-unmet_rate_v)[:4]
+worst_value = np.argsort(-unmet_value)[:4]
+print("top 4 by shortage *rate*  :",
+      [(tech.sectors[i], f"{100*unmet_rate_v[i]:.1f}%") for i in worst_rate])
+print("top 4 by shortage *value* :",
+      [(tech.sectors[i], f"{100*share[i]:.1f}% of all unmet demand") for i in worst_value])
+print("\nThe two lists differ, and that is a substantive point rather than a nuisance: a sector")
+print("with a tiny household demand can show a 100% shortage rate while contributing almost")
+print("nothing to aggregate unmet demand. Report both, or you will describe a different economy.")
+print("Note also that the shocked sector c12 is not the one whose households lose most:")
 print("what matters is the priority ladder and how much of the good intermediates absorb.")
 '''),
     ("md", r'''
@@ -950,10 +966,25 @@ ledger.check("grants <= supply elementwise",
              bool(np.all(mine["grants"].sum(axis=0) <= mine["supply"] + 1e-9)))
 ledger.check("S_end >= 0", bool(np.all(mine["S_end"] >= 0)))
 ledger.check("unmet == demand - C", bool(np.allclose(mine["unmet"], cap_kw["demand"] - mine["C"])))
-ledger.check("household claim <= demand + carried backlog", True, "by construction of requested_final")
+# cross-check two metrics of core.metrics against their written definitions
+c0 = 1e-3 * np.maximum(y0, 1e-6)
+welfare_by_hand = float(np.dot(tech.consumption_weights, np.log(np.maximum(mine["C"], 0.0) + c0)))
+shortage_by_hand = float(mine["unmet"].sum() / cap_kw["demand"].sum())
+record = audited.records[TARGET - 1]
+ledger.check("shortage_rate metric == unmet / demand",
+             abs(shortage_by_hand - record.metrics["shortage_rate"]) < 1e-12,
+             f"{shortage_by_hand:.12f} vs {record.metrics['shortage_rate']:.12f}")
+ledger.check("welfare metric == sum w_i log(C_i + c0)",
+             abs(welfare_by_hand - record.metrics["welfare"]) < 1e-9,
+             f"{welfare_by_hand:.9f} vs {record.metrics['welfare']:.9f}")
+ledger.check("stored record arrays == hand-recomputed arrays",
+             bool(np.array_equal(record.x, mine["x"])
+                  and np.array_equal(record.inventory_end, mine["S_end"])),
+             "bit-identical")
 
 receipt = ledger.frame()
 receipt.index = np.arange(1, len(receipt) + 1)
+pd.set_option("display.max_rows", 100)
 print(receipt.to_string())
 print(f"\n{int(receipt['ok'].sum())} / {len(receipt)} checks passed")
 assert receipt["ok"].all()

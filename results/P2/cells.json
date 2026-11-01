@@ -1,0 +1,3962 @@
+[
+  {
+    "block": "P2",
+    "cell_id": "P2.c01.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c01"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c01",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c01",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c01.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c01"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c01",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c01",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c02.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c02"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c02",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c02",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c02.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c02"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c02",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c02",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c03.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c03"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c03",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c03",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c03.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c03"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c03",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c03",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c04.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c04"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c04",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c04",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c04.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c04"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c04",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c04",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c05.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c05"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c05",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c05",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c05.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c05"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c05",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c05",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c06.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c06"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c06",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c06",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c06.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c06"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c06",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c06",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c07.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c07"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c07",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c07",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c07.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c07"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c07",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c07",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c08.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c08"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c08",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c08",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c08.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c08"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c08",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c08",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c09.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c09"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c09",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c09",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c09.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c09"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c09",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c09",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c10.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c10"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c10",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c10",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c10.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c10"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c10",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c10",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c11.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c11"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c11",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c11",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c11.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c11"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c11",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c11",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c12.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c12"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c12",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c12",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c12.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c12"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c12",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c12",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c13.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c13"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c13",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c13",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c13.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c13"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c13",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c13",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c14.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c14"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c14",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c14",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c14.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c14"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c14",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c14",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c15.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c15"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c15",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c15",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c15.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c15"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c15",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c15",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c16.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c16"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c16",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c16",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c16.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c16"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c16",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c16",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c17.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c17"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c17",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c17",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c17.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c17"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c17",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c17",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c18.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c18"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c18",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c18",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c18.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c18"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c18",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c18",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c19.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c19"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c19",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c19",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c19.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c19"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c19",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c19",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c20.d-0.05",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.05,
+      "kind": "target_offset",
+      "sector": "c20"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -5% on c20",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.05,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c20",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "P2",
+    "cell_id": "P2.c20.d-0.10",
+    "mechanism": "material_balance",
+    "notes": "deterministic probe; no shock, no noise",
+    "probe": {
+      "delta": -0.1,
+      "kind": "target_offset",
+      "sector": "c20"
+    },
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.0,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.0,
+        "sigma": 0.0
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "P2",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.0,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "P2 sign probe: target offset -10% on c20",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "P2",
+        "probe",
+        "gain"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "P2",
+    "seeds": [
+      0
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "P2",
+      "delta": -0.1,
+      "gain": 0.0,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.0,
+      "sector": "c20",
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  }
+]

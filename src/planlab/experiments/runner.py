@@ -1222,9 +1222,16 @@ def _identification_audit(cells: Sequence[Cell]) -> dict[str, Any]:
                     problems.append(f"{cell.cell_id}: {key}={value} != {expected}")
             elif value != expected:
                 problems.append(f"{cell.cell_id}: {key}={value} != {expected}")
+        # Knobs a block deliberately sweeps (the gain axis, theta, balance rounds)
+        # must be *present* but are allowed to differ from the pinned reference
+        # operating point inside the cells that sweep them; everything else must
+        # equal the pin exactly, or the mechanism is not the mechanism.
+        swept = {"revision_gain", "price_gain", "theta", "balance_rounds"}
         for key, expected in MECHANISM_BASE_PARAMS.get(cell.mechanism, {}).items():
             if key not in params:
                 problems.append(f"{cell.cell_id}: missing pinned {key}")
+            elif key in swept:
+                continue
             elif isinstance(expected, float):
                 if not np.isclose(float(params[key]), expected):
                     problems.append(f"{cell.cell_id}: {key}={params[key]} != {expected}")

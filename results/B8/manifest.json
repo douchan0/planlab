@@ -1,0 +1,173 @@
+{
+  "audit_file": "/Users/ceontou/Documents/code/planlab/results/B8/audit_records.npz",
+  "audit_records": 240,
+  "audit_runs": 60,
+  "block": "B8",
+  "cell_hashes": {
+    "B8.g0.1.r0": "cdd83d1f24b83241",
+    "B8.g0.1.r1": "aaeda046291331ae",
+    "B8.g0.1.r3": "5a9a3b06b3698f48",
+    "B8.g0.3.r0": "6b92d7aea44d0608",
+    "B8.g0.3.r1": "9f7d6519cffde1df",
+    "B8.g0.3.r3": "de9a5fe80f59ab35",
+    "B8.g0.r0": "976b7a2f4962208e",
+    "B8.g0.r1": "3ef4e1ccb5d7e765",
+    "B8.g0.r3": "3d68a2e1043ab08e",
+    "B8.g1.r0": "7fbdf80cda550c11",
+    "B8.g1.r1": "b281f42300e33aa7",
+    "B8.g1.r3": "c6586fd1d00d4fba"
+  },
+  "cells_completed": 12,
+  "cells_failed": 0,
+  "cells_planned": 12,
+  "cells_skipped_missing_mechanism": 0,
+  "code_fingerprint": "15124bbfe66d3ecb",
+  "code_fingerprints_seen": {
+    "15124bbfe66d3ecb": 12
+  },
+  "environment": {
+    "burn_in": 30,
+    "note": "docs/PROTOCOL.md \u00a74 as amended by docs/AMENDMENTS.md 1-3; the horizon T=80 is recorded as a deviation in docs/DEVIATIONS.md",
+    "periods": 80,
+    "shock_duration": 8,
+    "shock_sector": "c12",
+    "shock_size": 0.5,
+    "shock_start": 40,
+    "stock_ratio": 0.1
+  },
+  "failures": [],
+  "forced_rerun": false,
+  "generated_at": "2026-11-01T16:39:46+0800",
+  "git_commit": "7749ec65fe5486990fdfa7f6f420d24521e000ba",
+  "git_diff_stat": " 34 files changed, 3662 insertions(+), 3025 deletions(-)",
+  "git_dirty": true,
+  "grid_fingerprint": "40fedf33cf603817",
+  "identification_audit": {
+    "cells_checked": 12,
+    "cells_compliant": 12,
+    "common_params": {
+      "backlog_carry": 0.0,
+      "max_target_ratio": 2.5,
+      "min_target_ratio": 0.25,
+      "stock_target_ratio": 0.1
+    },
+    "institutional_knobs": [
+      "revision_gain",
+      "price_gain",
+      "theta",
+      "quota_speed"
+    ],
+    "ok": true,
+    "pinned_params": {
+      "hybrid_dual_track": {
+        "market_gain": 0.25,
+        "theta": 0.5
+      },
+      "lp_central": {
+        "use_shadow_prices": 0.0
+      },
+      "market": {},
+      "material_balance": {
+        "balance_rounds": 3,
+        "revision_gain": 0.3
+      },
+      "rationing_priority": {
+        "quota_speed": 0.5,
+        "revision_interval": 1
+      },
+      "tatonnement": {
+        "price_gain": 0.3
+      }
+    }
+  },
+  "mechanism_base_params": {
+    "backlog_carry": 0.0,
+    "max_target_ratio": 2.5,
+    "min_target_ratio": 0.25,
+    "stock_target_ratio": 0.1
+  },
+  "mechanism_pinned_params": {
+    "hybrid_dual_track": {
+      "market_gain": 0.25,
+      "theta": 0.5
+    },
+    "lp_central": {
+      "use_shadow_prices": 0.0
+    },
+    "market": {},
+    "material_balance": {
+      "balance_rounds": 3,
+      "revision_gain": 0.3
+    },
+    "rationing_priority": {
+      "quota_speed": 0.5,
+      "revision_interval": 1
+    },
+    "tatonnement": {
+      "price_gain": 0.3
+    }
+  },
+  "mechanisms_missing": [],
+  "mechanisms_present": [
+    "hybrid_dual_track",
+    "lp_central",
+    "market",
+    "material_balance",
+    "rationing_priority",
+    "tatonnement"
+  ],
+  "mechanisms_present_in_runs": [
+    "material_balance"
+  ],
+  "mixed_code_versions": false,
+  "package_versions": {
+    "machine": "arm64",
+    "matplotlib": "3.10.8",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "planlab": "0.1.0",
+    "platform": "macOS-15.7.7-arm64-arm-64bit",
+    "pyarrow": "25.0.1",
+    "python": "3.10.13",
+    "scipy": "1.15.3"
+  },
+  "runs_completed": 192,
+  "runs_planned": 192,
+  "scenario_hashes": {
+    "B8.g0.1.r0": "8c5574570edf4ad1",
+    "B8.g0.1.r1": "94c20af7fcf47a05",
+    "B8.g0.1.r3": "dc795ff8e9c01fc7",
+    "B8.g0.3.r0": "13797144d481d5ae",
+    "B8.g0.3.r1": "7a28a10bc27b96c9",
+    "B8.g0.3.r3": "6fc4df7dd59b62ed",
+    "B8.g0.r0": "3c76d2efa9949f23",
+    "B8.g0.r1": "fed61a1b8b3325c8",
+    "B8.g0.r3": "e2f0505087bc070d",
+    "B8.g1.r0": "42b70a255823bab1",
+    "B8.g1.r1": "fcdc4a23f55ad968",
+    "B8.g1.r3": "08beb1db2b91e39e"
+  },
+  "scenario_ids": [
+    "B8"
+  ],
+  "seeds_per_cell": {
+    "B8.g0.1.r0": 16,
+    "B8.g0.1.r1": 16,
+    "B8.g0.1.r3": 16,
+    "B8.g0.3.r0": 16,
+    "B8.g0.3.r1": 16,
+    "B8.g0.3.r3": 16,
+    "B8.g0.r0": 16,
+    "B8.g0.r1": 16,
+    "B8.g0.r3": 16,
+    "B8.g1.r0": 16,
+    "B8.g1.r1": 16,
+    "B8.g1.r3": 16
+  },
+  "substrates": [
+    "eurostat"
+  ],
+  "sum_cell_wall_time_s": 35.309,
+  "wall_time_s": 9.071,
+  "workers": 7
+}

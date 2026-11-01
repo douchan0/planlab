@@ -1,0 +1,1154 @@
+[
+  {
+    "block": "B2L",
+    "cell_id": "B2L.production.k0",
+    "mechanism": "material_balance",
+    "notes": "exploratory: the ladder is a treatment, not a default (ARCHITECTURE \u00a75)",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B2L",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "ladder": "production_first",
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B2L ladder: production_first, k=0",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B2L",
+        "ladder",
+        "exploratory"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B2L",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B2L",
+      "gain": 0.3,
+      "ladder": "production_first",
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B2L",
+    "cell_id": "B2L.production.k1",
+    "mechanism": "material_balance",
+    "notes": "exploratory: the ladder is a treatment, not a default (ARCHITECTURE \u00a75)",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B2L",
+      "indexation": 0.0,
+      "info": {
+        "lag": 1,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "ladder": "production_first",
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B2L ladder: production_first, k=1",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B2L",
+        "ladder",
+        "exploratory"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B2L",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B2L",
+      "gain": 0.3,
+      "ladder": "production_first",
+      "lag": 1,
+      "m": 2,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B2L",
+    "cell_id": "B2L.production.k2",
+    "mechanism": "material_balance",
+    "notes": "exploratory: the ladder is a treatment, not a default (ARCHITECTURE \u00a75)",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B2L",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "ladder": "production_first",
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B2L ladder: production_first, k=2",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B2L",
+        "ladder",
+        "exploratory"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B2L",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B2L",
+      "gain": 0.3,
+      "ladder": "production_first",
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B2L",
+    "cell_id": "B2L.production.k4",
+    "mechanism": "material_balance",
+    "notes": "exploratory: the ladder is a treatment, not a default (ARCHITECTURE \u00a75)",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B2L",
+      "indexation": 0.0,
+      "info": {
+        "lag": 4,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "ladder": "production_first",
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B2L ladder: production_first, k=4",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B2L",
+        "ladder",
+        "exploratory"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B2L",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B2L",
+      "gain": 0.3,
+      "ladder": "production_first",
+      "lag": 4,
+      "m": 5,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B2L",
+    "cell_id": "B2L.consumption.k0",
+    "mechanism": "material_balance",
+    "notes": "exploratory: the ladder is a treatment, not a default (ARCHITECTURE \u00a75)",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B2L",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "ladder": "consumption_first",
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B2L ladder: consumption_first, k=0",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B2L",
+        "ladder",
+        "exploratory"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B2L",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B2L",
+      "gain": 0.3,
+      "ladder": "consumption_first",
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B2L",
+    "cell_id": "B2L.consumption.k1",
+    "mechanism": "material_balance",
+    "notes": "exploratory: the ladder is a treatment, not a default (ARCHITECTURE \u00a75)",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B2L",
+      "indexation": 0.0,
+      "info": {
+        "lag": 1,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "ladder": "consumption_first",
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B2L ladder: consumption_first, k=1",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B2L",
+        "ladder",
+        "exploratory"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B2L",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B2L",
+      "gain": 0.3,
+      "ladder": "consumption_first",
+      "lag": 1,
+      "m": 2,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B2L",
+    "cell_id": "B2L.consumption.k2",
+    "mechanism": "material_balance",
+    "notes": "exploratory: the ladder is a treatment, not a default (ARCHITECTURE \u00a75)",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B2L",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "ladder": "consumption_first",
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B2L ladder: consumption_first, k=2",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B2L",
+        "ladder",
+        "exploratory"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B2L",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B2L",
+      "gain": 0.3,
+      "ladder": "consumption_first",
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B2L",
+    "cell_id": "B2L.consumption.k4",
+    "mechanism": "material_balance",
+    "notes": "exploratory: the ladder is a treatment, not a default (ARCHITECTURE \u00a75)",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B2L",
+      "indexation": 0.0,
+      "info": {
+        "lag": 4,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "ladder": "consumption_first",
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B2L ladder: consumption_first, k=4",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B2L",
+        "ladder",
+        "exploratory"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B2L",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B2L",
+      "gain": 0.3,
+      "ladder": "consumption_first",
+      "lag": 4,
+      "m": 5,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  }
+]

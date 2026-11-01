@@ -1,24 +1,21 @@
 {
   "bibliography_entries": 39,
   "bibliography_uncited": [],
-  "built": "2026-11-01T08:31:24Z",
+  "built": "2026-11-01T08:40:16Z",
   "citations_used": 39,
-  "civil_words_body": 16.2,
+  "civil_words_body": 16.9,
   "duplicated_nouns": [],
-  "elapsed_s": 0.38,
+  "elapsed_s": 2.28,
   "equations": 19,
   "figures": 2,
-  "html_bytes": 163297,
+  "html_bytes": 172572,
   "markdown": "3.10.3",
   "missing_captions": [],
   "missing_figure_files": [],
-  "missing_table_files": [
-    "balance_decomposition",
-    "noise_only"
-  ],
-  "pdf": null,
-  "pdf_bytes": null,
-  "pdf_pages": null,
+  "missing_table_files": [],
+  "pdf": "paper/main.pdf",
+  "pdf_bytes": 1451522,
+  "pdf_pages": 25,
   "python": "3.10.13",
   "sections": {
     "app:crossing": "A.2",
@@ -40,6 +37,7 @@
     "information": "3.3",
     "institutions": "3.4",
     "intro": "1",
+    "invariance": "5.5",
     "limitations": "8",
     "material-balances-and-the-input-output-tradition": "2.2",
     "measuring_gain": "5.6",
@@ -53,7 +51,6 @@
     "res-decomp": "6.3",
     "res-delay": "6.4",
     "res-dual": "6.7",
-    "res-invariance": "5.5",
     "res-noise": "6.2",
     "res-rationing": "6.6",
     "res-robust": "6.8",
@@ -73,6 +70,7 @@
     "sec:design": "5",
     "sec:discussion": "7",
     "sec:intro": "1",
+    "sec:invariance": "5.5",
     "sec:limitations": "8",
     "sec:measuring_gain": "5.6",
     "sec:model": "3",
@@ -82,7 +80,6 @@
     "sec:res-decomp": "6.3",
     "sec:res-delay": "6.4",
     "sec:res-dual": "6.7",
-    "sec:res-invariance": "5.5",
     "sec:res-noise": "6.2",
     "sec:res-rationing": "6.6",
     "sec:res-robust": "6.8",
@@ -103,7 +100,7 @@
     "why-a-balanced-plan-does-not-remove-shortage": "4.5"
   },
   "source": "paper/main.md",
-  "tables": 8,
+  "tables": 9,
   "unresolved_slots": [
     "[[REF:fig:stability_boundary_empirical]]",
     "[[REF:fig:welfare_vs_lag]]",
@@ -119,5 +116,5 @@
     "[[RESULTS:INTRO_FINDINGS]]"
   ],
   "words_bibliography": 802,
-  "words_body": 16217
+  "words_body": 16896
 }

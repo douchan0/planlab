@@ -1,0 +1,13 @@
+mechanism,substrate,n_runs,x_over_base,mean_shortage_rate,mean_plan_fulfilment,cum_welfare,max_abs_residual,checks_passed,reproduction_error
+hybrid_dual_track,eurostat,1,1,0,1,12978.4,0,80,0
+lp_central,eurostat,1,1,0,1,12978.4,0,80,0
+market,eurostat,1,1,0,1,12978.4,0,80,0
+material_balance,eurostat,1,1,0,1,12978.4,0,80,0
+rationing_priority,eurostat,1,1,0,1,12978.4,0,80,0
+tatonnement,eurostat,1,1,0,1,12978.4,0,80,0
+hybrid_dual_track,toy6,1,1,0,1,1121.6,0,80,0
+lp_central,toy6,1,1,0,1,1121.6,0,80,0
+market,toy6,1,1,0,1,1121.6,0,80,0
+material_balance,toy6,1,1,0,1,1121.6,0,80,0
+rationing_priority,toy6,1,1,0,1,1121.6,0,80,0
+tatonnement,toy6,1,1,0,1,1121.6,0,80,0

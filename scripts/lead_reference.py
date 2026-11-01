@@ -125,6 +125,26 @@ def cells(quick: bool) -> list[dict]:
                             shock=dict(sector="c12", size=size), seeds=r4_seeds,
                             n_seeds=len(r4_seeds), gain=None))
 
+    # R8 — decomposition of the material-balance penalty (H1')
+    if not quick:
+        for gain, rounds in itertools.product((0.0, 0.1, 0.3, 1.0), (0, 1, 3)):
+            out.append(dict(block="R8", cell=f"R8_g{gain:.1f}_r{rounds}", mechanism="material_balance",
+                            params=dict(_base_params("material_balance", gain),
+                                        balance_rounds=rounds),
+                            lag=0, noise=0.03, sigma=0.02, ar1=0.3, shock=None,
+                            seeds=list(range(16)), n_seeds=16, gain=gain,
+                            balance_rounds=rounds, labour_factor=1.15))
+        # R6L — the loss is conditional on labour slack
+        for lsf in (1.05, 1.15, 1.40, 2.00):
+            for gain, rounds in ((1.0, 3), (0.0, 3), (1.0, 0)):
+                out.append(dict(block="R6L", cell=f"R6L_L{lsf:.2f}_g{gain:.1f}_r{rounds}",
+                                mechanism="material_balance",
+                                params=dict(_base_params("material_balance", gain),
+                                            balance_rounds=rounds),
+                                lag=0, noise=0.03, sigma=0.02, ar1=0.3, shock=None,
+                                seeds=list(range(10)), n_seeds=10, gain=gain,
+                                balance_rounds=rounds, labour_factor=lsf))
+
     # R5 — dual track share theta
     thetas = [0.5] if quick else [round(i / 10, 1) for i in range(11)]
     r5_seeds = list(range(5)) if quick else seeds20
@@ -209,6 +229,7 @@ def run_one(task: tuple[dict, int]) -> dict:
         "burn_in": BURN,
         "seeds": [seed],
         "stock_ratio": STOCK,
+        "labor_supply_factor": float(cell.get("labour_factor", 1.15)),
         "mechanism_params": cell["params"],
         "info": {"lag": cell["lag"], "noise": cell["noise"]},
         "demand": {"ar1": cell["ar1"], "sigma": cell["sigma"], "price_elasticity": 0.6},
@@ -223,6 +244,8 @@ def run_one(task: tuple[dict, int]) -> dict:
     m = dict(res.run_metrics)
     row = {
         "block": cell["block"],
+        "balance_rounds": float(cell.get("balance_rounds", -1)),
+        "labour_factor": float(cell.get("labour_factor", 1.15)),
         "cell": cell["cell"],
         "mechanism": cell["mechanism"],
         "gain": -1.0 if cell["gain"] is None else float(cell["gain"]),

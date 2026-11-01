@@ -1,0 +1,257 @@
+{
+  "audit_file": "/Users/ceontou/Documents/code/planlab/results/P2/audit_records.npz",
+  "audit_records": 160,
+  "audit_runs": 40,
+  "block": "P2",
+  "cell_hashes": {
+    "P2.c01.d-0.05": "e4e452555e4f0b7c",
+    "P2.c01.d-0.10": "563da50cc4e7ba62",
+    "P2.c02.d-0.05": "84509cd0ba9ef63b",
+    "P2.c02.d-0.10": "97c935972e64c19a",
+    "P2.c03.d-0.05": "9a90fa4e9362849c",
+    "P2.c03.d-0.10": "16d8c449dbfacb77",
+    "P2.c04.d-0.05": "b268378cd5b06ca8",
+    "P2.c04.d-0.10": "ec047cb3b4de3f93",
+    "P2.c05.d-0.05": "66e7e50b78a3b51c",
+    "P2.c05.d-0.10": "7d98017f3cc5300f",
+    "P2.c06.d-0.05": "05494e4b825758b5",
+    "P2.c06.d-0.10": "1d0bf7c56c9831dd",
+    "P2.c07.d-0.05": "5d90f6c240c8eb33",
+    "P2.c07.d-0.10": "3be576e92c030a0a",
+    "P2.c08.d-0.05": "edaf95b67acf2e76",
+    "P2.c08.d-0.10": "962c6d8723541d82",
+    "P2.c09.d-0.05": "72df390375f45b9a",
+    "P2.c09.d-0.10": "0f31121bc7a74161",
+    "P2.c10.d-0.05": "6eb43109400e6b46",
+    "P2.c10.d-0.10": "1a1d83c065d86fb4",
+    "P2.c11.d-0.05": "f7b4fa0c7708ccc2",
+    "P2.c11.d-0.10": "57b759f33d24fc9f",
+    "P2.c12.d-0.05": "f0adbfed19a0f850",
+    "P2.c12.d-0.10": "0efb157eb1c27aec",
+    "P2.c13.d-0.05": "cab6dde35c532779",
+    "P2.c13.d-0.10": "0f768f8b7fa6b1bb",
+    "P2.c14.d-0.05": "7d55642a8aa41294",
+    "P2.c14.d-0.10": "1eeee486515ceacf",
+    "P2.c15.d-0.05": "ad4316a2953a30a5",
+    "P2.c15.d-0.10": "1991cb541fe9c8a5",
+    "P2.c16.d-0.05": "a81be27c74563fbb",
+    "P2.c16.d-0.10": "b00c7c1d6047c612",
+    "P2.c17.d-0.05": "5b7d9c5d73a7791e",
+    "P2.c17.d-0.10": "501e5d6ad1088993",
+    "P2.c18.d-0.05": "d7a63ab1cb50ea64",
+    "P2.c18.d-0.10": "5e707e6f3088a147",
+    "P2.c19.d-0.05": "761fa054eaaa64cb",
+    "P2.c19.d-0.10": "6974b8901005e3d4",
+    "P2.c20.d-0.05": "581c3a97344f925b",
+    "P2.c20.d-0.10": "cb68149deb0ba81e"
+  },
+  "cells_completed": 40,
+  "cells_failed": 0,
+  "cells_planned": 40,
+  "cells_skipped_missing_mechanism": 0,
+  "code_fingerprint": "15124bbfe66d3ecb",
+  "code_fingerprints_seen": {
+    "15124bbfe66d3ecb": 40
+  },
+  "environment": {
+    "burn_in": 30,
+    "note": "docs/PROTOCOL.md \u00a74 as amended by docs/AMENDMENTS.md 1-3; the horizon T=80 is recorded as a deviation in docs/DEVIATIONS.md",
+    "periods": 80,
+    "shock_duration": 8,
+    "shock_sector": "c12",
+    "shock_size": 0.5,
+    "shock_start": 40,
+    "stock_ratio": 0.1
+  },
+  "failures": [],
+  "forced_rerun": false,
+  "generated_at": "2026-11-01T16:39:57+0800",
+  "git_commit": "7749ec65fe5486990fdfa7f6f420d24521e000ba",
+  "git_diff_stat": " 34 files changed, 3662 insertions(+), 3025 deletions(-)",
+  "git_dirty": true,
+  "grid_fingerprint": "64e31ee32074c084",
+  "identification_audit": {
+    "cells_checked": 40,
+    "cells_compliant": 40,
+    "common_params": {
+      "backlog_carry": 0.0,
+      "max_target_ratio": 2.5,
+      "min_target_ratio": 0.25,
+      "stock_target_ratio": 0.1
+    },
+    "institutional_knobs": [
+      "revision_gain",
+      "price_gain",
+      "theta",
+      "quota_speed"
+    ],
+    "ok": true,
+    "pinned_params": {
+      "hybrid_dual_track": {
+        "market_gain": 0.25,
+        "theta": 0.5
+      },
+      "lp_central": {
+        "use_shadow_prices": 0.0
+      },
+      "market": {},
+      "material_balance": {
+        "balance_rounds": 3,
+        "revision_gain": 0.3
+      },
+      "rationing_priority": {
+        "quota_speed": 0.5,
+        "revision_interval": 1
+      },
+      "tatonnement": {
+        "price_gain": 0.3
+      }
+    }
+  },
+  "mechanism_base_params": {
+    "backlog_carry": 0.0,
+    "max_target_ratio": 2.5,
+    "min_target_ratio": 0.25,
+    "stock_target_ratio": 0.1
+  },
+  "mechanism_pinned_params": {
+    "hybrid_dual_track": {
+      "market_gain": 0.25,
+      "theta": 0.5
+    },
+    "lp_central": {
+      "use_shadow_prices": 0.0
+    },
+    "market": {},
+    "material_balance": {
+      "balance_rounds": 3,
+      "revision_gain": 0.3
+    },
+    "rationing_priority": {
+      "quota_speed": 0.5,
+      "revision_interval": 1
+    },
+    "tatonnement": {
+      "price_gain": 0.3
+    }
+  },
+  "mechanisms_missing": [],
+  "mechanisms_present": [
+    "hybrid_dual_track",
+    "lp_central",
+    "market",
+    "material_balance",
+    "rationing_priority",
+    "tatonnement"
+  ],
+  "mechanisms_present_in_runs": [
+    "material_balance"
+  ],
+  "mixed_code_versions": false,
+  "package_versions": {
+    "machine": "arm64",
+    "matplotlib": "3.10.8",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "planlab": "0.1.0",
+    "platform": "macOS-15.7.7-arm64-arm-64bit",
+    "pyarrow": "25.0.1",
+    "python": "3.10.13",
+    "scipy": "1.15.3"
+  },
+  "runs_completed": 40,
+  "runs_planned": 40,
+  "scenario_hashes": {
+    "P2.c01.d-0.05": "5607382815cb5460",
+    "P2.c01.d-0.10": "408d6c19915b560a",
+    "P2.c02.d-0.05": "a0f38c22e643ec3f",
+    "P2.c02.d-0.10": "565fe383ada8a545",
+    "P2.c03.d-0.05": "ad4c0e9c2f2da08b",
+    "P2.c03.d-0.10": "edc9eb918d9d8130",
+    "P2.c04.d-0.05": "bac1ae2b101e78af",
+    "P2.c04.d-0.10": "395a870bdb1ab0c9",
+    "P2.c05.d-0.05": "20e78feecc3b96e0",
+    "P2.c05.d-0.10": "627776d97576ffd4",
+    "P2.c06.d-0.05": "ae1ed707596f4cb2",
+    "P2.c06.d-0.10": "32cc811650ad4e29",
+    "P2.c07.d-0.05": "8d07863bc0c64d4d",
+    "P2.c07.d-0.10": "0b8c884a71c4fad2",
+    "P2.c08.d-0.05": "28e5ec7e23166a65",
+    "P2.c08.d-0.10": "4c3de602f4f0eda2",
+    "P2.c09.d-0.05": "5a9a763954e1cfe4",
+    "P2.c09.d-0.10": "fca28b41939db005",
+    "P2.c10.d-0.05": "a9460c262d6e5b32",
+    "P2.c10.d-0.10": "51402fbd87036bbe",
+    "P2.c11.d-0.05": "5ce58eec60f94201",
+    "P2.c11.d-0.10": "b5c5c0b3fa35fc18",
+    "P2.c12.d-0.05": "d4b249387ad31c02",
+    "P2.c12.d-0.10": "82d59c598543b573",
+    "P2.c13.d-0.05": "5fda18e0e53bcd2f",
+    "P2.c13.d-0.10": "6f3b6107b106f374",
+    "P2.c14.d-0.05": "f71a9f84238aeb23",
+    "P2.c14.d-0.10": "6ce3d635950a7b92",
+    "P2.c15.d-0.05": "faeecc86eb4850d0",
+    "P2.c15.d-0.10": "45736a5b61025233",
+    "P2.c16.d-0.05": "5ba42ae98d6180d8",
+    "P2.c16.d-0.10": "4c250c63f3380874",
+    "P2.c17.d-0.05": "85aaaed850017003",
+    "P2.c17.d-0.10": "cbbfdb16f77987f1",
+    "P2.c18.d-0.05": "d6af16ec735c9025",
+    "P2.c18.d-0.10": "5bcb378b87e60574",
+    "P2.c19.d-0.05": "0ce088ade2e64a22",
+    "P2.c19.d-0.10": "b07e59a0afe94b9c",
+    "P2.c20.d-0.05": "e5aeae4852b75927",
+    "P2.c20.d-0.10": "e2f5ee8b99d64b8e"
+  },
+  "scenario_ids": [
+    "P2"
+  ],
+  "seeds_per_cell": {
+    "P2.c01.d-0.05": 1,
+    "P2.c01.d-0.10": 1,
+    "P2.c02.d-0.05": 1,
+    "P2.c02.d-0.10": 1,
+    "P2.c03.d-0.05": 1,
+    "P2.c03.d-0.10": 1,
+    "P2.c04.d-0.05": 1,
+    "P2.c04.d-0.10": 1,
+    "P2.c05.d-0.05": 1,
+    "P2.c05.d-0.10": 1,
+    "P2.c06.d-0.05": 1,
+    "P2.c06.d-0.10": 1,
+    "P2.c07.d-0.05": 1,
+    "P2.c07.d-0.10": 1,
+    "P2.c08.d-0.05": 1,
+    "P2.c08.d-0.10": 1,
+    "P2.c09.d-0.05": 1,
+    "P2.c09.d-0.10": 1,
+    "P2.c10.d-0.05": 1,
+    "P2.c10.d-0.10": 1,
+    "P2.c11.d-0.05": 1,
+    "P2.c11.d-0.10": 1,
+    "P2.c12.d-0.05": 1,
+    "P2.c12.d-0.10": 1,
+    "P2.c13.d-0.05": 1,
+    "P2.c13.d-0.10": 1,
+    "P2.c14.d-0.05": 1,
+    "P2.c14.d-0.10": 1,
+    "P2.c15.d-0.05": 1,
+    "P2.c15.d-0.10": 1,
+    "P2.c16.d-0.05": 1,
+    "P2.c16.d-0.10": 1,
+    "P2.c17.d-0.05": 1,
+    "P2.c17.d-0.10": 1,
+    "P2.c18.d-0.05": 1,
+    "P2.c18.d-0.10": 1,
+    "P2.c19.d-0.05": 1,
+    "P2.c19.d-0.10": 1,
+    "P2.c20.d-0.05": 1,
+    "P2.c20.d-0.10": 1
+  },
+  "substrates": [
+    "eurostat"
+  ],
+  "sum_cell_wall_time_s": 4.066,
+  "wall_time_s": 0.875,
+  "workers": 7
+}

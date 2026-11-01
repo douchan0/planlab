@@ -1,0 +1,25 @@
+\begin{table}[htbp]
+\centering
+\caption{Calibration and validation (block B1). Six institutions on two substrates with perfect information, no shock and no lag. $x/\bar x$ is realised gross output relative to the base year; a correct implementation returns 1.000 for every institution, so any departure, any positive shortage rate or any balance residual above $10^{-8}$ is an implementation failure rather than a result.}
+\label{tab:validation}
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+mechanism & substrate & n\_runs & x\_over\_base & mean\_shortage\_rate & mean\_plan\_fulfilment & cum\_welfare & max\_abs\_residual & checks\_passed & reproduction\_error \\
+\midrule
+hybrid\_dual\_track & eurostat & 1 & 1.0000 & 0.0000 & 1.0000 & 12978.4403 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+lp\_central & eurostat & 1 & 1.0000 & 0.0000 & 1.0000 & 12978.4403 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+market & eurostat & 1 & 1.0000 & 0.0000 & 1.0000 & 12978.4403 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+material\_balance & eurostat & 1 & 1.0000 & 0.0000 & 1.0000 & 12978.4403 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+rationing\_priority & eurostat & 1 & 1.0000 & 0.0000 & 1.0000 & 12978.4403 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+tatonnement & eurostat & 1 & 1.0000 & 0.0000 & 1.0000 & 12978.4403 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+hybrid\_dual\_track & toy6 & 1 & 1.0000 & 0.0000 & 1.0000 & 1121.5953 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+lp\_central & toy6 & 1 & 1.0000 & 0.0000 & 1.0000 & 1121.5953 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+market & toy6 & 1 & 1.0000 & 0.0000 & 1.0000 & 1121.5953 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+material\_balance & toy6 & 1 & 1.0000 & 0.0000 & 1.0000 & 1121.5953 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+rationing\_priority & toy6 & 1 & 1.0000 & 0.0000 & 1.0000 & 1121.5953 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+tatonnement & toy6 & 1 & 1.0000 & 0.0000 & 1.0000 & 1121.5953 & $<10^{-4}$ & 80 & $<10^{-4}$ \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{\linewidth}\footnotesize Accounting residual is $\max_t \max_i |S^0_i+x_i-\sum_j Z_{ij}-C_i-G_i-I_i-S^{\mathrm{end}}_i|$ divided by the scale of the supply vector (the engine raises on any violation). Source: \texttt{results/B1/}.\end{minipage}
+\end{table}

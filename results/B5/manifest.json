@@ -1,0 +1,203 @@
+{
+  "audit_file": "/Users/ceontou/Documents/code/planlab/results/B5/audit_records.npz",
+  "audit_records": 240,
+  "audit_runs": 48,
+  "block": "B5",
+  "cell_hashes": {
+    "B5.k0.theta0": "d281b1204a57cec0",
+    "B5.k0.theta0.1": "4fda9da9d2b811db",
+    "B5.k0.theta0.2": "4af90d9f2450c745",
+    "B5.k0.theta0.3": "9bd3b26b821b17ab",
+    "B5.k0.theta0.4": "3d06ece458044444",
+    "B5.k0.theta0.5": "a0cad6324bbe5524",
+    "B5.k0.theta0.6": "85f6b5691fff8601",
+    "B5.k0.theta0.7": "982e253815a75511",
+    "B5.k0.theta0.8": "1bd0d427a6b10b6d",
+    "B5.k0.theta0.9": "3c51db25b2771fc9",
+    "B5.k0.theta1": "249de75876f025d4",
+    "B5.k3.theta0": "667162d6c0d3952d",
+    "B5.k3.theta0.1": "df10a76c628642f9",
+    "B5.k3.theta0.2": "b8fcebbfb7e939ce",
+    "B5.k3.theta0.3": "05842ed519400a25",
+    "B5.k3.theta0.4": "24a8e59f79c79c98",
+    "B5.k3.theta0.5": "b40b98e4da0d0e2b",
+    "B5.k3.theta0.6": "1db515fffaf655bb",
+    "B5.k3.theta0.7": "1b0d34cbc639cef5",
+    "B5.k3.theta0.8": "846611bb970f36d6",
+    "B5.k3.theta0.9": "0d594ca373c86cda",
+    "B5.k3.theta1": "9049c66462c6d4b9"
+  },
+  "cells_completed": 22,
+  "cells_failed": 0,
+  "cells_planned": 22,
+  "cells_skipped_missing_mechanism": 0,
+  "code_fingerprint": "15124bbfe66d3ecb",
+  "code_fingerprints_seen": {
+    "15124bbfe66d3ecb": 22
+  },
+  "environment": {
+    "burn_in": 30,
+    "note": "docs/PROTOCOL.md \u00a74 as amended by docs/AMENDMENTS.md 1-3; the horizon T=80 is recorded as a deviation in docs/DEVIATIONS.md",
+    "periods": 80,
+    "shock_duration": 8,
+    "shock_sector": "c12",
+    "shock_size": 0.5,
+    "shock_start": 40,
+    "stock_ratio": 0.1
+  },
+  "failures": [],
+  "forced_rerun": false,
+  "generated_at": "2026-11-01T16:38:51+0800",
+  "git_commit": "7749ec65fe5486990fdfa7f6f420d24521e000ba",
+  "git_diff_stat": " 33 files changed, 3630 insertions(+), 3020 deletions(-)",
+  "git_dirty": true,
+  "grid_fingerprint": "962b73db66faee5e",
+  "identification_audit": {
+    "cells_checked": 22,
+    "cells_compliant": 22,
+    "common_params": {
+      "backlog_carry": 0.0,
+      "max_target_ratio": 2.5,
+      "min_target_ratio": 0.25,
+      "stock_target_ratio": 0.1
+    },
+    "institutional_knobs": [
+      "revision_gain",
+      "price_gain",
+      "theta",
+      "quota_speed"
+    ],
+    "ok": true,
+    "pinned_params": {
+      "hybrid_dual_track": {
+        "market_gain": 0.25,
+        "theta": 0.5
+      },
+      "lp_central": {
+        "use_shadow_prices": 0.0
+      },
+      "market": {},
+      "material_balance": {
+        "balance_rounds": 3,
+        "revision_gain": 0.3
+      },
+      "rationing_priority": {
+        "quota_speed": 0.5,
+        "revision_interval": 1
+      },
+      "tatonnement": {
+        "price_gain": 0.3
+      }
+    }
+  },
+  "mechanism_base_params": {
+    "backlog_carry": 0.0,
+    "max_target_ratio": 2.5,
+    "min_target_ratio": 0.25,
+    "stock_target_ratio": 0.1
+  },
+  "mechanism_pinned_params": {
+    "hybrid_dual_track": {
+      "market_gain": 0.25,
+      "theta": 0.5
+    },
+    "lp_central": {
+      "use_shadow_prices": 0.0
+    },
+    "market": {},
+    "material_balance": {
+      "balance_rounds": 3,
+      "revision_gain": 0.3
+    },
+    "rationing_priority": {
+      "quota_speed": 0.5,
+      "revision_interval": 1
+    },
+    "tatonnement": {
+      "price_gain": 0.3
+    }
+  },
+  "mechanisms_missing": [],
+  "mechanisms_present": [
+    "hybrid_dual_track",
+    "lp_central",
+    "market",
+    "material_balance",
+    "rationing_priority",
+    "tatonnement"
+  ],
+  "mechanisms_present_in_runs": [
+    "hybrid_dual_track"
+  ],
+  "mixed_code_versions": false,
+  "package_versions": {
+    "machine": "arm64",
+    "matplotlib": "3.10.8",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "planlab": "0.1.0",
+    "platform": "macOS-15.7.7-arm64-arm-64bit",
+    "pyarrow": "25.0.1",
+    "python": "3.10.13",
+    "scipy": "1.15.3"
+  },
+  "runs_completed": 440,
+  "runs_planned": 440,
+  "scenario_hashes": {
+    "B5.k0.theta0": "8dffcf17b59eb393",
+    "B5.k0.theta0.1": "83ff7f86ca9cffad",
+    "B5.k0.theta0.2": "712c9daa2a15d698",
+    "B5.k0.theta0.3": "a9a49c7d5cd62928",
+    "B5.k0.theta0.4": "aa0240e302e261ce",
+    "B5.k0.theta0.5": "04a6d95c50ce4136",
+    "B5.k0.theta0.6": "22aa29cc66f012f1",
+    "B5.k0.theta0.7": "384a1b94771eaf32",
+    "B5.k0.theta0.8": "b30929ffc46b213f",
+    "B5.k0.theta0.9": "8a074a0d2dd53eec",
+    "B5.k0.theta1": "bbc0990266dab0f2",
+    "B5.k3.theta0": "ca53bab7cb21cfbb",
+    "B5.k3.theta0.1": "2d4e91e0bef3990d",
+    "B5.k3.theta0.2": "da310bbd3f0fafd3",
+    "B5.k3.theta0.3": "281b9b748f02eb32",
+    "B5.k3.theta0.4": "848812957346139d",
+    "B5.k3.theta0.5": "68171459cf791011",
+    "B5.k3.theta0.6": "e9b41164c9a646cd",
+    "B5.k3.theta0.7": "c7603f1b9ae7601a",
+    "B5.k3.theta0.8": "6822c4f234d2ec53",
+    "B5.k3.theta0.9": "3106384de1c2131e",
+    "B5.k3.theta1": "d22b48af83bca842"
+  },
+  "scenario_ids": [
+    "B5"
+  ],
+  "seeds_per_cell": {
+    "B5.k0.theta0": 20,
+    "B5.k0.theta0.1": 20,
+    "B5.k0.theta0.2": 20,
+    "B5.k0.theta0.3": 20,
+    "B5.k0.theta0.4": 20,
+    "B5.k0.theta0.5": 20,
+    "B5.k0.theta0.6": 20,
+    "B5.k0.theta0.7": 20,
+    "B5.k0.theta0.8": 20,
+    "B5.k0.theta0.9": 20,
+    "B5.k0.theta1": 20,
+    "B5.k3.theta0": 20,
+    "B5.k3.theta0.1": 20,
+    "B5.k3.theta0.2": 20,
+    "B5.k3.theta0.3": 20,
+    "B5.k3.theta0.4": 20,
+    "B5.k3.theta0.5": 20,
+    "B5.k3.theta0.6": 20,
+    "B5.k3.theta0.7": 20,
+    "B5.k3.theta0.8": 20,
+    "B5.k3.theta0.9": 20,
+    "B5.k3.theta1": 20
+  },
+  "substrates": [
+    "eurostat"
+  ],
+  "sum_cell_wall_time_s": 65.73,
+  "wall_time_s": 11.603,
+  "workers": 7
+}

@@ -40,7 +40,7 @@ def test_block_sizes_match_the_protocol():
     assert counts["B3"] == 60
     assert counts["B4"] == 6
     assert counts["B5"] == 22
-    assert counts["B6"] == 14
+    assert counts["B6"] == 26  # 14 robustness cells + the 12-cell labour-slack axis
     assert counts["B7"] == 120
     assert counts["B8"] == 12
     assert counts["B2L"] == 8
@@ -72,8 +72,17 @@ def test_identification_block_is_applied_everywhere():
             assert np.isclose(float(params[key]), float(expected)), (
                 f"{cell.cell_id}: {key}={params[key]} != {expected}"
             )
+        # The pinned operating point must be *present* in every cell of that mechanism.
+        # Knobs that a block deliberately sweeps (the gain axis, theta, balance rounds)
+        # legitimately differ from the pinned value inside those cells; the rest must
+        # equal the pin exactly.
+        swept = {"revision_gain", "price_gain", "theta", "balance_rounds"}
         for key, expected in grid.MECHANISM_BASE_PARAMS.get(cell.mechanism, {}).items():
-            assert key in params and np.isclose(float(params[key]), float(expected))
+            assert key in params, f"{cell.cell_id} is missing the pinned {key}"
+            if key not in swept:
+                assert np.isclose(float(params[key]), float(expected)), (
+                    f"{cell.cell_id}: {key}={params[key]} != pinned {expected}"
+                )
 
 
 def test_lp_central_never_uses_shadow_prices():

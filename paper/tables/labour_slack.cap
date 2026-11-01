@@ -1,0 +1,8 @@
+The cost of taut planning is conditional on how much labour the economy can
+mobilise: the same revision gain destroys 18.5 per cent of output when the economy
+can employ only 5 per cent more labour than in the base year, 14.6 per cent at 15 per
+cent, 0.4 per cent at 40 per cent, and nothing when labour is abundant. The controls
+(gain 0 with balancing on, gain 1 with balancing off) return base-year output at every
+level of slack, so the interaction rather than either factor is what costs. Source:
+reference_results/ (the Lead's independent reference run; the experiment layer's
+labour axis in results/B6 reproduces the same ordering).

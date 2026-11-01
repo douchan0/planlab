@@ -114,6 +114,7 @@ def ration_by_tier(supply, claims, tiers):
 # ---------------------------------------------------------------------------
 def independent_period(*, A, labor, targets, capacity, inventory, labour_supply,
                        claims, tiers, labels, demand, gov_demand, invest_demand,
+                       base_output=None, max_stock_ratio=None,
                        max_passes=400, tol=1e-9):
     n = A.shape[0]
     ub = np.minimum(np.maximum(targets, 0.0), np.maximum(capacity, 0.0))
@@ -159,11 +160,19 @@ def independent_period(*, A, labor, targets, capacity, inventory, labour_supply,
     G = np.minimum(parts["gov"], gov_demand)
     Inv = np.minimum(parts["invest"], invest_demand)
     used = Z.sum(axis=1) + C + G + Inv
-    S_end = supply - used
+    residual = np.maximum(supply - used, 0.0)
+    if base_output is None or max_stock_ratio is None:
+        S_end = residual
+        spoilage = np.zeros(n)
+    else:
+        # bounded storage: output that is neither used nor storable is spoilage
+        stock_cap = float(max_stock_ratio) * np.asarray(base_output, dtype=float)
+        S_end = np.minimum(residual, np.maximum(stock_cap - r, 0.0))
+        spoilage = residual - S_end
     unmet = np.maximum(demand - C, 0.0)
     return {
         "x": x, "Z": Z, "C": C, "G": G, "invest": Inv, "inventory_end": S_end,
-        "unmet": unmet, "supply": supply, "iterations": passes,
+        "unmet": unmet, "supply": supply, "iterations": passes, "spoilage": spoilage,
         "grants": grants, "claims_used": claims.copy(), "parts": parts,
         "reserve": reserve, "ub": ub,
     }
@@ -197,6 +206,8 @@ def capture_runs(mechanisms, *, periods=24, seed=0):
         captured.append({"inputs": snapshot, "outputs": out,
                          "status": str(getattr(self, "_last_status", "")),
                          "A": np.array(self.tech.A, dtype=float, copy=True),
+                         "base_output": np.array(self.tech.base_output, dtype=float, copy=True),
+                         "max_stock_ratio": float(self.scenario.max_stock_ratio),
                          "labor": np.array(self.tech.labor, dtype=float, copy=True),
                          "mechanism": getattr(self.mechanism, "name", "?")})
         return out

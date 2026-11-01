@@ -1,0 +1,1550 @@
+[
+  {
+    "block": "B8",
+    "cell_id": "B8.g0.r0",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=0, balance_rounds=0",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 0,
+      "block": "B8",
+      "gain": 0.0,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 0.0,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B8",
+    "cell_id": "B8.g0.r1",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 1,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=0, balance_rounds=1",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 1,
+      "block": "B8",
+      "gain": 0.0,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 0.0,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B8",
+    "cell_id": "B8.g0.r3",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=0, balance_rounds=3",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 3,
+      "block": "B8",
+      "gain": 0.0,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 0.0,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B8",
+    "cell_id": "B8.g0.1.r0",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=0.1, balance_rounds=0",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 0,
+      "block": "B8",
+      "gain": 0.1,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 0.1,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B8",
+    "cell_id": "B8.g0.1.r1",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 1,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=0.1, balance_rounds=1",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 1,
+      "block": "B8",
+      "gain": 0.1,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 0.1,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B8",
+    "cell_id": "B8.g0.1.r3",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=0.1, balance_rounds=3",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 3,
+      "block": "B8",
+      "gain": 0.1,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 0.1,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B8",
+    "cell_id": "B8.g0.3.r0",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=0.3, balance_rounds=0",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 0,
+      "block": "B8",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 0.3,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B8",
+    "cell_id": "B8.g0.3.r1",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 1,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=0.3, balance_rounds=1",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 1,
+      "block": "B8",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 0.3,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B8",
+    "cell_id": "B8.g0.3.r3",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=0.3, balance_rounds=3",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 3,
+      "block": "B8",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 0.3,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B8",
+    "cell_id": "B8.g1.r0",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 1.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=1, balance_rounds=0",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 0,
+      "block": "B8",
+      "gain": 1.0,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 1.0,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B8",
+    "cell_id": "B8.g1.r1",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 1,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 1.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=1, balance_rounds=1",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 1,
+      "block": "B8",
+      "gain": 1.0,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 1.0,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B8",
+    "cell_id": "B8.g1.r3",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: revision x balancing interaction only",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B8",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 1.0,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B8 material-balance decomposition: revision_gain=1, balance_rounds=3",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B8",
+        "decomposition",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B8",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "balance_rounds": 3,
+      "block": "B8",
+      "gain": 1.0,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "revision_gain": 1.0,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  }
+]

@@ -46,6 +46,7 @@ mechanism_params:
   max_target_ratio: 2.5
   min_target_ratio: 0.25
   revision_gain: 0.3
+  balance_rounds: 3
 stock_ratio: 0.1
 investment_share: 0.12
 gov_share: 0.1

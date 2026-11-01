@@ -204,8 +204,30 @@ def merged_summary(
     if not frames:
         return pd.DataFrame()
     frame = pd.concat(frames, ignore_index=True, sort=False)
-    base = baseline if baseline is not None else baseline_welfare(bundle)
-    frame["welfare_loss_vs_baseline"] = 1.0 - frame["cum_welfare"] / float(base)
+    if baseline is not None:
+        base: float | None = float(baseline)
+    else:
+        try:
+            base = baseline_welfare(bundle)
+        except RuntimeError:
+            # B1 has not been run yet: keep the pipeline usable (partial runs,
+            # figures built before the calibration block) and say so, rather than
+            # silently inventing a different welfare origin.
+            import warnings
+
+            warnings.warn(
+                "B1 is missing: welfare_loss_vs_baseline is NaN. Every welfare loss in "
+                "the paper is relative to results/B1/" + BASELINE_CELL + "; run the block.",
+                RuntimeWarning,
+                stacklevel=2,
+            )
+            base = None
+    column = (
+        1.0 - frame["cum_welfare"] / float(base)
+        if base is not None
+        else pd.Series(np.nan, index=frame.index)
+    )
+    frame["welfare_loss_vs_baseline"] = column
     for column in ("lag", "m", "gain", "price_elasticity", "theta"):
         if column in frame.columns:
             frame[column] = pd.to_numeric(frame[column], errors="coerce")
@@ -725,7 +747,6 @@ def table_validation(bundle: ResultsBundle, writer: TableWriter, tests: TestLog)
     summary = bundle.summaries[block].copy()
     rows: list[dict[str, Any]] = []
     for (mechanism, substrate), frame in summary.groupby(["mechanism", "substrate"], dropna=False):
-        base_total = float(frame["mean_output"].to_numpy(dtype=float).sum())
         rows.append(
             {
                 "mechanism": mechanism,
@@ -1134,7 +1155,7 @@ def boundary_cells(frame: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.
         ref_amp = float(ref["amp"].iloc[0])
         ref_sd = float(ref["amp_sd"].iloc[0]) if np.isfinite(ref["amp_sd"].iloc[0]) else 0.0
         stats["unstable"] = (stats["acf_lag1"] > 0.5) & (stats["amp"] > ref_amp + 3.0 * ref_sd)
-        stats["eps"] = float(eps)
+        stats["price_elasticity"] = float(eps)
         stats["gain"] = float(gain)
         stats["ref_amp"] = ref_amp
         stats["ref_sd"] = ref_sd
@@ -1174,7 +1195,7 @@ def boundary_cells(frame: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.
 
 
 def gain_estimate(bundle: ResultsBundle) -> pd.DataFrame:
-    """``b_p`` estimated from block B7 (the price-response probe).
+    r"""``b_p`` estimated from block B7 (the price-response probe).
 
     ``b_p = -ds/d log p``, measured sector by sector: the probed sector's own
     household unmet rate under a permanent 50% capacity shock, with and without a
@@ -1230,8 +1251,8 @@ def bp_summary(gains: pd.DataFrame) -> pd.DataFrame:
                 "b_p_min": float(np.nanmin(values)),
                 "b_p_max": float(np.nanmax(values)),
                 "b_p_sd": float(np.nanstd(values, ddof=1)) if np.isfinite(values).sum() > 1 else 0.0,
-                "b_p_argmin_sector": str(group.loc[np.nanargmin(values), "sector"]),
-                "b_p_argmax_sector": str(group.loc[np.nanargmax(values), "sector"]),
+                "b_p_argmin_sector": str(group["sector"].to_numpy()[int(np.nanargmin(values))]),
+                "b_p_argmax_sector": str(group["sector"].to_numpy()[int(np.nanargmax(values))]),
             }
         )
     return pd.DataFrame(rows).sort_values("price_elasticity").reset_index(drop=True)
@@ -1804,7 +1825,14 @@ def table_dual_track(bundle: ResultsBundle, writer: TableWriter, tests: TestLog)
         endpoints = ordered[ordered["theta"].isin([0.0, 1.0])]
         best_welfare = float(best["mean_welfare"])
         margin = best_welfare - float(endpoints["mean_welfare"].max())
+        # an "interior optimum" must be larger than the seed noise to count: the
+        # pre-registered test asks whether welfare is monotone in theta, so a grid
+        # point that wins by less than two seed standard deviations is not evidence
+        # of an interior optimum.
+        best_sd = float(best["mean_welfare_sd"]) if "mean_welfare_sd" in best else 0.0
+        detectable = bool(interior and margin > 2.0 * (best_sd if np.isfinite(best_sd) else 0.0))
         monotone = bool(abs(rho) > 0.9 and p_rho < 0.05)
+        verdict = "supported" if detectable and not monotone else "falsified (no detectable interior optimum)"
         tests.add(
             block=block,
             hypothesis="H5",
@@ -1818,8 +1846,9 @@ def table_dual_track(bundle: ResultsBundle, writer: TableWriter, tests: TestLog)
             n_units=int(len(ordered)),
             n_runs=int(group["n_seeds"].sum()),
             note=(
-                f"interior={bool(interior)}, monotone={monotone} (H5 falsified if monotone), "
-                f"welfare margin over best endpoint={margin:.4f}, rho(theta, welfare)={rho:.3f}"
+                f"verdict={verdict}; interior grid point={bool(interior)}, "
+                f"margin={margin:.4f} vs 2SD={2.0 * (best_sd if np.isfinite(best_sd) else 0.0):.4f}, "
+                f"monotone={monotone}, rho(theta, welfare)={rho:.3f}"
             ),
         )
     return table

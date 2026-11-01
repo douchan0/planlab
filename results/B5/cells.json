@@ -1,0 +1,3148 @@
+[
+  {
+    "block": "B5",
+    "cell_id": "B5.k0.theta0",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.0
+      },
+      "name": "B5 dual track: theta=0, k=0 (m=1)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.0,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k0.theta0.1",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.1
+      },
+      "name": "B5 dual track: theta=0.1, k=0 (m=1)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.1,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k0.theta0.2",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.2
+      },
+      "name": "B5 dual track: theta=0.2, k=0 (m=1)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.2,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k0.theta0.3",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.3
+      },
+      "name": "B5 dual track: theta=0.3, k=0 (m=1)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.3,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k0.theta0.4",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.4
+      },
+      "name": "B5 dual track: theta=0.4, k=0 (m=1)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.4,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k0.theta0.5",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.5
+      },
+      "name": "B5 dual track: theta=0.5, k=0 (m=1)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.5,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k0.theta0.6",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.6
+      },
+      "name": "B5 dual track: theta=0.6, k=0 (m=1)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.6,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k0.theta0.7",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.7
+      },
+      "name": "B5 dual track: theta=0.7, k=0 (m=1)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.7,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k0.theta0.8",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.8
+      },
+      "name": "B5 dual track: theta=0.8, k=0 (m=1)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.8,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k0.theta0.9",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.9
+      },
+      "name": "B5 dual track: theta=0.9, k=0 (m=1)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.9,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k0.theta1",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 1.0
+      },
+      "name": "B5 dual track: theta=1, k=0 (m=1)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 1.0,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k3.theta0",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 3,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.0
+      },
+      "name": "B5 dual track: theta=0, k=3 (m=4)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 3,
+      "m": 4,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.0,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k3.theta0.1",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 3,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.1
+      },
+      "name": "B5 dual track: theta=0.1, k=3 (m=4)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 3,
+      "m": 4,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.1,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k3.theta0.2",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 3,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.2
+      },
+      "name": "B5 dual track: theta=0.2, k=3 (m=4)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 3,
+      "m": 4,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.2,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k3.theta0.3",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 3,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.3
+      },
+      "name": "B5 dual track: theta=0.3, k=3 (m=4)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 3,
+      "m": 4,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.3,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k3.theta0.4",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 3,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.4
+      },
+      "name": "B5 dual track: theta=0.4, k=3 (m=4)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 3,
+      "m": 4,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.4,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k3.theta0.5",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 3,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.5
+      },
+      "name": "B5 dual track: theta=0.5, k=3 (m=4)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 3,
+      "m": 4,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.5,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k3.theta0.6",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 3,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.6
+      },
+      "name": "B5 dual track: theta=0.6, k=3 (m=4)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 3,
+      "m": 4,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.6,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k3.theta0.7",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 3,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.7
+      },
+      "name": "B5 dual track: theta=0.7, k=3 (m=4)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 3,
+      "m": 4,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.7,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k3.theta0.8",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 3,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.8
+      },
+      "name": "B5 dual track: theta=0.8, k=3 (m=4)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 3,
+      "m": 4,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.8,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k3.theta0.9",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 3,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.9
+      },
+      "name": "B5 dual track: theta=0.9, k=3 (m=4)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 3,
+      "m": 4,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 0.9,
+      "theta_param": "theta"
+    }
+  },
+  {
+    "block": "B5",
+    "cell_id": "B5.k3.theta1",
+    "mechanism": "hybrid_dual_track",
+    "notes": "theta=0 is the pure market pole, theta=1 the pure plan pole",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B5",
+      "indexation": 0.0,
+      "info": {
+        "lag": 3,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 1.0
+      },
+      "name": "B5 dual track: theta=1, k=3 (m=4)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B5",
+        "dual_track"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B5",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B5",
+      "gain": 0.3,
+      "lag": 3,
+      "m": 4,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat",
+      "theta": 1.0,
+      "theta_param": "theta"
+    }
+  }
+]

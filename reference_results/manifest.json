@@ -1,8 +1,8 @@
 {
-  "created_utc": "2026-11-01T08:25:28Z",
-  "wall_seconds": 86.8,
-  "n_cells": 220,
-  "n_runs": 2486,
+  "created_utc": "2026-11-01T08:38:28Z",
+  "wall_seconds": 236.2,
+  "n_cells": 244,
+  "n_runs": 2798,
   "n_failed": 0,
   "grid": {
     "T": 80,
@@ -39,7 +39,7 @@
     "scipy": "1.15.3",
     "pandas": "2.3.3"
   },
-  "git_head": "bb54a16ff5ce",
+  "git_head": "7749ec65fe54",
   "argv": [
     "scripts/lead_reference.py"
   ]

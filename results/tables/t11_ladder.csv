@@ -1,0 +1,9 @@
+ladder,lag_reporting,lag_effective,n_seeds,mean_shortage_rate,peak_shortage_rate,mean_welfare_loss,mean_x_over_base,mean_plan_fulfilment,shock_output_amplification,recovery_half_life
+consumption_first,0,1,20,0.173415,1,0.10735,0.747246,0.660035,57.1443,4.25
+production_first,0,1,20,0.0326034,0.186345,0.0390907,0.956313,0.786566,5.68863,1.85
+consumption_first,1,2,20,0.185633,1,0.108084,0.749165,0.649158,57.1443,3.5
+production_first,1,2,20,0.0368969,0.188326,0.0398729,0.948847,0.774678,5.69438,2
+consumption_first,2,3,20,0.200348,1,0.109406,0.742271,0.637606,57.1443,3.35
+production_first,2,3,20,0.0412576,0.189914,0.0403362,0.945114,0.769598,5.69045,1.7
+consumption_first,4,5,20,0.221791,1,0.111553,0.743734,0.634586,57.1443,3.3
+production_first,4,5,20,0.05067,0.190729,0.040813,0.942861,0.767429,5.67967,1.1

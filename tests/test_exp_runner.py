@@ -35,7 +35,7 @@ def _toy_scenario(mechanism: str, **overrides):
         "objective": {"shortage": 1.0, "inventory": 0.1, "plan_deviation": 0.5,
                       "inequality": 0.0, "adjustment": 0.1},
         "household": {"essential_priority": 0.0, "backlog_persistence": 0.5, "hoarding": 0.0},
-        "mechanism_params": dict(grid.COMMON_MECHANISM_PARAMS),
+        "mechanism_params": grid._mech_params(mechanism, 0.3),
         "stock_ratio": 0.10,
         "tags": ["test"],
     }
@@ -149,12 +149,29 @@ def test_audit_sample_is_self_consistent(out_dir: Path):
     assert (out_dir / "audit_index.csv").exists()
 
 
-def test_common_random_numbers_across_mechanisms(out_dir: Path):
-    """Two mechanisms with the same scenario id and seed must see the same demand."""
+def test_common_shock_and_noise_draws_across_mechanisms(out_dir: Path):
+    """Common random numbers = common *draws*, not common realised demand.
+
+    The exogenous stream (capacity-shock factors, AR(1) innovations, measurement
+    noise) is seeded from ``(scenario_id, seed)``, so two mechanisms of the same
+    block see the same draws.  Realised demand is **not** common: it carries three
+    endogenous channels — income elasticity (a mechanism that produces less also
+    generates less demand), price elasticity, and the backlog carry-over of last
+    period's unmet demand.  This test switches all three off, so the realised path
+    is purely exogenous and must coincide exactly; the companion test below keeps
+    them on and checks that it does not.
+    """
     cells = [
-        _toy_cell("material_balance", cell_id="TEST.crn.mb", seeds=(0,)),
+        _toy_cell("material_balance", cell_id="TEST.crn.mb", seeds=(0,),
+                  demand={"growth": 0.0, "ar1": 0.3, "sigma": 0.02,
+                          "price_elasticity": 0.0, "income_elasticity": 0.0},
+                  household={"essential_priority": 0.0, "backlog_persistence": 0.0,
+                             "hoarding": 0.0}),
         _toy_cell("lp_central", cell_id="TEST.crn.lp", seeds=(0,),
-                  mechanism_params=dict(grid.COMMON_MECHANISM_PARAMS, use_shadow_prices=0.0)),
+                  demand={"growth": 0.0, "ar1": 0.3, "sigma": 0.02,
+                          "price_elasticity": 0.0, "income_elasticity": 0.0},
+                  household={"essential_priority": 0.0, "backlog_persistence": 0.0,
+                             "hoarding": 0.0}),
     ]
     runner.run_cells(cells, out_dir, workers=1)
     frames = {}
@@ -163,8 +180,24 @@ def test_common_random_numbers_across_mechanisms(out_dir: Path):
         frames[cell.mechanism] = frame.sort_values("t")
     mb, lp = frames["material_balance"], frames["lp_central"]
     assert np.allclose(mb["demand_total"].to_numpy(), lp["demand_total"].to_numpy(), rtol=0, atol=0)
-    # ...and the outcomes differ, otherwise the pairing would be vacuous
+    # the *outcomes* differ, otherwise the pairing would be vacuous
     assert not np.allclose(mb["shortage_rate"].to_numpy(), lp["shortage_rate"].to_numpy())
+
+
+def test_income_elastic_demand_is_not_common_across_mechanisms(out_dir: Path):
+    """With income-elastic demand the realised path legitimately differs."""
+    cells = [
+        _toy_cell("material_balance", cell_id="TEST.crn2.mb", seeds=(0,)),
+        _toy_cell("lp_central", cell_id="TEST.crn2.lp", seeds=(0,),
+                  ),
+    ]
+    runner.run_cells(cells, out_dir, workers=1)
+    frames = {
+        cell.mechanism: pd.read_parquet(out_dir / "cells" / f"{cell.cell_id}.parquet").sort_values("t")
+        for cell in cells
+    }
+    mb, lp = frames["material_balance"], frames["lp_central"]
+    assert not np.allclose(mb["demand_total"].to_numpy(), lp["demand_total"].to_numpy())
 
 
 def test_failed_mechanism_is_recorded_not_raised(out_dir: Path):

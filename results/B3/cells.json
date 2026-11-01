@@ -1,0 +1,8442 @@
+[
+  {
+    "block": "B3",
+    "cell_id": "B3.c01.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c01, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c01",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c01",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c02.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c02, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c02",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c02",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c03.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c03, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c03",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c03",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c04.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c04, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c04",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c04",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c05.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c05, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c05",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c05",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c06.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c06, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c06",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c06",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c07.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c07, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c07",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c07",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c08.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c08, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c08",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c08",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c09.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c09, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c09",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c09",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c10.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c10, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c10",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c10",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c11.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c11, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c11",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c11",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c12.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c12, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c13.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c13, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c13",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c13",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c14.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c14, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c14",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c14",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c15.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c15, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c15",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c15",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c16.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c16, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c16",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c16",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c17.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c17, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c17",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c17",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c18.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c18, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c18",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c18",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c19.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c19, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c19",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c19",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c20.material_balance",
+    "mechanism": "material_balance",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c20, material_balance",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c20",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c20",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c01.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c01, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c01",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c01",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c02.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c02, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c02",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c02",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c03.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c03, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c03",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c03",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c04.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c04, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c04",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c04",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c05.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c05, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c05",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c05",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c06.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c06, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c06",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c06",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c07.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c07, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c07",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c07",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c08.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c08, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c08",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c08",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c09.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c09, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c09",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c09",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c10.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c10, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c10",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c10",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c11.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c11, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c11",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c11",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c12.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c12, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c13.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c13, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c13",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c13",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c14.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c14, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c14",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c14",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c15.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c15, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c15",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c15",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c16.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c16, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c16",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c16",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c17.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c17, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c17",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c17",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c18.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c18, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c18",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c18",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c19.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c19, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c19",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c19",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c20.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c20, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c20",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c20",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c01.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c01, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c01",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c01",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c02.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c02, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c02",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c02",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c03.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c03, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c03",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c03",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c04.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c04, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c04",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c04",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c05.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c05, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c05",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c05",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c06.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c06, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c06",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c06",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c07.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c07, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c07",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c07",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c08.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c08, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c08",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c08",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c09.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c09, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c09",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c09",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c10.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c10, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c10",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c10",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c11.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c11, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c11",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c11",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c12.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c12, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c13.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c13, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c13",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c13",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c14.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c14, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c14",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c14",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c15.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c15, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c15",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c15",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c16.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c16, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c16",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c16",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c17.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c17, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c17",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c17",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c18.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c18, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c18",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c18",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c19.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c19, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c19",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c19",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B3",
+    "cell_id": "B3.c20.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "network amplification: perturb_shock_name recorded in treatment",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B3",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B3 propagation: 50% capacity shock to c20, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c20",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B3",
+        "propagation"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B3",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B3",
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c20",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  }
+]

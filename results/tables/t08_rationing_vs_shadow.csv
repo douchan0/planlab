@@ -1,0 +1,7 @@
+mechanism,capacity_loss_pct,shock_size,n_seeds,mean_shortage_rate,peak_shortage_rate,mean_shortage_essentials,mean_welfare_loss,mean_x_over_base,shock_output_amplification,recovery_half_life
+rationing_priority,50,0.5,20,0.0453385,0.190403,0.0365772,0.0482738,0.954108,6.63159,3.85
+tatonnement,50,0.5,20,0.0289496,0.175668,0.0259986,0.0502621,0.945109,5.7148,1.5
+rationing_priority,70,0.3,20,0.139367,0.660145,0.17527,0.0932502,0.859141,17.9394,6.95
+tatonnement,70,0.3,20,0.109336,0.649152,0.133632,0.109932,0.892626,16.7242,2.35
+rationing_priority,90,0.1,20,0.193672,0.876001,0.211925,0.117695,0.759084,24.8425,5.85
+tatonnement,90,0.1,20,0.170828,0.828208,0.192528,0.13802,0.808765,24.2396,6.15

@@ -1,0 +1,851 @@
+[
+  {
+    "block": "B4",
+    "cell_id": "B4.loss90.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "same shock sector and duration; only the size changes",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B4",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B4 rationing vs shadow price: 90% capacity loss, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.1,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B4",
+        "shock_size"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B4",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B4",
+      "capacity_loss": 90,
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.1,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B4",
+    "cell_id": "B4.loss70.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "same shock sector and duration; only the size changes",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B4",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B4 rationing vs shadow price: 70% capacity loss, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.3,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B4",
+        "shock_size"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B4",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B4",
+      "capacity_loss": 70,
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.3,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B4",
+    "cell_id": "B4.loss50.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "same shock sector and duration; only the size changes",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B4",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B4 rationing vs shadow price: 50% capacity loss, rationing_priority",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B4",
+        "shock_size"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B4",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B4",
+      "capacity_loss": 50,
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B4",
+    "cell_id": "B4.loss90.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "same shock sector and duration; only the size changes",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B4",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B4 rationing vs shadow price: 90% capacity loss, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.1,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B4",
+        "shock_size"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B4",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B4",
+      "capacity_loss": 90,
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.1,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B4",
+    "cell_id": "B4.loss70.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "same shock sector and duration; only the size changes",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B4",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B4 rationing vs shadow price: 70% capacity loss, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.3,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B4",
+        "shock_size"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B4",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B4",
+      "capacity_loss": 70,
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.3,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B4",
+    "cell_id": "B4.loss50.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "same shock sector and duration; only the size changes",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.4,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.01
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B4",
+      "indexation": 0.0,
+      "info": {
+        "lag": 2,
+        "noise": 0.02,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B4 rationing vs shadow price: 50% capacity loss, tatonnement",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [
+        {
+          "duration": 8,
+          "sector": "c12",
+          "size": 0.5,
+          "start": 40,
+          "type": "capacity"
+        }
+      ],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B4",
+        "shock_size"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B4",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B4",
+      "capacity_loss": 50,
+      "gain": 0.3,
+      "lag": 2,
+      "m": 3,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_duration": 8,
+      "shock_sector": "c12",
+      "shock_size": 0.5,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  }
+]

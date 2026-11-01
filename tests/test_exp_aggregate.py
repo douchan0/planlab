@@ -38,6 +38,21 @@ def _summary_rows(block: str, mechanisms, n_seeds: int, *, base: float = 1000.0,
                     "mean_welfare": float((base - 5 * seed) / 50),
                     "mean_plan_fulfilment": float(0.95 + rng.normal(0, 0.005)),
                     "mean_iterations": 1.0,
+                    "mean_output": float(250.0 + seed),
+                    "mean_shortage_essentials": float(0.015 + 0.0005 * seed),
+                    "sd_shortage_rate": 0.02,
+                    "mean_price_volatility": 0.004,
+                    "amp_protocol_peak": 3.0,
+                    "amp_protocol_mean": 1.5,
+                    "oscillation_amplitude_sector_mean": 0.012,
+                    "pre_shock_shortage": 0.008,
+                    "mean_capital_utilisation": 0.95,
+                    "mean_inventory_ratio": 0.1,
+                    "mean_price_dispersion": 0.02,
+                    "mean_consumption": 200.0,
+                    "penalised_welfare": 100.0,
+                    "recovery_half_life_own": 2.0,
+                    "accounting_residual_rel": 1e-16,
                     "oscillation_amplitude": float(0.01 + 0.002 * extra.get("lag", 0) + rng.normal(0, 1e-4)),
                     "acf_lag1": float(0.4 + 0.05 * extra.get("lag", 0)),
                     "oscillation_period": 10.0,
@@ -82,6 +97,9 @@ def _bundle(tmp_path: Path) -> A.ResultsBundle:
         ignore_index=True,
     )
     b2["gain_axis"] = "swept"
+    b2["gain_param"] = np.where(b2["mechanism"].isin(["material_balance", "tatonnement"]),
+                                np.where(b2["mechanism"] == "material_balance",
+                                         "revision_gain", "price_gain"), "")
     b3 = pd.concat(
         [_summary_rows("B3", ["material_balance"], 2, shock_sector=s) for s in ("c01", "c12")],
         ignore_index=True,
@@ -132,6 +150,7 @@ def _bundle(tmp_path: Path) -> A.ResultsBundle:
     )
     b6["labor_supply_factor"] = 1.15
     b6["sigma_obs"] = 0.02
+    b6["sigma_demand"] = 0.02
     b6["a_perturb"] = 0.0
     b8 = pd.concat(
         [
@@ -238,8 +257,12 @@ def test_tex_is_booktabs_and_escaped():
 
 
 def test_g_star_matches_the_notes():
-    assert A.G_STAR(1) == pytest.approx(2.0)
-    assert A.G_STAR(2) == pytest.approx(1.0)
-    assert A.G_STAR(3) == pytest.approx(0.6180339887, abs=1e-9)
-    assert A.G_STAR(4) == pytest.approx(0.4450418679, abs=1e-9)
+    # docs/notes_delay_theorem.md (corrected): g*(m) = 2 sin(pi/(2(2m+1))),
+    # g*(0) = 2, g*(1) = 1, g*(2) = 1/phi, g*(3) = 0.445; the simulation's
+    # reporting lag maps to m = lag + 1, so lag 0 is m = 1.
+    assert A.G_STAR(0) == pytest.approx(2.0)
+    assert A.G_STAR(1) == pytest.approx(1.0)
+    assert A.G_STAR(2) == pytest.approx(0.6180339887, abs=1e-9)
+    assert A.G_STAR(3) == pytest.approx(0.4450418679, abs=1e-9)
+    assert A.G_STAR(6) == pytest.approx(0.2408, abs=1e-3)
     assert A.PERIOD_STAR(4) == 18

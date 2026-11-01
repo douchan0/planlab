@@ -1,0 +1,279 @@
+{
+  "blocks": [
+    {
+      "block": "B1",
+      "cells_failed": 0,
+      "cells_planned": 12,
+      "cells_run": 12,
+      "cells_skipped_existing": 12,
+      "manifest": "/Users/ceontou/Documents/code/planlab/results/B1/manifest.json",
+      "mechanisms_missing": [],
+      "mechanisms_present": [
+        "hybrid_dual_track",
+        "lp_central",
+        "market",
+        "material_balance",
+        "rationing_priority",
+        "tatonnement"
+      ],
+      "runs_completed": 12,
+      "wall_s": 0.01
+    },
+    {
+      "block": "B1b",
+      "cells_failed": 0,
+      "cells_planned": 6,
+      "cells_run": 6,
+      "cells_skipped_existing": 6,
+      "manifest": "/Users/ceontou/Documents/code/planlab/results/B1b/manifest.json",
+      "mechanisms_missing": [],
+      "mechanisms_present": [
+        "hybrid_dual_track",
+        "lp_central",
+        "market",
+        "material_balance",
+        "rationing_priority",
+        "tatonnement"
+      ],
+      "runs_completed": 120,
+      "wall_s": 0.04
+    },
+    {
+      "block": "B2",
+      "cells_failed": 0,
+      "cells_planned": 204,
+      "cells_run": 204,
+      "cells_skipped_existing": 204,
+      "manifest": "/Users/ceontou/Documents/code/planlab/results/B2/manifest.json",
+      "mechanisms_missing": [],
+      "mechanisms_present": [
+        "hybrid_dual_track",
+        "lp_central",
+        "market",
+        "material_balance",
+        "rationing_priority",
+        "tatonnement"
+      ],
+      "runs_completed": 4080,
+      "wall_s": 2.18
+    },
+    {
+      "block": "B3",
+      "cells_failed": 0,
+      "cells_planned": 60,
+      "cells_run": 60,
+      "cells_skipped_existing": 0,
+      "manifest": "/Users/ceontou/Documents/code/planlab/results/B3/manifest.json",
+      "mechanisms_missing": [],
+      "mechanisms_present": [
+        "hybrid_dual_track",
+        "lp_central",
+        "market",
+        "material_balance",
+        "rationing_priority",
+        "tatonnement"
+      ],
+      "runs_completed": 1200,
+      "wall_s": 84.11
+    },
+    {
+      "block": "B4",
+      "cells_failed": 0,
+      "cells_planned": 6,
+      "cells_run": 6,
+      "cells_skipped_existing": 0,
+      "manifest": "/Users/ceontou/Documents/code/planlab/results/B4/manifest.json",
+      "mechanisms_missing": [],
+      "mechanisms_present": [
+        "hybrid_dual_track",
+        "lp_central",
+        "market",
+        "material_balance",
+        "rationing_priority",
+        "tatonnement"
+      ],
+      "runs_completed": 120,
+      "wall_s": 3.3
+    },
+    {
+      "block": "B5",
+      "cells_failed": 0,
+      "cells_planned": 22,
+      "cells_run": 22,
+      "cells_skipped_existing": 0,
+      "manifest": "/Users/ceontou/Documents/code/planlab/results/B5/manifest.json",
+      "mechanisms_missing": [],
+      "mechanisms_present": [
+        "hybrid_dual_track",
+        "lp_central",
+        "market",
+        "material_balance",
+        "rationing_priority",
+        "tatonnement"
+      ],
+      "runs_completed": 440,
+      "wall_s": 11.6
+    },
+    {
+      "block": "B6",
+      "cells_failed": 0,
+      "cells_planned": 26,
+      "cells_run": 26,
+      "cells_skipped_existing": 0,
+      "manifest": "/Users/ceontou/Documents/code/planlab/results/B6/manifest.json",
+      "mechanisms_missing": [],
+      "mechanisms_present": [
+        "hybrid_dual_track",
+        "lp_central",
+        "market",
+        "material_balance",
+        "rationing_priority",
+        "tatonnement"
+      ],
+      "runs_completed": 520,
+      "wall_s": 29.65
+    },
+    {
+      "block": "B7",
+      "cells_failed": 0,
+      "cells_planned": 120,
+      "cells_run": 120,
+      "cells_skipped_existing": 0,
+      "manifest": "/Users/ceontou/Documents/code/planlab/results/B7/manifest.json",
+      "mechanisms_missing": [],
+      "mechanisms_present": [
+        "hybrid_dual_track",
+        "lp_central",
+        "market",
+        "material_balance",
+        "rationing_priority",
+        "tatonnement"
+      ],
+      "runs_completed": 360,
+      "wall_s": 12.32
+    },
+    {
+      "block": "B8",
+      "cells_failed": 0,
+      "cells_planned": 12,
+      "cells_run": 12,
+      "cells_skipped_existing": 0,
+      "manifest": "/Users/ceontou/Documents/code/planlab/results/B8/manifest.json",
+      "mechanisms_missing": [],
+      "mechanisms_present": [
+        "hybrid_dual_track",
+        "lp_central",
+        "market",
+        "material_balance",
+        "rationing_priority",
+        "tatonnement"
+      ],
+      "runs_completed": 192,
+      "wall_s": 9.07
+    },
+    {
+      "block": "B2L",
+      "cells_failed": 0,
+      "cells_planned": 8,
+      "cells_run": 8,
+      "cells_skipped_existing": 0,
+      "manifest": "/Users/ceontou/Documents/code/planlab/results/B2L/manifest.json",
+      "mechanisms_missing": [],
+      "mechanisms_present": [
+        "hybrid_dual_track",
+        "lp_central",
+        "market",
+        "material_balance",
+        "rationing_priority",
+        "tatonnement"
+      ],
+      "runs_completed": 160,
+      "wall_s": 9.7
+    },
+    {
+      "block": "P2",
+      "cells_failed": 0,
+      "cells_planned": 40,
+      "cells_run": 40,
+      "cells_skipped_existing": 0,
+      "manifest": "/Users/ceontou/Documents/code/planlab/results/P2/manifest.json",
+      "mechanisms_missing": [],
+      "mechanisms_present": [
+        "hybrid_dual_track",
+        "lp_central",
+        "market",
+        "material_balance",
+        "rationing_priority",
+        "tatonnement"
+      ],
+      "runs_completed": 40,
+      "wall_s": 0.87
+    }
+  ],
+  "blocks_completed": [
+    "B1",
+    "B1b",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7",
+    "B8",
+    "B2L",
+    "P2"
+  ],
+  "blocks_requested": [
+    "B1",
+    "B1b",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7",
+    "B8",
+    "B2L",
+    "P2"
+  ],
+  "cells_failed": 0,
+  "code_fingerprint": "15124bbfe66d3ecb",
+  "environment": {
+    "burn_in": 30,
+    "note": "docs/PROTOCOL.md \u00a74 as amended by docs/AMENDMENTS.md 1-3; the horizon T=80 is recorded as a deviation in docs/DEVIATIONS.md",
+    "periods": 80,
+    "shock_duration": 8,
+    "shock_sector": "c12",
+    "shock_size": 0.5,
+    "shock_start": 40,
+    "stock_ratio": 0.1
+  },
+  "generated_at": "2026-11-01T16:39:57+0800",
+  "git_commit": "7749ec65fe5486990fdfa7f6f420d24521e000ba",
+  "git_diff_stat": " 34 files changed, 3662 insertions(+), 3025 deletions(-)",
+  "git_dirty": true,
+  "grid_fingerprint": "2ddad8ca405cb343",
+  "how_to_reproduce": "bash scripts/reproduce.sh   # or: make reproduce",
+  "mechanisms_present": [
+    "hybrid_dual_track",
+    "lp_central",
+    "market",
+    "material_balance",
+    "rationing_priority",
+    "tatonnement"
+  ],
+  "package_versions": {
+    "machine": "arm64",
+    "matplotlib": "3.10.8",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "planlab": "0.1.0",
+    "platform": "macOS-15.7.7-arm64-arm-64bit",
+    "pyarrow": "25.0.1",
+    "python": "3.10.13",
+    "scipy": "1.15.3"
+  },
+  "planned_runs": 7244,
+  "runs_completed": 7244,
+  "total_wall_time_s": 189.37
+}

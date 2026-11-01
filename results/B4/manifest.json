@@ -1,0 +1,156 @@
+{
+  "audit_file": "/Users/ceontou/Documents/code/planlab/results/B4/audit_records.npz",
+  "audit_records": 240,
+  "audit_runs": 48,
+  "block": "B4",
+  "cell_hashes": {
+    "B4.loss50.rationing_priority": "fda687bbe7fe1169",
+    "B4.loss50.tatonnement": "c7055be401e33ba7",
+    "B4.loss70.rationing_priority": "b076afedf2d8f1a3",
+    "B4.loss70.tatonnement": "be4c129c132a61ea",
+    "B4.loss90.rationing_priority": "c67166be2d4d0b67",
+    "B4.loss90.tatonnement": "76006869c27211d8"
+  },
+  "cells_completed": 6,
+  "cells_failed": 0,
+  "cells_planned": 6,
+  "cells_skipped_missing_mechanism": 0,
+  "code_fingerprint": "15124bbfe66d3ecb",
+  "code_fingerprints_seen": {
+    "15124bbfe66d3ecb": 6
+  },
+  "environment": {
+    "burn_in": 30,
+    "note": "docs/PROTOCOL.md \u00a74 as amended by docs/AMENDMENTS.md 1-3; the horizon T=80 is recorded as a deviation in docs/DEVIATIONS.md",
+    "periods": 80,
+    "shock_duration": 8,
+    "shock_sector": "c12",
+    "shock_size": 0.5,
+    "shock_start": 40,
+    "stock_ratio": 0.1
+  },
+  "failures": [],
+  "forced_rerun": false,
+  "generated_at": "2026-11-01T16:38:38+0800",
+  "git_commit": "7749ec65fe5486990fdfa7f6f420d24521e000ba",
+  "git_diff_stat": " 33 files changed, 3630 insertions(+), 3020 deletions(-)",
+  "git_dirty": true,
+  "grid_fingerprint": "690b4b552f6caf83",
+  "identification_audit": {
+    "cells_checked": 6,
+    "cells_compliant": 6,
+    "common_params": {
+      "backlog_carry": 0.0,
+      "max_target_ratio": 2.5,
+      "min_target_ratio": 0.25,
+      "stock_target_ratio": 0.1
+    },
+    "institutional_knobs": [
+      "revision_gain",
+      "price_gain",
+      "theta",
+      "quota_speed"
+    ],
+    "ok": true,
+    "pinned_params": {
+      "hybrid_dual_track": {
+        "market_gain": 0.25,
+        "theta": 0.5
+      },
+      "lp_central": {
+        "use_shadow_prices": 0.0
+      },
+      "market": {},
+      "material_balance": {
+        "balance_rounds": 3,
+        "revision_gain": 0.3
+      },
+      "rationing_priority": {
+        "quota_speed": 0.5,
+        "revision_interval": 1
+      },
+      "tatonnement": {
+        "price_gain": 0.3
+      }
+    }
+  },
+  "mechanism_base_params": {
+    "backlog_carry": 0.0,
+    "max_target_ratio": 2.5,
+    "min_target_ratio": 0.25,
+    "stock_target_ratio": 0.1
+  },
+  "mechanism_pinned_params": {
+    "hybrid_dual_track": {
+      "market_gain": 0.25,
+      "theta": 0.5
+    },
+    "lp_central": {
+      "use_shadow_prices": 0.0
+    },
+    "market": {},
+    "material_balance": {
+      "balance_rounds": 3,
+      "revision_gain": 0.3
+    },
+    "rationing_priority": {
+      "quota_speed": 0.5,
+      "revision_interval": 1
+    },
+    "tatonnement": {
+      "price_gain": 0.3
+    }
+  },
+  "mechanisms_missing": [],
+  "mechanisms_present": [
+    "hybrid_dual_track",
+    "lp_central",
+    "market",
+    "material_balance",
+    "rationing_priority",
+    "tatonnement"
+  ],
+  "mechanisms_present_in_runs": [
+    "rationing_priority",
+    "tatonnement"
+  ],
+  "mixed_code_versions": false,
+  "package_versions": {
+    "machine": "arm64",
+    "matplotlib": "3.10.8",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "planlab": "0.1.0",
+    "platform": "macOS-15.7.7-arm64-arm-64bit",
+    "pyarrow": "25.0.1",
+    "python": "3.10.13",
+    "scipy": "1.15.3"
+  },
+  "runs_completed": 120,
+  "runs_planned": 120,
+  "scenario_hashes": {
+    "B4.loss50.rationing_priority": "44ae497812914d53",
+    "B4.loss50.tatonnement": "bb24f86cf87980ba",
+    "B4.loss70.rationing_priority": "80fa60b193a22d82",
+    "B4.loss70.tatonnement": "3355a55aeea443c8",
+    "B4.loss90.rationing_priority": "2ade16cc50c726ae",
+    "B4.loss90.tatonnement": "72822bdc1e29ec04"
+  },
+  "scenario_ids": [
+    "B4"
+  ],
+  "seeds_per_cell": {
+    "B4.loss50.rationing_priority": 20,
+    "B4.loss50.tatonnement": 20,
+    "B4.loss70.rationing_priority": 20,
+    "B4.loss70.tatonnement": 20,
+    "B4.loss90.rationing_priority": 20,
+    "B4.loss90.tatonnement": 20
+  },
+  "substrates": [
+    "eurostat"
+  ],
+  "sum_cell_wall_time_s": 16.206,
+  "wall_time_s": 3.303,
+  "workers": 7
+}

@@ -1,0 +1,115 @@
+{
+  "blocks_found": [
+    "B1",
+    "B1b",
+    "B2",
+    "B2L",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7",
+    "B8",
+    "P2"
+  ],
+  "generated_at": "2026-11-01T16:40:13+0800",
+  "git_commit": "7749ec65fe5486990fdfa7f6f420d24521e000ba",
+  "grid_fingerprint": "5d222d87c103e838",
+  "how_to_reproduce": "python -m planlab.experiments.aggregate",
+  "n_tests": 55,
+  "results_dir": "/Users/ceontou/Documents/code/planlab/results",
+  "tables": [
+    {
+      "caption": "Calibration and validation (block B1). Six institutions on two substrates with perfect information, no shock and no lag. $x/\\bar x$ is realised gross output relative to the base year; a correct implementation returns 1.000 for every institution, so any departure, any positive shortage rate or any balance residual above $10^{-8}$ is an implementation failure rather than a result.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t01_validation_b1.csv",
+      "rows": 12,
+      "table": "t01_validation_b1",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t01_validation_b1.tex"
+    },
+    {
+      "caption": "The information rent of a coordination institution (block B1b): no capacity shock, no reporting lag, only measurement noise ($\\sigma=0.03$) and AR(1) demand noise (ar1 $=0.3$, $\\sigma=0.02$). Since every institution reproduces the base year exactly when information is perfect (Table~\\ref{tab:validation}), any departure here is attributable to the institution's use of information.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t02_noise_only_information_rent.csv",
+      "rows": 6,
+      "table": "t02_noise_only_information_rent",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t02_noise_only_information_rent.tex"
+    },
+    {
+      "caption": "Delay and institution (block B2, reference gain 0.30, price elasticity 0.4): the reporting lag $\\ell$ is what the scenario sets, the effective delay $k=\\ell+1$ is what the theory's $g^*(k)$ refers to, because the planner observes period $t-1-\\ell$ when planning $t$. All cells share the same exogenous path (common random numbers), so row differences are institutional, not stochastic.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t03_lag_mechanism.csv",
+      "rows": 36,
+      "table": "t03_lag_mechanism",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t03_lag_mechanism.tex"
+    },
+    {
+      "caption": "The gain axis (block B2, extended by Amendment 3). By Amendment 1 the stability test is the price loop of \\texttt{tatonnement} (\\texttt{price\\_gain}, $\\varepsilon>0$); the plan-revision loop of \\texttt{material\\_balance} (\\texttt{revision\\_gain}) has the opposite sign and is reported as H1$'$.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t04_gain_sweep.csv",
+      "rows": 180,
+      "table": "t04_gain_sweep",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t04_gain_sweep.tex"
+    },
+    {
+      "caption": "Sectoral propagation (block B3): a 50 per cent capacity cut lasting eight quarters, one shocked sector at a time, 20 seeds each. $\\mathrm{Amp}^{\\mathrm{out}}$ is the peak aggregate output loss divided by the output-weighted capacity loss (the like-for-like amplification of H4); the distributional ratio divides the peak *shortage* share by the same denominator and is always larger because it compares a demand-side with a supply-side share.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t06_propagation.csv",
+      "rows": 60,
+      "table": "t06_propagation",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t06_propagation.tex"
+    },
+    {
+      "caption": "Incidence of the shortfall (block B3): the engine serves intermediate inputs before final claims, so rationing incidence and production incidence must be read separately. Within the rationed (final) claims, the ``household share'' is the part borne by households and ``gov/invest share'' the part borne by collective and investment demand; intermediate users bear **zero** rationed shortfall by construction and instead bear a plan gap, reported as the rate at which planned intermediate inputs were not supplied.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t07_incidence.csv",
+      "rows": 60,
+      "table": "t07_incidence",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t07_incidence.tex"
+    },
+    {
+      "caption": "Administrative rationing against shadow-price coordination (block B4) at three capacity-loss sizes, all with the same eight-quarter duration and the same shocked sector.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t08_rationing_vs_shadow.csv",
+      "rows": 6,
+      "table": "t08_rationing_vs_shadow",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t08_rationing_vs_shadow.tex"
+    },
+    {
+      "caption": "The dual-track frontier (block B5): welfare, shortage and price volatility against the plan share $\\theta$ at reporting lags 0 and 3. $\\theta=0$ is the pure market pole and $\\theta=1$ the pure plan pole.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t09_dual_track.csv",
+      "rows": 22,
+      "table": "t09_dual_track",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t09_dual_track.tex"
+    },
+    {
+      "caption": "Robustness of the reference condition (block B6): substrate, revision gain, demand and measurement noise, planning effort (internal balance rounds), a 5 per cent perturbation of the input-output matrix, the normative penalty weights at $\\pm50$ per cent, and the **labour-slack axis** (rows ``labour*''), which re-runs the B8 decomposition at 1.05--2.00 times labour supply: with little slack the taut plan cannot be executed and costs output, with a lot of slack it can, which turns the second conclusion into a conditional result.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t10_robustness.csv",
+      "rows": 26,
+      "table": "t10_robustness",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t10_robustness.tex"
+    },
+    {
+      "caption": "Decomposing material balance (block B8): the proportional revision gain against the number of internal balancing rounds, in the noise-only environment (no shock, no lag, $\\sigma_{\\mathrm{obs}}=0.03$, AR(1) demand noise). Neither mechanism alone costs output; the loss is in the interaction. The last four columns show the mechanism: balancing is a **downward-only filter** on the plan (``lowered'' counts the quarters in which at least one target came out of the planning step below where it went in), and because investment is a low-priority claimant it absorbs the shortfall (``investment/\\bar x falls'), so the capital stock decays and the transitory information error becomes a permanent output loss. Spoilage is output that can be neither used nor stored, bounded by ``max_stock_ratio``.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t13_material_balance_decomposition.csv",
+      "rows": 12,
+      "table": "t13_material_balance_decomposition",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t13_material_balance_decomposition.tex"
+    },
+    {
+      "caption": "The priority ladder as a treatment (block B2L, exploratory): what happens when essential consumption outranks intermediate inputs under a supply shock. The production-first ladder is the default; the consumption-first ladder is the classic mobilisation-economy alternative.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t11_ladder.csv",
+      "rows": 8,
+      "table": "t11_ladder",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t11_ladder.tex"
+    },
+    {
+      "caption": "Where the analytic stability boundary lies, and whether the price loop can reach it (H1). The bound is $g^*(m)=2\\sin(\\pi/(2(2m+1)))$ on the loop gain $g=\\eta\\,b_p$; the local gain $b_p$ is measured sector by sector in block B7 (table~\\ref{tab:bp_sector}). ``$g_{\\max}$'' is the largest loop gain the tested gain grid can produce, $\\eta_{\\max}b_p$, so ``$g_{\\max}/g^*$'' below one means the boundary is **not approachable** in this economy at any adjustment speed inside the grid, whatever its position.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t05_stability_boundary.csv",
+      "rows": 12,
+      "table": "t05_stability_boundary",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t05_stability_boundary.tex"
+    },
+    {
+      "caption": "Pre-registered hypotheses and the evidence on them. Every row traces to a test in \\texttt{results/tables/tests.csv}; p-values are Holm-corrected within block.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t00_hypotheses.csv",
+      "rows": 7,
+      "table": "t00_hypotheses",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t00_hypotheses.tex"
+    }
+  ],
+  "test_file": "/Users/ceontou/Documents/code/planlab/results/tables/tests.csv"
+}

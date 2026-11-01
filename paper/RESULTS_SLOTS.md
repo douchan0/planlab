@@ -5,17 +5,28 @@ cannot resolve, or a registered float whose data file has not arrived.
 `python scripts/build_paper.py` prints the open list and `paper/build_report.json`
 records it machine-readably.
 
-## State of play (wave 2)
+## State of play (wave 3)
 
-Sections 6.1, 6.2 and 6.3 are **written**, from the Lead's reference run
-(`scripts/lead_reference.py`, 2,486 runs, real 20-sector Eurostat substrate, amended
-parameters). They quote numbers that the experiment layer will re-derive into
-`results/`. When those files land, every number in 6.1–6.3 must be checked against
-them line by line; where they disagree, **the files win and the prose changes**. This
-is the protocol's reporting rule and it is not negotiable.
+Sections 6.1, 6.2, 6.3, 6.4 (the H1 null), 6.5 (propagation), 6.7 (the dual track)
+and 8 are **written**, from the Lead's reference run (`scripts/lead_reference.py`,
+real 20-sector Eurostat substrate, amended parameters) and the verifier's causal
+isolation. They quote numbers that `experiments` will re-derive into `results/`.
+When those files land, every number must be checked line by line; where they
+disagree, **the files win and the prose changes**. That is the protocol's reporting
+rule and it is not negotiable.
 
-Twelve slots remain. They are held open deliberately: a missing result must look
-like a missing result.
+One mechanism was revised three times before it could be defended, and the version in
+§6.3 is the one the verifier's causal isolation supports: the binding margin is
+**labour**, the cost appears only when the revised plan needs more labour than exists,
+and the inventory channel is exactly zero in the operating regime. Do not reinstate
+any inventory-based explanation, and do not describe the loss as arising from
+"asymmetry in the inventory response": that hypothesis was tested and is false.
+
+Twelve slots remain. They are held open deliberately: a missing result must look like
+a missing result.
+
+Two pre-registered hypotheses are reported as **falsified** (H1's crossing, H5's
+interior optimum) and must stay falsified in any later edit.
 
 ## How to fill a slot
 
@@ -41,13 +52,21 @@ Reference values already quoted in §6.2 — the file must reproduce them:
 [0.0041] / 1.64% [0.13]; `lp_central` 0.9712 [0.0069] / 1.61% [0.09];
 `material_balance` 0.8761 [0.0115] / 4.35% [0.82].
 
+### `paper/tables/labour_slack.csv` — Table, §6.3 (new)
+The labour-slack sweep that makes the cost of taut planning conditional. Fix the
+revision gain at 1.0 and the balancing rounds at 3, vary the labour supply factor,
+and report output/base and mean shortage. Reference points: factor 1.15 → 0.8698,
+1.40 → 0.9922, 2.00 → 1.0000, 3.00 → 1.0000. `experiments` is being asked to vary
+labour_supply_factor in B6, so this table may extend the sweep.
+
 ### `paper/tables/balance_decomposition.csv` — Table, §6.3
 The 7-row grid crossing `revision_gain` with `balance_rounds` in the same noise-only
 environment, 16 seeds. Columns: revision gain; balancing rounds; output/base; mean
 shortage. Reference values, in the order the prose uses them, are
 (0.0, 0, 0.9999, 1.64%), (0.0, 3, 0.9999, 1.60%), (1.0, 0, 1.0000, 1.60%),
-(0.3, 1, 0.9472, 3.37%), (0.3, 3, 0.9367, 4.25%), (1.0, 1, 0.8853, 3.79%),
-(1.0, 3, 0.8711, 4.78%). The caption should say plainly that the interaction is the
+(0.3, 1, 0.9472, 3.37%), (0.3, 3, 0.9367, 4.25%), (1.0, 3, 0.8711, 4.78%).
+The Lead has since quoted the last cell as a range across seeds, 0.8698–0.9087; if the
+file disagrees with the single figure in the prose, quote the range and say so. The caption should say plainly that the interaction is the
 finding: neither factor alone moves output, and both together do.
 
 ### `paper/tables/calibration.csv` — Table, §6.1

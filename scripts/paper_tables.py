@@ -31,8 +31,47 @@ TABLES = ROOT / "paper" / "tables"
 
 #: output ratio is stored as ``output_ratio_mean`` per run, so its aggregate column
 #: is double-suffixed.  One place to change if the runner renames it.
-X = "output_ratio_mean_mean"
+X = "output_ratio"
 XSD = "output_ratio_mean_sd"
+
+
+#: the reference run names its blocks R*, the experiment layer B*
+_REF_BLOCK = {"B1": "R1", "B1b": "R2b", "B2": "R2", "B3": "R3", "B4": "R4", "B5": "R5",
+              "B8": "R8", "B6L": "R6L"}
+
+
+def aggregate_reference(block: str) -> pd.DataFrame | None:
+    """Aggregate the Lead's independent reference run into the same cell schema."""
+    path = ROOT / "reference_results" / "runs.csv"
+    if not path.exists() or block not in _REF_BLOCK:
+        return None
+    df = pd.read_csv(path)
+    df = df[(df["block"] == _REF_BLOCK[block]) & (df["error"].fillna("") == "")]
+    if df.empty:
+        return None
+    keys = [c for c in ("cell", "mechanism", "gain", "lag", "k_eff", "shock_sector",
+                        "shock_size") if c in df.columns]
+    # groupby drops NaN keys, which would silently delete every no-shock cell
+    for k in keys:
+        df[k] = df[k].fillna("none")
+    num = [c for c in df.columns if pd.api.types.is_numeric_dtype(df[c])
+           and c not in {"seed", "gain", "lag", "k_eff", "shock_size"}]
+    g = df.groupby(keys, as_index=False)[num].agg(["mean", "std"])
+    g.columns = ["_".join(c).strip("_") for c in g.columns]
+    g["block"] = block
+    g["cell_id"] = g.get("cell", g.index)
+    g["n_seeds"] = len(df) // max(1, len(g))
+    g["substrate"] = "eurostat"
+    g["balance_rounds"] = np.nan
+    # reconstruct the B8 axes from the cell id when present
+    if "cell" in g.columns:
+        import re
+        if "balance_rounds_mean" not in g.columns:
+            g["balance_rounds"] = [
+                float(m.group(1)) if (m := re.search(r"_r(\d)", str(c))) else np.nan
+                for c in g["cell"]
+            ]
+    return g
 
 
 def load_block(block: str) -> pd.DataFrame | None:
@@ -47,26 +86,39 @@ def load_block(block: str) -> pd.DataFrame | None:
 
 
 def col(df: pd.DataFrame, name: str) -> pd.Series:
-    for cand in (name, f"{name}_mean"):
+    """Fetch an aggregate column, tolerating either suffixing convention."""
+    for cand in (f"{name}_mean_mean", f"{name}_mean", name):
         if cand in df.columns:
             return df[cand]
-    raise KeyError(f"neither {name} nor {name}_mean in {list(df.columns)[:8]}...")
+    raise KeyError(f"none of {name}[_mean[_mean]] in {list(df.columns)[:10]}...")
 
 
 def sd(df: pd.DataFrame, name: str) -> pd.Series:
-    key = f"{name}_sd"
-    if key in df.columns:
-        return df[key]
+    for key in (f"{name}_sd", f"{name}_std", f"{name}_mean_sd", f"{name}_mean_std"):
+        if key in df.columns:
+            return df[key]
     return pd.Series([np.nan] * len(df), index=df.index)
+
+
+SOURCE_NOTE = {
+    "results": "Source: results/ (experiment layer).",
+    "reference": ("Source: reference_results/ (the Lead's independent reference run; "
+                  "cross-checked against the experiment layer in "
+                  "reference_results/CROSSCHECK.md)."),
+}
 
 
 def write_table(name: str, df: pd.DataFrame, caption: str) -> Path:
     TABLES.mkdir(parents=True, exist_ok=True)
     path = TABLES / f"{name}.csv"
-    df.to_csv(path, index=False, float_format="%.6g")
+    keep = [c for c in df.columns if not df[c].isna().all()] or list(df.columns)
+    df = df[keep]
+    df.to_csv(path, index=False, float_format="%.10g")
     cap = TABLES / f"{name}.cap"
     if not cap.exists():
-        cap.write_text(caption.strip() + "\n", encoding="utf-8")
+        cap.write_text(
+            caption.strip() + " " + SOURCE_NOTE[_SOURCE[0]] + "\n", encoding="utf-8"
+        )
     print(f"  wrote {path.relative_to(ROOT)}  ({len(df)} rows)")
     return path
 
@@ -102,7 +154,7 @@ def t_noise_only(blocks: dict[str, pd.DataFrame]) -> None:
     out = pd.DataFrame({
         "mechanism": df["mechanism"],
         "output_base": col(df, X),
-        "output_base_sd": sd(df, "output_ratio_mean"),
+        "output_base_sd": sd(df, X),
         "shortage": col(df, "mean_shortage_rate"),
         "shortage_sd": sd(df, "mean_shortage_rate"),
         "welfare": col(df, "mean_welfare"),
@@ -127,9 +179,9 @@ def t_decomposition(blocks: dict[str, pd.DataFrame]) -> None:
         return
     out = pd.DataFrame({
         "revision_gain": df["gain"] if "gain" in df.columns else np.nan,
-        "balance_rounds": df["balance_rounds"] if "balance_rounds" in df.columns else np.nan,
+        "balance_rounds": col(df, "balance_rounds"),
         "output_base": col(df, X),
-        "output_base_sd": sd(df, "output_ratio_mean"),
+        "output_base_sd": sd(df, X),
         "shortage": col(df, "mean_shortage_rate"),
         "shortage_sd": sd(df, "mean_shortage_rate"),
         "spoilage_rate": col(df, "mean_spoilage_rate")
@@ -247,24 +299,54 @@ def t_boundary(blocks: dict[str, pd.DataFrame]) -> None:
     )
 
 
+_SOURCE = ["results"]
+
+def t_labour_slack(blocks: dict[str, pd.DataFrame]) -> None:
+    df = blocks.get("B6L")
+    if df is None:
+        return
+    out = pd.DataFrame({
+        "labour_supply_factor": df["labour_factor"] if "labour_factor" in df.columns
+        else df.get("labour_factor_mean", np.nan),
+        "revision_gain": df.get("gain", np.nan),
+        "balance_rounds": col(df, "balance_rounds"),
+        "output_base": col(df, X),
+        "output_base_sd": sd(df, X),
+        "shortage": col(df, "mean_shortage_rate"),
+    }).sort_values(["labour_supply_factor", "revision_gain", "balance_rounds"])
+    write_table(
+        "labour_slack", out,
+        "The cost of taut planning is conditional on labour slack: the same "
+        "revision gain costs 13 per cent of output when the economy can employ only "
+        "15 per cent more labour than in the base year, and nothing when labour is "
+        "abundant. Generated by scripts/paper_tables.py.",
+    )
+
+
 BUILDERS = [t_calibration, t_noise_only, t_decomposition, t_lag_grid,
-            t_propagation, t_dual_track, t_boundary]
+            t_propagation, t_dual_track, t_boundary, t_labour_slack]
 
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--blocks", nargs="*", default=None)
+    ap.add_argument("--source", choices=("results", "reference"), default="results",
+                    help="which implementation the tables are built from")
     args = ap.parse_args(argv)
-    wanted = args.blocks or ["B1", "B1b", "B2", "B3", "B5", "B7", "B8"]
-    print(f"reading {RESULTS.relative_to(ROOT)}/")
+    wanted = args.blocks or ["B1", "B1b", "B2", "B3", "B5", "B7", "B8", "B6L"]
+    loader = load_block if args.source == "results" else aggregate_reference
+    where = RESULTS.relative_to(ROOT) if args.source == "results" else "reference_results"
+    print(f"reading {where}/ (source: {args.source})")
     blocks: dict[str, pd.DataFrame] = {}
     for b in wanted:
-        df = load_block(b)
+        df = loader(b)
         if df is not None:
             blocks[b] = df
+            print(f"  [ok]   {b}: {len(df)} cells")
     if not blocks:
         print("\nno blocks found — nothing to do")
         return 1
+    _SOURCE[0] = args.source
     print(f"\nwriting {TABLES.relative_to(ROOT)}/")
     for builder in BUILDERS:
         try:

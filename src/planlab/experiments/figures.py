@@ -91,6 +91,8 @@ def _style() -> None:
 
 
 def _save(fig: Any, out_dir: Path, name: str, written: list[dict[str, Any]], *, block: str, what: str) -> None:
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
     png = out_dir / f"{name}.png"
     pdf = out_dir / f"{name}.pdf"
     metadata = {"Software": None, "CreationDate": None, "ModDate": None}
