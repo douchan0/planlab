@@ -1,11 +1,11 @@
 {
-  "generated": "2026-11-01 17:01:43 +0800",
+  "generated": "2026-11-01 17:10:40 +0800",
   "git": {
-    "commit": "5917ec312835d3739165a1631e1781319fb2b78d",
+    "commit": "dcf081c8b8b612a0387b9e675b13d3d43a119b4c",
     "dirty": true,
-    "diff_stat": "d                                      |   54 +-\n paper/main.pdf                                     |  Bin 2051759 -> 2208940 bytes\n paper/tables/balance_decomposition.csv             |   26 +-\n paper/tables/lag_grid_reference.cap                |    3 +-\n verification/check5_stats.py                       |  106 +-\n verification/check6_claims.py                      |   55 +-\n verification/run_all.py                            |  159 ++-\n 27 files changed, 1125 insertions(+), 4298 deletions(-)"
+    "diff_stat": "per/tables/lag_grid_reference.csv    |  80 ++++---\n paper/tables/main_lag_grid.csv         | 410 ++++++++++++++++-----------------\n results/tables/t06_propagation.csv     |  71 +-----\n scripts/paper_tables.py                |   6 +-\n verification/check5_stats.py           |   4 +-\n verification/report.json               | 102 +++++++-\n verification/report.md                 | 119 +++++++++-\n verification/run_all.py                |  57 +++++\n 14 files changed, 551 insertions(+), 355 deletions(-)"
   },
-  "elapsed_s": 116.11,
+  "elapsed_s": 64.4,
   "checks": [
     {
       "key": "theorem",
@@ -193,7 +193,7 @@
             "root_arg": 50.0
           }
         ],
-        "wall_s": 2.55
+        "wall_s": 0.53
       },
       "failures": [],
       "notes": [
@@ -240,7 +240,7 @@
         "n_collapse_forced": 10,
         "n_first_pass_optimality_probes": 182,
         "max_cascade_exit_deficit_rel": 2.3491519726445077e-16,
-        "wall_s": 3.79
+        "wall_s": 1.36
       },
       "failures": [],
       "notes": []
@@ -287,7 +287,7 @@
         "ladder_violations": 0,
         "cells_rerun": 83,
         "max_period_reproduction_diff": 0.0,
-        "wall_s": 48.36
+        "wall_s": 27.64
       },
       "failures": [],
       "notes": [
@@ -320,7 +320,7 @@
         "n_manifest_blocks_ok": 11,
         "n_consistency_checks_4e": 14728,
         "n_scenario_yamls_rerun": 16,
-        "wall_s": 25.84
+        "wall_s": 14.67
       },
       "failures": [],
       "notes": [
@@ -357,7 +357,7 @@
       "key": "statistics",
       "title": "Statistical audit (Wilcoxon/bootstrap/Holm/H4)",
       "status": "PASS",
-      "summary": "5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap reproducible); 5b 1 paired tests and 37 Holm values recomputed; 5c H4 correlations recomputed with a permutation null",
+      "summary": "5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap reproducible); 5b 1 paired tests and 37 Holm values recomputed; 5c H4 correlations recomputed with a permutation null; 5d 1018 published table values re-derived from results/ (7 tables, worst 5.0e-07)",
       "numbers": {
         "5a_wilcoxon_exact_max_diff": 0.0,
         "5a_wilcoxon_normal_max_diff": 1.6653345369377348e-16,
@@ -648,7 +648,12 @@
           }
         ],
         "5c_status": "AUDITED",
-        "wall_s": 19.04
+        "5d_tables_checked": 7,
+        "5d_values_checked": 1018,
+        "5d_worst_rel_diff": 4.983533505864557e-07,
+        "5d_worst_at": "robustness.csv:mean_x_over_base",
+        "5d_status": "AUDITED",
+        "wall_s": 10.97
       },
       "failures": [],
       "notes": [
@@ -733,7 +738,7 @@
         "6d_min_sector_fill_mean": 0.845039204605018,
         "6_current_claim_status": "SUPPORTED",
         "6_old_inventory_claim_status": "REFUTED",
-        "wall_s": 16.52
+        "wall_s": 9.22
       },
       "failures": [],
       "notes": [

@@ -248,6 +248,63 @@ FINDINGS = [
                     "spoilage amount without it); docs greps.",
         "resolution": "REPORTED; add an amendment entry and update ARCHITECTURE §2.",
     },
+    {
+        "id": "F13",
+        "date": "2026-11-01",
+        "severity": "table defect (paper)",
+        "where": "paper/tables/main_lag_grid.csv",
+        "finding": "The table has 204 rows but only 144 unique (mechanism, gain, reporting-lag) "
+                   "keys: the tatonnement cells at price elasticities 0.4 and 0.8 are "
+                   "indistinguishable because the elasticity column is absent. The values do "
+                   "come from results/B2 (my sorted-value traceability comparison passes), but "
+                   "a reader cannot tell which row is which, and §6.4's 'at the reference "
+                   "gain' sentences could refer to either.",
+        "evidence": "check 5d (7 tables, 406 values re-derived, worst 5e-7).",
+        "resolution": "FIXED in the 17:07 regeneration: the table now carries a "
+                      "price_elasticity column, so every row is identified; check 5d keys on it.",
+    },
+    {
+        "id": "F14",
+        "date": "2026-11-01",
+        "severity": "error (paper, H1 narrative)",
+        "where": "paper/main.md §6.4 and the abstract, against results/tables/t12_bp_by_sector.csv "
+                 "and results/tables/t05_stability_boundary.csv",
+        "finding": "§6.4 states b_p 'is of order 0.01 to 0.08 by sector' and that the loop gain "
+                   "'is of order 0.02 at the median sector and reaches 0.13 only in the most "
+                   "responsive one'. The final measurement table says the opposite: at the "
+                   "reference elasticity 0.4 the median b_p is 0.1707, the mean 0.1973 and the "
+                   "maximum 0.4782 (at 0.8: median 0.3319, max 0.7867). At eta=1.6 the median "
+                   "sector's loop gain is therefore 0.273, ABOVE g*(7)=0.209 and g*(6)=0.241, "
+                   "and the most responsive sector reaches 0.765, above g*(m) for every m>=3. "
+                   "t05 records g_max_over_bound = 1.11 at m=5 and 1.51 at m=7 (elasticity 0.4), "
+                   "1.23-2.62 at 0.8, `boundary_approachable` True in 6 cells and "
+                   "`rule_fired_below_bound` True in 2. Hence 'nowhere near the boundary' is "
+                   "false for the final grid, 'the median gain of 0.02 would turn at about "
+                   "seventy-eight quarters' should be about 31 quarters, and the abstract's "
+                   "'a factor of two to fifty below it' is not supported (3.7x below g*(1) but "
+                   "1.3x ABOVE g*(7) at the largest gain). The stale numbers look like b_p "
+                   "measured before the price-elasticity change in docs/DEVIATIONS.md.",
+        "evidence": "check 5d (t12 and t05 re-derived from results/), and the H1 test rows in "
+                    "results/tables/tests.csv.",
+        "resolution": "REPORTED; the H1 narrative must be rewritten from t12/t05, which actually "
+                      "strengthens the paper's story: the boundary is reachable at the top of "
+                      "the gain grid and the amplitude test there rejects (F15).",
+    },
+    {
+        "id": "F15",
+        "date": "2026-11-01",
+        "severity": "understated result (paper)",
+        "where": "paper/main.md §6.4 against results/tables/tests.csv row H1",
+        "finding": "The paper reports H1 as a null. The project's own test log records the "
+                   "pre-registered amplitude test at gain=1.6 (the largest), lag 6 vs lag 0: "
+                   "paired one-sided Wilcoxon statistic 817, p = 4.5e-12, significant_05 = yes. "
+                   "The null holds at the reference gain 0.3 only. Reporting the rejection that "
+                   "appears exactly when the loop gain is pushed toward the boundary would "
+                   "support rather than weaken the paper's reading of delay.",
+        "evidence": "results/tables/tests.csv (H1 rows).",
+        "resolution": "REPORTED; report both the reference-gain null and the high-gain "
+                      "rejection.",
+    },
 ]
 
 #: per-check "what this does not prove" text

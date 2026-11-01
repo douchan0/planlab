@@ -1,10 +1,10 @@
 # PlanLab independent verification report
 
-Generated: 2026-11-01 17:01:43 +0800  
+Generated: 2026-11-01 17:10:40 +0800  
 Repository: `/Users/ceontou/Documents/code/planlab`  
-git commit: `5917ec312835d3739165a1631e1781319fb2b78d` (dirty: True)  
+git commit: `dcf081c8b8b612a0387b9e675b13d3d43a119b4c` (dirty: True)  
 Python 3.10.13 on macOS-15.7.7-arm64-arm-64bit  
-Wall time: 116.1 s  
+Wall time: 64.4 s  
 Checks: 6 PASS, 0 FAIL, 0 SKIP, 0 ERROR
 
 This suite is written by an independent verifier. It re-derives the theorem, re-implements a period from the written specification, audits the raw records behind the paper's numbers, re-runs sampled cells, and re-computes the statistics with its own code. It deliberately does not import the project's engine, metrics or aggregate modules to judge their output; where it does use project code it is only for *inputs* (the technology matrix) or for *records* (the stored arrays).
@@ -97,6 +97,27 @@ An independent verifier is only worth having if its record shows what it caught.
 - Evidence: check 3 (identity holds to 1.6e-16 WITH spoilage, and fails by the spoilage amount without it); docs greps.
 - Resolution: REPORTED; add an amendment entry and update ARCHITECTURE §2.
 
+### F13 — table defect (paper) (2026-11-01)
+
+- Where: paper/tables/main_lag_grid.csv
+- Finding: The table has 204 rows but only 144 unique (mechanism, gain, reporting-lag) keys: the tatonnement cells at price elasticities 0.4 and 0.8 are indistinguishable because the elasticity column is absent. The values do come from results/B2 (my sorted-value traceability comparison passes), but a reader cannot tell which row is which, and §6.4's 'at the reference gain' sentences could refer to either.
+- Evidence: check 5d (7 tables, 406 values re-derived, worst 5e-7).
+- Resolution: FIXED in the 17:07 regeneration: the table now carries a price_elasticity column, so every row is identified; check 5d keys on it.
+
+### F14 — error (paper, H1 narrative) (2026-11-01)
+
+- Where: paper/main.md §6.4 and the abstract, against results/tables/t12_bp_by_sector.csv and results/tables/t05_stability_boundary.csv
+- Finding: §6.4 states b_p 'is of order 0.01 to 0.08 by sector' and that the loop gain 'is of order 0.02 at the median sector and reaches 0.13 only in the most responsive one'. The final measurement table says the opposite: at the reference elasticity 0.4 the median b_p is 0.1707, the mean 0.1973 and the maximum 0.4782 (at 0.8: median 0.3319, max 0.7867). At eta=1.6 the median sector's loop gain is therefore 0.273, ABOVE g*(7)=0.209 and g*(6)=0.241, and the most responsive sector reaches 0.765, above g*(m) for every m>=3. t05 records g_max_over_bound = 1.11 at m=5 and 1.51 at m=7 (elasticity 0.4), 1.23-2.62 at 0.8, `boundary_approachable` True in 6 cells and `rule_fired_below_bound` True in 2. Hence 'nowhere near the boundary' is false for the final grid, 'the median gain of 0.02 would turn at about seventy-eight quarters' should be about 31 quarters, and the abstract's 'a factor of two to fifty below it' is not supported (3.7x below g*(1) but 1.3x ABOVE g*(7) at the largest gain). The stale numbers look like b_p measured before the price-elasticity change in docs/DEVIATIONS.md.
+- Evidence: check 5d (t12 and t05 re-derived from results/), and the H1 test rows in results/tables/tests.csv.
+- Resolution: REPORTED; the H1 narrative must be rewritten from t12/t05, which actually strengthens the paper's story: the boundary is reachable at the top of the gain grid and the amplitude test there rejects (F15).
+
+### F15 — understated result (paper) (2026-11-01)
+
+- Where: paper/main.md §6.4 against results/tables/tests.csv row H1
+- Finding: The paper reports H1 as a null. The project's own test log records the pre-registered amplitude test at gain=1.6 (the largest), lag 6 vs lag 0: paired one-sided Wilcoxon statistic 817, p = 4.5e-12, significant_05 = yes. The null holds at the reference gain 0.3 only. Reporting the rejection that appears exactly when the loop gain is pushed toward the boundary would support rather than weaken the paper's reading of delay.
+- Evidence: results/tables/tests.csv (H1 rows).
+- Resolution: REPORTED; report both the reference-gain null and the high-gain rejection.
+
 ## What remains unverified
 
 An honest verification report has to say where it stops. These are the gaps that a
@@ -143,7 +164,7 @@ Measured:
     - m=10, predicted=42, zero_cross=42, fft=41.796, root_arg=42
     - m=11, predicted=46, zero_cross=46, fft=45.511, root_arg=46
     - m=12, predicted=50, zero_cross=50, fft=49.951, root_arg=50
-- `wall_s`: 2.55
+- `wall_s`: 0.53
 
 Notes:
 
@@ -171,7 +192,7 @@ Measured:
 - `n_collapse_forced`: 10
 - `n_first_pass_optimality_probes`: 182
 - `max_cascade_exit_deficit_rel`: 2.34915e-16
-- `wall_s`: 3.79
+- `wall_s`: 1.36
 
 What this does not prove. I implemented the *published* algorithm, so agreement shows that the code does what the specification says; it does not show that the specification is the right model. The per-period comparison also cannot detect a bias that is present identically in both my implementation and the engine's (e.g. a shared but wrong definition of a claim row).
 
@@ -203,7 +224,7 @@ Measured:
 - `ladder_violations`: 0
 - `cells_rerun`: 83
 - `max_period_reproduction_diff`: 0
-- `wall_s`: 48.36
+- `wall_s`: 27.64
 
 Notes:
 
@@ -234,7 +255,7 @@ Measured:
 - `n_manifest_blocks_ok`: 11
 - `n_consistency_checks_4e`: 14728
 - `n_scenario_yamls_rerun`: 16
-- `wall_s`: 25.84
+- `wall_s`: 14.67
 
 Notes:
 
@@ -272,7 +293,7 @@ What this does not prove. Reproducibility is not validity: it shows that the sto
 
 **Status: PASS**
 
-5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap reproducible); 5b 1 paired tests and 37 Holm values recomputed; 5c H4 correlations recomputed with a permutation null
+5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap reproducible); 5b 1 paired tests and 37 Holm values recomputed; 5c H4 correlations recomputed with a permutation null; 5d 1018 published table values re-derived from results/ (7 tables, worst 5.0e-07)
 
 Measured:
 
@@ -319,7 +340,12 @@ Measured:
     - mechanism=tatonnement, predictor=forward_intermediate_share, rho=0.566917, p_perm=0.011599, paper_p=0.00914627, paper_p_holm=0.0823164, paper_significant=no
     - mechanism=tatonnement, predictor=leontief_colsum, rho=0.016541, p_perm=0.947705, paper_p=0.944817, paper_p_holm=1, paper_significant=no
 - `5c_status`: AUDITED
-- `wall_s`: 19.04
+- `5d_tables_checked`: 7
+- `5d_values_checked`: 1018
+- `5d_worst_rel_diff`: 4.98353e-07
+- `5d_worst_at`: robustness.csv:mean_x_over_base
+- `5d_status`: AUDITED
+- `wall_s`: 10.97
 
 Notes:
 
@@ -349,7 +375,7 @@ Measured:
 - `6d_min_sector_fill_mean`: 0.845039
 - `6_current_claim_status`: SUPPORTED
 - `6_old_inventory_claim_status`: REFUTED
-- `wall_s`: 16.52
+- `wall_s`: 9.22
 
 Notes:
 

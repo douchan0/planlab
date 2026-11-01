@@ -567,7 +567,7 @@ TABLE_SPECS = (
     ("robustness.csv", "B6", ["variant"], None,
      {"mean_shortage_rate": ("mean_shortage_rate", "mean"),
       "mean_x_over_base": ("output_ratio_mean", "mean")}),
-    ("main_lag_grid.csv", "B2", ["mechanism", "gain", "lag_reporting"], None,
+    ("main_lag_grid.csv", "B2", ["mechanism", "gain", "price_elasticity", "lag"], None,
      {"welfare": ("mean_welfare", "mean"),
       "output_base": ("output_ratio_mean", "mean"),
       "shortage": ("mean_shortage_rate", "mean")}),
@@ -638,7 +638,7 @@ def _audit_tables(res: CheckResult) -> None:
                         sub = pub.groupby(keys).get_group(key if len(keys) > 1 else key)
                     except KeyError:
                         continue
-                    a = np.sort(grp[mine_col].to_numpy(dtype=float))
+                    a = np.sort(grp[new].to_numpy(dtype=float))
                     b = np.sort(sub[new].to_numpy(dtype=float))
                     if a.size != b.size:
                         res.note(f"5d: {table_name}:{new}: row count mismatch at {key}")

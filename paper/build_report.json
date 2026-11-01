@@ -1,21 +1,21 @@
 {
   "bibliography_entries": 39,
   "bibliography_uncited": [],
-  "built": "2026-11-01T09:04:02Z",
+  "built": "2026-11-01T09:09:34Z",
   "citations_used": 39,
-  "civil_words_body": 18.2,
+  "civil_words_body": 18.4,
   "duplicated_nouns": [],
-  "elapsed_s": 0.11,
+  "elapsed_s": 1.95,
   "equations": 19,
   "figures": 3,
-  "html_bytes": 230734,
+  "html_bytes": 232664,
   "markdown": "3.10.3",
   "missing_captions": [],
   "missing_figure_files": [],
   "missing_table_files": [],
-  "pdf": null,
-  "pdf_bytes": null,
-  "pdf_pages": null,
+  "pdf": "paper/main.pdf",
+  "pdf_bytes": 2233955,
+  "pdf_pages": 34,
   "python": "3.10.13",
   "sections": {
     "app:crossing": "A.2",
@@ -103,5 +103,5 @@
   "tables": 16,
   "unresolved_slots": [],
   "words_bibliography": 802,
-  "words_body": 18236
+  "words_body": 18389
 }

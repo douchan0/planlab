@@ -201,9 +201,13 @@ def t_lag_grid(blocks: dict[str, pd.DataFrame]) -> None:
     df = blocks.get("B2")
     if df is None:
         return
+    # the price elasticity MUST be carried: tatonnement appears twice per (gain, lag)
+    # at elasticities 0.4 and 0.8, and without this column those rows are
+    # indistinguishable, so a reader cannot tell which one the text quotes.
     out = pd.DataFrame({
         "mechanism": df["mechanism"],
         "gain": df.get("gain", np.nan),
+        "price_elasticity": df.get("price_elasticity", np.nan),
         "lag_reporting": df.get("lag", np.nan),
         "k_effective": df.get("m", df.get("lag", 0) + 1),
         "shortage": col(df, "mean_shortage_rate"),
@@ -215,7 +219,7 @@ def t_lag_grid(blocks: dict[str, pd.DataFrame]) -> None:
         "acf_lag1": col(df, "acf_lag1"),
         "plan_fulfilment": col(df, "mean_plan_fulfilment"),
         "iterations": col(df, "mean_iterations"),
-    }).sort_values(["mechanism", "gain", "lag_reporting"])
+    }).sort_values(["mechanism", "price_elasticity", "gain", "lag_reporting"])
     write_table(
         "main_lag_grid", out,
         "The lag-by-mechanism grid: reporting lag $\\ell$ and effective delay "
