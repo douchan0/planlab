@@ -12,15 +12,16 @@ not a draft.
 
 | # | notebook | what it establishes | runtime |
 |---|---|---|---|
-| 01 | [01_io_foundations.ipynb](01_io_foundations.ipynb) | the substrate: accounting identity, productivity of `A`, the Leontief inverse, and how much a sectoral capacity shock is amplified | ~8 s |
-| 02 | [02_delay_theorem.ipynb](02_delay_theorem.ipynb) | the delay theorem from scratch: characteristic polynomial, unit-circle proof, numerical boundary, oscillation period | ~5 s |
-| 03 | [03_one_period_walkthrough.ipynb](03_one_period_walkthrough.ipynb) | one period of the engine opened up and re-derived by hand: claims, tiers, the feasibility programme, rationing, and the balance identity | ~13 s |
-| 04 | [04_mechanism_zoo.ipynb](04_mechanism_zoo.ipynb) | every registered mechanism on one identical shock, with the common-random-numbers argument made testable | ~6 s |
-| 05 | [05_dual_track_and_shadow_prices.ipynb](05_dual_track_and_shadow_prices.ipynb) | the central LP's dual variables as shadow prices, and the welfare–volatility frontier of the dual track | ~14 s |
-| 06 | [06_reproduce_a_paper_table.ipynb](06_reproduce_a_paper_table.ipynb) | reproducibility: recompute a paper table from the rawest records and re-render a paper figure, asserting equality | ~14 s |
+| 01 | [01_io_foundations.ipynb](01_io_foundations.ipynb) | the substrate: accounting identity, productivity of `A`, the Leontief inverse, and how much a sectoral capacity shock is amplified | ~3 s |
+| 02 | [02_delay_theorem.ipynb](02_delay_theorem.ipynb) | the delay theorem from scratch: characteristic polynomial, unit-circle proof, numerical boundary, oscillation period | ~2 s |
+| 03 | [03_one_period_walkthrough.ipynb](03_one_period_walkthrough.ipynb) | one period of the engine opened up and re-derived by hand: claims, tiers, the feasibility programme, rationing, and the balance identity | ~3 s |
+| 04 | [04_mechanism_zoo.ipynb](04_mechanism_zoo.ipynb) | every registered mechanism on one identical shock, with the common-random-numbers argument made testable | ~4 s |
+| 05 | [05_dual_track_and_shadow_prices.ipynb](05_dual_track_and_shadow_prices.ipynb) | the central LP's dual variables as shadow prices, and the welfare–volatility frontier of the dual track | ~3 s |
+| 06 | [06_reproduce_a_paper_table.ipynb](06_reproduce_a_paper_table.ipynb) | reproducibility: recompute a paper table from the rawest records and re-render a paper figure, asserting equality | ~4 s |
 
-(Runtimes are the wall-clock times recorded by `execute_all.py` on the machine that
-produced the committed outputs; see `execution_status.json` for the exact figures.)
+(Runtimes are wall-clock, rounded up, on an otherwise idle machine; the exact
+recorded figures are in `execution_status.json`. They move with system load, so treat
+the ~60 s budget as the constraint and these numbers as a guide.)
 
 Companion pages with objectives, prerequisites and exercises for each notebook live
 in [`docs/tutorials/`](../docs/tutorials/).
