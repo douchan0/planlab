@@ -25,3 +25,6 @@ results/**/runs_*.parquet
 paper/.build/
 notebooks/.ipynb_checkpoints/
 *.log
+
+# per-cell scenario+result dumps: regenerable with `bash scripts/reproduce.sh` (~8 min)
+results/*/cells/
