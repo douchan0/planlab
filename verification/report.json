@@ -1,11 +1,11 @@
 {
-  "generated": "2026-11-01 17:10:40 +0800",
+  "generated": "2026-11-01 17:12:42 +0800",
   "git": {
-    "commit": "dcf081c8b8b612a0387b9e675b13d3d43a119b4c",
+    "commit": "0b6a8c875c523c9cdc6b0f4a32fc261b48cd9a19",
     "dirty": true,
-    "diff_stat": "per/tables/lag_grid_reference.csv    |  80 ++++---\n paper/tables/main_lag_grid.csv         | 410 ++++++++++++++++-----------------\n results/tables/t06_propagation.csv     |  71 +-----\n scripts/paper_tables.py                |   6 +-\n verification/check5_stats.py           |   4 +-\n verification/report.json               | 102 +++++++-\n verification/report.md                 | 119 +++++++++-\n verification/run_all.py                |  57 +++++\n 14 files changed, 551 insertions(+), 355 deletions(-)"
+    "diff_stat": "verification/report.json | 22 +++++++++++-----------\n verification/report.md   | 18 +++++++++---------\n verification/run_all.py  |  2 +-\n 3 files changed, 21 insertions(+), 21 deletions(-)"
   },
-  "elapsed_s": 64.4,
+  "elapsed_s": 69.94,
   "checks": [
     {
       "key": "theorem",
@@ -193,7 +193,7 @@
             "root_arg": 50.0
           }
         ],
-        "wall_s": 0.53
+        "wall_s": 0.64
       },
       "failures": [],
       "notes": [
@@ -240,7 +240,7 @@
         "n_collapse_forced": 10,
         "n_first_pass_optimality_probes": 182,
         "max_cascade_exit_deficit_rel": 2.3491519726445077e-16,
-        "wall_s": 1.36
+        "wall_s": 1.66
       },
       "failures": [],
       "notes": []
@@ -287,7 +287,7 @@
         "ladder_violations": 0,
         "cells_rerun": 83,
         "max_period_reproduction_diff": 0.0,
-        "wall_s": 27.64
+        "wall_s": 29.84
       },
       "failures": [],
       "notes": [
@@ -320,7 +320,7 @@
         "n_manifest_blocks_ok": 11,
         "n_consistency_checks_4e": 14728,
         "n_scenario_yamls_rerun": 16,
-        "wall_s": 14.67
+        "wall_s": 17.25
       },
       "failures": [],
       "notes": [
@@ -653,7 +653,7 @@
         "5d_worst_rel_diff": 4.983533505864557e-07,
         "5d_worst_at": "robustness.csv:mean_x_over_base",
         "5d_status": "AUDITED",
-        "wall_s": 10.97
+        "wall_s": 12.09
       },
       "failures": [],
       "notes": [
@@ -738,7 +738,7 @@
         "6d_min_sector_fill_mean": 0.845039204605018,
         "6_current_claim_status": "SUPPORTED",
         "6_old_inventory_claim_status": "REFUTED",
-        "wall_s": 9.22
+        "wall_s": 8.46
       },
       "failures": [],
       "notes": [

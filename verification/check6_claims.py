@@ -233,6 +233,7 @@ def _body(res: CheckResult) -> None:
         f"mechanism never operates. The earlier 'inventory-estimate asymmetry' "
         f"explanation is therefore refuted (finding F4)."
     )
+    _audit_hypotheses(res)
     res.check(corrected,
               "6: the corrected (labour-projection) mechanism claim is not supported by the "
               "measurements: see the 6a-6d numbers")
@@ -248,6 +249,74 @@ def _body(res: CheckResult) -> None:
             f"the operating regime; labour ×3 removes the loss, so the explanation holds as a "
             f"labour-projection effect."
         )
+
+
+# ---------------------------------------------------------------------------
+# 6e — hypothesis adjudication completeness, including H3
+# ---------------------------------------------------------------------------
+def _audit_hypotheses(res: CheckResult) -> None:
+    """Every pre-registered hypothesis must be adjudicated, and H3 must trace to B3.
+
+    The Lead's gap: `results/tables/t00_hypotheses.csv` covered H1, H1', H2, H4 and
+    H5 but not H3, although H3 is stated as a falsifiable prediction in §5 and
+    adjudicated in §6.5.  This check (i) requires a row for each of H1, H2, H3, H4,
+    H5 (H1' is the amendment's addition), (ii) re-derives H3's key statistic from
+    results/B3 and compares it with the paper's text, and (iii) checks that the
+    substitution of the amended 50% cut for the pre-registered 30% shock is
+    documented.
+    """
+    from .common import RESULTS, ROOT
+
+    required = ("H1", "H2", "H3", "H4", "H5")
+    t00 = RESULTS / "tables" / "t00_hypotheses.csv"
+    if not t00.exists():
+        res.note("6e: no results/tables/t00_hypotheses.csv")
+        res.numbers["6e_status"] = "SKIPPED"
+        return
+    import pandas as pd
+
+    tab = pd.read_csv(t00)
+    present = {str(v) for v in tab["hypothesis"].astype(str)}
+    res.numbers["6e_hypothesis_rows"] = sorted(present)
+    missing = [h for h in required if h not in present]
+    res.check(not missing,
+              f"6e: the hypothesis adjudication table has no row for {missing} "
+              f"(present: {sorted(present)})")
+
+    # --- H3's key statistic, re-derived from B3 -------------------------
+    b3 = pd.read_csv(RESULTS / "B3" / "summary.csv")
+    mb = b3[b3["mechanism"] == "material_balance"]
+    per_sector = mb.groupby("shock_sector")["mean_shortage_rate"].mean()
+    lo, hi, mean = float(per_sector.min()), float(per_sector.max()), float(per_sector.mean())
+    threshold = 0.005
+    res.numbers["6e_H3_statistic"] = {
+        "n_cells": int(per_sector.size), "min": lo, "max": hi, "mean": mean,
+        "threshold": threshold, "min_ratio": lo / threshold, "max_ratio": hi / threshold,
+        "cells_below_threshold": int((per_sector < threshold).sum()),
+    }
+    res.check(int(per_sector.size) == 20,
+              f"6e: H3 needs the 20 shocked-sector cells, found {per_sector.size}")
+    res.check((per_sector > threshold).all(),
+              f"6e: H3's 0.5% falsifier triggers in {int((per_sector < threshold).sum())} cell(s)")
+    res.check(abs(lo - 0.0116) < 5e-4 and abs(hi - 0.0604) < 5e-4 and abs(mean - 0.0293) < 5e-4,
+              f"6e: H3 statistic {lo:.4f}-{hi:.4f} (mean {mean:.4f}) does not match the paper's "
+              f"1.16-6.04 (mean 2.93) per cent")
+    # the amended shock is 50%, not the pre-registered 30%
+    res.numbers["6e_H3_shock_size"] = sorted(float(v) for v in b3["shock_size"].unique())
+    res.check(res.numbers["6e_H3_shock_size"] == [0.5],
+              f"6e: H3 is adjudicated on shock sizes {res.numbers['6e_H3_shock_size']}, "
+              f"expected the amended 0.5 cut")
+
+    # --- the paper's text and the amendment -----------------------------
+    paper = (ROOT / "paper" / "main.md").read_text(encoding="utf-8")
+    for token in ("1.16", "6.04", "2.93"):
+        res.check(token in paper, f"6e: the manuscript does not quote H3's figure {token}")
+    res.check("thirty per cent shock" in paper or "fifty per cent cut" in paper,
+              "6e: the manuscript does not disclose the 30%-to-50% substitution")
+    amendments = (ROOT / "docs" / "AMENDMENTS.md").read_text(encoding="utf-8")
+    res.check("0.50" in amendments and "duration = 8" in amendments,
+              "6e: docs/AMENDMENTS.md does not record the amended shock (size 0.50, duration 8)")
+    res.numbers["6e_status"] = "AUDITED"
 
 
 def run() -> CheckResult:

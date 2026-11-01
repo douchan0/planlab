@@ -259,7 +259,7 @@ FINDINGS = [
                    "come from results/B2 (my sorted-value traceability comparison passes), but "
                    "a reader cannot tell which row is which, and §6.4's 'at the reference "
                    "gain' sentences could refer to either.",
-        "evidence": "check 5d (7 tables, 406 values re-derived, worst 5e-7).",
+        "evidence": "check 5d (all headline tables re-derived from results/, worst 5e-7).",
         "resolution": "FIXED in the 17:07 regeneration: the table now carries a "
                       "price_elasticity column, so every row is identified; check 5d keys on it.",
     },

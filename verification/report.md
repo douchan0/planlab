@@ -1,10 +1,10 @@
 # PlanLab independent verification report
 
-Generated: 2026-11-01 17:10:40 +0800  
+Generated: 2026-11-01 17:12:42 +0800  
 Repository: `/Users/ceontou/Documents/code/planlab`  
-git commit: `dcf081c8b8b612a0387b9e675b13d3d43a119b4c` (dirty: True)  
+git commit: `0b6a8c875c523c9cdc6b0f4a32fc261b48cd9a19` (dirty: True)  
 Python 3.10.13 on macOS-15.7.7-arm64-arm-64bit  
-Wall time: 64.4 s  
+Wall time: 69.9 s  
 Checks: 6 PASS, 0 FAIL, 0 SKIP, 0 ERROR
 
 This suite is written by an independent verifier. It re-derives the theorem, re-implements a period from the written specification, audits the raw records behind the paper's numbers, re-runs sampled cells, and re-computes the statistics with its own code. It deliberately does not import the project's engine, metrics or aggregate modules to judge their output; where it does use project code it is only for *inputs* (the technology matrix) or for *records* (the stored arrays).
@@ -101,7 +101,7 @@ An independent verifier is only worth having if its record shows what it caught.
 
 - Where: paper/tables/main_lag_grid.csv
 - Finding: The table has 204 rows but only 144 unique (mechanism, gain, reporting-lag) keys: the tatonnement cells at price elasticities 0.4 and 0.8 are indistinguishable because the elasticity column is absent. The values do come from results/B2 (my sorted-value traceability comparison passes), but a reader cannot tell which row is which, and §6.4's 'at the reference gain' sentences could refer to either.
-- Evidence: check 5d (7 tables, 406 values re-derived, worst 5e-7).
+- Evidence: check 5d (all headline tables re-derived from results/, worst 5e-7).
 - Resolution: FIXED in the 17:07 regeneration: the table now carries a price_elasticity column, so every row is identified; check 5d keys on it.
 
 ### F14 — error (paper, H1 narrative) (2026-11-01)
@@ -164,7 +164,7 @@ Measured:
     - m=10, predicted=42, zero_cross=42, fft=41.796, root_arg=42
     - m=11, predicted=46, zero_cross=46, fft=45.511, root_arg=46
     - m=12, predicted=50, zero_cross=50, fft=49.951, root_arg=50
-- `wall_s`: 0.53
+- `wall_s`: 0.64
 
 Notes:
 
@@ -192,7 +192,7 @@ Measured:
 - `n_collapse_forced`: 10
 - `n_first_pass_optimality_probes`: 182
 - `max_cascade_exit_deficit_rel`: 2.34915e-16
-- `wall_s`: 1.36
+- `wall_s`: 1.66
 
 What this does not prove. I implemented the *published* algorithm, so agreement shows that the code does what the specification says; it does not show that the specification is the right model. The per-period comparison also cannot detect a bias that is present identically in both my implementation and the engine's (e.g. a shared but wrong definition of a claim row).
 
@@ -224,7 +224,7 @@ Measured:
 - `ladder_violations`: 0
 - `cells_rerun`: 83
 - `max_period_reproduction_diff`: 0
-- `wall_s`: 27.64
+- `wall_s`: 29.84
 
 Notes:
 
@@ -255,7 +255,7 @@ Measured:
 - `n_manifest_blocks_ok`: 11
 - `n_consistency_checks_4e`: 14728
 - `n_scenario_yamls_rerun`: 16
-- `wall_s`: 14.67
+- `wall_s`: 17.25
 
 Notes:
 
@@ -345,7 +345,7 @@ Measured:
 - `5d_worst_rel_diff`: 4.98353e-07
 - `5d_worst_at`: robustness.csv:mean_x_over_base
 - `5d_status`: AUDITED
-- `wall_s`: 10.97
+- `wall_s`: 12.09
 
 Notes:
 
@@ -375,7 +375,7 @@ Measured:
 - `6d_min_sector_fill_mean`: 0.845039
 - `6_current_claim_status`: SUPPORTED
 - `6_old_inventory_claim_status`: REFUTED
-- `wall_s`: 9.22
+- `wall_s`: 8.46
 
 Notes:
 
