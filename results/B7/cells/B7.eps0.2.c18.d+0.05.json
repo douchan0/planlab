@@ -2,7 +2,7 @@
   "block": "B7",
   "cell_hash": "5ce0308e018ff4bf",
   "cell_id": "B7.eps0.2.c18.d+0.05",
-  "code_fingerprint": "15124bbfe66d3ecb",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "tatonnement",
   "probe": {
@@ -1607,7 +1607,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.17773504101205617
+      "wall_s": 0.11474358406849205
     },
     {
       "accounting_checks_passed": 80.0,
@@ -1681,7 +1681,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.14549437491223216
+      "wall_s": 0.12717383296694607
     },
     {
       "accounting_checks_passed": 80.0,
@@ -1755,7 +1755,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.13091537496075034
+      "wall_s": 0.11360087501816452
     }
   ],
   "tech": {
@@ -1776,5 +1776,5 @@
     "stock_ratio": 0.1,
     "substrate": "eurostat"
   },
-  "wall_s": 0.49199041596148163
+  "wall_s": 0.3903815420344472
 }

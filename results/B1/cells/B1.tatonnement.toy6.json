@@ -2,7 +2,7 @@
   "block": "B1",
   "cell_hash": "12480ddc38bc8086",
   "cell_id": "B1.tatonnement.toy6",
-  "code_fingerprint": "f9941b58ca9a60cf",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "tatonnement",
   "probe": null,
@@ -293,7 +293,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "toy6",
-      "wall_s": 0.2649213749682531
+      "wall_s": 0.08077833289280534
     }
   ],
   "tech": {
@@ -311,5 +311,5 @@
     "stock_ratio": 0.1,
     "substrate": "toy6"
   },
-  "wall_s": 0.293121499940753
+  "wall_s": 0.08510458294767886
 }

@@ -1,3 +1,52 @@
+# Results slots — audit trail
+
+## Status: CLOSED (final build)
+
+All slots are filled or deliberately dropped. The paper builds with **zero open slots**,
+15 tables, 3 figures and 19 numbered equations, at 32 pages. This file is kept as the
+record of what was asked for, what arrived, and what was deliberately not used — which
+is the half of the audit trail a referee actually asks about.
+
+## Floats that were deliberately **not** used
+
+* `incidence` — **dropped.** The engine records shortage on household demand only, so a
+  claimant decomposition of unmet demand is not a quantity the model produces; reporting
+  one would have meant a table of numbers nobody computed. Section 6.5 states the
+  aggregate-versus-incidence point from Corollary 3 and points at the ladder table,
+  which is the table that does measure the institutional margin.
+* `stability_boundary_empirical` — **dropped.** It needed the measured price-loop
+  response coefficients plotted against the analytic bound, and those coefficients were
+  never delivered as a file. Rather than draw the panel from prose, Section 6.4 makes
+  the same argument in words with the numbers that do exist, and Section 5.6 explains
+  why the unreachability of the bound is itself the result.
+* `[[TABLE:main_lag_grid]]` — **not reproduced in the body.** The full grid is 204 cells
+  and would have added roughly eight pages; the text carries the 36-row reference slice
+  (`lag_grid_reference.csv`) and the full grid lives in `paper/tables/` and the data
+  release.
+
+## One table is not generated from a results file
+
+`pilot_loop_sign.md` (Table 3, Section 4.3) is the **single** non-generated table in the
+paper. It records the pilot runs that motivated the H1 amendment — revision gain against
+mean and peak shortage and welfare — and it is cited to `docs/AMENDMENTS.md`, Amendment 1,
+which is its source. It is kept because Corollary 4's discussion depends on it and
+because the amendment is part of the paper's argument rather than an appendix to it.
+Anyone auditing the paper's provenance should know that this one table is a calibration
+record and not a block output, and the caption says so.
+
+## Superseded material
+
+* `[[RESULTS:B1]]` — retired; Section 6.1 is written from `calibration.csv`.
+* The single-seed noise-only anchors that stood in Section 6.2 during wave 2 were
+  replaced by `noise_only.csv`; no superseded number survives in the text.
+* `dual_track.csv` was regenerated after a generator bug (the `theta` column repeated
+  the B5 `market_gain` constant, 0.3, in every row). Section 6.7 was rebuilt from the
+  corrected file and the placeholder sentence explaining a positional read was removed.
+
+---
+
+
+
 # Results slots — what the paper needs from the experiment wave
 
 Every placeholder below is a `[[...]]` token in `paper/main.md` that the builder

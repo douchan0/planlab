@@ -2,7 +2,7 @@
   "block": "B2",
   "cell_hash": "02131471d49a9ba2",
   "cell_id": "B2.k2.g0p4.eps0.4.material_balance",
-  "code_fingerprint": "f9941b58ca9a60cf",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "material_balance",
   "probe": null,
@@ -9800,7 +9800,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.5126982500078157
+      "wall_s": 0.5269508340861648
     },
     {
       "accounting_checks_passed": 80.0,
@@ -9876,7 +9876,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.48432058305479586
+      "wall_s": 0.38532408396713436
     },
     {
       "accounting_checks_passed": 80.0,
@@ -9952,7 +9952,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.541302707977593
+      "wall_s": 0.5858647909481078
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10028,7 +10028,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.4829009589739144
+      "wall_s": 0.5472754999063909
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10104,7 +10104,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.5171852500643581
+      "wall_s": 0.755243374966085
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10180,7 +10180,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.3928329999325797
+      "wall_s": 0.5405662500998005
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10256,7 +10256,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.40543875005096197
+      "wall_s": 0.49196712498087436
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10332,7 +10332,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.38457162503618747
+      "wall_s": 0.4224518339615315
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10408,7 +10408,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.4975555830169469
+      "wall_s": 0.516592749976553
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10484,7 +10484,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.44751387496944517
+      "wall_s": 0.5799859999679029
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10560,7 +10560,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.44577141595073044
+      "wall_s": 0.5182132079498842
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10636,7 +10636,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.5581660839961842
+      "wall_s": 0.5619468750664964
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10712,7 +10712,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 1.1757532079936936
+      "wall_s": 0.7048602090217173
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10788,7 +10788,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.8365752919344231
+      "wall_s": 0.5643583330092952
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10864,7 +10864,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.6924783749273047
+      "wall_s": 0.5418473338941112
     },
     {
       "accounting_checks_passed": 80.0,
@@ -10940,7 +10940,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.8410967501113191
+      "wall_s": 0.6327111249556765
     },
     {
       "accounting_checks_passed": 80.0,
@@ -11016,7 +11016,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.649383542011492
+      "wall_s": 0.5940669999690726
     },
     {
       "accounting_checks_passed": 80.0,
@@ -11092,7 +11092,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.49149083299562335
+      "wall_s": 0.520657500019297
     },
     {
       "accounting_checks_passed": 80.0,
@@ -11168,7 +11168,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.6059318750631064
+      "wall_s": 0.6161678750067949
     },
     {
       "accounting_checks_passed": 80.0,
@@ -11244,7 +11244,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.6692024579970166
+      "wall_s": 0.6057847909396514
     }
   ],
   "tech": {
@@ -11267,5 +11267,5 @@
     "stock_ratio": 0.1,
     "substrate": "eurostat"
   },
-  "wall_s": 11.945918333018199
+  "wall_s": 11.519747541984543
 }

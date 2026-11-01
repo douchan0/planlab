@@ -256,8 +256,18 @@ def t_dual_track(blocks: dict[str, pd.DataFrame]) -> None:
     df = blocks.get("B5")
     if df is None:
         return
+    # `gain` in B5 is the mechanism's market_gain (constant 0.3); the dual-track
+    # share is carried in its own column.  Using `gain` as theta silently produced a
+    # table whose every row read 0.3, which a reader would have read as a flat result.
+    if "theta" in df.columns:
+        theta = df["theta"]
+    elif "theta_param" in df.columns:
+        theta = df["theta_param"]
+    else:
+        import re
+        theta = df["cell_id"].astype(str).str.extract(r"theta([0-9.]+)")[0].astype(float)
     out = pd.DataFrame({
-        "theta": df.get("gain", np.nan),
+        "theta": theta,
         "lag_reporting": df.get("lag", 0),
         "welfare": col(df, "mean_welfare"),
         "welfare_sd": sd(df, "mean_welfare"),
@@ -323,8 +333,40 @@ def t_labour_slack(blocks: dict[str, pd.DataFrame]) -> None:
     )
 
 
+def t_h4_correlations(blocks: dict[str, pd.DataFrame]) -> None:
+    """Rank correlations behind the propagation claim, written where the paper cites them."""
+    df = blocks.get("B3")
+    if df is None:
+        return
+    from scipy import stats as _st
+
+    from planlab.data import load_technology
+
+    tech = load_technology("eurostat", 2020, 20)
+    A, x = tech.A, tech.base_output
+    fwd = (A * x.reshape(1, -1)).sum(axis=1) / x
+    lsum = np.linalg.inv(np.eye(tech.n) - A).sum(axis=0) - 1.0
+    loss = col(df, "shock_output_loss")
+    out = []
+    for mech in df["mechanism"].unique():
+        m = df["mechanism"] == mech
+        pred = {"forward_linkage": df["shock_sector"].map(dict(zip(tech.sectors, fwd))),
+                "leontief_multiplier": df["shock_sector"].map(dict(zip(tech.sectors, lsum))),
+                "output_share": df["shock_sector"].map(dict(zip(tech.sectors, x / x.sum())))}
+        for name, series in pred.items():
+            rho, p = _st.spearmanr(series[m], loss[m])
+            out.append({"mechanism": mech, "predictor": name, "spearman_rho": round(float(rho), 4),
+                        "p_value": round(float(p), 4), "n_sectors": int(m.sum()),
+                        "statistic": "shock_output_loss"})
+    path = RESULTS / "tables" / "t06_propagation.csv"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(out).to_csv(path, index=False)
+    print(f"  wrote {path.relative_to(ROOT)}  ({len(out)} rows)")
+
+
 BUILDERS = [t_calibration, t_noise_only, t_decomposition, t_lag_grid,
-            t_propagation, t_dual_track, t_boundary, t_labour_slack]
+            t_propagation, t_dual_track, t_boundary, t_labour_slack,
+            t_h4_correlations]
 
 
 def main(argv: list[str] | None = None) -> int:

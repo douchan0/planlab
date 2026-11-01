@@ -2,7 +2,7 @@
   "block": "B1",
   "cell_hash": "41c67503019ac7d8",
   "cell_id": "B1.rationing_priority.toy6",
-  "code_fingerprint": "f9941b58ca9a60cf",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "rationing_priority",
   "probe": null,
@@ -294,7 +294,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "toy6",
-      "wall_s": 0.23925920808687806
+      "wall_s": 0.09542150003835559
     }
   ],
   "tech": {
@@ -312,5 +312,5 @@
     "stock_ratio": 0.1,
     "substrate": "toy6"
   },
-  "wall_s": 0.294397542020306
+  "wall_s": 0.10937575006391853
 }

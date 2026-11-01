@@ -62,9 +62,15 @@ Nobody edits another owner's files; report problems in the shared task instead.
 * One period = one **quarter**. `T` periods per run.
 * Per-sector balance must hold to within `1e-8 * scale` every period:
 
-  `S0_i + x_i + M_i = sum_j Z_ij + C_i + G_i + I_i + S_end_i`
-  with `M_i` imports (0 unless the scenario enables trade) and `I_i` investment
-  demand. This is asserted by the engine every period (raises `AccountingError`).
+  `S0_i + x_i + M_i = sum_j Z_ij + C_i + G_i + I_i + S_end_i + S_i^{spoil}`
+
+  with `M_i` imports (0 unless the scenario enables trade), `I_i` investment demand,
+  and `S_i^{spoil}` **spoilage**: output that is neither used nor storable. Storage is
+  finite — `S_end_i <= max_stock_ratio * base_output_i` (default 2.0, see
+  `docs/AMENDMENTS.md` Amendment 4) — and the excess is recorded, not silently
+  accumulated. The audit is implemented once, in
+  `planlab.core.engine.balance_residual`; import it rather than re-deriving the
+  identity. This is asserted by the engine every period (raises `AccountingError`).
 
 ---
 

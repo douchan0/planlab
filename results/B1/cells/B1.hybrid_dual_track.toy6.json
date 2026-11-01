@@ -2,7 +2,7 @@
   "block": "B1",
   "cell_hash": "918e3931ed4fee65",
   "cell_id": "B1.hybrid_dual_track.toy6",
-  "code_fingerprint": "f9941b58ca9a60cf",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "hybrid_dual_track",
   "probe": null,
@@ -294,7 +294,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "toy6",
-      "wall_s": 0.23893029103055596
+      "wall_s": 0.13610179198440164
     }
   ],
   "tech": {
@@ -312,5 +312,5 @@
     "stock_ratio": 0.1,
     "substrate": "toy6"
   },
-  "wall_s": 0.2503645831020549
+  "wall_s": 0.14507837500423193
 }

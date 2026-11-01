@@ -102,6 +102,19 @@ def main(argv: list[str] | None = None) -> int:
         "total_wall_time_s": round(wall, 2),
         "planned_runs": planned["total"],
         "runs_completed": int(sum(s["runs_completed"] for s in summaries)),
+        "sum_cell_wall_time_s": round(
+            float(
+                sum(
+                    (json.loads((Path(s["manifest"]).read_text(encoding="utf-8"))).get(
+                        "sum_cell_wall_time_s", 0.0
+                    )
+                     if Path(s["manifest"]).exists()
+                     else 0.0)
+                    for s in summaries
+                )
+            ),
+            2,
+        ),
         "cells_failed": int(sum(s["cells_failed"] for s in summaries)),
         "mechanisms_present": present,
         "grid_fingerprint": grid.grid_fingerprint(),

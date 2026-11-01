@@ -2,7 +2,7 @@
   "block": "B6",
   "cell_hash": "e9f455e4e2825649",
   "cell_id": "B6.labour114_rev_only",
-  "code_fingerprint": "15124bbfe66d3ecb",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "material_balance",
   "probe": null,
@@ -9798,7 +9798,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.11443687498103827
+      "wall_s": 0.27035725000314415
     },
     {
       "a_perturb": 0.0,
@@ -9880,7 +9880,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.14995512494351715
+      "wall_s": 0.2556054580491036
     },
     {
       "a_perturb": 0.0,
@@ -9962,7 +9962,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.11978254106361419
+      "wall_s": 0.3195712500018999
     },
     {
       "a_perturb": 0.0,
@@ -10044,7 +10044,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.17052016709931195
+      "wall_s": 0.3607900000642985
     },
     {
       "a_perturb": 0.0,
@@ -10126,7 +10126,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.13176462496630847
+      "wall_s": 0.15387670905329287
     },
     {
       "a_perturb": 0.0,
@@ -10208,7 +10208,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.145535874995403
+      "wall_s": 0.12463004200253636
     },
     {
       "a_perturb": 0.0,
@@ -10290,7 +10290,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.11592433298937976
+      "wall_s": 0.20584241696633399
     },
     {
       "a_perturb": 0.0,
@@ -10372,7 +10372,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.12640841596294194
+      "wall_s": 0.1785419579828158
     },
     {
       "a_perturb": 0.0,
@@ -10454,7 +10454,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.13641745899803936
+      "wall_s": 0.16740437492262572
     },
     {
       "a_perturb": 0.0,
@@ -10536,7 +10536,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.1342214160831645
+      "wall_s": 0.2533698749030009
     },
     {
       "a_perturb": 0.0,
@@ -10618,7 +10618,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.18874599994160235
+      "wall_s": 0.18571687501389533
     },
     {
       "a_perturb": 0.0,
@@ -10700,7 +10700,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.13091779092792422
+      "wall_s": 0.3035266670631245
     },
     {
       "a_perturb": 0.0,
@@ -10782,7 +10782,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.13458329206332564
+      "wall_s": 0.2505025420105085
     },
     {
       "a_perturb": 0.0,
@@ -10864,7 +10864,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.12190791603643447
+      "wall_s": 0.16098183300346136
     },
     {
       "a_perturb": 0.0,
@@ -10946,7 +10946,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.16374125005677342
+      "wall_s": 0.1107411669800058
     },
     {
       "a_perturb": 0.0,
@@ -11028,7 +11028,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.13130629202350974
+      "wall_s": 0.1274311669403687
     },
     {
       "a_perturb": 0.0,
@@ -11110,7 +11110,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.12841708294581622
+      "wall_s": 0.12771162495482713
     },
     {
       "a_perturb": 0.0,
@@ -11192,7 +11192,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.14280308305751532
+      "wall_s": 0.11538812494836748
     },
     {
       "a_perturb": 0.0,
@@ -11274,7 +11274,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.14086004195269197
+      "wall_s": 0.10971774999052286
     },
     {
       "a_perturb": 0.0,
@@ -11356,7 +11356,7 @@
       "stock_ratio": 0.1,
       "substrate": "eurostat",
       "variant": "labour114_rev_only",
-      "wall_s": 0.13319587497971952
+      "wall_s": 0.12610491702798754
     }
   ],
   "tech": {
@@ -11385,5 +11385,5 @@
     "substrate": "eurostat",
     "variant": "labour114_rev_only"
   },
-  "wall_s": 3.027690791990608
+  "wall_s": 4.1998516250168905
 }

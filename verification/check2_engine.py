@@ -376,7 +376,9 @@ def _body(res: CheckResult) -> None:
             labour_supply=inp["labour_supply"], claims=inp["claims"],
             tiers=inp["tiers"], labels=inp["labels"], demand=inp["demand"],
             gov_demand=inp["gov_demand"], invest_demand=inp["invest_demand"],
+            base_output=cap["base_output"], max_stock_ratio=cap["max_stock_ratio"],
         )
+        spoilage = np.asarray(out[9], dtype=float) if len(out) > 9 else np.zeros_like(x)
         diffs = {
             "x": _rel(x, mine["x"]),
             "Z": _rel(Z, mine["Z"]),
@@ -385,6 +387,7 @@ def _body(res: CheckResult) -> None:
             "invest": _rel(Inv, mine["invest"]),
             "inventory_end": _rel(S_end, mine["inventory_end"]),
             "unmet": _rel(unmet, mine["unmet"]),
+            "spoilage": _rel(spoilage, mine["spoilage"]),
             "supply": _rel(inp["inventory"] + x, mine["supply"]),
         }
         flags = classify_flags(inp, mine, cap["A"], cap["labor"])
@@ -401,8 +404,9 @@ def _body(res: CheckResult) -> None:
 
         # ---- structural audit on the engine's own arrays -------------------
         supply = inp["inventory"] + x
-        res.check(_rel(supply, Z.sum(axis=1) + C + G + Inv + S_end) <= 1e-8,
+        res.check(_rel(supply, Z.sum(axis=1) + C + G + Inv + S_end + spoilage) <= 1e-8,
                   f"2b: {tag}: balance identity")
+        res.check(np.all(spoilage >= 0.0), f"2b: {tag}: negative spoilage")
         res.check(np.max(np.abs(Z - cap["A"] * x.reshape(1, -1)))
                   <= 1e-12 * max(1.0, np.max(np.abs(Z))), f"2b: {tag}: Z == A diag(x)")
         res.check(min(np.min(x), np.min(Z), np.min(C), np.min(G), np.min(Inv),

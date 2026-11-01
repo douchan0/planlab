@@ -98,3 +98,39 @@ mechanism, with the gain grid `{0.05, 0.1, 0.2, 0.3, 0.4, 0.6, 0.8, 1.0, 1.2, 1.
 
 This is an *extension* of the pre-registered design (more cells along an axis the
 theory requires), not a change to the outcomes, the tests, or the seeds.
+
+---
+
+## Amendment 4 (2026-11-01) — finite storage: the spoilage channel
+
+**Problem found.** During verification of the material-balance decomposition the
+engine was found to accumulate inventory without bound: one run reached an inventory
+ratio of **17x** base-year output. The cause is structural, not numerical. The engine
+gives every good that is produced and not used to end-of-period stock
+(`S_end = supply - used`), so a compositional mismatch — a glut of some goods
+co-existing with a shortage of others — is parked in the inventory series forever and
+never shows up as a cost. A model in which unsalable output is free is not an economy.
+
+**Amendment.** Storage is bounded:
+
+* new scenario parameter `max_stock_ratio` (default `2.0`), a ceiling on
+  end-of-period inventory as a multiple of the sector's base-year output;
+* output that cannot be stored is recorded as `PeriodRecord.spoilage` and as the
+  metrics `spoilage_total`, `spoilage_rate`, `mean_spoilage`, `mean_spoilage_rate`;
+* the balance identity becomes
+  `S0 + x = sum_j Z_ij + C + G + I + S_end + spoilage`,
+  and the single canonical audit is `planlab.core.engine.balance_residual`.
+
+**Interpretation, and why this is not a patch.** The spoilage term is the model's
+representation of unsalable output in a plan-driven economy — output produced to meet
+a gross-output target that no user wants in that composition. It is the quantity that
+the classical literature describes as production "for the plan rather than for the
+user". Measured, it is not small: 1.4% of supply under material balance, 1.8% under
+tatonnement, exactly 0 for the four institutions whose plans are compositionally
+consistent, and up to 3.3% in the decomposition cells. An external replicator
+implementing the *old* identity would observe a 1-16% discrepancy and conclude that
+the model leaks; that is precisely why this amendment exists.
+
+**Cost.** Every result in the paper is computed under the amended identity. The
+change was made before the final grid, and the grid was re-run in full afterwards
+(single code version, per-cell code fingerprints in each manifest).

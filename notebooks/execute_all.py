@@ -137,6 +137,15 @@ def main(argv: list[str] | None = None) -> int:
         "nbclient_timeout_s": TIMEOUT,
         "notebooks": {},
     }
+    # merge with a previous report so that `--only X` does not erase the record of
+    # the other notebooks; the sha256 stored per notebook is what makes a stale
+    # entry detectable, so merging cannot hide a rebuilt-but-unexecuted notebook.
+    if STATUS_PATH.exists():
+        try:
+            previous = json.loads(STATUS_PATH.read_text(encoding="utf-8"))
+            status["notebooks"] = dict(previous.get("notebooks", {}))
+        except Exception:  # pragma: no cover - a corrupt status file is replaced
+            pass
     failures = 0
     total = 0.0
     for path in notebooks:
@@ -153,6 +162,7 @@ def main(argv: list[str] | None = None) -> int:
             failures += 1
             print(f" FAILED  {record['seconds']:6.2f}s\n  {record['error']}", file=sys.stderr)
 
+    status["notebooks"] = dict(sorted(status["notebooks"].items()))
     status["total_seconds"] = round(total, 2)
     status["failures"] = failures
     STATUS_PATH.write_text(json.dumps(status, indent=1, sort_keys=True) + "\n", encoding="utf-8")

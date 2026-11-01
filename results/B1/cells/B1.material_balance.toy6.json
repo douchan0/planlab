@@ -2,7 +2,7 @@
   "block": "B1",
   "cell_hash": "01030c81cf6ba18a",
   "cell_id": "B1.material_balance.toy6",
-  "code_fingerprint": "f9941b58ca9a60cf",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "material_balance",
   "probe": null,
@@ -294,7 +294,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "toy6",
-      "wall_s": 0.2459136249963194
+      "wall_s": 0.06705900002270937
     }
   ],
   "tech": {
@@ -312,5 +312,5 @@
     "stock_ratio": 0.1,
     "substrate": "toy6"
   },
-  "wall_s": 0.28690345806535333
+  "wall_s": 0.07801925006788224
 }

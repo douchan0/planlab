@@ -2,7 +2,7 @@
   "block": "B8",
   "cell_hash": "3ef4e1ccb5d7e765",
   "cell_id": "B8.g0.r1",
-  "code_fingerprint": "15124bbfe66d3ecb",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "material_balance",
   "probe": null,
@@ -7865,7 +7865,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.14132162497844547
+      "wall_s": 0.18648212496191263
     },
     {
       "accounting_checks_passed": 80.0,
@@ -7942,7 +7942,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.1530872080475092
+      "wall_s": 0.13275508291553706
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8019,7 +8019,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.11086825001984835
+      "wall_s": 0.1279469159198925
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8096,7 +8096,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.10356420802418143
+      "wall_s": 0.19841545796953142
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8173,7 +8173,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.1330247080186382
+      "wall_s": 0.1712012499338016
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8250,7 +8250,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.10862004093360156
+      "wall_s": 0.4291559170233086
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8327,7 +8327,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.11781579197850078
+      "wall_s": 0.16082874999847263
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8404,7 +8404,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.11136620806064457
+      "wall_s": 0.1567517080111429
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8481,7 +8481,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.11427958402782679
+      "wall_s": 0.14695266692433506
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8558,7 +8558,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.12757008301559836
+      "wall_s": 0.20311520795803517
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8635,7 +8635,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.14407108293380588
+      "wall_s": 0.19598595809657127
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8712,7 +8712,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.11461029201745987
+      "wall_s": 0.15914304205216467
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8789,7 +8789,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.11705829098355025
+      "wall_s": 0.18846245796885341
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8866,7 +8866,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.14518995792604983
+      "wall_s": 0.21244549995753914
     },
     {
       "accounting_checks_passed": 80.0,
@@ -8943,7 +8943,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.11882133304607123
+      "wall_s": 0.19035925006028265
     },
     {
       "accounting_checks_passed": 80.0,
@@ -9020,7 +9020,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.14043716609012336
+      "wall_s": 0.1802549579879269
     }
   ],
   "tech": {
@@ -9044,5 +9044,5 @@
     "stock_ratio": 0.1,
     "substrate": "eurostat"
   },
-  "wall_s": 2.2140207909978926
+  "wall_s": 3.364454541937448
 }

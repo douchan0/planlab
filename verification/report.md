@@ -1,15 +1,13 @@
 # PlanLab independent verification report
 
-Generated: 2026-11-01 16:36:10 +0800  
+Generated: 2026-11-01 16:55:55 +0800  
 Repository: `/Users/ceontou/Documents/code/planlab`  
-git commit: `7749ec65fe5486990fdfa7f6f420d24521e000ba` (dirty: True)  
+git commit: `f3b9b3166452be2242bd4ea324afacf6b5ef1528` (dirty: True)  
 Python 3.10.13 on macOS-15.7.7-arm64-arm-64bit  
-Wall time: 138.7 s  
-Checks: 1 PASS, 4 FAIL, 1 SKIP, 0 ERROR
+Wall time: 76.7 s  
+Checks: 4 PASS, 2 FAIL, 0 SKIP, 0 ERROR
 
 This suite is written by an independent verifier. It re-derives the theorem, re-implements a period from the written specification, audits the raw records behind the paper's numbers, re-runs sampled cells, and re-computes the statistics with its own code. It deliberately does not import the project's engine, metrics or aggregate modules to judge their output; where it does use project code it is only for *inputs* (the technology matrix) or for *records* (the stored arrays).
-
-> **The audit is INCOMPLETE.** Skipped or errored checks mean the corresponding evidence has NOT been verified, not that it passed.
 
 ## Findings reported to the Lead (the verifier's own record)
 
@@ -91,7 +89,7 @@ Measured:
     - m=10, predicted=42, zero_cross=42, fft=41.796, root_arg=42
     - m=11, predicted=46, zero_cross=46, fft=45.511, root_arg=46
     - m=12, predicted=50, zero_cross=50, fft=49.951, root_arg=50
-- `wall_s`: 2.58
+- `wall_s`: 0.76
 
 Notes:
 
@@ -101,189 +99,57 @@ What this does not prove. This verifies a linear difference equation. It does no
 
 ## Check engine — Independent one-period implementation vs the engine
 
-**Status: FAIL**
+**Status: PASS**
+
+My from-scratch period reproduces the engine on 192 captured periods (regimes, non-exclusive: 101 calm / 18 capacity-binding / 91 tier-binding): worst relative difference 0.00e+00 over x, Z, C, G, I, S_end, unmet, supply. The balance identity, Z = A diag(x), capacity/target/labour bounds and the tier ladder hold; single-pass output is certified optimal by two independent HiGHS algorithms; the 10 collapse periods are structurally forced by outranking claims.
 
 Measured:
 
 - `periods_captured`: 192
 - `collapse_blocked_goods`: [4, 19, 19, 20, 20, 20, 20, 20, 3, 17]
 - `regime_counts`: calm=101, capacity=18, tier=91
-- `max_rel_diff_by_regime`: calm=0, capacity=0.408759, tier=0.408759
-- `max_relative_difference`: 0.408759
-- `max_relative_difference_at`: material_balance period 135 (capacity/tier)
+- `max_rel_diff_by_regime`: calm=0, capacity=0, tier=0
+- `max_relative_difference`: 0
+- `max_relative_difference_at`: 
 - `ladder_violations`: 0
 - `engine_status_counts`: infeasible-ub=180, optimal=12
 - `n_collapse_periods`: 10
 - `n_collapse_forced`: 10
 - `n_first_pass_optimality_probes`: 182
 - `max_cascade_exit_deficit_rel`: 2.34915e-16
-- `wall_s`: 5.94
-
-Failures:
-
-- 2a: material_balance period 134 (capacity/tier): inventory_end differs by 7.08e-02 (tol 1e-09)
-- 2b: material_balance period 134 (capacity/tier): balance identity
-- 2a: material_balance period 135 (capacity/tier): inventory_end differs by 4.09e-01 (tol 1e-09)
-- 2b: material_balance period 135 (capacity/tier): balance identity
-- 2a: material_balance period 136 (capacity/tier): inventory_end differs by 1.31e-01 (tol 1e-09)
-- 2b: material_balance period 136 (capacity/tier): balance identity
-- 2a: material_balance period 137 (capacity/tier): inventory_end differs by 3.88e-01 (tol 1e-09)
-- 2b: material_balance period 137 (capacity/tier): balance identity
-- 2a: material_balance period 138 (tier): inventory_end differs by 6.07e-02 (tol 1e-09)
-- 2b: material_balance period 138 (tier): balance identity
-- 2a: material_balance period 139 (tier): inventory_end differs by 3.29e-01 (tol 1e-09)
-- 2b: material_balance period 139 (tier): balance identity
-- 2a: material_balance period 140 (capacity/tier): inventory_end differs by 5.16e-02 (tol 1e-09)
-- 2b: material_balance period 140 (capacity/tier): balance identity
-- 2a: material_balance period 141 (tier): inventory_end differs by 3.08e-01 (tol 1e-09)
-- 2b: material_balance period 141 (tier): balance identity
-- 2a: material_balance period 142 (tier): inventory_end differs by 4.38e-02 (tol 1e-09)
-- 2b: material_balance period 142 (tier): balance identity
-- 2a: material_balance period 143 (tier): inventory_end differs by 2.64e-01 (tol 1e-09)
-- 2b: material_balance period 143 (tier): balance identity
+- `wall_s`: 2.21
 
 What this does not prove. I implemented the *published* algorithm, so agreement shows that the code does what the specification says; it does not show that the specification is the right model. The per-period comparison also cannot detect a bias that is present identically in both my implementation and the engine's (e.g. a shared but wrong definition of a claim row).
 
 ## Check accounting — Accounting audit over the experiment records
 
-**Status: FAIL**
+**Status: PASS**
+
+2344 audit records across 11 blocks: balance identity worst 1.63e-16 (tol 1e-08), Z=A diag(x) worst 0.00e+00, no negative arrays, C<=demand / x<=capacity / x<=targets all hold, unmet=demand-C holds; recomputed shortage_rate, welfare, plan_fulfilment and four aggregates match runs.parquet to 0.00e+00; the priority ladder was verified exactly on 381 re-run periods (0 violations) and the stored arrays reproduce from the current code to 0.00e+00.
 
 Measured:
 
-- `n_audit_records`: 288
-- `n_blocks`: 2
-- `max_balance_identity_residual`: 0.0760879
+- `n_audit_records`: 2344
+- `n_blocks`: 11
+- `max_balance_identity_residual`: 1.62532e-16
 - `max_Z_vs_Ax_residual`: 0
 - `max_metric_error`: shortage_rate=0, welfare=0, plan_fulfilment=0, consumption_total=0, demand_total=0, output_total=0, unmet_total=0
-- `n_metric_comparisons`: shortage_rate=288, welfare=288, plan_fulfilment=288, consumption_total=288, demand_total=288, output_total=288, unmet_total=288
+- `n_metric_comparisons`: shortage_rate=2344, welfare=2344, plan_fulfilment=2344, consumption_total=2344, demand_total=2344, output_total=2344, unmet_total=2344
 - `n_records_with_negative`: 0
 - `n_records_C_gt_demand`: 0
 - `n_records_x_gt_capacity`: 0
 - `n_records_bad_unmet`: 0
 - `n_substrate_mismatches`: 0
-- `runner_reported_residual_max`: 1.45073e-16
-- `runner_residual_vs_mine`: 0.0760879
+- `runner_reported_residual_max`: 1.62532e-16
+- `runner_residual_vs_mine`: 0
 - `n_duplicate_metric_rows`: 0
-- `ladder_records_checked`: 56
+- `max_spoilage_share_of_supply`: 0.159973
+- `n_sectors_with_implied_cap_ratios`: 0
+- `ladder_records_checked`: 381
 - `ladder_violations`: 0
-- `cells_rerun`: 14
+- `cells_rerun`: 83
 - `max_period_reproduction_diff`: 0
-- `wall_s`: 13.72
-
-Failures:
-
-- 3a: B1b/B1b.material_balance/seed0/t63: balance identity residual 4.048e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed0/t63: aggregate identity residual 1.470e-01
-- 3a: B1b/B1b.material_balance/seed0/t80: balance identity residual 3.500e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed0/t80: aggregate identity residual 1.551e-01
-- 3a: B1b/B1b.material_balance/seed2/t63: balance identity residual 3.402e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed2/t63: aggregate identity residual 1.214e-01
-- 3a: B1b/B1b.material_balance/seed2/t80: balance identity residual 3.328e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed2/t80: aggregate identity residual 1.149e-01
-- 3a: B1b/B1b.material_balance/seed4/t63: balance identity residual 3.879e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed4/t63: aggregate identity residual 1.919e-01
-- 3a: B1b/B1b.material_balance/seed4/t80: balance identity residual 5.167e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed4/t80: aggregate identity residual 1.692e-01
-- 3a: B1b/B1b.material_balance/seed6/t63: balance identity residual 3.080e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed6/t63: aggregate identity residual 6.678e-02
-- 3a: B1b/B1b.material_balance/seed6/t80: balance identity residual 4.402e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed6/t80: aggregate identity residual 1.890e-01
-- 3a: B1b/B1b.material_balance/seed8/t63: balance identity residual 3.389e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed8/t63: aggregate identity residual 1.749e-01
-- 3a: B1b/B1b.material_balance/seed8/t80: balance identity residual 3.321e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed8/t80: aggregate identity residual 1.787e-01
-- 3a: B1b/B1b.material_balance/seed10/t63: balance identity residual 1.884e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed10/t63: aggregate identity residual 1.108e-01
-- 3a: B1b/B1b.material_balance/seed10/t80: balance identity residual 3.853e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed10/t80: aggregate identity residual 1.909e-01
-- 3a: B1b/B1b.material_balance/seed12/t63: balance identity residual 2.706e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed12/t63: aggregate identity residual 1.083e-01
-- 3a: B1b/B1b.material_balance/seed12/t80: balance identity residual 5.190e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed12/t80: aggregate identity residual 3.076e-01
-- 3a: B1b/B1b.material_balance/seed14/t63: balance identity residual 2.393e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed14/t63: aggregate identity residual 8.787e-02
-- 3a: B1b/B1b.material_balance/seed14/t80: balance identity residual 4.242e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed14/t80: aggregate identity residual 1.628e-01
-- 3a: B1b/B1b.material_balance/seed16/t63: balance identity residual 4.550e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed16/t63: aggregate identity residual 1.613e-01
-- 3a: B1b/B1b.material_balance/seed16/t80: balance identity residual 3.651e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed16/t80: aggregate identity residual 1.876e-01
-- 3a: B1b/B1b.material_balance/seed18/t63: balance identity residual 2.767e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed18/t63: aggregate identity residual 1.680e-01
-- 3a: B1b/B1b.material_balance/seed18/t80: balance identity residual 3.880e-02 > 1e-08
-- 3a: B1b/B1b.material_balance/seed18/t80: aggregate identity residual 1.819e-01
-- 3a: B1b/B1b.tatonnement/seed0/t31: balance identity residual 3.374e-04 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed0/t31: aggregate identity residual 3.374e-04
-- 3a: B1b/B1b.tatonnement/seed0/t46: balance identity residual 4.623e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed0/t46: aggregate identity residual 1.143e-01
-- 3a: B1b/B1b.tatonnement/seed0/t63: balance identity residual 3.338e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed0/t63: aggregate identity residual 1.195e-01
-- 3a: B1b/B1b.tatonnement/seed0/t80: balance identity residual 3.603e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed0/t80: aggregate identity residual 2.208e-01
-- 3a: B1b/B1b.tatonnement/seed2/t46: balance identity residual 2.451e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed2/t46: aggregate identity residual 1.011e-01
-- 3a: B1b/B1b.tatonnement/seed2/t63: balance identity residual 5.517e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed2/t63: aggregate identity residual 1.731e-01
-- 3a: B1b/B1b.tatonnement/seed2/t80: balance identity residual 6.047e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed2/t80: aggregate identity residual 2.219e-01
-- 3a: B1b/B1b.tatonnement/seed4/t46: balance identity residual 3.567e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed4/t46: aggregate identity residual 9.865e-02
-- 3a: B1b/B1b.tatonnement/seed4/t63: balance identity residual 3.192e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed4/t63: aggregate identity residual 1.438e-01
-- 3a: B1b/B1b.tatonnement/seed4/t80: balance identity residual 5.425e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed4/t80: aggregate identity residual 2.345e-01
-- 3a: B1b/B1b.tatonnement/seed6/t31: balance identity residual 3.031e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed6/t31: aggregate identity residual 3.031e-02
-- 3a: B1b/B1b.tatonnement/seed6/t46: balance identity residual 3.191e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed6/t46: aggregate identity residual 5.958e-02
-- 3a: B1b/B1b.tatonnement/seed6/t63: balance identity residual 3.058e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed6/t63: aggregate identity residual 1.699e-01
-- 3a: B1b/B1b.tatonnement/seed6/t80: balance identity residual 4.636e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed6/t80: aggregate identity residual 2.105e-01
-- 3a: B1b/B1b.tatonnement/seed8/t31: balance identity residual 3.890e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed8/t31: aggregate identity residual 3.890e-02
-- 3a: B1b/B1b.tatonnement/seed8/t46: balance identity residual 3.276e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed8/t46: aggregate identity residual 1.182e-01
-- 3a: B1b/B1b.tatonnement/seed8/t63: balance identity residual 3.778e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed8/t63: aggregate identity residual 1.450e-01
-- 3a: B1b/B1b.tatonnement/seed8/t80: balance identity residual 6.490e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed8/t80: aggregate identity residual 2.755e-01
-- 3a: B1b/B1b.tatonnement/seed10/t31: balance identity residual 2.358e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed10/t31: aggregate identity residual 2.358e-02
-- 3a: B1b/B1b.tatonnement/seed10/t46: balance identity residual 2.864e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed10/t46: aggregate identity residual 7.260e-02
-- 3a: B1b/B1b.tatonnement/seed10/t63: balance identity residual 5.819e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed10/t63: aggregate identity residual 1.906e-01
-- 3a: B1b/B1b.tatonnement/seed10/t80: balance identity residual 6.196e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed10/t80: aggregate identity residual 2.419e-01
-- 3a: B1b/B1b.tatonnement/seed12/t31: balance identity residual 2.532e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed12/t31: aggregate identity residual 2.532e-02
-- 3a: B1b/B1b.tatonnement/seed12/t46: balance identity residual 5.121e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed12/t46: aggregate identity residual 1.248e-01
-- 3a: B1b/B1b.tatonnement/seed12/t63: balance identity residual 2.341e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed12/t63: aggregate identity residual 1.456e-01
-- 3a: B1b/B1b.tatonnement/seed12/t80: balance identity residual 7.609e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed12/t80: aggregate identity residual 2.659e-01
-- 3a: B1b/B1b.tatonnement/seed14/t46: balance identity residual 2.361e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed14/t46: aggregate identity residual 4.919e-02
-- 3a: B1b/B1b.tatonnement/seed14/t63: balance identity residual 4.910e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed14/t63: aggregate identity residual 1.915e-01
-- 3a: B1b/B1b.tatonnement/seed14/t80: balance identity residual 4.870e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed14/t80: aggregate identity residual 2.131e-01
-- 3a: B1b/B1b.tatonnement/seed16/t31: balance identity residual 6.379e-03 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed16/t31: aggregate identity residual 8.898e-03
-- 3a: B1b/B1b.tatonnement/seed16/t46: balance identity residual 4.036e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed16/t46: aggregate identity residual 8.378e-02
-- 3a: B1b/B1b.tatonnement/seed16/t63: balance identity residual 2.795e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed16/t63: aggregate identity residual 1.584e-01
-- 3a: B1b/B1b.tatonnement/seed16/t80: balance identity residual 6.157e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed16/t80: aggregate identity residual 2.480e-01
-- 3a: B1b/B1b.tatonnement/seed18/t46: balance identity residual 4.777e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed18/t46: aggregate identity residual 1.344e-01
-- 3a: B1b/B1b.tatonnement/seed18/t63: balance identity residual 4.011e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed18/t63: aggregate identity residual 1.626e-01
-- 3a: B1b/B1b.tatonnement/seed18/t80: balance identity residual 5.198e-02 > 1e-08
-- 3a: B1b/B1b.tatonnement/seed18/t80: aggregate identity residual 2.199e-01
+- `wall_s`: 41.12
 
 Notes:
 
@@ -294,69 +160,41 @@ What this does not prove. The balance identity is imposed by construction inside
 
 ## Check reproducibility — Reproducibility audit of the stored results
 
-**Status: FAIL**
+**Status: PASS**
+
+80 of 7364 (cell, seed) runs re-executed across 11 block(s): 2960 stored run-level metrics match to 0.0e+00; my independent recomputation of mean_shortage_rate, cum_welfare and mean_plan_fulfilment agrees to 2.0e-16; 147120 per-period metric values re-checked (worst 0.0e+00); manifests carry versions, git commit and scenario hashes that match; runs.parquet and summary.csv agree; 16 scenario YAML(s) re-run.
 
 Measured:
 
-- `n_runs_available`: 132
-- `n_runs_sampled`: 40
-- `n_samples`: 40
-- `n_metric_comparisons_4a`: 1480
+- `n_runs_available`: 7364
+- `n_runs_sampled`: 80
+- `n_samples`: 80
+- `n_metric_comparisons_4a`: 2960
 - `worst_run_metric_diff_4a`: 0
 - `worst_run_metric_diff_at`: 
 - `independent_metric_worst`: mean_shortage_rate=9.71445e-17, cum_welfare=2.02723e-16, mean_plan_fulfilment=1.11022e-16, n_periods_used=0
-- `per_period_comparisons`: 73560
+- `per_period_comparisons`: 147120
 - `per_period_worst_diff`: 0
 - `n_cells_without_definition`: 0
 - `n_tech_spec_disagreements`: 0
-- `n_manifest_blocks_ok`: 2
-- `n_consistency_checks_4e`: 264
+- `n_manifest_blocks_ok`: 11
+- `n_consistency_checks_4e`: 14728
 - `n_scenario_yamls_rerun`: 16
-- `wall_s`: 18.56
-
-Failures:
-
-- 4d: B1/B1.lp_central.eurostat: manifest hash 0a58910c2c8f0769 != recomputed cell digest c4d7b04c1be79014
-- 4d: B1/B1.lp_central.toy6: manifest hash 1edf866c608a7fe5 != recomputed cell digest 74c7c0f33d483bde
-- 4d: B1/B1.material_balance.eurostat: manifest hash 8027e7ec8372111e != recomputed cell digest 3776afa7b4a85491
-- 4d: B1/B1.material_balance.toy6: manifest hash 01a572d544144e4b != recomputed cell digest 01030c81cf6ba18a
-- 4d: B1/B1.rationing_priority.eurostat: manifest hash e0c2254685935da7 != recomputed cell digest 06443259452ba68c
-- 4d: B1/B1.rationing_priority.toy6: manifest hash c89a0676fe898d16 != recomputed cell digest 41c67503019ac7d8
-- 4d: B1/B1.tatonnement.eurostat: manifest hash 823fba4e6f274e3c != recomputed cell digest ba49f9bc918026e5
-- 4d: B1/B1.tatonnement.toy6: manifest hash faec1de719b3e908 != recomputed cell digest 12480ddc38bc8086
-- 4d: B1/B1.market.eurostat: manifest hash 3389da306e7c1596 != recomputed cell digest 3649834a4744c723
-- 4d: B1/B1.market.toy6: manifest hash 12f564011d24bb7d != recomputed cell digest 0e6dd9b766f2948d
-- 4d: B1/B1.hybrid_dual_track.eurostat: manifest hash c5f7bfc0afb50239 != recomputed cell digest b4eb8deec325454a
-- 4d: B1/B1.hybrid_dual_track.toy6: manifest hash 30d424b437f28105 != recomputed cell digest 918e3931ed4fee65
-- 4d: B1b/B1b.lp_central: manifest hash c0684b9635471245 != recomputed cell digest a50dc98b661838eb
-- 4d: B1b/B1b.material_balance: manifest hash 368ae513be2f1416 != recomputed cell digest f3da73af1e03f639
-- 4d: B1b/B1b.rationing_priority: manifest hash 881ede9bf799ba6e != recomputed cell digest 71f1ea23b4de5334
-- 4d: B1b/B1b.tatonnement: manifest hash caeaffbed8af674a != recomputed cell digest 0d0d2bb7be00715d
-- 4d: B1b/B1b.market: manifest hash 247e8582e9f15dc5 != recomputed cell digest 599d62b76fe4c202
-- 4d: B1b/B1b.hybrid_dual_track: manifest hash 3bf71148138a5c73 != recomputed cell digest b1afe0d5026e8614
+- `wall_s`: 15.82
 
 Notes:
 
 - 4d: B1: seeds recorded only as counts (seeds_per_cell); the actual values live in cells.json/summary.csv
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.lp_central.eurostat (naming is then accurate)
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.lp_central.toy6 (naming is then accurate)
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.material_balance.eurostat (naming is then accurate)
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.material_balance.toy6 (naming is then accurate)
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.rationing_priority.eurostat (naming is then accurate)
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.rationing_priority.toy6 (naming is then accurate)
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.tatonnement.eurostat (naming is then accurate)
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.tatonnement.toy6 (naming is then accurate)
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.market.eurostat (naming is then accurate)
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.market.toy6 (naming is then accurate)
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.hybrid_dual_track.eurostat (naming is then accurate)
-- 4d: B1: scenario_hashes equals the policy scenario hash for B1.hybrid_dual_track.toy6 (naming is then accurate)
 - 4d: B1b: seeds recorded only as counts (seeds_per_cell); the actual values live in cells.json/summary.csv
-- 4d: B1b: scenario_hashes equals the policy scenario hash for B1b.lp_central (naming is then accurate)
-- 4d: B1b: scenario_hashes equals the policy scenario hash for B1b.material_balance (naming is then accurate)
-- 4d: B1b: scenario_hashes equals the policy scenario hash for B1b.rationing_priority (naming is then accurate)
-- 4d: B1b: scenario_hashes equals the policy scenario hash for B1b.tatonnement (naming is then accurate)
-- 4d: B1b: scenario_hashes equals the policy scenario hash for B1b.market (naming is then accurate)
-- 4d: B1b: scenario_hashes equals the policy scenario hash for B1b.hybrid_dual_track (naming is then accurate)
+- 4d: B2: seeds recorded only as counts (seeds_per_cell); the actual values live in cells.json/summary.csv
+- 4d: B2L: seeds recorded only as counts (seeds_per_cell); the actual values live in cells.json/summary.csv
+- 4d: B3: seeds recorded only as counts (seeds_per_cell); the actual values live in cells.json/summary.csv
+- 4d: B4: seeds recorded only as counts (seeds_per_cell); the actual values live in cells.json/summary.csv
+- 4d: B5: seeds recorded only as counts (seeds_per_cell); the actual values live in cells.json/summary.csv
+- 4d: B6: seeds recorded only as counts (seeds_per_cell); the actual values live in cells.json/summary.csv
+- 4d: B7: seeds recorded only as counts (seeds_per_cell); the actual values live in cells.json/summary.csv
+- 4d: B8: seeds recorded only as counts (seeds_per_cell); the actual values live in cells.json/summary.csv
+- 4d: P2: seeds recorded only as counts (seeds_per_cell); the actual values live in cells.json/summary.csv
 - 4f: baseline_lp_k0.yaml: no stored summary row for scenario id 'baseline_lp_k0'
 - 4f: baseline_mb_k0.yaml: no stored summary row for scenario id 'baseline_mb_k0'
 - 4f: dual_track_theta0p5_k0.yaml: no stored summary row for scenario id 'dual_track_theta0p5_k0'
@@ -378,9 +216,7 @@ What this does not prove. Reproducibility is not validity: it shows that the sto
 
 ## Check statistics — Statistical audit (Wilcoxon/bootstrap/Holm/H4)
 
-**Status: SKIP**
-
-5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap reproducible); 5b skipped (no tests.csv); 5c skipped (no shock cells) — the statistical audit of the PAPER's numbers is NOT complete yet.
+**Status: FAIL**
 
 Measured:
 
@@ -390,14 +226,57 @@ Measured:
 - `5a_spearman_max_diff`: 1.11022e-16
 - `5a_permutation_vs_exact`: perm=0.0157992, exact=0.0166667
 - `5a_bootstrap_ci`: ci=(-0.6462720519005788, 0.10470015457123541), ci_other_seed=(-0.6491652296509687, 0.11330669802630018)
-- `5b_status`: SKIPPED_NO_TESTS_CSV
-- `5c_status`: SKIPPED_NO_SHOCK_CELLS
-- `wall_s`: 6.69
+- `5b_n_rows`: 59
+- `5b_paired_rows_checked`: 0
+- `5b_p_values_checked`: 0
+- `5b_worst_p_diff`: 0
+- `5b_worst_effect_rel_diff`: 0
+- `5b_holm_values_checked`: 37
+- `5b_status`: AUDITED
+- `5c_n_cells`: 63
+- `5c_h4`:
+    - mechanism=hybrid_dual_track, predictor=forward_rowsum_A, rho=nan, p_perm=nan, n=1
+    - mechanism=hybrid_dual_track, predictor=forward_intermediate_share, rho=nan, p_perm=nan, n=1
+    - mechanism=hybrid_dual_track, predictor=leontief_colsum, rho=nan, p_perm=nan, n=1
+    - mechanism=hybrid_dual_track, predictor=leontief_rowsum, rho=nan, p_perm=nan, n=1
+    - mechanism=lp_central, predictor=forward_rowsum_A, rho=nan, p_perm=nan, n=1
+    - mechanism=lp_central, predictor=forward_intermediate_share, rho=nan, p_perm=nan, n=1
+    - mechanism=lp_central, predictor=leontief_colsum, rho=nan, p_perm=nan, n=1
+    - mechanism=lp_central, predictor=leontief_rowsum, rho=nan, p_perm=nan, n=1
+    - mechanism=market, predictor=forward_rowsum_A, rho=nan, p_perm=nan, n=1
+    - mechanism=market, predictor=forward_intermediate_share, rho=nan, p_perm=nan, n=1
+    - mechanism=market, predictor=leontief_colsum, rho=nan, p_perm=nan, n=1
+    - mechanism=market, predictor=leontief_rowsum, rho=nan, p_perm=nan, n=1
+    - mechanism=material_balance, predictor=forward_rowsum_A, rho=-0.282707, p_perm=0.224078, n=20
+    - mechanism=material_balance, predictor=forward_intermediate_share, rho=0.754887, p_perm=0.0001, n=20
+    - mechanism=material_balance, predictor=leontief_colsum, rho=0.311278, p_perm=0.184682, n=20
+    - mechanism=material_balance, predictor=leontief_rowsum, rho=-0.365414, p_perm=0.114689, n=20
+    - mechanism=rationing_priority, predictor=forward_rowsum_A, rho=-0.390977, p_perm=0.088591, n=20
+    - mechanism=rationing_priority, predictor=forward_intermediate_share, rho=0.688722, p_perm=0.0011, n=20
+    - mechanism=rationing_priority, predictor=leontief_colsum, rho=0.239098, p_perm=0.309269, n=20
+    - mechanism=rationing_priority, predictor=leontief_rowsum, rho=-0.458647, p_perm=0.043096, n=20
+- `5c_status`: AUDITED
+- `wall_s`: 6.89
+
+Failures:
+
+- 5b: block B3: Holm-adjusted p disagrees by 2.00e-06
+- 5c: hybrid_dual_track/forward_rowsum_A: undefined Spearman rho
+- 5c: hybrid_dual_track/forward_intermediate_share: undefined Spearman rho
+- 5c: hybrid_dual_track/leontief_colsum: undefined Spearman rho
+- 5c: hybrid_dual_track/leontief_rowsum: undefined Spearman rho
+- 5c: lp_central/forward_rowsum_A: undefined Spearman rho
+- 5c: lp_central/forward_intermediate_share: undefined Spearman rho
+- 5c: lp_central/leontief_colsum: undefined Spearman rho
+- 5c: lp_central/leontief_rowsum: undefined Spearman rho
+- 5c: market/forward_rowsum_A: undefined Spearman rho
+- 5c: market/forward_intermediate_share: undefined Spearman rho
+- 5c: market/leontief_colsum: undefined Spearman rho
+- 5c: market/leontief_rowsum: undefined Spearman rho
 
 Notes:
 
-- 5b: results/tables/tests.csv does not exist yet — test-statistic audit skipped
-- 5c: no B3-style shock cells in results/ yet — H4 correlation audit skipped
+- 5c: H4 correlations recomputed from summary.csv with a 10,000-draw permutation null; the paper's reported rho should match the forward_rowsum_A or forward_intermediate_share row for the same mechanism.
 
 What this does not prove. I can recompute the test statistics and their multiplicity correction; I cannot verify that the pre-registered test was the right one for the question, that the run-level unit of analysis was respected in every table, or that the pre-registration was not silently narrowed after the results were seen. The permutation test assumes exchangeability of the shocked sectors, which is exact under the null only if the shock assignment is exchangeable — with a fixed 20-sector design that is the natural null but it does not model dependence through common shocks.
 
@@ -420,7 +299,7 @@ Measured:
 - `6d_goods_tightness_max`: -0.161008
 - `6d_min_sector_fill_mean`: 0.845039
 - `6_explanation_status`: REFUTED
-- `wall_s`: 91.22
+- `wall_s`: 9.86
 
 Failures:
 

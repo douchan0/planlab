@@ -12,11 +12,11 @@
     "B8",
     "P2"
   ],
-  "generated_at": "2026-11-01T16:40:13+0800",
-  "git_commit": "7749ec65fe5486990fdfa7f6f420d24521e000ba",
+  "generated_at": "2026-11-01T16:55:18+0800",
+  "git_commit": "f3b9b3166452be2242bd4ea324afacf6b5ef1528",
   "grid_fingerprint": "5d222d87c103e838",
   "how_to_reproduce": "python -m planlab.experiments.aggregate",
-  "n_tests": 55,
+  "n_tests": 59,
   "results_dir": "/Users/ceontou/Documents/code/planlab/results",
   "tables": [
     {
@@ -88,6 +88,13 @@
       "rows": 12,
       "table": "t13_material_balance_decomposition",
       "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t13_material_balance_decomposition.tex"
+    },
+    {
+      "caption": "The local gain of the price loop, measured sector by sector (block B7): $b_{p,j}=-\\mathrm{d}s_j/\\mathrm{d}\\log p_j$ from a $\\pm5$ per cent permanent price offset on each good, with that good's capacity permanently cut by 50 per cent and the price gain switched off. The loop gain of the mechanism is $g=\\eta\\,b_p$, so these numbers decide whether the analytic bound $g^*(m)=2\\sin(\\pi/(2(2m+1)))$ is reachable at all.",
+      "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t12_bp_by_sector.csv",
+      "rows": 80,
+      "table": "t12_bp_by_sector",
+      "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t12_bp_by_sector.tex"
     },
     {
       "caption": "The priority ladder as a treatment (block B2L, exploratory): what happens when essential consumption outranks intermediate inputs under a supply shock. The production-first ladder is the default; the consumption-first ladder is the classic mobilisation-economy alternative.",

@@ -53,7 +53,7 @@ _LABELS = {
     "lp_central": "central LP",
     "material_balance": "material balance",
     "rationing_priority": "priority rationing",
-    "tatonnement": "t\\^atonnement",
+    "tatonnement": "tatonnement",
     "market": "market",
     "hybrid_dual_track": "dual track",
 }
@@ -160,7 +160,7 @@ def make_lag_grid(bundle: A.ResultsBundle, out_dir: Path, written: list[dict[str
     axes[1].set_xlabel("reporting lag $\\ell$ (effective delay $k=\\ell+1$)")
     axes[1].set_ylabel("welfare loss vs baseline (per cent)")
     axes[1].set_title("(b) Welfare loss against delay")
-    axes[0].legend(loc="upper left", ncol=1)
+    axes[0].legend(loc="lower right", ncol=2)
     _save(fig, out_dir, "fig_lag_grid", written, block="B2",
           what="shortage and welfare loss against the reporting lag, one line per institution (H2)")
     make_lag_grid.lag_stats = frame  # type: ignore[attr-defined]

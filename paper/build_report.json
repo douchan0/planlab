@@ -1,21 +1,21 @@
 {
   "bibliography_entries": 39,
   "bibliography_uncited": [],
-  "built": "2026-11-01T08:40:16Z",
+  "built": "2026-11-01T08:53:55Z",
   "citations_used": 39,
-  "civil_words_body": 16.9,
+  "civil_words_body": 17.7,
   "duplicated_nouns": [],
-  "elapsed_s": 2.28,
+  "elapsed_s": 2.24,
   "equations": 19,
-  "figures": 2,
-  "html_bytes": 172572,
+  "figures": 3,
+  "html_bytes": 213408,
   "markdown": "3.10.3",
   "missing_captions": [],
   "missing_figure_files": [],
   "missing_table_files": [],
   "pdf": "paper/main.pdf",
-  "pdf_bytes": 1451522,
-  "pdf_pages": 25,
+  "pdf_bytes": 2051759,
+  "pdf_pages": 32,
   "python": "3.10.13",
   "sections": {
     "app:crossing": "A.2",
@@ -100,21 +100,8 @@
     "why-a-balanced-plan-does-not-remove-shortage": "4.5"
   },
   "source": "paper/main.md",
-  "tables": 9,
-  "unresolved_slots": [
-    "[[REF:fig:stability_boundary_empirical]]",
-    "[[REF:fig:welfare_vs_lag]]",
-    "[[REF:tab:incidence]]",
-    "[[REF:tab:main_lag_grid]]",
-    "[[RESULTS:ABSTRACT_FINDINGS]]",
-    "[[RESULTS:B2]]",
-    "[[RESULTS:B3]]",
-    "[[RESULTS:B4]]",
-    "[[RESULTS:B5]]",
-    "[[RESULTS:B6]]",
-    "[[RESULTS:DISCUSSION]]",
-    "[[RESULTS:INTRO_FINDINGS]]"
-  ],
+  "tables": 15,
+  "unresolved_slots": [],
   "words_bibliography": 802,
-  "words_body": 16896
+  "words_body": 17679
 }

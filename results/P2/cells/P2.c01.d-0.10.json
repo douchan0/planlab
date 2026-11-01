@@ -2,7 +2,7 @@
   "block": "P2",
   "cell_hash": "563da50cc4e7ba62",
   "cell_id": "P2.c01.d-0.10",
-  "code_fingerprint": "15124bbfe66d3ecb",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "material_balance",
   "probe": {
@@ -635,7 +635,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.06661437498405576
+      "wall_s": 0.47986495890654624
     }
   ],
   "tech": {
@@ -655,5 +655,5 @@
     "stock_ratio": 0.1,
     "substrate": "eurostat"
   },
-  "wall_s": 0.08025095798075199
+  "wall_s": 0.5436771250097081
 }

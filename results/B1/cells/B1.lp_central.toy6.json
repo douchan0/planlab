@@ -2,7 +2,7 @@
   "block": "B1",
   "cell_hash": "74c7c0f33d483bde",
   "cell_id": "B1.lp_central.toy6",
-  "code_fingerprint": "f9941b58ca9a60cf",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "lp_central",
   "probe": null,
@@ -293,7 +293,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "toy6",
-      "wall_s": 0.7294910830678418
+      "wall_s": 0.2930484999669716
     }
   ],
   "tech": {
@@ -311,5 +311,5 @@
     "stock_ratio": 0.1,
     "substrate": "toy6"
   },
-  "wall_s": 0.7645325829507783
+  "wall_s": 0.3047016250202432
 }

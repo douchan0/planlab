@@ -41,7 +41,7 @@ def test_block_sizes_match_the_protocol():
     assert counts["B4"] == 6
     assert counts["B5"] == 22
     assert counts["B6"] == 26  # 14 robustness cells + the 12-cell labour-slack axis
-    assert counts["B7"] == 120
+    assert counts["B7"] == 160  # 4 elasticities x 20 sectors x 2 offsets
     assert counts["B8"] == 12
     assert counts["B2L"] == 8
     assert counts["P2"] == 40

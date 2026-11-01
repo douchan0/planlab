@@ -2,7 +2,7 @@
   "block": "B1",
   "cell_hash": "0e6dd9b766f2948d",
   "cell_id": "B1.market.toy6",
-  "code_fingerprint": "f9941b58ca9a60cf",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "market",
   "probe": null,
@@ -292,7 +292,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "toy6",
-      "wall_s": 0.25042604201007634
+      "wall_s": 0.12262904201634228
     }
   ],
   "tech": {
@@ -310,5 +310,5 @@
     "stock_ratio": 0.1,
     "substrate": "toy6"
   },
-  "wall_s": 0.29196741699706763
+  "wall_s": 0.1307019580854103
 }

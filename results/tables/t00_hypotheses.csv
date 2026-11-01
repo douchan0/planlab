@@ -1,8 +1,8 @@
 hypothesis,n_tests,n_significant_holm_05,key_statistic,key_p_value,key_p_holm,prediction
-H1,14,1,817,4.54747e-12,1.81899e-11,Delay destabilises the administered price loop: the measured critical price gain should track $g^*(m)/b_p$ within one lag period and the oscillation period should approach $2(2m+1)$.
-H1',2,2,0.951515,2.27985e-05,6.83956e-05,"Taut plans are self-defeating: in a capacity-constrained input-output economy the plan-revision loop is positive, so shortage rises and welfare falls with the revision gain."
+H1,18,1,817,4.54747e-12,1.81899e-11,Delay destabilises the administered price loop: the measured critical price gain should track $g^*(m)/b_p$ within one lag period and the oscillation period should approach $2(2m+1)$.
+H1',7,5,0.951515,2.27985e-05,6.83956e-05,"Taut plans are self-defeating: in a capacity-constrained input-output economy the plan-revision loop is positive, so shortage rises and welfare falls with the revision gain."
 H2,7,6,0.000693875,0,0,Welfare loss rises fastest with the reporting lag for the institution that needs the freshest information (\texttt{lp\_central}).
-H4,3,3,210,9.53674e-07,1.43051e-05,A single-sector shock amplifies through the network: the like-for-like output amplification exceeds one on average over the twenty shocked sectors.
+H4,15,6,210,9.53674e-07,1.43051e-05,A single-sector shock amplifies through the network: the like-for-like output amplification exceeds one on average over the twenty shocked sectors.
 H5,2,1,0.9,0.00447316,0.00894632,The dual track has an interior optimum in the plan share $\theta$: welfare is not monotone in $\theta$ over the tested grid.
 incidence,2,0,0.734683,,,
 ladder,1,1,0,7.84953e-15,7.84953e-15,

@@ -2,7 +2,7 @@
   "block": "B1",
   "cell_hash": "b4eb8deec325454a",
   "cell_id": "B1.hybrid_dual_track.eurostat",
-  "code_fingerprint": "f9941b58ca9a60cf",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "hybrid_dual_track",
   "probe": null,
@@ -632,7 +632,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.2904374999925494
+      "wall_s": 0.15376283403020352
     }
   ],
   "tech": {
@@ -652,5 +652,5 @@
     "stock_ratio": 0.1,
     "substrate": "eurostat"
   },
-  "wall_s": 0.30427470803260803
+  "wall_s": 0.15989383403211832
 }

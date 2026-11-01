@@ -1372,6 +1372,9 @@ def table_stability_boundary(
                     "g_max_achieved": g_max,
                     "g_max_over_bound": g_max / G_STAR(m) if G_STAR(m) > 0 else float("nan"),
                     "boundary_approachable": bool(np.isfinite(g_max) and g_max >= G_STAR(m)),
+                    "rule_fired_below_bound": bool(
+                        np.isfinite(measured) and np.isfinite(b) and measured * b < G_STAR(m)
+                    ),
                     "period_theory": PERIOD_STAR(m),
                     "max_amplitude": float(row["max_amp"]),
                     "max_acf_lag1": float(row["max_acf1"]),
@@ -1404,6 +1407,7 @@ def table_stability_boundary(
         digits=3,
         formatters={
             "boundary_approachable": lambda v: "yes" if bool(v) else "no",
+            "rule_fired_below_bound": lambda v: "yes" if bool(v) else "no",
         },
     )
     for _, row in table.iterrows():
@@ -1498,9 +1502,12 @@ def table_propagation(bundle: ResultsBundle, writer: TableWriter, tests: TestLog
         ),
         label="tab:propagation",
         notes=(
-            "Forward linkage: row sums of the direct-requirement matrix $A$ (how much of a "
-            "sector's output other sectors use per unit of their own output). Source: "
-            "\\texttt{results/B3/}."
+            "Forward linkage is the intermediate share of a sector's own output, "
+            "$(A x)_j/x_j$: how much of what the sector makes other sectors need as input. "
+            "The Leontief column-sum multiplier is reported as a secondary predictor only: it "
+            "divides by the sector's output share, so for a sector that is 0.27 per cent of "
+            "output it yields an 'amplification' of 87$\\times$ --- a small-denominator "
+            "artefact, not network amplification. Source: \\texttt{results/B3/}."
         ),
         formatters={"mechanism": lambda v: _tex_escape(v), "shocked_sector": lambda v: _tex_escape(v)},
         digits=3,
@@ -2126,8 +2133,17 @@ def table_hypotheses(tests: TestLog, writer: TableWriter) -> pd.DataFrame:
             "monotone in $\\theta$ over the tested grid."
         ),
     }
+    # tests that belong to a hypothesis but carry a sub-label are folded in
+    aliases = {
+        "H1-gain": "H1",
+        "H4-centrality": "H4",
+        "H4-multiplier": "H4",
+        "H1'-decomposition": "H1'",
+    }
+    folded = frame.copy()
+    folded["hypothesis"] = folded["hypothesis"].replace(aliases)
     for hypothesis in ("H1", "H1'", "H2", "H3", "H4", "H5", "incidence", "ladder"):
-        sub = frame[frame["hypothesis"] == hypothesis]
+        sub = folded[folded["hypothesis"] == hypothesis]
         if sub.empty:
             continue
         sig = sub[sub["significant_05"] == "yes"]
@@ -2207,6 +2223,8 @@ def build_tables(
         table_robustness(bundle, writer, tests)
     if bundle.has("B8"):
         table_mb_decomposition(bundle, writer, tests)
+    if bundle.has("B7"):
+        table_bp_by_sector(bundle, writer, tests)
     if bundle.has("B2L"):
         table_ladder(bundle, writer, tests)
     table_stability_boundary(bundle, writer, tests)

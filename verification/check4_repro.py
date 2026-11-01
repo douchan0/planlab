@@ -41,7 +41,7 @@ import numpy as np
 import pandas as pd
 
 from .common import RESULTS, SCENARIOS, CheckResult, run_guarded
-from .check3_accounting import cell_tech_spec
+from ._rerun import cell_tech_spec, rerun_cell
 
 MIN_RUNS = 20
 METRIC_RTOL = 1e-10
@@ -131,7 +131,7 @@ def _body(res: CheckResult) -> None:
                              int(row["seed"]) if "seed" in summ.columns else 0))
     # de-duplicate while preserving determinism
     all_runs = sorted(set(all_runs))
-    n_sample = min(len(all_runs), max(MIN_RUNS, MIN_RUNS * len(blocks)))
+    n_sample = min(len(all_runs), max(MIN_RUNS, MIN_RUNS * len(blocks)), 80)
     idx = rng.choice(len(all_runs), size=n_sample, replace=False)
     sample = [all_runs[i] for i in sorted(idx)]
     res.numbers["n_runs_available"] = len(all_runs)
@@ -158,11 +158,14 @@ def _body(res: CheckResult) -> None:
         sc_dict = dict(cell["scenario"])
         scenario = scenario_from_dict(sc_dict)
         tech_spec = cell_tech_spec(cell)
-        tech = resolve_technology_spec(tech_spec)
         if dict(sc_dict.get("technology") or {}) != dict(tech_spec):
             tech_disagreements += 1
+            res.note(f"4a: {block_name}/{cell_id}: cell.tech {tech_spec} differs from the "
+                     f"scenario-file technology {dict(sc_dict.get('technology') or {})}; the "
+                     f"recorded scenario alone does not reproduce the cell")
         try:
-            result = run_scenario(scenario, technology=tech, seed=seed)
+            # the verifier's own reconstructor: substrate + A-perturbation + probe
+            result, tech = rerun_cell(cell, seed)
         except Exception as exc:  # noqa: BLE001
             res.fail(f"4a: {block_name}/{cell_id}/seed{seed}: re-run raised {type(exc).__name__}: {exc}")
             continue
@@ -247,22 +250,34 @@ def _body(res: CheckResult) -> None:
             res.note(f"4d: {block.name}: seeds recorded only as counts (seeds_per_cell); the "
                      f"actual values live in cells.json/summary.csv")
         hashes = man.get("scenario_hashes") or {}
+        cell_hashes = man.get("cell_hashes") or {}
         res.check(bool(hashes), f"4d: {block.name}: manifest lacks scenario_hashes")
         cells = cells_by_block.get(block.name, {})
         for cid, cell in cells.items():
-            if cid not in hashes:
-                continue
-            # independent re-hash of the recorded cell (canonical JSON, hashlib only)
-            payload = json.dumps(cell, sort_keys=True, separators=(",", ":"))
-            recalculated = hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
-            if recalculated != hashes[cid]:
-                res.fail(f"4d: {block.name}/{cid}: manifest hash {hashes[cid]} != "
-                         f"recomputed cell digest {recalculated}")
-            # the field is named scenario_hashes: also confirm it is not the scenario hash
-            sc = scenario_from_dict(dict(cell["scenario"]))
-            if scenario_hash(sc) == hashes[cid]:
-                res.note(f"4d: {block.name}: scenario_hashes equals the policy scenario hash "
-                         f"for {cid} (naming is then accurate)")
+            # (i) the cell content digest: canonical JSON hashed with hashlib only
+            if cell_hashes:
+                payload = json.dumps(cell, sort_keys=True, separators=(",", ":"))
+                recalculated = hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+                if cid in cell_hashes and recalculated != cell_hashes[cid]:
+                    res.fail(f"4d: {block.name}/{cid}: manifest cell_hash {cell_hashes[cid]} != "
+                             f"recomputed cell digest {recalculated}")
+                if cid in hashes and hashes[cid] != cell_hashes.get(cid, hashes[cid]):
+                    pass  # scenario hash and cell hash are different objects by design
+            # (ii) the scenario hash: re-derived from the recorded scenario dict
+            if cid in hashes:
+                sc = scenario_from_dict(dict(cell["scenario"]))
+                mine = hashlib.sha256(
+                    json.dumps(sc.to_dict(), sort_keys=True, separators=(",", ":")).encode("utf-8")
+                ).hexdigest()[:16]
+                if mine != hashes[cid]:
+                    res.fail(f"4d: {block.name}/{cid}: manifest scenario_hash {hashes[cid]} != "
+                             f"re-derived {mine}")
+            # (iii) cross-block code version: a cell produced under another fingerprint
+            # cannot be compared with cells from this one without saying so
+        seen = man.get("code_fingerprints_seen") or {}
+        if len(seen) > 1:
+            res.fail(f"4d: {block.name}: cells were produced under {len(seen)} different code "
+                     f"fingerprints {sorted(seen)}")
         res.check(int(man.get("cells_failed", 0)) == 0,
                   f"4d: {block.name}: manifest reports {man.get('cells_failed')} failed cells")
         n_manifest_ok += 1

@@ -2,7 +2,7 @@
   "block": "B1",
   "cell_hash": "3776afa7b4a85491",
   "cell_id": "B1.material_balance.eurostat",
-  "code_fingerprint": "f9941b58ca9a60cf",
+  "code_fingerprint": "83343c436f192205",
   "error": "",
   "mechanism": "material_balance",
   "probe": null,
@@ -632,7 +632,7 @@
       "status": "ok",
       "stock_ratio": 0.1,
       "substrate": "eurostat",
-      "wall_s": 0.2494282079860568
+      "wall_s": 0.08430674998089671
     }
   ],
   "tech": {
@@ -652,5 +652,5 @@
     "stock_ratio": 0.1,
     "substrate": "eurostat"
   },
-  "wall_s": 0.28956725005991757
+  "wall_s": 0.09683016699273139
 }

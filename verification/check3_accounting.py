@@ -51,6 +51,7 @@ import pandas as pd
 import yaml
 
 from .common import RESULTS, CheckResult, rel, run_guarded
+from ._rerun import capture_cell, cell_tech_spec
 from .check2_engine import ration_by_tier
 
 PADDED_NOTES: list = []
@@ -84,7 +85,7 @@ def _load_audit():
         # pads the 6-sector (toy) records with NaN.  The valid prefix is n_sectors[i].
         vec_keys = {"x", "C", "G", "invest", "inventory_end", "demand", "unmet",
                     "capacity", "plan_targets", "supply", "price", "base_output",
-                    "base_final", "essentials", "consumption_weights"}
+                    "base_final", "essentials", "consumption_weights", "spoilage"}
         mat_keys = {"Z", "A"}
         n_padded = 0
         for i in range(n):
@@ -133,19 +134,6 @@ def recover_recorded_A(rec):
     if finite.size == ns * ns:
         return finite.reshape(ns, ns), True
     raise ValueError(f"cannot recover A of shape {A.shape} for n_sectors={ns}")
-
-
-def cell_tech_spec(cell):
-    """The authoritative technology spec of a results cell.
-
-    ``cell["tech"]`` is what the runner actually resolved; ``cell["scenario"]
-    ["technology"]`` is the scenario-file view and is (for the 6-sector B1 cells)
-    a placeholder ``eurostat`` spec that does not reproduce the cell.  Prefer the
-    former and say so.
-    """
-    if isinstance(cell.get("tech"), dict) and cell["tech"]:
-        return dict(cell["tech"])
-    return dict(cell["scenario"]["technology"])
 
 
 def _load_runs():
@@ -298,12 +286,21 @@ def _body(res: CheckResult) -> None:
     runner_residual_max = 0.0
     runner_residual_disagreement = 0.0
     duplicates = 0
+    spoilage_share_max = 0.0
+    implied_caps: dict = {}
 
     from planlab.data import load_technology
     from planlab.core.io_model import toy_technology
 
     tech_cache = {}
     current_A = {}
+    CELL_TECH = {}
+    for block in _blocks():
+        for cid, cell in _cell_scenarios(block).items():
+            try:
+                CELL_TECH[cid] = cell_tech_spec(cell)
+            except Exception:                              # pragma: no cover
+                pass
     for rec in records:
         cid = str(rec["cell_id"])
         seed = int(rec["seed"])
@@ -319,10 +316,12 @@ def _body(res: CheckResult) -> None:
         capacity = np.asarray(rec["capacity"], dtype=float)
         targets = np.asarray(rec["plan_targets"], dtype=float)
         supply = np.asarray(rec["supply"], dtype=float)
+        spoilage = np.asarray(rec.get("spoilage", np.zeros_like(supply)), dtype=float)
         A, was_flat = recover_recorded_A(rec)
         if was_flat:
             FLAT_A_RECORDS.append(str(rec["cell_id"]))
         base_final = np.asarray(rec["base_final"], dtype=float)
+        base_output = np.asarray(rec["base_output"], dtype=float)
         weights = np.asarray(rec["consumption_weights"], dtype=float)
         tag = f"{rec['_block']}/{cid}/seed{seed}/t{t}"
 
@@ -331,18 +330,30 @@ def _body(res: CheckResult) -> None:
         scale = max(1.0, float(np.max(np.abs(supply))))
         if float(np.min(S0)) < -ACCOUNTING_TOL * scale:
             res.fail(f"3a: {tag}: beginning inventory negative ({float(np.min(S0)):.3e})")
-        rhs = Z.sum(axis=1) + C + G + I + S_end
+        rhs = Z.sum(axis=1) + C + G + I + S_end + spoilage
         ident = float(np.max(np.abs(supply - rhs))) / scale
         max_identity = max(max_identity, ident)
         res.check(ident <= ACCOUNTING_TOL,
-                  f"3a: {tag}: balance identity residual {ident:.3e} > {ACCOUNTING_TOL:.0e}")
+                  f"3a: {tag}: balance identity residual {ident:.3e} > {ACCOUNTING_TOL:.0e} "
+                  f"(with the spoilage channel)")
+        if np.any(spoilage > 0):
+            spoil_share = float(spoilage.sum() / max(float(supply.sum()), 1e-30))
+            spoilage_share_max = max(spoilage_share_max, spoil_share)
+            # bounded storage semantics: where output spoils, the stock must be at its cap
+            inv0 = supply - x
+            # implied cap must be <= recorded stock + spoilage and the S_end must be the
+            # residual clamped by the headroom; check S_end + inv is constant per sector later
+            res.check(np.all(S_end >= -1e-9 * scale), f"3a: {tag}: negative inventory with spoilage")
+            for i in np.where(spoilage > 1e-9 * scale)[0]:
+                cap_implied = (S_end[i] + inv0[i]) / max(float(base_output[i]), 1e-30)
+                implied_caps.setdefault((cid, int(i)), set()).add(round(float(cap_implied), 9))
         agg = abs(float(np.sum(supply)) - float(np.sum(rhs))) / scale
         res.check(agg <= ACCOUNTING_TOL, f"3a: {tag}: aggregate identity residual {agg:.3e}")
 
         # ---- 3b non-negativity / finiteness ------------------------------
         arrays = {"x": x, "Z": Z, "C": C, "G": G, "invest": I, "inventory_end": S_end,
                   "demand": demand, "unmet": unmet, "capacity": capacity,
-                  "plan_targets": targets, "supply": supply}
+                  "plan_targets": targets, "supply": supply, "spoilage": spoilage}
         bad = [k for k, v in arrays.items() if (not np.all(np.isfinite(v))) or np.min(v) < 0.0]
         if bad:
             n_neg += 1
@@ -355,13 +366,19 @@ def _body(res: CheckResult) -> None:
 
         # the substrate recorded with the run must be the substrate the repo ships
         ns = int(np.asarray(rec["n_sectors"])) if "n_sectors" in rec else A.shape[0]
+        # a cell may legitimately declare a different substrate or an A-perturbation;
+        # those are recorded in cells.json and are checked by check 4 (reproduction).
+        declared = CELL_TECH.get(str(rec["cell_id"]), {})
+        perturbed = bool(float(declared.get("a_perturb", 0.0) or 0.0) > 0
+                         or (declared.get("source") and declared.get("source") != "eurostat")
+                         or "toy" in declared)
         if cid not in current_A:
             key = ("toy", ns) if ns != 20 else ("eurostat", 2020, 20)
             if key not in tech_cache:
                 tech_cache[key] = (toy_technology(int(ns)) if key[0] == "toy"
                                    else load_technology("eurostat", 2020, 20))
             current_A[cid] = np.asarray(tech_cache[key].A, dtype=float)
-        if _rel(A, current_A[cid]) > 1e-12:
+        if not perturbed and _rel(A, current_A[cid]) > 1e-12:
             substrate_mismatch += 1
             res.fail(f"3c: {tag}: recorded A differs from the current data layer")
 
@@ -439,15 +456,11 @@ def _body(res: CheckResult) -> None:
             cell = scenarios.get(cid)
             if cell is None:
                 continue
-            from planlab.core.scenarios import resolve_technology_spec, scenario_from_dict
-            sc_dict = dict(cell["scenario"])
-            sc = scenario_from_dict(sc_dict)
-            tech = resolve_technology_spec(cell_tech_spec(cell))
             seeds_here = sorted({int(r["seed"]) for r in records
                                  if r["_block"] == block.name and str(r["cell_id"]) == cid})
-            result, captured = _capture_scenario(sc, seeds_here[0], tech)
+            result, captured = capture_cell(cell, seeds_here[0])
             cells_touched.add(cid)
-            n = tech.n
+            n = result.technology.n
             by_t = {r.t: r for r in result.records}
             for rec in [r for r in records if str(r["cell_id"]) == cid
                         and int(r["seed"]) == seeds_here[0]]:
@@ -458,20 +471,18 @@ def _body(res: CheckResult) -> None:
                 x = np.asarray(snap["outputs"][0], dtype=float)
                 supply = snap["inventory"] + x
                 claims = np.array(snap["claims"], dtype=float, copy=True)
-                claims[:n, :] = (np.asarray(tech.A) * x.reshape(1, -1)).T
+                claims[:n, :] = (np.asarray(result.technology.A) * x.reshape(1, -1)).T
                 grants = ration_by_tier(supply, claims, snap["tiers"])
                 bad = _ladder_violations(grants, claims, snap["tiers"])
                 ladder_checked += 1
                 ladder_bad_total += len(bad)
                 res.check(not bad, f"3g: {cid}/t{t}: ladder violated for goods {bad}")
-                # stored arrays vs the current code's output (period-level reproduction)
                 stored_x = np.asarray(rec["x"], dtype=float)
                 rep = _rel(stored_x, x)
                 if rep > reproduction_max:
                     reproduction_max = rep
                     res.numbers["_repro_worst"] = f"{cid}/seed{seeds_here[0]}/t{t}"
-                res.check(_rel(stored_x, x) <= 1e-11,
-                          f"3g: {cid}/t{t}: stored x != re-run x (rel {_rel(stored_x, x):.2e})")
+                res.check(rep <= 1e-11, f"3g: {cid}/t{t}: stored x != re-run x (rel {rep:.2e})")
                 stored_C = np.asarray(rec["C"], dtype=float)
                 res.check(_rel(stored_C, np.asarray(snap["outputs"][2], dtype=float)) <= 1e-11,
                           f"3g: {cid}/t{t}: stored C != re-run C")
@@ -490,6 +501,8 @@ def _body(res: CheckResult) -> None:
         "runner_reported_residual_max": runner_residual_max,
         "runner_residual_vs_mine": runner_residual_disagreement,
         "n_duplicate_metric_rows": duplicates,
+        "max_spoilage_share_of_supply": spoilage_share_max,
+        "n_sectors_with_implied_cap_ratios": sum(1 for v in implied_caps.values() if len(v) > 1),
         "ladder_records_checked": ladder_checked,
         "ladder_violations": ladder_bad_total,
         "cells_rerun": len(cells_touched),

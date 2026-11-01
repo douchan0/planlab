@@ -200,3 +200,58 @@ computed **at run time** per cell (`code_fingerprints_seen` lists every one, and
 `mixed_code_versions` is true if the directory mixes them). Bulk per-period output
 (`runs.parquet`) is gitignored; manifests, `summary.csv`, `aggregate.csv`, tables and
 figures are what get committed.
+
+---
+
+## 7. The H1 stability criterion was reinterpreted after seeing that its first arm cannot discriminate (2026-11-01, recorded by the Lead)
+
+**Protocol §6** defines "unstable" as *both* (i) the lag-1 autocorrelation of the
+detrended price deviation exceeding 0.5 and (ii) the amplitude exceeding the
+`k = 0` amplitude by at least three standard deviations.
+
+**What happened.** Arm (i) is *degenerate in this design*: every cell in the B2 grid
+has `acf₁` between 0.90 and 0.95, including the cells with no feedback at all,
+because a quarterly series driven by AR(1) demand and a decaying capacity shock is
+strongly autocorrelated whether or not any control loop is near a stability
+boundary. Reading the criterion literally therefore declares every cell unstable,
+which is not a test of anything. Arm (ii) retains discriminating power and does not
+rise with lag.
+
+**Deviation.** The paper rests the H1 null on arm (ii), reports arm (i) as a
+diagnostic, and says in the text that the criterion was reinterpreted after the
+degeneracy became visible.
+
+**Disclosure.** This is a change to a pre-registered *analysis rule* adopted after
+seeing the data, and it is recorded as such rather than presented as a
+straightforward pass. It is the one place in the paper where a deviation was
+discovered during analysis rather than before it. A reader who insists on the literal
+criterion should conclude that the criterion failed to discriminate — not that the
+boundary was crossed. That reading is also supported by the measured loop gain, which
+lies one to two orders of magnitude below `g*(k)` in every sector at every lag
+(§6.4), and by the fact that the amplitude does not increase with lag.
+
+**Consequence for H1's status.** H1 is reported as *not supported in this economy*,
+not as falsified and not as confirmed. The boundary is verified mathematics
+(`verification/`, agreement `2.9e-11` over `m = 0..30`) that this calibration cannot
+reach.
+
+---
+
+## 8. Provenance repairs made at the final build (2026-11-01, Lead)
+
+Two citations in the manuscript pointed at artefacts that did not exist at the time
+of writing, and both were repaired rather than removed:
+
+* `results/tables/t06_propagation.csv` — the rank correlations behind §6.5. The
+  numbers were correct (`+0.5128/+0.5669/+0.4135` for forward linkage,
+  `+0.0195/+0.0165/−0.0406` for the Leontief multiplier) but the file had not been
+  written. It is now generated reproducibly by `t_h4_correlations` in
+  `scripts/paper_tables.py`, and the regenerated values match the paper to four
+  decimals.
+* `paper/tables/dual_track.csv` — the `theta` column was corrupt (every row read
+  `0.3`) because the table generator was reading the mechanism's `market_gain`
+  instead of the dual-track share. Fixed in `scripts/paper_tables.py`; §6.7 was
+  rewritten from the corrected file and no longer reads the table positionally.
+
+Both were defects in the Lead's table-assembly code, not in the model or the
+experiment layer.
