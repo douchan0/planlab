@@ -154,8 +154,10 @@ FINDINGS = [
                    "the multiplier-vs-loss ambiguity.",
         "evidence": "check 5's data audit and the B4 cell definitions; numbers reproduced from "
                     "paper/tables/rationing_shadow.csv.",
-        "resolution": "REPORTED; needs relabelling (or a re-run at size 0.9/0.7/0.5) before "
-                      "submission. This is the paper's most referee-visible error in §6.",
+        "resolution": "FIXED in the current manuscript (paper/main.md mtime in the header): §6.6 now states that the pre-registered sizes are capacity "
+                      "multipliers 0.1/0.3/0.5, that the realised losses are 90/70/50 per "
+                      "cent, and the narrative follows the rows (ranking reverses at 70 per "
+                      "cent, widens at 90 per cent). Verified by grep on the current file.",
     },
     {
         "id": "F8",
@@ -177,9 +179,11 @@ FINDINGS = [
                    "sums of A) the correlation is only 0.31-0.33 (p about 0.15-0.18).",
         "evidence": "check 5 (5c) recomputation from summary.csv + permutation null; "
                     "results/tables/tests.csv H4-centrality rows.",
-        "resolution": "REPORTED; the text should say two of the three raw correlations are "
-                      "significant but none survives Holm, and should report the row-sum "
-                      "measure as a null. Not yet fixed in the manuscript.",
+        "resolution": "FIXED in the current manuscript (§6.5 now reports both linkage definitions, "
+                      "the row-sum null and the Holm caveat). One residual: the paper says "
+                      "two correlations survive Holm across the three institutions, while "
+                      "results/tables/tests.csv applies Holm within the whole B3 block "
+                      "(p_holm 0.166 / 0.082 / 0.489, none survive). See F16.",
     },
     {
         "id": "F9",
@@ -191,7 +195,8 @@ FINDINGS = [
                    "c05, c02 (c12 is fifth; c19 is second). The sentence holds for material "
                    "balance and tatonnement.",
         "evidence": "paper/tables/propagation.csv ranks by output_loss.",
-        "resolution": "REPORTED; one-clause fix (or say 'under two of the three').",
+        "resolution": "FIXED in the current manuscript (§6.5 now gives the per-institution ordering "
+                      "with c19 second and c12 fifth under priority rationing).",
     },
     {
         "id": "F10",
@@ -227,7 +232,7 @@ FINDINGS = [
                    "sector's 1.9 with the median sector's 12-50.",
         "evidence": "results/tables/main_lag_grid.csv, results/B1/summary.csv, "
                     "paper/tables/labour_slack.csv.",
-        "resolution": "REPORTED; all four are sentence-level corrections.",
+        "resolution": "MOSTLY FIXED in the current manuscript: the phrase cumulative welfare is now welfare, the abstract says the loss vanishes at a hundred per cent of labour slack, and the factor-of-two-to-fifty claim is replaced by the reachability statement. Two numbers remain off in the amplitude sentence of section 6.4: tatonnement spans 0.118-0.152 in the reference-gain table, not 0.128-0.156, and 0.249 is the pooled-grid maximum at gain 0.8, not a reference-gain cell (market 0.124-0.170 is correct).",
     },
     {
         "id": "F12",
@@ -260,8 +265,8 @@ FINDINGS = [
                    "a reader cannot tell which row is which, and §6.4's 'at the reference "
                    "gain' sentences could refer to either.",
         "evidence": "check 5d (all headline tables re-derived from results/, worst 5e-7).",
-        "resolution": "FIXED in the 17:07 regeneration: the table now carries a "
-                      "price_elasticity column, so every row is identified; check 5d keys on it.",
+        "resolution": "FIXED in the current table and verified in check 5d: the table now "
+                      "carries a price_elasticity column, so every row is identified.",
     },
     {
         "id": "F14",
@@ -286,9 +291,10 @@ FINDINGS = [
                    "measured before the price-elasticity change in docs/DEVIATIONS.md.",
         "evidence": "check 5d (t12 and t05 re-derived from results/), and the H1 test rows in "
                     "results/tables/tests.csv.",
-        "resolution": "REPORTED; the H1 narrative must be rewritten from t12/t05, which actually "
-                      "strengthens the paper's story: the boundary is reachable at the top of "
-                      "the gain grid and the amplitude test there rejects (F15).",
+        "resolution": "FIXED in the current manuscript: §6.4 now reports b_p = 0.197/0.342, maximum "
+                      "loop gains 0.316/0.548, the m>=5 / m>=3 crossing lags, and the "
+                      "abstract says the bound is 'rarely reached ... crossed only at the far "
+                      "end of the lag axis'. These match t12/t05 exactly.",
     },
     {
         "id": "F15",
@@ -302,8 +308,64 @@ FINDINGS = [
                    "appears exactly when the loop gain is pushed toward the boundary would "
                    "support rather than weaken the paper's reading of delay.",
         "evidence": "results/tables/tests.csv (H1 rows).",
-        "resolution": "REPORTED; report both the reference-gain null and the high-gain "
-                      "rejection.",
+        "resolution": "FIXED in the current manuscript (§6.4 now reports the Wilcoxon 817 / "
+                      "p = 4.5e-12 row beside the reference-gain null, framed as a "
+                      "reachable boundary seen from below).",
+    },
+    {
+        "id": "F16",
+        "date": "2026-11-01",
+        "severity": "inconsistency (paper vs test log)",
+        "where": "paper/main.md §6.5 vs results/tables/tests.csv",
+        "finding": "§6.5 says 'After Holm correction across the three institutions, two survive "
+                   "at alpha=0.05 (material balance and tatonnement)'. That is true for a "
+                   "three-test family (p = 0.0091, 0.0208, 0.0699 -> adjusted 0.027, 0.042, "
+                   "0.070), but results/tables/tests.csv applies Holm within the whole B3 block "
+                   "(nine centrality rows plus the other B3 tests) and records p_holm = 0.166, "
+                   "0.082 and 0.489 - none survives. The protocol says 'Holm correction within "
+                   "each block', so the paper's narrower family needs to be stated explicitly "
+                   "(and the test log regenerated for that family, or vice versa).",
+        "evidence": "check 5b (Holm values recomputed from tests.csv, 37 values, agreement "
+                    "1e-12) and the permutation p-values in check 5c.",
+        "resolution": "REPORTED; state the family and reconcile the two files.",
+    },
+    {
+        "id": "F17",
+        "date": "2026-11-01",
+        "severity": "internal contradiction (abstract vs body)",
+        "where": "paper/main.md abstract (line 10) vs §6.4 and §6.7",
+        "finding": "The abstract still ends 'Two pre-registered hypotheses are falsified: no "
+                   "crossing of the delay boundary is observed, and the dual-track share shows "
+                   "no detectable interior optimum', while the rebuilt body says the opposite in "
+                   "both places: §6.4 states 'The boundary is not unreachable; it is reached by "
+                   "driving the loop hard', and §6.7 states 'the pre-registered prediction is "
+                   "formally satisfied and one of the two H5 tests survives Holm correction at "
+                   "p = 0.0045'. The abstract also contradicts itself two sentences earlier "
+                   "('crossed only at the far end of the lag axis by a hard-driven loop').",
+        "evidence": "grep of paper/main.md at the audited commit/mtime; the corresponding test "
+                    "rows are in results/tables/tests.csv (H1 amplitude row significant; H5 row "
+                    "p_holm 0.0089).",
+        "resolution": "REPORTED; the abstract must be rebuilt from the final §6.4/§6.7 on "
+                      "whether H1 and H5 are falsified, or the body reverted.",
+    },
+    {
+        "id": "F18",
+        "date": "2026-11-01",
+        "severity": "gap (adjudication table) — the Lead's own finding, confirmed",
+        "where": "results/tables/t00_hypotheses.csv vs paper/main.md §5/§6.5",
+        "finding": "The machine-readable hypothesis table has rows for H1, H1', H2, H4, H5, "
+                   "incidence and ladder but NO row for H3, although §5 states H3 as a "
+                   "falsifiable prediction and §6.5 adjudicates it. The adjudication itself is "
+                   "correct: I re-derived H3's statistic from results/B3/summary.csv "
+                   "(material_balance, 20 shocked sectors): mean shortage 1.162%-6.038%, mean "
+                   "2.935%, ratios 2.32-12.08 against the 0.5% falsifier, 0 of 20 cells below "
+                   "the threshold - exactly the paper's 1.16-6.04/2.93/2.3-12.1. The amended "
+                   "shock (size 0.50 = 50% cut, duration 8) is documented in Amendment 2 and "
+                   "disclosed in §5.",
+        "evidence": "check 6e (new): hypothesis-table completeness + H3 statistic re-derived "
+                    "from B3 + amendment disclosure. The check FAILS until the H3 row exists.",
+        "resolution": "OPEN at the time of writing: add the H3 row to the adjudication table "
+                      "(and regenerate results/tables/t00_hypotheses.csv).",
     },
 ]
 
@@ -355,6 +417,16 @@ LIMITS = {
         "labour supply factors."
     ),
 }
+
+
+def _stamp(path) -> str:
+    """mtime of an audited artefact, so a stale read can be detected next time."""
+    try:
+        import datetime as _d
+        ts = path.stat().st_mtime
+        return _d.datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")
+    except Exception:                                      # pragma: no cover
+        return "missing"
 
 
 def _git() -> dict:
@@ -462,6 +534,11 @@ def main(argv: list[str] | None = None) -> int:
         f"Repository: `{ROOT}`  ",
         f"git commit: `{git['commit'] or 'n/a'}` (dirty: {git['dirty']})  ",
         f"Python {platform.python_version()} on {platform.platform()}  ",
+        f"Artefacts audited (mtime): paper/main.md {_stamp(ROOT / 'paper' / 'main.md')}; "
+        f"paper/tables {_stamp(ROOT / 'paper' / 'tables')}; "
+        f"results/tables/tests.csv {_stamp(ROOT / 'results' / 'tables' / 'tests.csv')}; "
+        f"results/tables/t00_hypotheses.csv "
+        f"{_stamp(ROOT / 'results' / 'tables' / 't00_hypotheses.csv')}  ",
         f"Wall time: {elapsed:.1f} s  ",
         f"Checks: {n_pass} PASS, {n_fail} FAIL, {n_skip} SKIP, {n_err} ERROR",
         "",

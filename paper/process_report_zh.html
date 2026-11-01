@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="planlab build_paper.py">
+<title>PlanLab 研究过程报告</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.12/dist/katex.min.css">
+<style>
+:root {
+  --ink: #14171c; --muted: #5b6470; --rule: #d6dae0; --accent: #7a1f2b;
+  --bg: #ffffff; --slotbg: #fdf3d8; --slotbd: #b98a12;
+  --mono: "SF Mono", "Menlo", "Consolas", "PingFang SC", "Hiragino Sans GB", "STHeiti", monospace;
+  --serif: "Charter", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Songti SC", "Songti TC", "Hiragino Sans GB", "STHeiti", "Arial Unicode MS", serif;
+  --width: 46rem;
+}
+* { box-sizing: border-box; }
+html { font-size: 11pt; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0 auto; padding: 2.6rem 1.6rem 4rem; max-width: calc(var(--width) + 3.2rem);
+  background: var(--bg); color: var(--ink); font-family: var(--serif);
+  line-height: 1.78; letter-spacing: .01em; text-rendering: optimizeLegibility;
+  font-kerning: normal; font-variant-ligatures: common-ligatures;
+}
+p { margin: 0 0 0.62rem; text-align: justify; hyphens: auto; -webkit-hyphens: auto;
+    orphans: 3; widows: 3; }
+h1, h2, h3, h4, h5 { font-family: var(--serif); font-weight: 700; line-height: 1.22;
+    break-after: avoid-page; page-break-after: avoid; }
+h1 { font-size: 1.62rem; margin: 0 0 .35rem; letter-spacing: -.01em; text-align: left; }
+h2 { font-size: 1.16rem; margin: 1.9rem 0 .55rem; padding-bottom: .18rem;
+     border-bottom: 1px solid var(--rule); }
+h3 { font-size: 1.02rem; margin: 1.35rem 0 .4rem; }
+h4 { font-size: .96rem; margin: 1.1rem 0 .32rem; font-style: italic; }
+h5 { font-size: .92rem; margin: .9rem 0 .25rem; }
+.secno { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: .28em; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a.xref, a.cite { font-variant-numeric: tabular-nums; }
+code, pre, .eqno, .floatlabel { font-family: var(--mono); }
+code { font-size: .88em; background: #f2f4f7; padding: .06em .28em; border-radius: 3px; }
+pre { background: #f6f8fa; border: 1px solid var(--rule); border-radius: 4px;
+      padding: .7rem .85rem; overflow-x: auto; font-size: .80rem; line-height: 1.45; }
+pre code { background: none; padding: 0; }
+blockquote { margin: .8rem 0 .8rem 1.1rem; padding-left: .9rem;
+             border-left: 2px solid var(--rule); color: #33383f; }
+blockquote p:last-child { margin-bottom: 0; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 1.6rem 0; }
+.pagebreak { break-after: page; page-break-after: always; height: 0; margin: 0; }
+ul, ol { margin: 0 0 .7rem 1.25rem; padding: 0; }
+li { margin: .12rem 0; }
+li > p { margin-bottom: .25rem; }
+
+/* ---------- title block ---------- */
+.titleblock { border-bottom: 2px solid var(--ink); padding-bottom: 1.05rem; margin-bottom: 1.5rem; }
+.kicker { font-family: var(--mono); font-size: .70rem; letter-spacing: .13em;
+          text-transform: uppercase; color: var(--muted); margin-bottom: .7rem; }
+.subtitle { font-size: 1.02rem; font-style: italic; color: #2c3138; margin: .1rem 0 .9rem; }
+.authors { font-size: .95rem; margin: .1rem 0 .18rem; }
+.affil { font-size: .84rem; color: var(--muted); margin: 0 0 .5rem; }
+.meta { font-family: var(--mono); font-size: .74rem; color: var(--muted); }
+.abstract { background: #fafbfc; border: 1px solid var(--rule); border-left: 3px solid var(--accent);
+            padding: .85rem 1.05rem .55rem; margin: 0 0 1.35rem; }
+.abstract h2, .abstract .abshead { font-size: .82rem; text-transform: uppercase; letter-spacing: .10em;
+            border: 0; margin: 0 0 .45rem; color: var(--muted); font-weight: 700; }
+.abstract p { font-size: .94rem; }
+
+/* ---------- floats ---------- */
+figure.float, .tablefloat {
+  margin: 1.15rem 0 1.3rem; padding: 0; break-inside: avoid; page-break-inside: avoid;
+  text-align: center;
+}
+figure.float img { max-width: 100%; height: auto; display: block; margin: 0 auto .45rem; }
+figcaption { font-size: .845rem; line-height: 1.40; text-align: left; color: #2b3037;
+             margin: 0 auto; max-width: 100%; }
+.floatlabel { font-weight: 700; color: var(--ink); }
+figure.float.missing { border: 1px dashed var(--slotbd); background: var(--slotbg);
+             padding: .8rem; border-radius: 4px; }
+.figph { font-family: var(--mono); font-size: .76rem; color: #7a5c00; padding: 1.1rem .5rem;
+         border-bottom: 1px dashed var(--slotbd); margin-bottom: .5rem; }
+.tablefloat .tabbody { overflow-x: auto; }
+table { border-collapse: collapse; margin: .35rem auto .45rem; font-size: .85rem;
+        font-variant-numeric: tabular-nums; width: 100%; }
+thead th { border-top: 1.6px solid var(--ink); border-bottom: .8px solid var(--ink);
+           padding: .34rem .5rem; text-align: left; font-weight: 700; }
+tbody td { padding: .27rem .5rem; border-bottom: .5px solid #eceff3; }
+tbody tr:last-child td { border-bottom: 1.6px solid var(--ink); }
+tbody tr:nth-child(even) { background: #fafbfc; }
+.tabcap { caption-side: top; margin-bottom: .3rem; }
+.tablefloat figcaption { text-align: left; }
+
+/* ---------- maths ---------- */
+.equation { display: flex; align-items: center; gap: .4rem; margin: .95rem 0;
+            break-inside: avoid; page-break-inside: avoid; }
+.equation .eqbody { flex: 1 1 auto; min-width: 0; overflow-x: auto; overflow-y: hidden;
+                    text-align: center; }
+.equation .eqno { flex: 0 0 auto; font-size: .84rem; color: var(--ink); }
+.katex-display { margin: .15rem 0; }
+.katex { font-size: 1.02em; }
+
+/* ---------- boxes ---------- */
+.box { border: 1px solid var(--rule); border-radius: 4px; padding: .75rem .95rem .45rem;
+       margin: 1rem 0 1.15rem; background: #fbfcfd; break-inside: avoid; }
+.box .boxhead { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em;
+       text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+.prop { border-left: 3px solid var(--ink); padding-left: .95rem; margin: 1.1rem 0; }
+.prop .prophead { font-weight: 700; }
+.proof { margin: .4rem 0 .9rem; }
+.proof .proofhead { font-style: italic; }
+.qed { float: right; }
+.proof::after { content: ""; display: block; clear: both; }
+
+/* ---------- slots ---------- */
+.slot { background: var(--slotbg); border: 1px dashed var(--slotbd); border-radius: 3px;
+        padding: 0 .26em; font-family: var(--mono); font-size: .84em; color: #6b4f00;
+        white-space: nowrap; }
+.slot::before { content: "◻ "; color: var(--slotbd); }
+.xref-broken { color: #b3261e; font-weight: 700; }
+
+/* ---------- references ---------- */
+.references { font-size: .90rem; }
+.references p { text-align: left; padding-left: 2.1rem; text-indent: -2.1rem;
+                margin-bottom: .34rem; }
+.references p:target { background: #fff6d6; }
+.unverified { font-family: var(--mono); font-size: .74em; color: #8a4b00;
+              border: 1px solid #d9a441; border-radius: 2px; padding: 0 .22em; }
+
+/* ---------- screen-only nav ---------- */
+nav.toc { border: 1px solid var(--rule); border-radius: 4px; padding: .7rem .9rem;
+          margin: 0 0 1.6rem; font-size: .84rem; background: #fafbfc; }
+nav.toc .tochead { font-family: var(--mono); font-size: .70rem; letter-spacing: .11em;
+          text-transform: uppercase; color: var(--muted); margin-bottom: .35rem; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; }
+nav.toc li { margin: .08rem 0; }
+nav.toc .tocnum { display: inline-block; min-width: 2.4em; color: var(--accent); }
+
+@media print {
+  :root { --width: 44rem; }
+  html { font-size: 10.2pt; }
+  @page { size: A4; margin: 20mm 19mm 18mm; }
+  @page :first { margin-top: 16mm; }
+  body { padding: 0; max-width: none; line-height: 1.62; }
+  nav.toc { display: none; }
+  a { color: inherit; text-decoration: none; }
+  .slot { background: none; border-style: dotted; }
+  .abstract { background: none; }
+  h2 { break-after: avoid; page-break-after: avoid; }
+  figure.float, .tablefloat, .equation, .box { break-inside: avoid; page-break-inside: avoid; }
+  table { font-size: .76rem; }
+  .references { font-size: .84rem; }
+}
+</style>
+</head>
+<body data-built="2026-11-01T09:23:41Z">
+
+<header class="titleblock">
+<div class="kicker">PlanLab · 过程性报告</div>
+<h1>PlanLab 研究过程报告</h1>
+<div class="subtitle">从一份行动方案到可发表的仿真平台：决策、返工与验证的完整记录</div>
+<div class="authors">The PlanLab Project（项目负责人撰写）</div>
+<div class="affil">计划—市场协调机制的计算经济学实验平台</div>
+<div class="meta">version: 1.0 &nbsp;·&nbsp; date: 2026 年 11 月 &nbsp;·&nbsp; status: 内部过程记录，与论文配套</div>
+</header>
+<section class="abstract"><div class="abshead">摘要</div><p>本报告记录 PlanLab 项目从阅读一份关于模拟计划经济运行的研究报告，到交付仿真核心、可复现数据仓库、16 个标准情景、一篇方法论文与一套教学 notebook 的全过程。与论文不同，本报告的重点不在结论，而在结论是如何得到的，以及中间判断错在哪里。项目历时约两小时，由 7 个智能体协作完成，最终产出 32 个模块、13,314 行仿真代码、7,364 次蒙特卡洛运行、35 页论文、6 个已执行 notebook、371 项通过的测试，以及一份含 15 条发现的独立验证报告——其中 6 条指向项目负责人本人。报告的核心在第四、第七两节：前者记录六次实质性返工，后者记录独立验证如何发现了我三次错误的机制解释。这两节说明一件事：在这个项目里，没有一个数字是靠推理得出的，全部靠在两个互不依赖的产物之间对账而得出。</p></section>
+<h2><span class="secno">1</span> 任务来源与目标</h2>
+<p>用户提供的是一份中文行动方案（<code>deep-research-report.md</code>），内容涵盖理论依据（马克思两部类再生产、Leontief 投入产出、Kantorovich 最优规划、Lange 市场社会主义、Hayek 分散知识、Kornai 短缺经济）、建模层级、技术选型、实施路线与风险控制。</p>
+<p>方案本身是一条"应该怎么做"的路线图，而不是一条"已经发现什么"的结论。它明确指出，如果以论文或开源为目标，合理的产物组合是：</p>
+<ol>
+<li>一个 MIT/BSD 许可的仿真核心；</li>
+<li>一个可复现的数据处理仓库；</li>
+<li>一组 10–20 个标准情景；</li>
+<li>一篇方法论文；</li>
+<li>一套教学 notebook。</li>
+</ol>
+<p>并且给出了一个关键判断，本项目的全部设计都建立在这一判断之上：</p>
+<blockquote>
+<p>最具发表潜力的主题通常不是"我写了一个计划经济模拟器"，而是更明确的问题。</p>
+</blockquote>
+<p>方案列出四个候选方向：信息延迟对物资平衡计划稳定性的影响；配给与影子价格机制在供应冲击下的比较；投入产出网络中的计划优先级与短缺传播；计划—市场混合协调机制的计算实验。</p>
+<p><strong>决定：不选其中任何一个，而是选一个能覆盖全部四个的问题。</strong></p>
+<p>这是一次有意的设计取舍。四个候选若各自成篇，会产出四篇都很薄的论文；而把它们组织成一个二阶设计——<strong>同一技术底座、同一冲击、同一信息条件，只更换协调制度</strong>——则每个候选都成为同一篇论文的一个结果块。最终确定的主问题：</p>
+<blockquote>
+<p><strong>协调者所获信息的时间滞后与噪声，如何影响不同协调机制在投入产出经济中的稳定性与福利表现？哪种机制抑制、哪种放大随之而来的短缺动态？</strong></p>
+</blockquote>
+<p>这个提问方式带来三个直接后果，事后看全部正确：</p>
+<p>其一，它把"制度"变成了可替换模块，因此"制度比较"具有可识别性；
+其二，它把"信息延迟"变成了实验处理而不是需要假设掉的噪声，因此可测；
+其三，它要求一个<strong>理论预言</strong>——否则只是四种机制的描述性对比。这个要求最终产出了论文的解析核心。</p>
+<hr>
+<h2><span class="secno">2</span> 研究问题的确定与理论骨架</h2>
+<h3><span class="secno">2.1</span> 为什么必须有定理</h3>
+<p>一个纯仿真对比在审稿中很难成立，因为读者会问："你的结果依赖参数吗？"若答案是"是"，则工作退化为演示。</p>
+<p>因此在写第一行代码之前，先确立了必须由理论回答的问题：<strong>延迟在什么条件下破坏稳定性，临界点在哪里？</strong> 这个问题有闭式答案，而答案本身可以反过来预测仿真的稳定性边界——这就把"演示"变成了"检验"。</p>
+<h3><span class="secno">2.2</span> 核心方程的来源</h3>
+<p>设某个信号按观察到的缺口比例调整，且观察值滞后 $k$ 期：</p>
+<div class="equation"><div class="eqbody">$$
+u_{t+1} = u_t - g\,u_{t-k}, \qquad u_t = \log p_t - \log p^\star
+$$</div><div class="eqno">(1)</div></div>
+<p>其特征多项式为 $z^{k+1} - z^k + g = 0$。在单位圆上代入 $z=e^{i\theta}$ 得 $|e^{i\theta}-1|=g$ 与相位条件 $(k+\tfrac12)\theta \equiv \tfrac{\pi}{2}$，解得</p>
+<div class="equation"><div class="eqbody">$$
+g^\star(m) = 2\sin\left[\frac{\pi}{2(2m+1)}\right] \approx \frac{\pi}{2m+1}
+$$</div><div class="eqno">(2)</div></div>
+<p>其中 $m$ 为有效时滞。边界处振荡周期恰为 $2(2m+1)$ 个季度。</p>
+<p>这个结果有三处值得强调，且都是事后才充分理解的：</p>
+<p><strong>第一，被约束的不是增益，而是增益与时滞的乘积。</strong> 初稿写的是"每增加一期延迟，可容许增益大约减半"，这是错的：$g^\star$ 序列为 2, 1, 0.618, 0.445, 0.347…，比值趋于 1。正确的陈述是 $g^\star(m)\sim \pi/(2m+1)$，即<strong>延迟翻倍才使增益减半</strong>，而 $m\cdot g^\star(m)$ 单调升向 $\pi/2$。这个错误由独立验证者在第十一节记录的 F2 中发现。</p>
+<p><strong>第二，$m$ 与仿真参数 $\ell$ 差一。</strong> 引擎的时序约定是：在第 $t$ 期做计划时，协调者能看到的是第 $t-1-\ell$ 期的实现值。因此即使 $\ell=0$，也必然滞后一期。<strong>有效时滞 $m=\ell+1$。</strong> 若不做这个换算，理论与仿真的对比会整体错位一期——这是最可能让论文失效的单点错误，因此在架构文档、论文第 3.3 节与第 5.2 节、以及每一张表的表头都写明了。</p>
+<p><strong>第三，它只对负反馈成立。</strong> 若缺口随工具上升而增大（$b&lt;0$），则特征多项式在 $z=1$ 处取值 $-G&lt;0$，而 $z\to\infty$ 时趋于 $+\infty$，故对任意 $G&gt;0$ 必存在一个大于 1 的实根——<strong>正反馈环路没有任何可容许增益</strong>。这条推论（论文 Corollary 4）是全部结果中最强的一条，而它是写作 agent 在整理第四节时独立导出的。</p>
+<hr>
+<h2><span class="secno">3</span> 总体架构与分工</h2>
+<h3><span class="secno">3.1</span> 分层</h3>
+<p>架构被固定为六层，任何一层不得越界：</p>
+<pre><code>数据层 → 技术层 → 制度层 → 引擎层 → 指标层 → 实验层
+</code></pre>
+<p>关键设计是<strong>引擎拥有全部会计，制度只做三个决策</strong>：定什么目标、谁有什么优先权、价格怎么变。这样机制之间差异只来自制度，不来自代数实现。这条规则后来救了整个比较设计的可识别性。</p>
+<h3><span class="secno">3.2</span> 冻结接口</h3>
+<p>在写任何实现前，先写下三份契约文档：</p>
+<ul>
+<li><code>docs/ARCHITECTURE.md</code>：数据结构、机制接口、引擎时序、指标定义；</li>
+<li><code>docs/PROTOCOL.md</code>：预注册，含 5 个假设及各自的证伪条件、6 个实验块、5 项统计程序、8 项效度威胁及缓解；</li>
+<li><code>docs/DATA_SCHEMA.md</code>：数据层的输入输出规范。</li>
+</ul>
+<p>这些文档在开工后被反复修订（见第五节），但<strong>修订必须留下记录</strong>——<code>docs/AMENDMENTS.md</code> 记录主实验开始前的 4 次修订，<code>docs/DEVIATIONS.md</code> 记录实验过程中的 8 项偏离。规则是：允许修订，禁止静默修订。</p>
+<h3><span class="secno">3.3</span> 七人分工</h3>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>职责</th>
+<th>写入范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lead（我）</td>
+<td>架构、核心引擎、参考实现、集成、论文终审</td>
+<td><code>src/planlab/core/</code>、<code>docs/</code>、<code>scripts/lead_reference.py</code></td>
+</tr>
+<tr>
+<td>data-pipeline</td>
+<td>欧统局对称投入产出表摄取与聚合</td>
+<td><code>src/planlab/data/</code>、<code>data/</code></td>
+</tr>
+<tr>
+<td>mechanisms</td>
+<td>另外四种协调机制及其测试</td>
+<td><code>src/planlab/mechanisms/</code></td>
+</tr>
+<tr>
+<td>experiments</td>
+<td>情景库、蒙特卡洛运行器、统计表、图</td>
+<td><code>scenarios/</code>、<code>src/planlab/experiments/</code>、<code>results/</code></td>
+</tr>
+<tr>
+<td>writer</td>
+<td>论文：文献、理论、构建管线</td>
+<td><code>paper/</code></td>
+</tr>
+<tr>
+<td>notebooks</td>
+<td>六个教学 notebook</td>
+<td><code>notebooks/</code>、<code>docs/tutorials/</code></td>
+</tr>
+<tr>
+<td>verifier</td>
+<td>独立验证，对抗性阅读</td>
+<td><code>verification/</code></td>
+</tr>
+</tbody>
+</table>
+<p>写入范围互不重叠，通过共享任务板协调。事后看，这个安排唯一没有防住的问题是<strong>跨范围的陈旧性</strong>：文件被替换而引用它的文字没有跟着改（见第六节末）。</p>
+<hr>
+<h2><span class="secno">4</span> 建模过程中的关键决策与返工</h2>
+<p><strong>这是本报告的核心章节。</strong> 下列六次返工中，五次是我自己的实现错误，一次是方法论错误。</p>
+<h3><span class="secno">4.1</span> 会计恒等式必须成为硬约束</h3>
+<p>第一版引擎允许每个季度的收支有微小残差。测试显示残差约 $10^{-16}$，看起来无害。</p>
+<p>但一个仿真平台最危险的错误类别正是<strong>小到像舍入的会计泄漏</strong>：它不会让程序崩溃，只会让福利与短缺的排序慢慢偏掉，而所有下游结论都建立在这个排序上。</p>
+<p>因此改为：每期强制审计</p>
+<div class="equation"><div class="eqbody">$$
+S_{0,i} + x_i = \sum_j Z_{ij} + C_i + G_i + I_i + S_{\text{end},i} + S^{\text{spoil}}_i
+$$</div><div class="eqno">(3)</div></div>
+<p>相对误差超过 $10^{-8}$ 即抛出 <code>AccountingError</code>。这个决定后来两次救了项目：一次抓出了机制过度申报的 bug，一次抓出了存货无界累积的问题（4.4 节）。</p>
+<p>审计函数最终收敛为<strong>唯一一处实现</strong> <code>planlab.core.engine.balance_residual</code>，并要求所有测试导入它而不是各自重写。原因是 4.4 节引入溢损项后，若测试各自重写恒等式，就会有一部分测试仍在检查旧规则而显示通过。</p>
+<h3><span class="secno">4.2</span> 从比例级联到线性规划：短边配置怎么算</h3>
+<p><strong>问题</strong>：给定目标、产能、存货，实际产量是多少？</p>
+<p>第一版采用"比例级联"：对每个商品求供给/需求的填充比，取最小者作为各部门的收缩因子，反复迭代至收敛。这在教科书式的 Leontief 模型里是标准做法。</p>
+<p><strong>它彻底失败。</strong> 冲击一个部门后，全体部门的产量迭代收敛到<strong>零</strong>。原因是数学性的：级联每轮把 $x$ 乘以一个小于 1 的比例 $\rho$，而 $\rho$ 本身依赖于 $x$——供给含自身产量，产量下降则供给下降，$\rho$ 不随之回升。映射的不动点只有原点。</p>
+<p><strong>诊断</strong>：在产能受限的投入产出经济中，按比例收缩<strong>无法重新配置产出结构</strong>。一个部门产能被砍 40%，正确的反应不是所有部门统一减产 40%，而是使用者按各自对该部门的依赖程度不同程度减产。</p>
+<p><strong>修正</strong>：把短边配置改写为一个小型线性规划</p>
+<div class="equation"><div class="eqbody">$$
+\max_x \sum_j x_j \quad \text{s.t.}\quad Ax - x \le r - \text{reserve},\; 0 \le x \le \min(\text{targets},\text{capacity}),\; \ell^\top x \le L
+$$</div><div class="eqno">(4)</div></div>
+<p>即国际文献中的非替代/短边均衡（Drèze–Bénassy）。解得的结构性重配置正是需要的：冲击 50% 的电力部门时，电耗强度不同的部门减产幅度不同。</p>
+<p><strong>代价</strong>：每期解一个小 LP。测速后确认在 $n=20$ 时约 1 ms，并加了快速通道——目标可行时直接返回，不解 LP，因此平静期几乎无开销。</p>
+<p><strong>这一节的教训</strong>：教科书的算法在加入产能约束后可能不再收敛，而"它跑不动"往往不是数值问题而是模型问题。</p>
+<h3><span class="secno">4.3</span> 优先级阶梯：消费优先为何导致自我强化崩塌</h3>
+<p>引擎的配给原语只有一个：按优先级层级逐层填充，同层内按比例分配。制度差异通过"申报多少"和"给谁高优先级"来表达。</p>
+<p><strong>第一次运行即崩塌。</strong> 设定"基本消费品最高优先级、生产投入次之"后，一次 40% 的产能冲击让产量在两期内归零。</p>
+<p><strong>机理</strong>：固定数量的最终需求排在中间投入之前，于是短缺时消费先吃掉本已不足的存货，生产部门拿不到投入，产量下降，下一期短缺更大。这是正反馈。存货耗尽后不动点只有零。</p>
+<p><strong>修正</strong>：把默认阶梯改为<strong>生产优先</strong>——中间投入第 0 层，基本消费第 1 层，其他消费第 2 层，政府、投资、储备依次靠后。</p>
+<p>这一改动表面上是参数选择，实质上是制度假定。论文因此把阶梯本身设为<strong>实验维度</strong>：<code>production_first</code> 与 <code>consumption_first</code>。二者的对比不是 bug 与修复，而是结果：<strong>在产能受限经济中，把消费排在生产之前的阶梯会自我强化地崩塌。</strong> 这与 Kornai 关于短缺再生产的论述一致，而它是模型机械地给出的，不是被设定的。</p>
+<h3><span class="secno">4.4</span> 存货无界累积与溢损上限</h3>
+<p>物质平衡机制的分解实验显示，某次运行的<strong>存货达到基年产出 17 倍</strong>。</p>
+<p><strong>诊断</strong>：引擎把每期"生产了但没人用"的商品全部计入期末存货。当计划结构失衡（部分商品过剩、部分短缺）时，过剩的部分被永久堆进仓库，从不出现在成本里。<strong>一个不可售产出免费的经济不是经济。</strong></p>
+<p><strong>修正</strong>（修订 4）：设定存货上限 <code>max_stock_ratio = 2.0</code>（每部门基年产出的倍数），超出部分记为<strong>溢损</strong>（spoilage），进入指标而非静默累积：</p>
+<div class="equation"><div class="eqbody">$$
+S_{\text{end}} = \min\bigl(\text{residual},\ \max(\text{cap}-\text{inv},0)\bigr),\qquad S^{\text{spoil}} = \text{residual} - S_{\text{end}}
+$$</div><div class="eqno">(5)</div></div>
+<p><strong>这不是补丁，而是建模改进</strong>：溢损正是计划驱动经济中"为计划而生产、不为使用者而生产"的产出。实测其规模不小——物质平衡下占供给的 1.4%，试探性定价下 1.8%，四种计划结构自洽的机制恰为 0。</p>
+<p><strong>代价</strong>：恒等式改变，所有结果作废，整个网格重跑。由于单次运行约 45 ms，重跑代价是分钟级，因此判断是"立刻改、立刻重跑"而不是"留作已知问题"。</p>
+<p><strong>治理教训</strong>：这一改动当时<strong>没有</strong>写入冻结的架构文档，被独立验证者在后续检查中发现（F7/P7），最终补为修订 4。项目自己的规则是"允许修订，禁止静默修订"，而我违反了它。</p>
+<h3><span class="secno">4.5</span> 指标设计的两个错误</h3>
+<p><strong>（a）恢复半衰期恒为 NaN 或 0。</strong> 函数以"燃烧期后窗口内的相对索引"去索引绝对期号，<code>shortage[start:]</code> 在 <code>start = 40</code>、燃烧期 30 时为空切片。修正为先在窗口内定位峰值，再从峰值之后寻找首次跌破半程阈值的位置——原实现还会在冲击尚未传导时返回 0，因为冲击首期的短缺仍为零。</p>
+<p><strong>（b）放大倍数的分母错误。</strong> 原定义为"峰值短缺率 ÷ (1 − 冲击规模)"，即把一个占产出 2% 的部门被砍 50% 算作<strong>全局</strong> 50% 的冲击，导致放大倍数虚高。修正为按基年产出加权：</p>
+<div class="equation"><div class="eqbody">$$
+\text{intensity} = \frac{\sum_j (1-f_j)\,\bar x_j}{\sum_j \bar x_j}
+$$</div><div class="eqno">(6)</div></div>
+<p>同时新增一个同量纲的统计量 <code>shock_output_amplification</code>：总产出损失 ÷ 上述加权产能损失。短缺率比的版本保留，但明确标注为"分配比率"而非"网络放大"。</p>
+<p>两个错误都指向同一类问题：<strong>分子分母量纲不一致的比率，在小分母处会给出惊人而不实的数字。</strong></p>
+<h3><span class="secno">4.6</span> 机制比较的可识别性：共同参数块</h3>
+<p><strong>这是全项目最重要的方法论错误。</strong></p>
+<p>六个机制的代码由不同作者、在不同时间写成，各自带有合理的默认参数。检查发现：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>material_balance</th>
+<th>其余四种</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backlog_carry</code></td>
+<td>0.30</td>
+<td>0.00</td>
+</tr>
+<tr>
+<td><code>stock_target_ratio</code></td>
+<td>0.10</td>
+<td>0.15</td>
+</tr>
+</tbody>
+</table>
+<p><code>backlog_carry</code> 会把上期未满足的需求重新注入本期申报——这是一条<strong>正反馈通道，与协调制度无关</strong>。于是"物资平衡表现最差"这一结论，部分是"物资平衡被额外给了一条别人没有的通道"。</p>
+<p>实测（真实 20 部门表、仅噪声、12 个种子）：统一参数下物资平衡产出比 0.9347；把 <code>revision_gain</code> 设为 0 后为 <strong>0.9999</strong>。也就是说，<strong>全部劣势来自目标修订增益，而非分配规则本身。</strong></p>
+<p><strong>修正</strong>：定义唯一的共同参数块，应用于每个机制的每个单元：</p>
+<pre><code class="language-python">MECHANISM_BASE_PARAMS = {&quot;backlog_carry&quot;: 0.0, &quot;stock_target_ratio&quot;: 0.10,
+                         &quot;max_target_ratio&quot;: 2.5, &quot;min_target_ratio&quot;: 0.25}
+</code></pre>
+<p>只有制度旋钮可变（<code>revision_gain</code> / <code>price_gain</code> / <code>theta</code> / <code>quota_speed</code>）。实验层在组装每个块时<strong>强制校验</strong>，缺参数即抛出异常——"一个无法识别的排序不能被写进结果目录"。</p>
+<p><strong>代价</strong>：所有已跑完的块重跑。因运行成本低，仍然是分钟级。</p>
+<p><strong>收益</strong>：这条修正把论文的核心比较从"可疑"变成"可识别"，并且顺带产出了更干净的结论：机制之间的差别不在短缺率（五个机制落在 1.56–1.64% 的窄带内），而在产出的浪费（0.97–0.99 对 0.937）。</p>
+<h3><span class="secno">4.7</span> 环路增益的估计：回归的偏误</h3>
+<p>为检验稳定性边界，需要测出 $b$（缺口对工具的反应系数）。初版用<strong>实现路径上的回归</strong>：把短缺率对价格或目标做回归。</p>
+<p><strong>结果符号颠倒。</strong> 对物资平衡估出的 $b$ 为正（看似稳定），而配对增益实验明确显示增益越大短缺越高。</p>
+<p><strong>诊断</strong>：同时性偏误。工具是<strong>对短缺的反应</strong>，所以观测到的是"短缺高时目标也高"，回归捕捉的是反向因果而非政策响应。这条回归的回归元本身就是它要解释的误差的函数。</p>
+<p><strong>修正</strong>：改为<strong>外生位移法</strong>——关闭反馈（增益置 0），把价格外生扰动 ±5%，测量短缺的反应。实验层的 B7 块正是这么做的，得到</p>
+<div class="equation"><div class="eqbody">$$
+b_p = 0.125\ /\ 0.197\ /\ 0.342\ /\ 0.616 \quad (\varepsilon = 0.2/0.4/0.8/2.0)
+$$</div><div class="eqno">(7)</div></div>
+<p>近似线性于需求价格弹性，正如机制所要求。这条方法论警示写入论文第 5.5 节。</p>
+<h3><span class="secno">4.8</span> 三次错误的机制解释（本报告最重要的一节）</h3>
+<p>物质平衡在仅噪声条件下损失约 6% 的产出，而同条件下双轨制仅 0.5%。<strong>为什么会这样？</strong> 我给出了三次解释，前两次都是错的。</p>
+<p><strong>第一次：存货估计的不对称（错）</strong></p>
+<p><strong>假设</strong>：可行性规划对存货估计是不对称的——乐观估计被产能上界吸收（无害），悲观估计砍掉计划（有害）。</p>
+<p><strong>检验</strong>：在基年目标下，把存货从 $0.5r$ 到 $2r$ 变动，规划返回值恒定。原因很干净：$(A-I)x_{\text{base}} = -y_{\text{base}} \le 0$，在任何缩放下都可行——<strong>存货根本不是约束</strong>。</p>
+<p><strong>验证者的判定</strong>：在其机制内部的 86 次平衡规划调用中，$R(0.9r) = R(r) = R(1.1r)$，差值恰为 0。</p>
+<p><strong>第二次：单边过滤 + 投资残余承担（部分对，但不是原因）</strong></p>
+<p><strong>假设</strong>：平衡步骤是<strong>单边</strong>的（<code>feasible_output</code> 返回值必然逐分量不超过目标，因此只能下调不能上调），噪声下跌幅累积；投资位于优先级阶梯底部，承担了缺口，资本存量因此永久下降。</p>
+<p><strong>检验</strong>：两条都成立——计划步骤在 29/80 期下调过目标（增益为 0 时仅 8/80），实际投资从基年比 0.0500 降至 0.0434，资本降至 0.9024。</p>
+<p><strong>但它不是原因</strong>：把存货估计设为无噪声、直接删除、或把初始存货设为 0 与 0.5，损失<strong>逐位不变</strong>。真正的原因是验证者用因果隔离实验找到的。</p>
+<p><strong>第三次：劳动力约束（对）</strong></p>
+<p><strong>验证者的做法</strong>：逐个关闭通道。</p>
+<table>
+<thead>
+<tr>
+<th>干预</th>
+<th>产出比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基准</td>
+<td>0.9087</td>
+</tr>
+<tr>
+<td>产能估计无噪声</td>
+<td>0.9050</td>
+</tr>
+<tr>
+<td>需求积压估计无噪声</td>
+<td>0.9072</td>
+</tr>
+<tr>
+<td><strong>删除存货估计</strong></td>
+<td><strong>0.9083</strong></td>
+</tr>
+<tr>
+<td>初始存货 0 / 0.5</td>
+<td>0.9061 / 0.9110</td>
+</tr>
+<tr>
+<td><strong>劳动力供给 ×3</strong></td>
+<td><strong>1.0000</strong></td>
+</tr>
+</tbody>
+</table>
+<p>只有劳动力一条改变了结论。我自己复现：</p>
+<table>
+<thead>
+<tr>
+<th>劳动力供给因子</th>
+<th>1.05</th>
+<th>1.15</th>
+<th>1.40</th>
+<th>2.00</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>产出比（增益 1.0，平衡 3 轮）</td>
+<td>0.8151</td>
+<td>0.8540</td>
+<td>0.9964</td>
+<td>0.9999</td>
+</tr>
+</tbody>
+</table>
+<p><strong>完整机制</strong>：测量噪声使家庭在部分季度低估申报 → 计划者观察到短缺 → 增益把目标推高到基年的 1.26–1.40 倍 → 在 1.15 的劳动力供给下该计划需要约 1.22 倍的可用劳动 → 平衡轮次把它投影回劳动可行的前沿，投影是单边的且偏向劳动密集部门（最小填充比 0.23）→ 结构扭曲而非等比缩减 → 投资承担缺口 → 资本存量永久下移。</p>
+<p><strong>这次纠错的方法论价值大于结论本身。</strong> 前两次解释都是"听起来合理且部分可证"的，都通过了各自的部分检验，而都是错的。区分它们的唯一办法是<strong>因果隔离</strong>——逐个关闭通道，看哪一个改变结果。这个逻辑现在写在论文第 6.3 节，也写在验证报告的 F4 中。</p>
+<p><strong>一致性后果</strong>：论文的 Corollary 4（正反馈无安全增益）的<strong>前件是经验性的</strong>，而第三节的分解显示是"劳动前沿投影"把它打开，不是"存货估计"。论文第 4.3 节据此重写了这条推论的定位：它解释为什么耦合环路的代价从第一个增益增量就开始，而分解实验指出是哪个环节触发的。</p>
+<hr>
+<h2><span class="secno">5</span> 实验设计与预注册修订</h2>
+<h3><span class="secno">5.1</span> 冻结与修订</h3>
+<p>预注册在生成任何结果前冻结。之后发生 4 次修订（<code>docs/AMENDMENTS.md</code>）与 8 项偏离（<code>docs/DEVIATIONS.md</code>）。</p>
+<p><strong>修订 1：环路的符号。</strong> 试点发现目标修订环是<strong>正</strong>的（提高目标反而加剧短缺），因此预注册的边界检验不能跑在计划修订机制上。H1 改在试探性定价的价格环上检验（负反馈经由家庭需求弹性成立），并增设 H1′ 在目标环上同等呈现。</p>
+<p><strong>修订 2：冲击与缓冲的标定。</strong> 试点显示冲击的成本主要由<strong>持续时间相对于存货缓冲</strong>决定，而非深度：35% 冲击持续 12 期造成的峰值短缺是 65% 冲击持续 4 期的三倍。因此标准冲击定为规模 0.50、持续 8 季、初始存货比 0.10。</p>
+<p><strong>修订 3：增益轴。</strong> 检验边界必须变化增益，而预注册设计只变化时滞。B2 因此扩展为"增益 × 时滞 × 机制"三维。</p>
+<p><strong>修订 4：有限仓储（溢损）。</strong> 见 4.4 节。</p>
+<p><strong>偏离记录中最重要的一条</strong>：H1 的判据被重新解释。预注册的判据有两条臂——滞一自相关 &gt; 0.5 且振幅超过无反馈基线三个标准差。第一条臂在本设计中<strong>退化</strong>：受 AR(1) 需求驱动的季度序列，在任何单元（包括完全不设价格的机制）中自相关都在 0.65–0.95。按字面执行会在每个单元宣布不稳定。因此结论改为依托振幅臂，并在论文中明写"判据是在看到其第一条臂无法区分之后重新解释的"。<strong>这是本项目唯一一处看到数据后改变分析规则的偏离</strong>，它被记录而不是被包装成顺利通过。</p>
+<h3><span class="secno">5.2</span> 最终设计规模</h3>
+<table>
+<thead>
+<tr>
+<th>块</th>
+<th>内容</th>
+<th>运行数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1</td>
+<td>基年复现（6 机制 × 2 底座）</td>
+<td>12</td>
+</tr>
+<tr>
+<td>B1b</td>
+<td>仅噪声（信息租金）</td>
+<td>120</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>时滞 × 机制 × 增益</td>
+<td>4,080</td>
+</tr>
+<tr>
+<td>B3</td>
+<td>部门冲击传播</td>
+<td>1,200</td>
+</tr>
+<tr>
+<td>B4</td>
+<td>配给 vs 影子价格</td>
+<td>120</td>
+</tr>
+<tr>
+<td>B5</td>
+<td>双轨制份额 θ</td>
+<td>440</td>
+</tr>
+<tr>
+<td>B6</td>
+<td>稳健性（弹性、劳动力、底座、权重）</td>
+<td>520</td>
+</tr>
+<tr>
+<td>B7</td>
+<td>外生位移测 $b_p$</td>
+<td>480</td>
+</tr>
+<tr>
+<td>B8</td>
+<td>物质平衡惩罚的分解</td>
+<td>192</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>阶梯对照、机制探测</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td>556 单元</td>
+<td><strong>7,364</strong></td>
+</tr>
+</tbody>
+</table>
+<p>全程约 472 秒（7 进程），远小于预留给实验的 60 分钟预算。这个充裕度直接决定了 4.6 节那次"全部重跑"的判断可以立刻做出。</p>
+<hr>
+<h2><span class="secno">6</span> 主要结果</h2>
+<p><strong>（1）延迟的闭式代价。</strong> $g^\star(m)=2\sin[\pi/(2(2m+1))]$，边界周期 $2(2m+1)$。数学上已验证（四条独立路径，$m$ 至 30，一致性 $2.9\times10^{-11}$；另一路径至 $5.5\times10^{-15}$）。</p>
+<p><strong>（2）信息租金以产出而非短缺支付。</strong> 仅噪声、无冲击时，五个机制的短缺率落在 1.56–1.64% 的窄带内，而产出比为 0.937（物资平衡）到 0.995（双轨制）。<strong>方法学警示</strong>：由于家庭需求对收入有弹性，摧毁产出的机制同时摧毁了本来会记录短缺的需求，短缺率因此近乎不变。只报短缺率的论文会错误地得出"制度无关紧要"。</p>
+<p><strong>（3）紧绷的计划只在劳动力紧张时昂贵。</strong> 增益 1.0 + 3 轮平衡在劳动供给因子 1.05 时损失 18.5%，1.15 时 14.6%，1.40 时 0.4%，2.00 时为零；两个对照（只修订、只平衡）在每个因子下都接近 1.0000。溢损从 0.1% 升至 2.9%。</p>
+<p><strong>（4）下游依赖传播，上游乘数不传播。</strong> 总产出损失随受冲击部门的前向关联（产出中作为中间投入的份额 $(Ax)_i/x_i$）上升：Spearman $\rho=+0.513/+0.567/+0.414$；而用 Leontief 逆的列和（教科书乘数）则完全不相关（$\rho\approx 0$）。<strong>定义敏感性必须披露</strong>：改用教科书的 $A$ 行和定义，相关性降到 $+0.329/+0.313/+0.311$（$p\approx0.16$–$0.18$），不显著。论文两种都报。</p>
+<h3><span class="secno">6.1</span> 两个阴性结果</h3>
+<p><strong>H1 的边界不可靠地可达。</strong> 实测 $b_p$ 在弹性 0.4/0.8 下为 0.197/0.342，最大环路增益 0.316/0.548，对照 $g^\star(m)$ 只在 $m\ge5$ 或 $m\ge3$ 处接近。预注册判据在 18 个单元中只触发 1 次，且触发点在<strong>边界之下</strong>（实测临界增益为理论值的 57%）。故不宣称跨越。但在增益网格顶端，配对时滞效应确实显著（Wilcoxon 817，$p=4.5\times10^{-12}$）——说明环路的增益提够高时延迟确实起作用。</p>
+<p><strong>H5 形式成立、经济上空洞。</strong> 双轨制份额 θ 的福利曲线在 θ=0.9 处有内部极大，但整个区间（0.122）小于种子标准差（0.067–0.146），且极大点在不同时滞间移动。结论是"检测不到经济意义上的内部最优"，既非证实也非证伪。</p>
+<hr>
+<h2><span class="secno">7</span> 独立验证体系</h2>
+<h3><span class="secno">7.1</span> 六项检查</h3>
+<table>
+<thead>
+<tr>
+<th>检查</th>
+<th>内容</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 定理</td>
+<td>四条独立路径重推边界</td>
+<td>PASS（$m=0..30$）</td>
+</tr>
+<tr>
+<td>2 引擎</td>
+<td><strong>从书面规范独立重写一个周期</strong>，与引擎对比 192 个真实周期</td>
+<td>PASS（差异 $0.0$）</td>
+</tr>
+<tr>
+<td>3 会计</td>
+<td>2,344 条原始记录：恒等式、$Z=A\,\mathrm{diag}(x)$、全部不等式、优先级阶梯、7 项指标重算</td>
+<td>PASS（$1.6\times10^{-16}$）</td>
+</tr>
+<tr>
+<td>4 复现</td>
+<td>随机抽 80/7,364 次运行重执行，147,120 个逐期数值对比</td>
+<td>PASS（逐位一致）</td>
+</tr>
+<tr>
+<td>5 统计</td>
+<td>自写精确 Wilcoxon/Holm/Spearman/置换检验，与 scipy/statsmodels 对照</td>
+<td>PASS</td>
+</tr>
+<tr>
+<td>6 机制主张</td>
+<td>对三次机制解释做因果隔离</td>
+<td>修正后 PASS</td>
+</tr>
+</tbody>
+</table>
+<p><strong>第 2 项是最强的一项</strong>：验证者不导入引擎，只依据 <code>docs/ARCHITECTURE.md</code> 的书面规范重写一个周期的求解、配给与会计，覆盖平静期（101）、产能受限期（18）、层级受限期（91）三种状态，在 $x, Z, C, G, I, S_{\text{end}}, \text{unmet}, \text{spoilage}$ 上差异恰为 0。</p>
+<h3><span class="secno">7.2</span> 发现的 15 条问题（其中 6 条指向主控）</h3>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>问题</th>
+<th>归属</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F1</td>
+<td>定理笔记中 $g^\star$ 索引错位一期</td>
+<td>主控</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>"每期减半"渐近错误</td>
+<td>主控</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>证明中 $j\ge1$ 未排除（论证缺口）</td>
+<td>主控</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>三次机制解释中前两次错误</td>
+<td>主控</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>审计记录中 6 部门单元的 $A$ 被扁平写入 20×20 缓冲</td>
+<td>实验层</td>
+</tr>
+<tr>
+<td>F6</td>
+<td><code>cells.json</code> 中 toy 单元的 scenario 技术底座记录错误</td>
+<td>实验层</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>§6.6 冲击标签错误（乘数 vs 实现损失）</td>
+<td>论文</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>H4 中心性在 Holm 校正后不显著</td>
+<td>论文</td>
+</tr>
+<tr>
+<td>F9</td>
+<td>"三种机制下最严重部门相同"对配给机制不成立</td>
+<td>论文</td>
+</tr>
+<tr>
+<td>F11a</td>
+<td>§6.4 振幅与自相关区间引用错误</td>
+<td>论文</td>
+</tr>
+<tr>
+<td>F13</td>
+<td>表缺 <code>price_elasticity</code> 列，204 行仅 144 个可辨识键</td>
+<td>主控（表生成器）</td>
+</tr>
+<tr>
+<td>F14</td>
+<td>摘要称边界"不可达"，与正文矛盾</td>
+<td>论文</td>
+</tr>
+<tr>
+<td>F15</td>
+<td>论文未报增益顶端显著的那一行</td>
+<td>论文</td>
+</tr>
+<tr>
+<td>P7</td>
+<td>溢损通道未写入架构文档与修订记录</td>
+<td>主控</td>
+</tr>
+<tr>
+<td>—</td>
+<td>双轨制表 <code>theta</code> 列损坏（全为 0.3）</td>
+<td>主控（表生成器）</td>
+</tr>
+</tbody>
+</table>
+<p>这份清单本身就是交付物的一部分。<strong>一个独立验证者的价值，在于它的记录能显示它抓到了什么。</strong></p>
+<h3><span class="secno">7.3</span> 最后一类错误：陈旧性</h3>
+<p>项目最后三轮的每一个错误都属于同一类型：<strong>不是算错，而是过期。</strong></p>
+<ul>
+<li>文件被替换，引用它的正文没改（§6.3 的图注仍在用旧的存货解释，正压在显示"劳动力才是通道"的表格上方）；</li>
+<li>摘要称"不可达"，而正文已改成"罕见可达"（$0.171\times1.6=0.273 &gt; g^\star(6)=0.241$）；</li>
+<li>表格缺一列，两行不同的对象被合成一个可辨识键；</li>
+<li>假设列了六条，裁决表只表五条（H3 缺失）。</li>
+</ul>
+<p>没有一个是通过推理发现的。<strong>每一个都是通过阅读两个本应说同一件事的产物、发现它们不一致而发现的。</strong> 项目因此形成的实践是：改完文件后，在<strong>构建出的 PDF</strong> 里检索那个应该消失的字符串，而不是检查自己刚改过的源文件。</p>
+<hr>
+<h2><span class="secno">8</span> 协作机制</h2>
+<h3><span class="secno">8.1</span> 并行策略</h3>
+<p>第一阶段串行：主控独立完成核心引擎与参考机制，因为一切依赖这一层，且它必须自洽。</p>
+<p>第二阶段并行：数据、论文骨架与理论、其余机制、实验框架四线同时推进。每条线写入范围互斥。</p>
+<p>第三阶段收敛：实验产出冻结后，论文按文件重写；验证者独立审计。</p>
+<h3><span class="secno">8.2</span> 双实现交叉验证</h3>
+<p>主控另写了一份<strong>不共享任何网格、聚合与统计代码</strong>的参考实现（<code>scripts/lead_reference.py</code>，2,798 次运行）。与实验层对比：</p>
+<table>
+<thead>
+<tr>
+<th>机制</th>
+<th>实验层产出比</th>
+<th>参考实现</th>
+<th>差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hybrid_dual_track</td>
+<td>0.99513</td>
+<td>0.99482</td>
+<td>0.00031</td>
+</tr>
+<tr>
+<td>tatonnement</td>
+<td>0.99378</td>
+<td>0.99368</td>
+<td>0.00010</td>
+</tr>
+<tr>
+<td>market</td>
+<td>0.99080</td>
+<td>0.98992</td>
+<td>0.00187</td>
+</tr>
+<tr>
+<td>rationing_priority</td>
+<td>0.98221</td>
+<td>0.98132</td>
+<td>0.00089</td>
+</tr>
+<tr>
+<td>lp_central</td>
+<td>0.97096</td>
+<td>0.97122</td>
+<td>0.00026</td>
+</tr>
+<tr>
+<td>material_balance</td>
+<td>0.93708</td>
+<td>0.87613</td>
+<td>0.06095</td>
+</tr>
+</tbody>
+</table>
+<p><strong>机制排序完全一致（Spearman = 1.000）</strong>，五个机制一致到小数点后三位。唯一的例外是物资平衡——已知最敏感单元（种子间 1.9–4.8%），其差异来自需求弹性参数不同（0.6 vs 0.4）。这条交叉验证现在是 4.6 节那次修正的直接证据。</p>
+<h3><span class="secno">8.3</span> 协调失败</h3>
+<p>一次真实的协调失败：主控在修正会计恒等式时留下中间状态，导致两位队友的测试同时失败。两人都<strong>报告而没有擅自改动</strong>核心代码——这是写入范围约束起作用的表现。但也说明在共享文件系统上，<strong>核心模块不能有中间状态</strong>；事后改为"改动核心或重跑全网格，二选一，不留悬空"。</p>
+<hr>
+<h2><span class="secno">9</span> 可复现性</h2>
+<pre><code class="language-bash">cd planlab &amp;&amp; source scripts/env.sh
+python -m planlab.data.build --source both     # 重建数据（幂等，约 3 秒）
+python -m pytest tests/ -q                     # 371 项测试
+bash scripts/reproduce.sh                      # 全网格 + 表 + 图，约 472 秒
+python notebooks/execute_all.py                # 六个 notebook，约 20 秒
+</code></pre>
+<p>保证：</p>
+<ul>
+<li><strong>每个情景是自描述 YAML</strong>，<code>planlab run &lt;file&gt;</code> 可独立复现；</li>
+<li><strong>每个运行由 <code>(scenario_id, seed)</code> 确定性播种</strong>，同单元内各机制共享同一条外生冲击与噪声抽样（共同随机数）；</li>
+<li><strong>数据层记录来源 URL、原始响应 sha256、聚合映射 sha256</strong>，上游静默修订可被检出；</li>
+<li><strong>每个块的 manifest 记录包版本、git commit、单元代码指纹、情景哈希、种子数</strong>；</li>
+<li><strong>论文中没有一个手工键入的数字</strong>——所有表格由 <code>scripts/paper_tables.py</code> 从 <code>results/</code> 生成，图由 <code>figures.py</code> 生成。</li>
+</ul>
+<p>一项特别值得记录的复现证据：教学 notebook 06 从 <code>runs.parquet</code> 重算 4,080 次运行的 B2 表，数值列在存储精度内一致，并<strong>逐像素</strong>重新生成图（最大颜色差 0）；notebook 03 依据书面规范重推一个真实周期的全部数组，与引擎<strong>逐位相同</strong>（差异 0.0），会计恒等式残差 $2.4\times10^{-17}$。</p>
+<hr>
+<h2><span class="secno">10</span> 遗留问题与后续工作</h2>
+<p><strong>已知而未解决的：</strong></p>
+<ol>
+<li><strong>表与池化文件的对象不一致。</strong> <code>paper/tables/lag_grid_reference.csv</code>（参考增益切片）与 <code>results/tables/t03_lag_mechanism.csv</code>（对全部增益池化）是不同对象，物资平衡的短缺率相差最高 67%。论文正文与图注均已披露并指向正确的文件，但<strong>未修复</strong>——实验层已下线。这是提交前应当修的第一项。</li>
+<li><strong>§6.3 的因果链略强于证据。</strong> 四个被测量到的通道都按劳动可行性的方向移动，但没有单个单元隔离出这四者中哪一个在做功；只有劳动供给扫描能做到。该节按扫描支持的强度陈述，并明写了这一点。</li>
+<li><strong>短边规划的目标函数是总产出最大化</strong>，因此在劳动约束下会把削减集中在劳动密集部门。这是目标函数的性质，不是制度的性质；改用最大最小目标会摊平。未做该对照，已写入局限。</li>
+<li><strong>恒定价格价值单位</strong>，非实物量；单一年份 Leontief 技术，无替代；无货币与金融；家庭不跨期优化；企业不博弈计划指标（"按吨位出产"的经典病理留作后续）。</li>
+</ol>
+<p><strong>后续最值得做的三件事</strong>（按我的判断排序）：</p>
+<ol>
+<li><strong>把 H1 的检验搬到可稳定运行的价格机制上</strong>：本模型中价格环的增益天然很小，因此边界不可靠地可达。若允许非 Leontief 的边际替代，$b_p$ 可提高一个量级，边界将真正进入可测范围。</li>
+<li><strong>指标博弈</strong>：让企业能在"上报需求"上策略性偏离。这会直接激活 Kornai 的软预算约束与信息不对称，且与本文的信息延迟主题同构。</li>
+<li><strong>历史校准</strong>：用真实计划经济体的年度物资平衡表回测，检验"紧绷计划 + 劳动紧张 → 产出损失"的条件性预测是否在历史上留下痕迹。</li>
+</ol>
+<hr>
+<h2><span class="secno">11</span> 时间线</h2>
+<table>
+<thead>
+<tr>
+<th>时刻</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15:20</td>
+<td>读取行动方案；环境探测（Eurostat API、Edge 无头打印、PyPI 均可用）</td>
+</tr>
+<tr>
+<td>15:26</td>
+<td>写下预注册、架构契约、数据规范三份文档</td>
+</tr>
+<tr>
+<td>15:30</td>
+<td>并行启动：数据层、论文骨架</td>
+</tr>
+<tr>
+<td>15:35–16:00</td>
+<td>核心引擎五次返工（级联→LP、优先级阶梯、存货、指标 bug）</td>
+</tr>
+<tr>
+<td>15:41</td>
+<td>数据层完成：65 部门、方向转置的发现、GVA 交叉校验 −0.179%</td>
+</tr>
+<tr>
+<td>15:52</td>
+<td>并行启动：其余机制、实验框架</td>
+</tr>
+<tr>
+<td>16:00</td>
+<td>恒等式成为硬约束；冒烟测试通过</td>
+</tr>
+<tr>
+<td>16:08</td>
+<td><strong>发现机制默认参数混杂</strong>（4.6 节），全部重跑</td>
+</tr>
+<tr>
+<td>16:16</td>
+<td>定理数值验证：闭式值精确到 $10^{-13}$</td>
+</tr>
+<tr>
+<td>16:22</td>
+<td><strong>引入溢损上限</strong>（4.4 节），全部重跑</td>
+</tr>
+<tr>
+<td>16:30</td>
+<td>验证者首轮：抓出 F1–F3（我的笔记错误）</td>
+</tr>
+<tr>
+<td>16:36</td>
+<td>验证者抓出机制主张错误（4.8 节的前两次解释）</td>
+</tr>
+<tr>
+<td>16:50</td>
+<td>论文第 3 版：劳动力机制写入</td>
+</tr>
+<tr>
+<td>17:00</td>
+<td>实验网格冻结：7,364 次运行</td>
+</tr>
+<tr>
+<td>17:05</td>
+<td>验证者六项检查全通过；提出 F7–F15</td>
+</tr>
+<tr>
+<td>17:12</td>
+<td>论文第 4 版：摘要与正文对齐</td>
+</tr>
+<tr>
+<td>17:15</td>
+<td>H3 补入裁决表；最终构建</td>
+</tr>
+<tr>
+<td>17:20</td>
+<td>全仓提交，工作树干净</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2><span class="secno">12</span> 结语</h2>
+<p>这个项目最终交付的东西，比"一个计划经济模拟器"要多，也比"一篇论文"要少。</p>
+<p><strong>多出来的部分</strong>是一套可复用的判断工具：会计恒等式作为硬约束、短边配置作为线性规划、制度与引擎的严格分层、独立验证者的对抗性阅读、以及"改完文件去 PDF 里检索应该消失的字符串"这条朴素实践。</p>
+<p><strong>少掉的部分</strong>是任何一种把结果说得比数据更硬的诱惑。三个假设被证实，两个被证伪或变成空结果，三次机制解释被推翻，一处预注册判据在看到数据后被重新解释并被如实记录。论文里最重要的五个数字旁边都有一句话说明它依赖什么条件。</p>
+<p>如果说这个过程有一条贯穿的经验，那是：<strong>在这个项目里，没有一个数字是靠推理得出的。</strong> 定理靠四条独立路径算出来，引擎靠从零重写的一个周期对出来，结果靠两套独立实现交叉校出来，论文里每一句话靠一张 CSV 对出来。我自己的三次机制解释听起来都很合理，两次都通过了部分检验，两次都是错的——最后是因果隔离实验、而不是论证，把它们区分开。</p>
+<p>这一点值得写进任何使用本仓库的人的预期里。</p>
+<hr>
+<p><em>本报告的每一个数字都可在仓库中追溯：结果见 <code>results/</code>，逐期原始数组见 <code>results/*/audit_records.npz</code>，验证发现见 <code>verification/report.md</code>，修订与偏离见 <code>docs/AMENDMENTS.md</code> 与 <code>docs/DEVIATIONS.md</code>。</em></p>
+<h2 class="unnumbered" id="sec:references">参考文献</h2>
+<div class="references">
+<p id="ref-leontief1936"><span class="refnum">[1]</span> Leontief, Wassily (1936). Quantitative Input and Output Relations in the Economic Systems of the United States. <em>The Review of Economics and Statistics</em>, 18(3), 105. doi:<a href="https://doi.org/10.2307/1927837">10.2307/1927837</a></p>
+<p id="ref-leontief1941"><span class="refnum">[2]</span> Leontief, Wassily (1941). <em>The Structure of American Economy, 1919–1929: An Empirical Application of Equilibrium Analysis</em>. Cambridge, MA: Harvard University Press, xi + 181 pp. Metadata verified against the review in <em>The Journal of Economic History</em> 1(2), 246, doi:<a href="https://doi.org/10.1017/S0022050700053158">10.1017/S0022050700053158</a></p>
+<p id="ref-miller_blair2009"><span class="refnum">[3]</span> Miller, Ronald E. and Peter D. Blair (2009). <em>Input–Output Analysis: Foundations and Extensions</em>, 2nd edition. Cambridge: Cambridge University Press. doi:<a href="https://doi.org/10.1017/CBO9780511626982">10.1017/CBO9780511626982</a></p>
+<p id="ref-neumann1945"><span class="refnum">[4]</span> von Neumann, John (1945). A Model of General Economic Equilibrium. <em>The Review of Economic Studies</em>, 13(1), 1. doi:<a href="https://doi.org/10.2307/2296111">10.2307/2296111</a></p>
+<p id="ref-kantorovich1960"><span class="refnum">[5]</span> Kantorovich, Leonid V. (1960). Mathematical Methods of Organizing and Planning of Production. <em>Management Science</em>, 6(4), 366–422. (English translation of the 1939 Leningrad monograph.) doi:<a href="https://doi.org/10.1287/mnsc.6.4.366">10.1287/mnsc.6.4.366</a></p>
+<p id="ref-belykh2024"><span class="refnum">[6]</span> Belykh, Andrey A. (2024). Leonid Kantorovich's Economic Ideas and Their Perception in the USSR and the West. <em>AlterEconomics</em>, 21(1), 82–102. doi:<a href="https://doi.org/10.31063/altereconomics/2024.21-1.6">10.31063/altereconomics/2024.21-1.6</a></p>
+<p id="ref-ellman2014"><span class="refnum">[7]</span> Ellman, Michael (2014). <em>Socialist Planning</em>, 3rd edition. Cambridge: Cambridge University Press. doi:<a href="https://doi.org/10.1017/CBO9781139871341">10.1017/CBO9781139871341</a></p>
+<p id="ref-ericson1991"><span class="refnum">[8]</span> Ericson, Richard E. (1991). The Classical Soviet-Type Economy: Nature of the System and Implications for Reform. <em>Journal of Economic Perspectives</em>, 5(4), 11–27. doi:<a href="https://doi.org/10.1257/jep.5.4.11">10.1257/jep.5.4.11</a> ## The socialist calculation debate</p>
+<p id="ref-mises1920"><span class="refnum">[9]</span> von Mises, Ludwig (1920). Die Wirtschaftsrechnung im sozialistischen Gemeinwesen. First published in <em>Archiv für Sozialwissenschaft und Sozialpolitik</em>; English translation, "Economic Calculation in the Socialist Commonwealth", in <em>Classics in Austrian Economics</em>, vol. 3, London: Routledge, 2–31. doi:<a href="https://doi.org/10.4324/9781003547952-2">10.4324/9781003547952-2</a></p>
+<p id="ref-hayek1945"><span class="refnum">[10]</span> Hayek, Friedrich A. (1945). The Use of Knowledge in Society. <em>American Economic Review</em>, 35(4). Reprinted in <em>Classics in Austrian Economics</em>, vol. 3, London: Routledge, 258–271. doi:<a href="https://doi.org/10.4324/9781003547952-12">10.4324/9781003547952-12</a></p>
+<p id="ref-lange1936"><span class="refnum">[11]</span> Lange, Oskar (1936). On the Economic Theory of Socialism: Part One. <em>The Review of Economic Studies</em>, 4(1), 53. doi:<a href="https://doi.org/10.2307/2967660">10.2307/2967660</a></p>
+<p id="ref-lange1937"><span class="refnum">[12]</span> Lange, Oskar (1937). On the Economic Theory of Socialism: Part Two. <em>The Review of Economic Studies</em>, 4(2), 123. doi:<a href="https://doi.org/10.2307/2967609">10.2307/2967609</a> ## Shortage, rationing and disequilibrium</p>
+<p id="ref-kornai1992"><span class="refnum">[13]</span> Kornai, János (1992). <em>The Socialist System: The Political Economy of Communism</em>. Princeton: Princeton University Press, 644 pp. doi:<a href="https://doi.org/10.1515/9780691228020">10.1515/9780691228020</a></p>
+<p id="ref-kornai1986"><span class="refnum">[14]</span> Kornai, János (1986). The Soft Budget Constraint. <em>Kyklos</em>, 39(1), 3–30. doi:<a href="https://doi.org/10.1111/j.1467-6435.1986.tb01252.x">10.1111/j.1467-6435.1986.tb01252.x</a></p>
+<p id="ref-kornai_maskin_roland2003"><span class="refnum">[15]</span> Kornai, János, Eric Maskin and Gérard Roland (2003). Understanding the Soft Budget Constraint. <em>Journal of Economic Literature</em>, 41(4), 1095–1136. doi:<a href="https://doi.org/10.1257/jel.41.4.1095">10.1257/jel.41.4.1095</a></p>
+<p id="ref-kornai_weibull1983"><span class="refnum">[16]</span> Kornai, János and Jörgen W. Weibull (1983). Paternalism, Buyers' and Sellers' Market. <em>Mathematical Social Sciences</em>, 6(2), 153–169. doi:<a href="https://doi.org/10.1016/0165-4896(83">10.1016/0165-4896(83)90003-3</a>90003-3)</p>
+<p id="ref-dreze1975"><span class="refnum">[17]</span> Drèze, Jacques H. (1975). Existence of an Exchange Equilibrium under Price Rigidities. <em>International Economic Review</em>, 16(2), 301. doi:<a href="https://doi.org/10.2307/2525813">10.2307/2525813</a></p>
+<p id="ref-barro_grossman1971"><span class="refnum">[18]</span> Barro, Robert J. and Herschel I. Grossman (1971). A General Disequilibrium Model of Income and Employment. <em>American Economic Review</em>, 61(1), 82–93. Record consulted: <a href="https://openalex.org/works?filter=title.search:a%20general%20disequilibrium%20model%20of%20income%20and%20employment">OpenAlex</a> ## Delay, cycles and the stability of difference equations</p>
+<p id="ref-hale1977"><span class="refnum">[19]</span> Hale, Jack K. (1977). <em>Theory of Functional Differential Equations</em>. New York: Springer. doi:<a href="https://doi.org/10.1007/978-1-4612-9892-2">10.1007/978-1-4612-9892-2</a></p>
+<p id="ref-elaydi2005"><span class="refnum">[20]</span> Elaydi, Saber N. (2005). <em>An Introduction to Difference Equations</em>, 3rd edition. New York: Springer. doi:<a href="https://doi.org/10.1007/0-387-27602-5">10.1007/0-387-27602-5</a></p>
+<p id="ref-levin_may1976"><span class="refnum">[21]</span> Levin, Simon A. and Robert M. May (1976). A Note on Difference-Delay Equations. <em>Theoretical Population Biology</em>, 9(2), 178–187. doi:<a href="https://doi.org/10.1016/0040-5809(76">10.1016/0040-5809(76)90043-5</a>90043-5)</p>
+<p id="ref-tarski1955"><span class="refnum">[22]</span> Tarski, Alfred (1955). A Lattice-Theoretical Fixpoint Theorem and Its Applications. <em>Pacific Journal of Mathematics</em>, 5(2), 285–309. doi:<a href="https://doi.org/10.2140/pjm.1955.5.285">10.2140/pjm.1955.5.285</a></p>
+<p id="ref-ezekiel1938"><span class="refnum">[23]</span> Ezekiel, Mordecai (1938). The Cobweb Theorem. <em>The Quarterly Journal of Economics</em>, 52(2), 255. doi:<a href="https://doi.org/10.2307/1881734">10.2307/1881734</a></p>
+<p id="ref-nerlove1958"><span class="refnum">[24]</span> Nerlove, Marc (1958). Adaptive Expectations and Cobweb Phenomena. <em>The Quarterly Journal of Economics</em>, 72(2), 227. doi:<a href="https://doi.org/10.2307/1880597">10.2307/1880597</a></p>
+<p id="ref-hommes1994"><span class="refnum">[25]</span> Hommes, Cars H. (1994). Dynamics of the Cobweb Model with Adaptive Expectations and Nonlinear Supply and Demand. <em>Journal of Economic Behavior and Organization</em>, 24(3), 315–335. doi:<a href="https://doi.org/10.1016/0167-2681(94">10.1016/0167-2681(94)90039-6</a>90039-6) ## Reform, transition and the dual track</p>
+<p id="ref-murphy_shleifer_vishny1992"><span class="refnum">[26]</span> Murphy, Kevin M., Andrei Shleifer and Robert W. Vishny (1992). The Transition to a Market Economy: Pitfalls of Partial Reform. <em>The Quarterly Journal of Economics</em>, 107(3), 889–906. doi:<a href="https://doi.org/10.2307/2118367">10.2307/2118367</a></p>
+<p id="ref-sicular1988"><span class="refnum">[27]</span> Sicular, Terry (1988). Plan and Market in China's Agricultural Commerce. <em>Journal of Political Economy</em>, 96(2), 283–307. doi:<a href="https://doi.org/10.1086/261537">10.1086/261537</a></p>
+<p id="ref-lau_qian_roland2000"><span class="refnum">[28]</span> Lau, Lawrence J., Yingyi Qian and Gérard Roland (2000). Reform without Losers: An Interpretation of China's Dual-Track Approach to Transition. <em>Journal of Political Economy</em>, 108(1), 120–143. doi:<a href="https://doi.org/10.1086/262113">10.1086/262113</a></p>
+<p id="ref-weitzman1993"><span class="refnum">[29]</span> Weitzman, Martin L. (1993). Economic Transition: Can Theory Help? <em>European Economic Review</em>, 37(2–3), 549–555. doi:<a href="https://doi.org/10.1016/0014-2921(93">10.1016/0014-2921(93)90044-B</a>90044-B)</p>
+<p id="ref-cheremukhin2017"><span class="refnum">[30]</span> Cheremukhin, Anton, Mikhail Golosov, Sergei Guriev and Aleh Tsyvinski (2016/2017). The Industrialization and Economic Development of Russia through the Lens of a Neoclassical Growth Model. <em>The Review of Economic Studies</em>, 84(2). doi:<a href="https://doi.org/10.1093/restud/rdw026">10.1093/restud/rdw026</a> ## Computational planning and the simulation of planned economies</p>
+<p id="ref-cockshott_cottrell1993"><span class="refnum">[31]</span> Cockshott, W. Paul and Allin Cottrell (1993). Calculation, Complexity and Planning: The Socialist Calculation Debate Once Again. <em>Review of Political Economy</em>, 5(1), 73–112. doi:<a href="https://doi.org/10.1080/09538259300000005">10.1080/09538259300000005</a></p>
+<p id="ref-dapprich_greenwood2024"><span class="refnum">[32]</span> Dapprich, Jan Philipp and Dan Greenwood (2024). Cybersocialism and the Future of the Socialist Calculation Debate. <em>Erasmus Journal for Philosophy and Economics</em>, 17(1). doi:<a href="https://doi.org/10.23941/ejpe.v17i1.781">10.23941/ejpe.v17i1.781</a></p>
+<p id="ref-medina2011"><span class="refnum">[33]</span> Medina, Eden (2011). <em>Cybernetic Revolutionaries: Technology and Politics in Allende's Chile</em>. Cambridge, MA: MIT Press. doi:<a href="https://doi.org/10.7551/mitpress/8417.001.0001">10.7551/mitpress/8417.001.0001</a> ## Statistical and simulation methodology</p>
+<p id="ref-holm1979"><span class="refnum">[34]</span> Holm, Sture (1979). A Simple Sequentially Rejective Multiple Test Procedure. <em>Scandinavian Journal of Statistics</em>, 6, 65–70. doi:<a href="https://doi.org/10.2307/4615733">10.2307/4615733</a></p>
+<p id="ref-wilcoxon1945"><span class="refnum">[35]</span> Wilcoxon, Frank (1945). Individual Comparisons by Ranking Methods. <em>Biometrics Bulletin</em>, 1(6), 80. doi:<a href="https://doi.org/10.2307/3001968">10.2307/3001968</a></p>
+<p id="ref-davison_hinkley1997"><span class="refnum">[36]</span> Davison, Anthony C. and David V. Hinkley (1997). <em>Bootstrap Methods and Their Application</em>. Cambridge: Cambridge University Press. doi:<a href="https://doi.org/10.1017/CBO9780511802843">10.1017/CBO9780511802843</a></p>
+<p id="ref-grimm2020"><span class="refnum">[37]</span> Grimm, Volker, Steven F. Railsback, Christian E. Vincenot and Uta Berger (2020). The ODD Protocol for Describing Agent-Based and Other Simulation Models: A Second Update to Improve Clarity, Replication, and Structural Realism. <em>Journal of Artificial Societies and Social Simulation</em>, 23(2). doi:<a href="https://doi.org/10.18564/jasss.4259">10.18564/jasss.4259</a> ## Data and measurement standards</p>
+<p id="ref-eurostat_naio"><span class="refnum">[38]</span> Eurostat (2024). <em>Symmetric input–output table at basic prices (naio_10_cp1700)</em>. Eurostat database, reference year 2020, EU-27. Consulted through the Eurostat data browser: <a href="https://ec.europa.eu/eurostat/databrowser/view/naio_10_cp1700/default/table">naio_10_cp1700</a></p>
+<p id="ref-eurostat_manual"><span class="refnum">[39]</span> Eurostat (2008). <em>Eurostat Manual of Supply, Use and Input–Output Tables</em>. Luxembourg: Office for Official Publications of the European Communities. Methodology pages: <a href="https://ec.europa.eu/eurostat/web/esa-supply-use-input-tables/methodology">ESA supply, use and input–output tables</a></p>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.12/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.12/dist/contrib/auto-render.min.js"></script>
+
+
+<script>
+  window.__mathRendered = false;
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof renderMathInElement !== "function") { return; }
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "\\[", right: "\\]", display: true},
+        {left: "$",  right: "$",  display: false},
+        {left: "\\(", right: "\\)", display: false}
+      ],
+      throwOnError: false,
+      strict: false,
+      trust: false,
+      macros: {"\\R": "\\mathbb{R}", "\\N": "\\mathbb{N}", "\\E": "\\mathbb{E}"},
+      ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+    });
+    window.__mathRendered = true;
+    document.body.setAttribute("data-math", "done");
+  });
+</script>
+
+</body></html>

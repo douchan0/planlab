@@ -1,11 +1,11 @@
 {
-  "generated": "2026-11-01 17:12:42 +0800",
+  "generated": "2026-11-01 17:19:28 +0800",
   "git": {
-    "commit": "0b6a8c875c523c9cdc6b0f4a32fc261b48cd9a19",
+    "commit": "647fdf12fd5dcd688c01ec8193fb0c2b0b395364",
     "dirty": true,
-    "diff_stat": "verification/report.json | 22 +++++++++++-----------\n verification/report.md   | 18 +++++++++---------\n verification/run_all.py  |  2 +-\n 3 files changed, 21 insertions(+), 21 deletions(-)"
+    "diff_stat": "verification/report.json |  51 +++++++++++++++++------\n verification/report.md   |  68 +++++++++++++++++++++---------\n verification/run_all.py  | 105 ++++++++++++++++++++++++++++++++++++++++-------\n 3 files changed, 177 insertions(+), 47 deletions(-)"
   },
-  "elapsed_s": 69.94,
+  "elapsed_s": 64.3,
   "checks": [
     {
       "key": "theorem",
@@ -193,7 +193,7 @@
             "root_arg": 50.0
           }
         ],
-        "wall_s": 0.64
+        "wall_s": 0.56
       },
       "failures": [],
       "notes": [
@@ -240,7 +240,7 @@
         "n_collapse_forced": 10,
         "n_first_pass_optimality_probes": 182,
         "max_cascade_exit_deficit_rel": 2.3491519726445077e-16,
-        "wall_s": 1.66
+        "wall_s": 1.46
       },
       "failures": [],
       "notes": []
@@ -287,7 +287,7 @@
         "ladder_violations": 0,
         "cells_rerun": 83,
         "max_period_reproduction_diff": 0.0,
-        "wall_s": 29.84
+        "wall_s": 26.52
       },
       "failures": [],
       "notes": [
@@ -320,7 +320,7 @@
         "n_manifest_blocks_ok": 11,
         "n_consistency_checks_4e": 14728,
         "n_scenario_yamls_rerun": 16,
-        "wall_s": 17.25
+        "wall_s": 14.63
       },
       "failures": [],
       "notes": [
@@ -653,7 +653,7 @@
         "5d_worst_rel_diff": 4.983533505864557e-07,
         "5d_worst_at": "robustness.csv:mean_x_over_base",
         "5d_status": "AUDITED",
-        "wall_s": 12.09
+        "wall_s": 11.33
       },
       "failures": [],
       "notes": [
@@ -663,8 +663,8 @@
     {
       "key": "claims",
       "title": "Mechanism claims for the headline interaction (Lead's target)",
-      "status": "PASS",
-      "summary": "Interaction reproduced (1.0000 either alone vs 0.9089 together, \u03c3_obs=0.03), the inventory asymmetry exists at the goods-balance frontier (gain +0.00% / loss -8.71%) and disappears in the operating regime; labour \u00d73 removes the loss, so the explanation holds as a labour-projection effect.",
+      "status": "FAIL",
+      "summary": "",
       "numbers": {
         "6a_grid": {
           "gain0.0_rounds0": {
@@ -738,9 +738,34 @@
         "6d_min_sector_fill_mean": 0.845039204605018,
         "6_current_claim_status": "SUPPORTED",
         "6_old_inventory_claim_status": "REFUTED",
-        "wall_s": 8.46
+        "6e_hypothesis_rows": [
+          "H1",
+          "H1'",
+          "H2",
+          "H4",
+          "H5",
+          "incidence",
+          "ladder"
+        ],
+        "6e_H3_statistic": {
+          "n_cells": 20,
+          "min": 0.011623730912654194,
+          "max": 0.060380297079192166,
+          "mean": 0.02934870512728242,
+          "threshold": 0.005,
+          "min_ratio": 2.3247461825308386,
+          "max_ratio": 12.076059415838433,
+          "cells_below_threshold": 0
+        },
+        "6e_H3_shock_size": [
+          0.5
+        ],
+        "6e_status": "AUDITED",
+        "wall_s": 9.79
       },
-      "failures": [],
+      "failures": [
+        "6e: the hypothesis adjudication table has no row for ['H3'] (present: ['H1', \"H1'\", 'H2', 'H4', 'H5', 'incidence', 'ladder'])"
+      ],
       "notes": [
         "The interaction is reproduced (1.0000 either alone vs 0.9089 together). The corrected mechanism is supported: inventory estimates are irrelevant in the operating regime (r_est=0 gives 0.9069 vs 0.9089), labour x3 removes the loss (1.0000), the mechanism's own balancing calls are labour-binding (used/L = 0.992 mean, 86% of calls) and the inventory asymmetry exists only at the knife-edge goods-balance frontier (gain +0.00%, loss -8.71%), where the mechanism never operates. The earlier 'inventory-estimate asymmetry' explanation is therefore refuted (finding F4)."
       ]

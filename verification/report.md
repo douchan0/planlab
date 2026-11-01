@@ -1,11 +1,12 @@
 # PlanLab independent verification report
 
-Generated: 2026-11-01 17:12:42 +0800  
+Generated: 2026-11-01 17:19:28 +0800  
 Repository: `/Users/ceontou/Documents/code/planlab`  
-git commit: `0b6a8c875c523c9cdc6b0f4a32fc261b48cd9a19` (dirty: True)  
+git commit: `647fdf12fd5dcd688c01ec8193fb0c2b0b395364` (dirty: True)  
 Python 3.10.13 on macOS-15.7.7-arm64-arm-64bit  
-Wall time: 69.9 s  
-Checks: 6 PASS, 0 FAIL, 0 SKIP, 0 ERROR
+Artefacts audited (mtime): paper/main.md 2026-11-01 17:14:23; paper/tables 2026-11-01 17:13:16; results/tables/tests.csv 2026-11-01 16:55:18; results/tables/t00_hypotheses.csv 2026-11-01 16:55:18  
+Wall time: 64.3 s  
+Checks: 5 PASS, 1 FAIL, 0 SKIP, 0 ERROR
 
 This suite is written by an independent verifier. It re-derives the theorem, re-implements a period from the written specification, audits the raw records behind the paper's numbers, re-runs sampled cells, and re-computes the statistics with its own code. It deliberately does not import the project's engine, metrics or aggregate modules to judge their output; where it does use project code it is only for *inputs* (the technology matrix) or for *records* (the stored arrays).
 
@@ -60,21 +61,21 @@ An independent verifier is only worth having if its record shows what it caught.
 - Where: paper/main.md §6.6 against results/B4/cells.json and paper/tables/rationing_shadow.csv
 - Finding: The B4 cells are named loss50/loss70/loss90 and pass scenario shock `size` = 0.5/0.3/0.1; because Shock.factor treats `size` as the capacity MULTIPLIER, the realised capacity losses are 50%/70%/90%, not the protocol's 10%/30%/50% losses. The paper labels the 70% cell 'thirty per cent' and the 90% cell 'ten per cent', and the narrative built on those labels does not survive: the output gap reverses sign between the 50% and 70% cells (-0.9pp, rationing ahead, then +3.35pp, tatonnement ahead) and widens to +4.97pp at 90%. The protocol (docs/PROTOCOL.md §4 B4) and Amendment 2 ('keeps its pre-registered size sweep {0.10, 0.30, 0.50}') are silent on the multiplier-vs-loss ambiguity.
 - Evidence: check 5's data audit and the B4 cell definitions; numbers reproduced from paper/tables/rationing_shadow.csv.
-- Resolution: REPORTED; needs relabelling (or a re-run at size 0.9/0.7/0.5) before submission. This is the paper's most referee-visible error in §6.
+- Resolution: FIXED in the current manuscript (paper/main.md mtime in the header): §6.6 now states that the pre-registered sizes are capacity multipliers 0.1/0.3/0.5, that the realised losses are 90/70/50 per cent, and the narrative follows the rows (ranking reverses at 70 per cent, widens at 90 per cent). Verified by grep on the current file.
 
 ### F8 — overclaim (paper, H4) (2026-11-01)
 
 - Where: paper/main.md §6.5 'Both halves are confirmed' against results/tables/tests.csv
 - Finding: The H4 centrality half rests on raw Spearman p-values. The project's own test log applies the pre-registered Holm correction and marks EVERY centrality test non-significant: material_balance rho=0.5128 p=0.0208 p_holm=0.166; tatonnement rho=0.5669 p=0.0091 p_holm=0.082; priority rationing rho=0.4135 p=0.0699 p_holm=0.489. My 10,000-draw permutation test agrees with the raw p (0.024 / 0.012 / 0.077) and with the rho values to 1e-6, so the numbers are right and the INTERPRETATION is not: after the paper's own multiplicity rule, the centrality result is not significant for any of the three mechanisms. The only significant centrality rows in tests.csv use shock_output_amplification (p_holm 0.0011/0.0073/0.00024), which the paper itself demotes as a small-denominator artefact. A second, independent sensitivity: with the textbook forward-linkage measure (row sums of A) the correlation is only 0.31-0.33 (p about 0.15-0.18).
 - Evidence: check 5 (5c) recomputation from summary.csv + permutation null; results/tables/tests.csv H4-centrality rows.
-- Resolution: REPORTED; the text should say two of the three raw correlations are significant but none survives Holm, and should report the row-sum measure as a null. Not yet fixed in the manuscript.
+- Resolution: FIXED in the current manuscript (§6.5 now reports both linkage definitions, the row-sum null and the Holm caveat). One residual: the paper says two correlations survive Holm across the three institutions, while results/tables/tests.csv applies Holm within the whole B3 block (p_holm 0.166 / 0.082 / 0.489, none survive). See F16.
 
 ### F9 — factual error (paper) (2026-11-01)
 
 - Where: paper/main.md §6.5
 - Finding: "The most damaging sectors are c05, c20, c02 and c12 under all three institutions" is false for priority rationing: its top four are c20, c19, c05, c02 (c12 is fifth; c19 is second). The sentence holds for material balance and tatonnement.
 - Evidence: paper/tables/propagation.csv ranks by output_loss.
-- Resolution: REPORTED; one-clause fix (or say 'under two of the three').
+- Resolution: FIXED in the current manuscript (§6.5 now gives the per-institution ordering with c19 second and c12 fifth under priority rationing).
 
 ### F10 — stale text (paper) (2026-11-01)
 
@@ -88,7 +89,7 @@ An independent verifier is only worth having if its record shows what it caught.
 - Where: paper/main.md §6.4, abstract; §6.1
 - Finding: (a) §6.4: 'the detrended amplitude of the mean log price sits between 0.017 and 0.041 across the whole grid, the lag-one autocorrelation between 0.93 and 0.95'. At the reference gain 0.3 the amplitude spans 0.000-0.170 (market 0.124-0.170, tatonnement 0.128-0.146) and the acf spans 0.65-0.95; the 0.017-0.041 range corresponds to tatonnement at gains 0.05-0.1, not to the lag grid at the reference gain. (b) §6.1 calls 259.568805 'cumulative welfare'; it is the mean per-period welfare (cum_welfare = 12978.44). (c) The abstract says the loss 'vanishes at eighty' per cent labour slack, while §6.3 and §6.8 report it vanishing at labour_supply_factor 2.00 (100% slack), with 0.4% left at 1.40. (d) The abstract's 'a factor of two to fifty below it' mixes the most-responsive sector's 1.9 with the median sector's 12-50.
 - Evidence: results/tables/main_lag_grid.csv, results/B1/summary.csv, paper/tables/labour_slack.csv.
-- Resolution: REPORTED; all four are sentence-level corrections.
+- Resolution: MOSTLY FIXED in the current manuscript: the phrase cumulative welfare is now welfare, the abstract says the loss vanishes at a hundred per cent of labour slack, and the factor-of-two-to-fifty claim is replaced by the reachability statement. Two numbers remain off in the amplitude sentence of section 6.4: tatonnement spans 0.118-0.152 in the reference-gain table, not 0.128-0.156, and 0.249 is the pooled-grid maximum at gain 0.8, not a reference-gain cell (market 0.124-0.170 is correct).
 
 ### F12 — governance / documentation (2026-11-01)
 
@@ -102,21 +103,42 @@ An independent verifier is only worth having if its record shows what it caught.
 - Where: paper/tables/main_lag_grid.csv
 - Finding: The table has 204 rows but only 144 unique (mechanism, gain, reporting-lag) keys: the tatonnement cells at price elasticities 0.4 and 0.8 are indistinguishable because the elasticity column is absent. The values do come from results/B2 (my sorted-value traceability comparison passes), but a reader cannot tell which row is which, and §6.4's 'at the reference gain' sentences could refer to either.
 - Evidence: check 5d (all headline tables re-derived from results/, worst 5e-7).
-- Resolution: FIXED in the 17:07 regeneration: the table now carries a price_elasticity column, so every row is identified; check 5d keys on it.
+- Resolution: FIXED in the current table and verified in check 5d: the table now carries a price_elasticity column, so every row is identified.
 
 ### F14 — error (paper, H1 narrative) (2026-11-01)
 
 - Where: paper/main.md §6.4 and the abstract, against results/tables/t12_bp_by_sector.csv and results/tables/t05_stability_boundary.csv
 - Finding: §6.4 states b_p 'is of order 0.01 to 0.08 by sector' and that the loop gain 'is of order 0.02 at the median sector and reaches 0.13 only in the most responsive one'. The final measurement table says the opposite: at the reference elasticity 0.4 the median b_p is 0.1707, the mean 0.1973 and the maximum 0.4782 (at 0.8: median 0.3319, max 0.7867). At eta=1.6 the median sector's loop gain is therefore 0.273, ABOVE g*(7)=0.209 and g*(6)=0.241, and the most responsive sector reaches 0.765, above g*(m) for every m>=3. t05 records g_max_over_bound = 1.11 at m=5 and 1.51 at m=7 (elasticity 0.4), 1.23-2.62 at 0.8, `boundary_approachable` True in 6 cells and `rule_fired_below_bound` True in 2. Hence 'nowhere near the boundary' is false for the final grid, 'the median gain of 0.02 would turn at about seventy-eight quarters' should be about 31 quarters, and the abstract's 'a factor of two to fifty below it' is not supported (3.7x below g*(1) but 1.3x ABOVE g*(7) at the largest gain). The stale numbers look like b_p measured before the price-elasticity change in docs/DEVIATIONS.md.
 - Evidence: check 5d (t12 and t05 re-derived from results/), and the H1 test rows in results/tables/tests.csv.
-- Resolution: REPORTED; the H1 narrative must be rewritten from t12/t05, which actually strengthens the paper's story: the boundary is reachable at the top of the gain grid and the amplitude test there rejects (F15).
+- Resolution: FIXED in the current manuscript: §6.4 now reports b_p = 0.197/0.342, maximum loop gains 0.316/0.548, the m>=5 / m>=3 crossing lags, and the abstract says the bound is 'rarely reached ... crossed only at the far end of the lag axis'. These match t12/t05 exactly.
 
 ### F15 — understated result (paper) (2026-11-01)
 
 - Where: paper/main.md §6.4 against results/tables/tests.csv row H1
 - Finding: The paper reports H1 as a null. The project's own test log records the pre-registered amplitude test at gain=1.6 (the largest), lag 6 vs lag 0: paired one-sided Wilcoxon statistic 817, p = 4.5e-12, significant_05 = yes. The null holds at the reference gain 0.3 only. Reporting the rejection that appears exactly when the loop gain is pushed toward the boundary would support rather than weaken the paper's reading of delay.
 - Evidence: results/tables/tests.csv (H1 rows).
-- Resolution: REPORTED; report both the reference-gain null and the high-gain rejection.
+- Resolution: FIXED in the current manuscript (§6.4 now reports the Wilcoxon 817 / p = 4.5e-12 row beside the reference-gain null, framed as a reachable boundary seen from below).
+
+### F16 — inconsistency (paper vs test log) (2026-11-01)
+
+- Where: paper/main.md §6.5 vs results/tables/tests.csv
+- Finding: §6.5 says 'After Holm correction across the three institutions, two survive at alpha=0.05 (material balance and tatonnement)'. That is true for a three-test family (p = 0.0091, 0.0208, 0.0699 -> adjusted 0.027, 0.042, 0.070), but results/tables/tests.csv applies Holm within the whole B3 block (nine centrality rows plus the other B3 tests) and records p_holm = 0.166, 0.082 and 0.489 - none survives. The protocol says 'Holm correction within each block', so the paper's narrower family needs to be stated explicitly (and the test log regenerated for that family, or vice versa).
+- Evidence: check 5b (Holm values recomputed from tests.csv, 37 values, agreement 1e-12) and the permutation p-values in check 5c.
+- Resolution: REPORTED; state the family and reconcile the two files.
+
+### F17 — internal contradiction (abstract vs body) (2026-11-01)
+
+- Where: paper/main.md abstract (line 10) vs §6.4 and §6.7
+- Finding: The abstract still ends 'Two pre-registered hypotheses are falsified: no crossing of the delay boundary is observed, and the dual-track share shows no detectable interior optimum', while the rebuilt body says the opposite in both places: §6.4 states 'The boundary is not unreachable; it is reached by driving the loop hard', and §6.7 states 'the pre-registered prediction is formally satisfied and one of the two H5 tests survives Holm correction at p = 0.0045'. The abstract also contradicts itself two sentences earlier ('crossed only at the far end of the lag axis by a hard-driven loop').
+- Evidence: grep of paper/main.md at the audited commit/mtime; the corresponding test rows are in results/tables/tests.csv (H1 amplitude row significant; H5 row p_holm 0.0089).
+- Resolution: REPORTED; the abstract must be rebuilt from the final §6.4/§6.7 on whether H1 and H5 are falsified, or the body reverted.
+
+### F18 — gap (adjudication table) — the Lead's own finding, confirmed (2026-11-01)
+
+- Where: results/tables/t00_hypotheses.csv vs paper/main.md §5/§6.5
+- Finding: The machine-readable hypothesis table has rows for H1, H1', H2, H4, H5, incidence and ladder but NO row for H3, although §5 states H3 as a falsifiable prediction and §6.5 adjudicates it. The adjudication itself is correct: I re-derived H3's statistic from results/B3/summary.csv (material_balance, 20 shocked sectors): mean shortage 1.162%-6.038%, mean 2.935%, ratios 2.32-12.08 against the 0.5% falsifier, 0 of 20 cells below the threshold - exactly the paper's 1.16-6.04/2.93/2.3-12.1. The amended shock (size 0.50 = 50% cut, duration 8) is documented in Amendment 2 and disclosed in §5.
+- Evidence: check 6e (new): hypothesis-table completeness + H3 statistic re-derived from B3 + amendment disclosure. The check FAILS until the H3 row exists.
+- Resolution: OPEN at the time of writing: add the H3 row to the adjudication table (and regenerate results/tables/t00_hypotheses.csv).
 
 ## What remains unverified
 
@@ -164,7 +186,7 @@ Measured:
     - m=10, predicted=42, zero_cross=42, fft=41.796, root_arg=42
     - m=11, predicted=46, zero_cross=46, fft=45.511, root_arg=46
     - m=12, predicted=50, zero_cross=50, fft=49.951, root_arg=50
-- `wall_s`: 0.64
+- `wall_s`: 0.56
 
 Notes:
 
@@ -192,7 +214,7 @@ Measured:
 - `n_collapse_forced`: 10
 - `n_first_pass_optimality_probes`: 182
 - `max_cascade_exit_deficit_rel`: 2.34915e-16
-- `wall_s`: 1.66
+- `wall_s`: 1.46
 
 What this does not prove. I implemented the *published* algorithm, so agreement shows that the code does what the specification says; it does not show that the specification is the right model. The per-period comparison also cannot detect a bias that is present identically in both my implementation and the engine's (e.g. a shared but wrong definition of a claim row).
 
@@ -224,7 +246,7 @@ Measured:
 - `ladder_violations`: 0
 - `cells_rerun`: 83
 - `max_period_reproduction_diff`: 0
-- `wall_s`: 29.84
+- `wall_s`: 26.52
 
 Notes:
 
@@ -255,7 +277,7 @@ Measured:
 - `n_manifest_blocks_ok`: 11
 - `n_consistency_checks_4e`: 14728
 - `n_scenario_yamls_rerun`: 16
-- `wall_s`: 17.25
+- `wall_s`: 14.63
 
 Notes:
 
@@ -345,7 +367,7 @@ Measured:
 - `5d_worst_rel_diff`: 4.98353e-07
 - `5d_worst_at`: robustness.csv:mean_x_over_base
 - `5d_status`: AUDITED
-- `wall_s`: 12.09
+- `wall_s`: 11.33
 
 Notes:
 
@@ -355,9 +377,7 @@ What this does not prove. I can recompute the test statistics and their multipli
 
 ## Check claims — Mechanism claims for the headline interaction (Lead's target)
 
-**Status: PASS**
-
-Interaction reproduced (1.0000 either alone vs 0.9089 together, σ_obs=0.03), the inventory asymmetry exists at the goods-balance frontier (gain +0.00% / loss -8.71%) and disappears in the operating regime; labour ×3 removes the loss, so the explanation holds as a labour-projection effect.
+**Status: FAIL**
 
 Measured:
 
@@ -375,7 +395,15 @@ Measured:
 - `6d_min_sector_fill_mean`: 0.845039
 - `6_current_claim_status`: SUPPORTED
 - `6_old_inventory_claim_status`: REFUTED
-- `wall_s`: 8.46
+- `6e_hypothesis_rows`: ['H1', "H1'", 'H2', 'H4', 'H5', 'incidence', 'ladder']
+- `6e_H3_statistic`: n_cells=20, min=0.0116237, max=0.0603803, mean=0.0293487, threshold=0.005, min_ratio=2.32475, max_ratio=12.0761, cells_below_threshold=0
+- `6e_H3_shock_size`: [0.5]
+- `6e_status`: AUDITED
+- `wall_s`: 9.79
+
+Failures:
+
+- 6e: the hypothesis adjudication table has no row for ['H3'] (present: ['H1', "H1'", 'H2', 'H4', 'H5', 'incidence', 'ladder'])
 
 Notes:
 

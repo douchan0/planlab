@@ -255,3 +255,30 @@ of writing, and both were repaired rather than removed:
 
 Both were defects in the Lead's table-assembly code, not in the model or the
 experiment layer.
+
+---
+
+## 9. H3 added to the adjudication table by the Lead (2026-11-01)
+
+**Gap.** `results/tables/t00_hypotheses.csv` adjudicated H1, H1', H2, H4 and H5 —
+five of the six pre-registered hypotheses. H3 was stated in `docs/PROTOCOL.md` and
+in the paper's §5 as a falsifiable prediction, and the paper's §6.5 adjudicated it,
+but the machine-readable table did not carry it. The paper and the table therefore
+disagreed about which hypotheses the design covers, which is exactly the kind of
+disagreement the protocol's "every number traces to a file" rule is meant to prevent.
+
+**Why the Lead rather than the experiment layer.** The experiment layer had gone
+inactive by the time the gap was found, and the row is a pure derivation from
+`results/B3/summary.csv`, so an inactive owner is not a reason to leave a hole.
+
+**Row content**, derived not typed: 20 sectoral cells (one per shocked sector under
+the amended 50 per cent cut, 8 quarters, 20 seeds, lag 2, gain 0.30); every cell
+clears the falsifier, so 20/20 "significant"; `key_statistic` is the **weakest** cell
+mean, 0.011624, which is 2.32x the 0.5 per cent threshold; the strongest cell is
+0.06038 (12.08x); the mean over cells is 0.02935. No p-value is recorded because H3's
+falsification condition is a threshold, not a hypothesis test — recording a p-value
+there would have implied an inferential procedure the protocol never specified.
+
+**Verification.** `verification/check6` fails if the adjudication table does not carry
+six hypothesis rows; that check now passes, and the verifier independently re-derived
+the same statistics from `results/B3/summary.csv` before the row existed.

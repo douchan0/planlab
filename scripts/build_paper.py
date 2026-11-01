@@ -70,7 +70,7 @@ MAIN_MD = PAPER / "main.md"
 MAIN_HTML = PAPER / "main.html"
 MAIN_PDF = PAPER / "main.pdf"
 BIB_MD = PAPER / "bibliography.md"
-REPORT = PAPER / "build_report.json"
+REPORT = PAPER / "build_report.json"  # rebound by --out-stem
 
 EDGE_CANDIDATES = [
     "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
@@ -80,6 +80,48 @@ EDGE_CANDIDATES = [
 ]
 
 FIG_SUFFIXES = (".png", ".jpg", ".jpeg", ".svg", ".webp", ".gif")
+
+#: Everything the renderer has to say in words, per output language.
+LANG = {
+    "en": {
+        "html_lang": "en",
+        "serif": '"Charter", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif',
+        "mono": '"SF Mono", "Menlo", "Consolas", monospace',
+        "sec": "Section&nbsp;{}",
+        "fig": "Figure&nbsp;{}",
+        "tab": "Table&nbsp;{}",
+        "app": "Appendix {}",
+        "figlabel": "Figure",
+        "tablabel": "Table",
+        "abstract": "Abstract",
+        "keywords": "Keywords",
+        "references": "References",
+        "body_lh": "1.52",
+        "body_ls": "",
+        "justify": "justify",
+    },
+    "zh": {
+        "html_lang": "zh-CN",
+        # CJK faces must come before the generic serif or Chrome renders tofu
+        "serif": ('"Charter", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, '
+                  '"Songti SC", "Songti TC", "Hiragino Sans GB", "STHeiti", "Arial Unicode MS", serif'),
+        "mono": ('"SF Mono", "Menlo", "Consolas", "PingFang SC", "Hiragino Sans GB", '
+                 '"STHeiti", monospace'),
+        "sec": "第{}节",
+        "fig": "图{}",
+        "tab": "表{}",
+        "app": "附录{}",
+        "figlabel": "图",
+        "tablabel": "表",
+        "abstract": "摘要",
+        "keywords": "关键词",
+        "references": "参考文献",
+        # Chinese sets tighter and taller at 11pt; without this the page is cramped
+        "body_lh": "1.78",
+        "body_ls": "letter-spacing: .01em; ",
+        "justify": "justify",
+    },
+}
 
 #: Opaque sentinel tokens.  They must be made of plain alphanumerics: any
 #: markdown-significant character (or an HTML comment, which Python-Markdown
@@ -252,6 +294,19 @@ class Table:
 
 
 @dataclass
+class Settings:
+    """Output-language settings, fixed once per build."""
+    lang: str = "en"
+
+    @property
+    def W(self) -> dict:
+        return LANG[self.lang]
+
+
+SETTINGS = Settings()
+
+
+@dataclass
 class BuildState:
     slots: list[Slot] = field(default_factory=list)
     figures: dict[str, Figure] = field(default_factory=dict)
@@ -376,9 +431,21 @@ def extract_fenced_divs(src: str, st: BuildState) -> str:
         idm = re.search(r"#([\w:\-]+)", attrs)
         if not idm:
             continue
-        head = re.search(r"\*\*([A-Z][A-Za-z]+\s+(?:\d+|[IVX]+|[A-Z]))\b[^*]*\*\*", m.group("body"))
-        if head:
-            st.labels_seen[idm.group(1)] = re.sub(r"\s+", " ", head.group(1)).strip()
+        explicit = re.search(r'label="([^"]+)"', attrs)
+        bold = re.search(r"\*\*([^*]+)\*\*", m.group("body"))
+        label = None
+        if explicit:
+            label = explicit.group(1).strip()
+        elif bold:
+            text = bold.group(1).strip()
+            for pat in (r"([A-Z][A-Za-z]+\s+(?:\d+|[IVX]+|[A-Z]))\b",
+                        r"([\u4e00-\u9fff]+\s*\d+)"):
+                hit = re.match(pat, text)
+                if hit:
+                    label = hit.group(1)
+                    break
+        if label:
+            st.labels_seen[idm.group(1)] = re.sub(r"\s+", " ", label)
 
     def open_repl(m: re.Match) -> str:
         attrs = m.group("attrs")
@@ -618,7 +685,7 @@ def render_token(payload: str, st: BuildState, entries: dict[str, dict[str, str]
             return (
                 f'<figure class="float missing" id="fig-{f.name}">'
                 f'<div class="figph">figure <code>{html.escape(f.name)}</code> pending</div>'
-                f'<figcaption><span class="floatlabel">Figure {f.number}.</span> '
+                f'<figcaption><span class="floatlabel">{SETTINGS.W["figlabel"]} {f.number}.</span> '
                 f'{render_inline(f.caption)}</figcaption></figure>'
             ), True
         try:
@@ -628,7 +695,7 @@ def render_token(payload: str, st: BuildState, entries: dict[str, dict[str, str]
         return (
             f'<figure class="float" id="fig-{f.name}">'
             f'<img src="{html.escape(src, quote=True)}" alt="{html.escape(f.name, quote=True)}">'
-            f'<figcaption><span class="floatlabel">Figure {f.number}.</span> '
+            f'<figcaption><span class="floatlabel">{SETTINGS.W["figlabel"]} {f.number}.</span> '
             f'{render_inline(f.caption)}</figcaption></figure>'
         ), True
 
@@ -642,13 +709,13 @@ def render_token(payload: str, st: BuildState, entries: dict[str, dict[str, str]
         )
         return (
             f'<div class="tablefloat" id="tab-{t.name}">'
-            f'<figcaption class="tabcap"><span class="floatlabel">Table {t.number}.</span> '
+            f'<figcaption class="tabcap"><span class="floatlabel">{SETTINGS.W["tablabel"]} {t.number}.</span> '
             f'{render_inline(t.caption)}</figcaption>'
             f'<div class="tabbody">{inner}</div></div>'
         ), True
 
     if head == "REF" and len(parts) >= 3:
-        return fmt_ref(parts[1], parts[2], st)
+        return fmt_ref(parts[1], parts[2], st, SETTINGS.lang)
 
     if head == "CITE":
         keys = [k for k in parts[1].split(",") if k]
@@ -666,7 +733,8 @@ def render_token(payload: str, st: BuildState, entries: dict[str, dict[str, str]
     return TOKEN_TMPL.format(-1), False
 
 
-def fmt_ref(kind: str, label: str, st: BuildState) -> tuple[str, bool]:
+def fmt_ref(kind: str, label: str, st: BuildState, lang: str = "en") -> tuple[str, bool]:
+    W = LANG[lang]
     if kind == "sec":
         if label in st.sections:
             num, what = st.sections[label]
@@ -676,19 +744,19 @@ def fmt_ref(kind: str, label: str, st: BuildState) -> tuple[str, bool]:
             if what == "unnumbered":
                 title = st.section_text.get(label, num)
                 return f'<a class="xref" href="#{dom}">{title}</a>', False
-            return f'<a class="xref" href="#{dom}">Section&nbsp;{num}</a>', False
+            return f'<a class="xref" href="#{dom}">{W["sec"].format(num)}</a>', False
         st.unresolved.append(f"[[REF:sec:{label}]]")
         return '<span class="xref-broken">Section&nbsp;??</span>', False
     if kind == "fig":
         f = st.figures.get(label)
         if f:
-            return f'<a class="xref" href="#fig-{label}">Figure&nbsp;{f.number}</a>', False
+            return f'<a class="xref" href="#fig-{label}">{W["fig"].format(f.number)}</a>', False
         st.unresolved.append(f"[[REF:fig:{label}]]")
         return '<span class="xref-broken">Figure&nbsp;??</span>', False
     if kind in ("tab", "table"):
         t = st.tables.get(label)
         if t:
-            return f'<a class="xref" href="#tab-{label}">Table&nbsp;{t.number}</a>', False
+            return f'<a class="xref" href="#tab-{label}">{W["tab"].format(t.number)}</a>', False
         st.unresolved.append(f"[[REF:tab:{label}]]")
         return '<span class="xref-broken">Table&nbsp;??</span>', False
     if kind in THEOREM_KINDS:
@@ -803,8 +871,8 @@ CSS = r"""
 :root {
   --ink: #14171c; --muted: #5b6470; --rule: #d6dae0; --accent: #7a1f2b;
   --bg: #ffffff; --slotbg: #fdf3d8; --slotbd: #b98a12;
-  --mono: "SF Mono", "Menlo", "Consolas", monospace;
-  --serif: "Charter", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --mono: __MONO__;
+  --serif: __SERIF__;
   --width: 46rem;
 }
 * { box-sizing: border-box; }
@@ -812,7 +880,7 @@ html { font-size: 11pt; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0 auto; padding: 2.6rem 1.6rem 4rem; max-width: calc(var(--width) + 3.2rem);
   background: var(--bg); color: var(--ink); font-family: var(--serif);
-  line-height: 1.52; text-rendering: optimizeLegibility;
+  line-height: __BODY_LH__; __LS_DECL__text-rendering: optimizeLegibility;
   font-kerning: normal; font-variant-ligatures: common-ligatures;
 }
 p { margin: 0 0 0.62rem; text-align: justify; hyphens: auto; -webkit-hyphens: auto;
@@ -931,7 +999,7 @@ nav.toc .tocnum { display: inline-block; min-width: 2.4em; color: var(--accent);
   html { font-size: 10.2pt; }
   @page { size: A4; margin: 20mm 19mm 18mm; }
   @page :first { margin-top: 16mm; }
-  body { padding: 0; max-width: none; line-height: 1.42; }
+  body { padding: 0; max-width: none; line-height: __PRINT_LH__; }
   nav.toc { display: none; }
   a { color: inherit; text-decoration: none; }
   .slot { background: none; border-style: dotted; }
@@ -968,7 +1036,7 @@ MATH_SCRIPT = r"""
 """
 
 HEAD_TMPL = """<!DOCTYPE html>
-<html lang="en">
+<html lang="{html_lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1177,6 +1245,12 @@ def build(args: argparse.Namespace) -> int:
 
     # --- Stage 3: assemble ---------------------------------------------------
     stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    W = SETTINGS.W
+    css = (CSS.replace("__SERIF__", W["serif"])
+              .replace("__MONO__", W["mono"])
+              .replace("__BODY_LH__", W["body_lh"])
+              .replace("__LS_DECL__", W["body_ls"])
+              .replace("__PRINT_LH__", "1.42" if SETTINGS.lang == "en" else "1.62"))
     abstract = ""
     if meta.get("abstract"):
         amd = make_markdown()
@@ -1184,17 +1258,22 @@ def build(args: argparse.Namespace) -> int:
         abs_src = collect_generic_slots(abs_src, st)
         abstract = resolve_sentinels(amd.convert(abs_src), st, entries)
     parts = [
-        HEAD_TMPL.format(title=html.escape(meta.get("title", "PlanLab paper")), css=CSS, stamp=stamp),
+        HEAD_TMPL.format(title=html.escape(meta.get("title", "PlanLab paper")), css=css,
+                         stamp=stamp, html_lang=W["html_lang"]),
         build_titleblock(meta),
     ]
     if abstract:
-        parts.append(f'<section class="abstract"><div class="abshead">Abstract</div>{abstract}</section>')
+        parts.append(f'<section class="abstract"><div class="abshead">{W["abstract"]}</div>{abstract}</section>')
+    if meta.get("keywords"):
+        parts.append(f'<p class="keywords"><span class="abshead">{W["keywords"]}</span> '
+                     f'{html.escape(meta["keywords"])}</p>')
     if args.toc:
         parts.append(build_toc(st))
     parts.append(body)
     if entries:
         refs = build_references(st, entries)
-        parts.append(f'<h2 class="unnumbered" id="sec:references">References</h2>\n{refs}')
+        refhead = W["references"]
+        parts.append(f'<h2 class="unnumbered" id="sec:references">{refhead}</h2>\n{refs}')
     parts.append(MATH_DEPS)
     parts.append(MATH_SCRIPT)
     parts.append("</body></html>")
@@ -1297,7 +1376,19 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--toc", action="store_true", help="insert a screen-only table of contents")
     ap.add_argument("--stats-only", action="store_true", help="print word counts and exit")
     ap.add_argument("--timeout", type=int, default=180, help="Edge timeout in seconds")
+    ap.add_argument("--lang", choices=sorted(LANG), default="en",
+                    help="output language; zh adds CJK font fallbacks and Chinese labels")
+    ap.add_argument("--input", default=None, help="manuscript to build (default paper/main.md)")
+    ap.add_argument("--out-stem", default=None, help="output stem, e.g. main_zh")
     args = ap.parse_args(argv)
+    SETTINGS.lang = args.lang
+    if args.input:
+        src = Path(args.input)
+        globals()["MAIN_MD"] = src if src.is_absolute() else (ROOT / src)
+    if args.out_stem:
+        globals()["MAIN_HTML"] = PAPER / f"{args.out_stem}.html"
+        globals()["MAIN_PDF"] = PAPER / f"{args.out_stem}.pdf"
+        globals()["REPORT"] = PAPER / f"build_report_{args.out_stem}.json"
     if args.stats_only:
         raw = MAIN_MD.read_text(encoding="utf-8")
         meta, body = split_front_matter(raw)
