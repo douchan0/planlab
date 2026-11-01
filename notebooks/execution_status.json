@@ -1,0 +1,21 @@
+{
+ "executable": "/Users/ceontou/Documents/code/planlab/.venv/bin/python",
+ "failures": 0,
+ "generated_by": "notebooks/execute_all.py",
+ "nbclient_timeout_s": 600,
+ "notebooks": {
+  "03_one_period_walkthrough.ipynb": {
+   "cells": 35,
+   "error": null,
+   "kernel": "planlab-venv",
+   "n_code_cells": 18,
+   "n_outputs": 23,
+   "ok": true,
+   "seconds": 9.01,
+   "sha256": "d7bde066f2bfcef616bd517bffed9b86de18fce1f9bde00b23873d4b5e41c25c"
+  }
+ },
+ "platform": "macOS-15.7.7-arm64-arm-64bit",
+ "python": "3.10.13",
+ "total_seconds": 9.01
+}

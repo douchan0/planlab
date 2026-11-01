@@ -26,9 +26,12 @@ base year (a buffer-inclusive market would report permanent excess supply equal 
 buffer and deflate the price to the floor).
 
 **Experimental treatments.** ``claim_elasticity`` (how strongly buyers' claims fall
-with the price the market maker posts) and ``price_step`` / ``max_clearing_iters``
-(how fast and how long the auctioneer iterates) are the knobs; ``capacity_ceiling``
-governs how far the supply plan may exceed observed capacity.
+with the price the market maker posts) and ``price_step`` / ``max_clearing_iters`` /
+``clearing_tol`` (how fast, how long and how exactly the auctioneer iterates) are the
+knobs; ``capacity_ceiling`` governs how far the supply plan may exceed observed
+capacity; ``price_floor`` / ``price_ceiling`` must match the scenario's ``price_bounds``
+so that the posted price is the price the claims were computed at.  Stockbuilding is
+*not* a bidder in the auction: it is the residual claimant of the priority ladder.
 
 **Relation to the scenario's demand elasticity.** The household price response is
 *this mechanism's* demand schedule: at market prices a household buys
@@ -66,18 +69,25 @@ class Market(CoordinationMechanism):
         #: log-price step of the auctioneer per clearing iteration
         "price_step": 0.25,
         #: maximum clearing iterations per period
-        "max_clearing_iters": 40,
+        "max_clearing_iters": 80,
         #: relative gap at which the market is declared clear
-        "clearing_tol": 0.01,
+        "clearing_tol": 0.001,
         #: ceiling on the supply plan as a multiple of observed capacity
         "capacity_ceiling": 1.50,
-        #: share of the observed backlog added to this period's household claim
-        "backlog_carry": 0.0,
+        #: share of the observed backlog re-submitted as this period's household claim
+        #: (a queue: granted-but-not-demanded quantities end up in inventory, which is
+        #: what rebuilds the buffer stock after a shock)
+        "backlog_carry": 0.30,
         #: desired stock level as a multiple of base output
         "stock_target_ratio": 0.15,
         #: bounds on the planned target, relative to base-year output
         "max_target_ratio": 2.50,
         "min_target_ratio": 0.25,
+        #: band inside which the market posts its clearing price.  Keep it equal to the
+        #: scenario's ``price_bounds``: the price vector the mechanism actually posts
+        #: must be the one its claims were computed at.
+        "price_floor": 0.05,
+        "price_ceiling": 20.0,
     }
 
     # ------------------------------------------------------------------ setup
@@ -90,17 +100,25 @@ class Market(CoordinationMechanism):
             "price_step", self.param("price_step", 0.25), 0.0, 1.0, lo_open=True
         )
         self._max_iters = require_int(
-            "max_clearing_iters", self.param("max_clearing_iters", 40), 1, 400
+            "max_clearing_iters", self.param("max_clearing_iters", 80), 1, 400
         )
         self._clearing_tol = require_range(
-            "clearing_tol", self.param("clearing_tol", 0.01), 0.0, 1.0, lo_open=True
+            "clearing_tol", self.param("clearing_tol", 0.001), 0.0, 1.0, lo_open=True
         )
         self._capacity_ceiling = require_range(
             "capacity_ceiling", self.param("capacity_ceiling", 1.5), 0.0, 5.0, lo_open=True
         )
         self._backlog_carry = require_range(
-            "backlog_carry", self.param("backlog_carry", 0.0), 0.0, 1.0
+            "backlog_carry", self.param("backlog_carry", 0.3), 0.0, 1.0
         )
+        self._price_floor = require_range(
+            "price_floor", self.param("price_floor", 0.05), 0.0, 1.0, lo_open=True, hi_open=True
+        )
+        self._price_ceiling = require_range(
+            "price_ceiling", self.param("price_ceiling", 20.0), 1.0, 1e6, hi_open=True
+        )
+        if not self._price_floor < self._price_ceiling:
+            raise ValueError("price_floor must be below price_ceiling")
         self._stock_ratio = require_range(
             "stock_target_ratio", self.param("stock_target_ratio", 0.15), 0.0, 5.0
         )
@@ -130,9 +148,17 @@ class Market(CoordinationMechanism):
 
     # ------------------------------------------------------------------ helpers
     def _final_claims(self, obs: Observation) -> tuple[np.ndarray, np.ndarray]:
-        """``(household, other)`` final claims implied by the observation."""
+        """``(household, other)`` *notional* final claims implied by the observation.
+
+        Stockbuilding is deliberately **excluded**: it is the residual claimant of the
+        priority ladder (tier 5), funded out of leftovers, not a buyer that competes in
+        the auction.  Including it would make a price-inelastic claim crowd household
+        demand out of the clearing computation and drive the price to its ceiling for
+        no economic reason.  Government and investment are genuine buyers at the market
+        price (they are quantity-constrained, not marginal).
+        """
         household = self.requested_final(obs)
-        other = self.gov_claim(obs) + self.invest_claim(obs) + self.stock_claim(obs)
+        other = self.gov_claim(obs) + self.invest_claim(obs)
         return household, other
 
     def _supply_plan(self, obs: Observation) -> np.ndarray:
@@ -154,8 +180,14 @@ class Market(CoordinationMechanism):
 
     def _clear(self, household: np.ndarray, other: np.ndarray, supply_flow: np.ndarray,
                start: np.ndarray) -> tuple[np.ndarray, int, float]:
-        """Iterate the price against excess demand until the flow market clears."""
-        price = np.maximum(np.asarray(start, dtype=float), PRICE_EPS)
+        """Iterate the price against excess demand until the flow market clears.
+
+        The posted price is confined to ``[price_floor, price_ceiling]``: there is no
+        point computing claims at a price the exchange is not allowed to post, and in a
+        capacity-constrained Leontief economy the demand schedule can need an
+        arbitrarily high price to clear a good whose entire output is an intermediate.
+        """
+        price = np.clip(np.asarray(start, dtype=float), self._price_floor, self._price_ceiling)
         scale = np.maximum(np.maximum(household + other, supply_flow), 1e-12)
         gap = 0.0
         iters = 0
@@ -165,13 +197,12 @@ class Market(CoordinationMechanism):
             if gap <= self._clearing_tol:
                 break
             step = self._price_step * np.clip((demand - supply_flow) / scale, -1.0, 1.0)
-            price = np.maximum(price * np.exp(step), PRICE_EPS)
+            price = np.clip(price * np.exp(step), self._price_floor, self._price_ceiling)
         return price, iters, gap
 
     # ------------------------------------------------------------------ plan
     def form_plan(self, obs: Observation, state: State) -> Plan:
         """Plan supply, then clear the final-goods market within the period."""
-        base = self.tech.base_output
         targets = self._supply_plan(obs)
         self.targets = targets
 
@@ -230,7 +261,7 @@ class Market(CoordinationMechanism):
             clearing_iters=self._diag["clearing_iters"],
             clearing_gap=self._diag["clearing_gap"],
             household_claim_scale=float(
-                np.mean(household_claim / np.maximum(household, PRICE_EPS))
+                np.mean(household_claim / np.maximum(household, 1e-12))
             ),
         )
         return alloc

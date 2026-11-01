@@ -1,0 +1,178 @@
+{
+  "audit_file": "/Users/ceontou/Documents/code/planlab/results/B1/audit_records.npz",
+  "audit_records": 48,
+  "audit_runs": 12,
+  "block": "B1",
+  "cell_hashes": {
+    "B1.hybrid_dual_track.eurostat": "b4eb8deec325454a",
+    "B1.hybrid_dual_track.toy6": "918e3931ed4fee65",
+    "B1.lp_central.eurostat": "c4d7b04c1be79014",
+    "B1.lp_central.toy6": "74c7c0f33d483bde",
+    "B1.market.eurostat": "3649834a4744c723",
+    "B1.market.toy6": "0e6dd9b766f2948d",
+    "B1.material_balance.eurostat": "3776afa7b4a85491",
+    "B1.material_balance.toy6": "01030c81cf6ba18a",
+    "B1.rationing_priority.eurostat": "06443259452ba68c",
+    "B1.rationing_priority.toy6": "41c67503019ac7d8",
+    "B1.tatonnement.eurostat": "ba49f9bc918026e5",
+    "B1.tatonnement.toy6": "12480ddc38bc8086"
+  },
+  "cells_completed": 12,
+  "cells_failed": 0,
+  "cells_planned": 12,
+  "cells_skipped_missing_mechanism": 0,
+  "code_fingerprint": "f9941b58ca9a60cf",
+  "code_fingerprints_seen": {
+    "f9941b58ca9a60cf": 12
+  },
+  "environment": {
+    "burn_in": 30,
+    "note": "docs/PROTOCOL.md \u00a74 as amended by docs/AMENDMENTS.md 1-3; the horizon T=80 is recorded as a deviation in docs/DEVIATIONS.md",
+    "periods": 80,
+    "shock_duration": 8,
+    "shock_sector": "c12",
+    "shock_size": 0.5,
+    "shock_start": 40,
+    "stock_ratio": 0.1
+  },
+  "failures": [],
+  "forced_rerun": false,
+  "generated_at": "2026-11-01T16:30:58+0800",
+  "git_commit": "bb54a16ff5ceabb1ae8e45c5409aab27b7869b83",
+  "git_diff_stat": " 19 files changed, 1282 insertions(+), 258 deletions(-)",
+  "git_dirty": true,
+  "grid_fingerprint": "ab7d7cbe21cdc9a4",
+  "identification_audit": {
+    "cells_checked": 12,
+    "cells_compliant": 12,
+    "common_params": {
+      "backlog_carry": 0.0,
+      "max_target_ratio": 2.5,
+      "min_target_ratio": 0.25,
+      "stock_target_ratio": 0.1
+    },
+    "institutional_knobs": [
+      "revision_gain",
+      "price_gain",
+      "theta",
+      "quota_speed"
+    ],
+    "ok": true,
+    "pinned_params": {
+      "hybrid_dual_track": {
+        "market_gain": 0.25,
+        "theta": 0.5
+      },
+      "lp_central": {
+        "use_shadow_prices": 0.0
+      },
+      "market": {},
+      "material_balance": {
+        "balance_rounds": 3,
+        "revision_gain": 0.3
+      },
+      "rationing_priority": {
+        "quota_speed": 0.5,
+        "revision_interval": 1
+      },
+      "tatonnement": {
+        "price_gain": 0.3
+      }
+    }
+  },
+  "mechanism_base_params": {
+    "backlog_carry": 0.0,
+    "max_target_ratio": 2.5,
+    "min_target_ratio": 0.25,
+    "stock_target_ratio": 0.1
+  },
+  "mechanism_pinned_params": {
+    "hybrid_dual_track": {
+      "market_gain": 0.25,
+      "theta": 0.5
+    },
+    "lp_central": {
+      "use_shadow_prices": 0.0
+    },
+    "market": {},
+    "material_balance": {
+      "balance_rounds": 3,
+      "revision_gain": 0.3
+    },
+    "rationing_priority": {
+      "quota_speed": 0.5,
+      "revision_interval": 1
+    },
+    "tatonnement": {
+      "price_gain": 0.3
+    }
+  },
+  "mechanisms_missing": [],
+  "mechanisms_present": [
+    "hybrid_dual_track",
+    "lp_central",
+    "market",
+    "material_balance",
+    "rationing_priority",
+    "tatonnement"
+  ],
+  "mechanisms_present_in_runs": [
+    "hybrid_dual_track",
+    "lp_central",
+    "market",
+    "material_balance",
+    "rationing_priority",
+    "tatonnement"
+  ],
+  "mixed_code_versions": false,
+  "package_versions": {
+    "machine": "arm64",
+    "matplotlib": "3.10.8",
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "planlab": "0.1.0",
+    "platform": "macOS-15.7.7-arm64-arm-64bit",
+    "pyarrow": "25.0.1",
+    "python": "3.10.13",
+    "scipy": "1.15.3"
+  },
+  "runs_completed": 12,
+  "runs_planned": 12,
+  "scenario_hashes": {
+    "B1.hybrid_dual_track.eurostat": "c5f7bfc0afb50239",
+    "B1.hybrid_dual_track.toy6": "30d424b437f28105",
+    "B1.lp_central.eurostat": "0a58910c2c8f0769",
+    "B1.lp_central.toy6": "1edf866c608a7fe5",
+    "B1.market.eurostat": "3389da306e7c1596",
+    "B1.market.toy6": "12f564011d24bb7d",
+    "B1.material_balance.eurostat": "8027e7ec8372111e",
+    "B1.material_balance.toy6": "01a572d544144e4b",
+    "B1.rationing_priority.eurostat": "e0c2254685935da7",
+    "B1.rationing_priority.toy6": "c89a0676fe898d16",
+    "B1.tatonnement.eurostat": "823fba4e6f274e3c",
+    "B1.tatonnement.toy6": "faec1de719b3e908"
+  },
+  "scenario_ids": [
+    "B1"
+  ],
+  "seeds_per_cell": {
+    "B1.hybrid_dual_track.eurostat": 1,
+    "B1.hybrid_dual_track.toy6": 1,
+    "B1.lp_central.eurostat": 1,
+    "B1.lp_central.toy6": 1,
+    "B1.market.eurostat": 1,
+    "B1.market.toy6": 1,
+    "B1.material_balance.eurostat": 1,
+    "B1.material_balance.toy6": 1,
+    "B1.rationing_priority.eurostat": 1,
+    "B1.rationing_priority.toy6": 1,
+    "B1.tatonnement.eurostat": 1,
+    "B1.tatonnement.toy6": 1
+  },
+  "substrates": [
+    "eurostat"
+  ],
+  "sum_cell_wall_time_s": 4.18,
+  "wall_time_s": 0.939,
+  "workers": 7
+}

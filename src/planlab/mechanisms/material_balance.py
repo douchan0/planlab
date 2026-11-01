@@ -15,6 +15,18 @@ the plan until the two sides are consistent.  Two features matter for the paper:
    being resource-feasible.  The count is a first-class object of study: how much
    iteration does a material-balance system need per period to stay coordinated?
 
+   **The balancing step is one-sided.**  ``feasible_output`` maximises subject to
+   ``0 <= x <= ub`` and therefore returns ``balanced <= ub``, so a round can only move
+   a target *down*: ``T_t <= T_{t-1} * (1 + eta * s_{t-k})`` elementwise.  The
+   proportional revision, by contrast, can push targets up.  Together they are
+   asymmetric: under measurement noise the revision answers the noise by raising
+   targets, the balancing office can only cut them, and the plan ratchets downwards
+   with nothing to undo it.  Either feature alone is harmless — on the 6-sector
+   fixture, ``revision_gain = 1`` with zero rounds and ``revision_gain = 0`` with three
+   rounds both keep ``x / base`` at 1.0000, while the two together give 0.8854.  This
+   is the interaction the paper's H1' rests on; it is checked, not merely argued, in
+   ``tests/test_mech_material_balance.py``.
+
 Historically, Gosplan's *material balances* did exactly this for key products, with
 prices carrying little allocative weight (so by default prices are administrative
 and revised slowly, if at all).

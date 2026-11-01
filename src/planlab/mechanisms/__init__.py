@@ -10,8 +10,12 @@ from __future__ import annotations
 from typing import Any, Mapping
 
 from .base import CoordinationMechanism
+from .hybrid_dual_track import HybridDualTrack
 from .lp_central import CentralLP
+from .market import Market
 from .material_balance import MaterialBalance
+from .rationing_priority import RationingPriority
+from .tatonnement import Tatonnement
 
 __all__ = [
     "CoordinationMechanism",
@@ -19,7 +23,11 @@ __all__ = [
     "available_mechanisms",
     "register",
     "CentralLP",
+    "HybridDualTrack",
+    "Market",
     "MaterialBalance",
+    "RationingPriority",
+    "Tatonnement",
 ]
 
 _REGISTRY: dict[str, type[CoordinationMechanism]] = {}
@@ -33,7 +41,8 @@ def register(cls: type[CoordinationMechanism]) -> type[CoordinationMechanism]:
     return cls
 
 
-for _cls in (CentralLP, MaterialBalance):
+for _cls in (CentralLP, MaterialBalance, RationingPriority, Tatonnement, Market,
+             HybridDualTrack):
     register(_cls)
 
 

@@ -15,8 +15,14 @@ assumption that Hayek and the socialist-calculation debate attacked; making the
 information lag a treatment turns that argument into a measurable prediction.
 
 The dual variables of the material-balance constraints are the **shadow prices** of
-the plan, and are used as the mechanism's price signal (Kantorovich's
-``resolving multipliers``).
+the plan (Kantorovich's ``resolving multipliers``).  They are reported as a *diagnostic*
+of scarcity in the plan in ``Plan.meta["shadow_prices"]`` and are **not** used as the
+consumer price vector by default: our household demand rule is an ad-hoc
+base-basket-with-elasticity system, not the demand system implied by the LP's own
+``sum_i w_i log C_i`` objective, so feeding the duals into it double-counts the welfare
+weights and drives the economy off its own steady state (measured: 29% calm-state
+shortage on the real table).  ``use_shadow_prices = 1.0`` keeps that experiment
+available for the shadow-price notebook on purpose.
 """
 
 from __future__ import annotations
@@ -50,8 +56,10 @@ class CentralLP(CoordinationMechanism):
     default_params: Mapping[str, Any] = {
         # small penalty on gross output to break degeneracy (1e-3 << welfare weights)
         "output_penalty": 1e-3,
-        # use the LP duals as the price signal
-        "use_shadow_prices": 1.0,
+        # feed the LP duals back as the *consumer* price vector.  Off by default: the
+        # duals are a diagnostic of plan scarcity, not a consumer price vector (see the
+        # module docstring).  Switch on only for the deliberate diagnostic experiment.
+        "use_shadow_prices": 0.0,
         # cap on the planned output as a multiple of observed capacity
         "capacity_slack": 1.0,
         "tier_all_equal": 1.0,
@@ -108,6 +116,8 @@ class CentralLP(CoordinationMechanism):
                 "objective": float(-res.fun),
                 "solver": "highs",
                 "lag": obs.lag,
+                # diagnostic only: marginal scarcity value of each good's plan balance
+                "shadow_prices": [float(v) for v in self._shadow],
             },
         )
 
@@ -141,7 +151,7 @@ class CentralLP(CoordinationMechanism):
         alloc: Allocation,
         realised: Realisation,
     ) -> np.ndarray:
-        if float(self.param("use_shadow_prices", 1.0)) <= 0.5:
+        if float(self.param("use_shadow_prices", 0.0)) <= 0.5:
             return np.asarray(state.price, dtype=float).copy()
         return self._shadow.copy()
 

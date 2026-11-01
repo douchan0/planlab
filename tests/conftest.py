@@ -79,8 +79,7 @@ def run_shock(toy_tech):
 
 
 def balance_residual(record) -> float:
-    """Relative violation of the per-sector balance identity in one period record."""
-    lhs = record.supply
-    rhs = record.Z.sum(axis=1) + record.C + record.G + record.invest + record.inventory_end
-    scale = max(1.0, float(np.max(np.abs(lhs))))
-    return float(np.max(np.abs(lhs - rhs))) / scale
+    """Canonical audit helper (re-exported so tests share one definition)."""
+    from planlab.core.engine import balance_residual as _canonical
+
+    return _canonical(record)

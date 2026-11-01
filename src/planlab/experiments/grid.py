@@ -119,6 +119,42 @@ GAIN_PARAMS: Mapping[str, str] = {
     "tatonnement": "price_gain",
 }
 
+#: Parameters applied to **every mechanism in every cell**.  They are household-side
+#: or planning-side settings that are *not* institutional choices, and letting them
+#: differ would confound the mechanism comparison (Lead, identification review):
+#: ``backlog_carry`` re-injects last period's unmet demand into this period's claim,
+#: which is a positive feedback channel unrelated to the coordination rule; a
+#: differing ``stock_target_ratio`` changes the buffer the planner holds.  Only the
+#: institutional knob (revision/price gain, plan share theta, quota speed) is
+#: allowed to vary between cells.
+COMMON_MECHANISM_PARAMS: Mapping[str, Any] = {
+    "backlog_carry": 0.0,
+    "stock_target_ratio": 0.10,
+    "max_target_ratio": 2.5,
+    "min_target_ratio": 0.25,
+}
+
+#: The documented **reference operating point** of every institution, pinned in every
+#: cell of every block (Lead's specification).  Without this, "material balance" at
+#: ``revision_gain = 0`` (its module default during development) and at ``0.30`` are
+#: different institutions, and the paper's central ranking would move with a module
+#: default.  The treatment axes override the relevant knob in the cells that sweep it
+#: (``revision_gain`` in B2/B2L/B8, ``price_gain`` in B2/B7, ``theta`` in B5,
+#: ``balance_rounds`` in B6/B8); elsewhere the pinned value *is* the mechanism.
+#:
+#: ``lp_central.use_shadow_prices = 0`` is not a treatment but an artefact switch: its
+#: LP duals are Hilbert-space shadow prices, not the consumer prices of this demand
+#: system, and leaving them on collapses the information-rich benchmark (see
+#: ``docs/DEVIATIONS.md``).
+MECHANISM_BASE_PARAMS: Mapping[str, Mapping[str, Any]] = {
+    "lp_central": {"use_shadow_prices": 0.0},
+    "material_balance": {"revision_gain": 0.30, "balance_rounds": 3},
+    "rationing_priority": {"quota_speed": 0.50, "revision_interval": 1},
+    "tatonnement": {"price_gain": 0.30},
+    "market": {},
+    "hybrid_dual_track": {"theta": 0.50, "market_gain": 0.25},
+}
+
 #: the reference gain used for the lag x mechanism grid and for every mechanism
 #: that has no gain parameter.  0.30 is the shipped ``material_balance`` default.
 REFERENCE_GAIN = 0.30
@@ -126,13 +162,15 @@ REFERENCE_GAIN = 0.30
 #: seeds per block (docs/PROTOCOL.md §4)
 SEEDS: Mapping[str, tuple[int, ...]] = {
     "B1": (0,),
+    "B1b": tuple(range(20)),
     "B2": tuple(range(20)),
     "B3": tuple(range(20)),
     "B4": tuple(range(20)),
     "B5": tuple(range(20)),
     "B6": tuple(range(20)),
     "B2L": tuple(range(20)),
-    "P1": (0,),
+    "B7": (0, 1, 2),
+    "B8": tuple(range(16)),
     "P2": (0,),
 }
 
@@ -198,6 +236,7 @@ def _scenario(
     stock_ratio: float = STOCK_RATIO,
     technology: Mapping[str, Any] | None = None,
     tags: Sequence[str] = (),
+    labor_supply_factor: float = 1.15,
 ) -> dict[str, Any]:
     """Build a complete scenario dictionary (the schema of ``core.scenarios``).
 
@@ -248,7 +287,7 @@ def _scenario(
         "gov_share": 0.10,
         "depreciation": 0.02,
         "discount": 0.98,
-        "labor_supply_factor": 1.15,
+        "labor_supply_factor": float(labor_supply_factor),
         "indexation": 0.0,
         "price_bounds": [0.05, 20.0],
         "tags": [str(t) for t in tags],
@@ -281,8 +320,9 @@ class Cell:
     Attributes
     ----------
     block:
-        ``B1``..``B6`` plus the exploratory extensions ``B2L`` and the probes
-        ``P1``/``P2``.
+        ``B1``..``B6``, the Lead's price-response block ``B7``, plus the
+        exploratory extensions ``B2L`` (priority ladder) and ``P2`` (the ``b_T``
+        sign probe behind H1').
     cell_id:
         Stable, human-readable identity of the treatment combination.  This is
         what ``results/`` is keyed on.
@@ -510,51 +550,80 @@ def _theta_key() -> str | None:
 
 
 def _build_b1() -> list[Cell]:
-    """B1 — deterministic base-year reproduction, one run per mechanism."""
+    """B1 — deterministic calibration/validation on both substrates.
+
+    Six mechanisms x two substrates (the 6-sector toy fixture and the real
+    20-sector Eurostat table), one deterministic run each: no shock, no noise, no
+    lag.  With perfect information every institution must reproduce the base year,
+    so this block is the falsification test of the *implementation*: any departure
+    from ``x/base = 1``, a non-zero shortage or a balance residual above ``1e-8``
+    is a bug, not a result.
+    """
     cells: list[Cell] = []
-    for cell_id, mechanism in B1_CASES:
-        sc = _scenario(
-            scenario_id="B1",
-            name=f"B1 validation: {mechanism}, perfect information, no shock",
-            mechanism=mechanism,
-            seeds=SEEDS["B1"],
-            lag=0,
-            noise=0.0,
-            sigma=0.0,
-            ar1=0.0,
-            price_elasticity=0.0,
-            shocks=(),
-            mechanism_params=_gain_params(mechanism, REFERENCE_GAIN),
-            tags=("B1", "validation", "deterministic"),
-        )
-        cells.append(
-            Cell(
-                block="B1",
-                cell_id=cell_id,
+    substrates: tuple[tuple[str, dict[str, Any]], ...] = (
+        ("eurostat", _standard_tech_spec()),
+        ("toy6", {"toy": 6}),
+    )
+    for mechanism in MECHANISMS:
+        for substrate, tech in substrates:
+            cell_id = _cell_id("B1", mechanism, substrate)
+            sc = _scenario(
+                scenario_id="B1",
+                name=f"B1 validation: {mechanism} on {substrate}, perfect information",
                 mechanism=mechanism,
-                scenario=sc,
                 seeds=SEEDS["B1"],
-                treatment={
-                    "block": "B1",
-                    "mechanism": mechanism,
-                    "lag": 0,
-                    "m": 1,
-                    "gain": REFERENCE_GAIN,
-                    "price_elasticity": 0.0,
-                    "shock_size": 1.0,
-                    "shock_sector": None,
-                    "substrate": "eurostat",
-                },
-                tech=_standard_tech_spec(),
-                notes="base-year reproduction: no shock, no noise, lag 0",
+                lag=0,
+                noise=0.0,
+                sigma=0.0,
+                ar1=0.0,
+                price_elasticity=0.0,
+                shocks=(),
+                mechanism_params=_mech_params(mechanism, REFERENCE_GAIN),
+                technology=dict(tech),
+                tags=("B1", "validation", "deterministic", substrate),
             )
-        )
+            cells.append(
+                Cell(
+                    block="B1",
+                    cell_id=cell_id,
+                    mechanism=mechanism,
+                    scenario=sc,
+                    seeds=SEEDS["B1"],
+                    treatment={
+                        "block": "B1",
+                        "mechanism": mechanism,
+                        "lag": 0,
+                        "m": 1,
+                        "gain": REFERENCE_GAIN,
+                        "price_elasticity": 0.0,
+                        "shock_size": 1.0,
+                        "shock_sector": None,
+                        "stock_ratio": STOCK_RATIO,
+                        "substrate": substrate,
+                    },
+                    tech=dict(tech),
+                    notes="base-year reproduction: no shock, no noise, lag 0",
+                )
+            )
     return cells
 
 
-def _gain_params(mechanism: str, gain: float) -> dict[str, Any]:
+def _mech_params(mechanism: str, gain: float, **extra: Any) -> dict[str, Any]:
+    """The full ``mechanism_params`` of a cell.
+
+    Order of precedence: the common identification block, then the pinned
+    per-mechanism parameters (``use_shadow_prices``), then the institutional knob
+    (``revision_gain`` / ``price_gain`` / ``theta``), then block-specific extras
+    (the priority ladder, ``balance_rounds``).  Nothing else is allowed to differ
+    between cells, so a mechanism comparison identifies the institution.
+    """
+    params: dict[str, Any] = dict(COMMON_MECHANISM_PARAMS)
+    params.update(MECHANISM_BASE_PARAMS.get(mechanism, {}))
     key = _gain_param(mechanism)
-    return {key: float(gain)} if key else {}
+    if key:
+        params[key] = float(gain)
+    params.update(extra)
+    return params
 
 
 def _build_b2() -> list[Cell]:
@@ -587,7 +656,7 @@ def _build_b2() -> list[Cell]:
             lag=lag,
             price_elasticity=eps,
             shocks=(_capacity_shock(STANDARD_SECTOR),),
-            mechanism_params=_gain_params(mechanism, gain),
+            mechanism_params=_mech_params(mechanism, gain),
             tags=("B2", "lag", "gain"),
         )
         cells.append(
@@ -619,6 +688,59 @@ def _build_b2() -> list[Cell]:
     return cells
 
 
+def _build_b1b() -> list[Cell]:
+    """B1b — no shock, no lag, only measurement and demand noise.
+
+    The paper's thesis in its purest form (requested by the Lead as an amendment
+    extension): with perfect information every institution reproduces the base
+    year exactly, so *any* departure here is the information rent of the
+    institution.  Environment: measurement noise 0.03, AR(1) demand noise
+    (ar1 0.3, sigma 0.02), no shock, lag 0, 20 seeds.
+    """
+    cells: list[Cell] = []
+    for mechanism in MECHANISMS:
+        cell_id = _cell_id("B1b", mechanism)
+        sc = _scenario(
+            scenario_id="B1b",
+            name=f"B1b information rent: {mechanism}, noise only (no shock, no lag)",
+            mechanism=mechanism,
+            seeds=SEEDS["B1b"],
+            lag=0,
+            noise=0.03,
+            sigma=0.02,
+            ar1=0.3,
+            shocks=(),
+            mechanism_params=_mech_params(mechanism, REFERENCE_GAIN),
+            tags=("B1b", "information_rent"),
+        )
+        cells.append(
+            Cell(
+                block="B1b",
+                cell_id=cell_id,
+                mechanism=mechanism,
+                scenario=sc,
+                seeds=SEEDS["B1b"],
+                treatment={
+                    "block": "B1b",
+                    "mechanism": mechanism,
+                    "lag": 0,
+                    "m": 1,
+                    "gain": REFERENCE_GAIN,
+                    "price_elasticity": STANDARD_ELASTICITY,
+                    "sigma_demand": 0.02,
+                    "sigma_obs": 0.03,
+                    "shock_size": 1.0,
+                    "shock_sector": None,
+                    "stock_ratio": STOCK_RATIO,
+                    "substrate": "eurostat",
+                },
+                tech=_standard_tech_spec(),
+                notes="no shock, no lag: the information rent of the institution",
+            )
+        )
+    return cells
+
+
 def _build_b3(mechanisms: Sequence[str] = B3_MECHANISMS) -> list[Cell]:
     """B3 — one cell per (shocked sector, mechanism), 10 seeds each."""
     sectors = _sector_names()
@@ -633,7 +755,7 @@ def _build_b3(mechanisms: Sequence[str] = B3_MECHANISMS) -> list[Cell]:
                 seeds=SEEDS["B3"],
                 lag=2,
                 shocks=(_capacity_shock(sector),),
-                mechanism_params=_gain_params(mechanism, REFERENCE_GAIN),
+                mechanism_params=_mech_params(mechanism, REFERENCE_GAIN),
                 tags=("B3", "propagation"),
             )
             cells.append(
@@ -677,7 +799,7 @@ def _build_b4() -> list[Cell]:
                 seeds=SEEDS["B4"],
                 lag=2,
                 shocks=(_capacity_shock(STANDARD_SECTOR, size=size),),
-                mechanism_params=_gain_params(mechanism, REFERENCE_GAIN),
+                mechanism_params=_mech_params(mechanism, REFERENCE_GAIN),
                 tags=("B4", "shock_size"),
             )
             cells.append(
@@ -722,7 +844,9 @@ def _build_b5() -> list[Cell]:
                 seeds=SEEDS["B5"],
                 lag=lag,
                 shocks=(_capacity_shock(STANDARD_SECTOR),),
-                mechanism_params={theta_key: float(theta)},
+                mechanism_params=_mech_params(
+                    "hybrid_dual_track", REFERENCE_GAIN, **{theta_key: float(theta)}
+                ),
                 tags=("B5", "dual_track"),
             )
             cells.append(
@@ -788,6 +912,36 @@ def _build_b6() -> list[Cell]:
             "note": "5% log-normal perturbation of A, instance 2",
         },
         {
+            "label": "balance_rounds_0",
+            "extra_params": {"balance_rounds": 0},
+            "note": "planning effort: no internal consistency pass (a naive taut plan)",
+        },
+        {
+            "label": "balance_rounds_6",
+            "extra_params": {"balance_rounds": 6},
+            "note": "planning effort: six internal consistency passes",
+        },
+        *[
+            {
+                "label": f"labour{int(slack * 100)}_{cond}",
+                "labour_supply_factor": float(slack),
+                "no_shock": True,
+                "extra_params": dict(params),
+                "note": (
+                    "labour slack robustness on the B8 decomposition: the taut plan "
+                    f"(gain 1.0, rounds 3) at {slack:.2f}x labour supply"
+                    if cond == "taut"
+                    else f"control {cond} at {slack:.2f}x labour supply"
+                ),
+            }
+            for slack in (1.05, 1.15, 1.40, 2.00)
+            for cond, params in (
+                ("taut", {"revision_gain": 1.0, "balance_rounds": 3}),
+                ("rev_only", {"revision_gain": 1.0, "balance_rounds": 0}),
+                ("no_rev", {"revision_gain": 0.0, "balance_rounds": 0}),
+            )
+        ],
+        {
             "label": "weights_low",
             "weights": {"shortage": 0.5, "inventory": 0.05},
             "note": "shortage and inventory penalties at -50%",
@@ -805,18 +959,24 @@ def _build_b6() -> list[Cell]:
         substrate = str(variant.get("substrate", "eurostat"))
         tech = dict(variant.get("tech") or tech_by_label[substrate])
         gain = float(variant.get("gain", REFERENCE_GAIN))
+        no_shock = bool(variant.get("no_shock", False))
+        labour_factor = variant.get("labour_supply_factor")
         cell_id = _cell_id("B6", label)
         sc = _scenario(
             scenario_id="B6",
             name=f"B6 robustness: {label}",
             mechanism="material_balance",
             seeds=SEEDS["B6"],
-            lag=int(variant.get("lag", base["lag"])),
-            noise=float(variant.get("noise", base["noise"])),
-            sigma=float(variant.get("sigma", base["sigma"])),
+            lag=int(variant.get("lag", 0 if no_shock else base["lag"])),
+            noise=float(variant.get("noise", 0.03 if no_shock else base["noise"])),
+            sigma=float(variant.get("sigma", 0.02 if no_shock else base["sigma"])),
+            ar1=float(variant.get("ar1", 0.3 if no_shock else 0.4)),
             price_elasticity=float(variant.get("eps", base["eps"])),
-            shocks=(_capacity_shock(STANDARD_SECTOR),),
-            mechanism_params=_gain_params("material_balance", gain),
+            shocks=() if no_shock else (_capacity_shock(STANDARD_SECTOR),),
+            mechanism_params=_mech_params(
+                "material_balance", gain, **dict(variant.get("extra_params") or {})
+            ),
+            labor_supply_factor=float(labour_factor) if labour_factor is not None else 1.15,
             objective=dict(variant.get("weights", base["weights"])),
             technology={"source": tech.get("source", "eurostat"), "year": tech.get("year", 2020),
                         "n_sectors": tech.get("n_sectors", 20)},
@@ -842,6 +1002,10 @@ def _build_b6() -> list[Cell]:
                     "shortage_weight": float(sc["objective"]["shortage"]),
                     "inventory_weight": float(sc["objective"]["inventory"]),
                     "a_perturb": float(tech.get("a_perturb", 0.0)),
+                    "labor_supply_factor": float(
+                        labour_factor if labour_factor is not None else 1.15
+                    ),
+                    "shock_scale": 0.0 if no_shock else SHOCK_SIZE,
                     "shock_size": SHOCK_SIZE,
                     "shock_duration": SHOCK_DURATION,
                     "shock_sector": STANDARD_SECTOR,
@@ -855,13 +1019,75 @@ def _build_b6() -> list[Cell]:
     return cells
 
 
+def _build_b8() -> list[Cell]:
+    """B8 — decomposing material balance: revision gain x balancing rounds.
+
+    The Lead's decomposition experiment (noise-only environment, no shock, lag 0):
+    neither the proportional revision alone nor the balancing alone costs output;
+    the loss lives in their interaction, because the balancing pass acts on a noisy
+    stock estimate and the resulting asymmetry (an over-estimate is harmless —
+    capacity binds from above — while an under-estimate cuts the plan inside the
+    period) turns symmetric measurement noise into a systematic output loss.
+    """
+    cells: list[Cell] = []
+    for gain in (0.0, 0.1, 0.3, 1.0):
+        for rounds in (0, 1, 3):
+            cell_id = _cell_id("B8", f"g{gain:g}", f"r{rounds}")
+            sc = _scenario(
+                scenario_id="B8",
+                name=(
+                    f"B8 material-balance decomposition: revision_gain={gain:g}, "
+                    f"balance_rounds={rounds}"
+                ),
+                mechanism="material_balance",
+                seeds=SEEDS["B8"],
+                lag=0,
+                noise=0.03,
+                sigma=0.02,
+                ar1=0.3,
+                shocks=(),
+                mechanism_params=_mech_params(
+                    "material_balance", gain, balance_rounds=int(rounds)
+                ),
+                tags=("B8", "decomposition", "information_rent"),
+            )
+            cells.append(
+                Cell(
+                    block="B8",
+                    cell_id=cell_id,
+                    mechanism="material_balance",
+                    scenario=sc,
+                    seeds=SEEDS["B8"],
+                    treatment={
+                        "block": "B8",
+                        "mechanism": "material_balance",
+                        "gain": float(gain),
+                        "revision_gain": float(gain),
+                        "balance_rounds": int(rounds),
+                        "lag": 0,
+                        "m": 1,
+                        "price_elasticity": STANDARD_ELASTICITY,
+                        "sigma_demand": 0.02,
+                        "sigma_obs": 0.03,
+                        "shock_size": 1.0,
+                        "shock_sector": None,
+                        "stock_ratio": STOCK_RATIO,
+                        "substrate": "eurostat",
+                    },
+                    tech=_standard_tech_spec(),
+                    notes="no shock, no lag: revision x balancing interaction only",
+                )
+            )
+    return cells
+
+
 def _build_b2l() -> list[Cell]:
     """B2L (exploratory) — production-first vs consumption-first priority ladder."""
     cells: list[Cell] = []
     for ladder in ("production_first", "consumption_first"):
         for lag in (0, 1, 2, 4):
             cell_id = _cell_id("B2L", ladder.replace("_first", ""), f"k{lag}")
-            params = {"ladder": ladder, "revision_gain": REFERENCE_GAIN}
+            params = _mech_params("material_balance", REFERENCE_GAIN, ladder=ladder)
             sc = _scenario(
                 scenario_id="B2L",
                 name=f"B2L ladder: {ladder}, k={lag}",
@@ -900,44 +1126,51 @@ def _build_b2l() -> list[Cell]:
     return cells
 
 
-def _build_p1() -> list[Cell]:
-    """P1 — price-response probe: measure ``b_p = -ds/dlog p`` sector by sector.
+def _build_b7() -> list[Cell]:
+    """B7 — price-response probe: measure ``b_p = -ds/dlog p`` sector by sector.
 
-    The mechanism is ``tatonnement`` with the price gain switched off, so prices
-    do not move by themselves; a permanent +-5% price offset is injected into a
-    single sector's price vector at the start of the run, and the shortage
-    response is read from the (deterministic) trajectory under a permanent 50%
-    capacity shock to ``STANDARD_SECTOR``.  This is the notes' recipe
-    (``docs/notes_delay_theorem.md`` §5.1) adapted to a price instrument.
+    The mechanism is ``tatonnement`` with the price gain switched off, so prices do
+    not move by themselves; a permanent +-5% price offset is injected into one
+    good's price at the start of the run, and the shortage response of *the same
+    good* is read from the deterministic trajectory under a permanent 50% capacity
+    shock to that good.  Matching the probed good to the shocked good is what makes
+    the derivative the one the feedback loop actually uses: ``b_p,j = -ds_j/dlog p_j``.
+
+    This is the notes' recipe (``docs/notes_delay_theorem.md`` §5.1) adapted to a
+    price instrument, and it is what turns H1 into a theory-vs-measurement
+    comparison ``price_gain*(m) = g*(m)/b_p`` instead of a story about amplitude.
     """
     cells: list[Cell] = []
-    for eps in (STANDARD_ELASTICITY, HIGH_ELASTICITY):
+    for eps in (0.2, HIGH_ELASTICITY, 2.0):
         for sector in _sector_names():
             for delta in (-0.05, 0.05):
-                cell_id = _cell_id("P1", f"eps{eps}", sector, f"d{delta:+.2f}")
+                cell_id = _cell_id("B7", f"eps{eps}", sector, f"d{delta:+.2f}")
                 sc = _scenario(
-                    scenario_id="P1",
-                    name=f"P1 gain probe: price offset {delta:+.0%} on {sector}, epsilon={eps:g}",
+                    scenario_id="B7",
+                    name=(
+                        f"B7 gain probe: price offset {delta:+.0%} on {sector} "
+                        f"with {sector} capacity shocked, epsilon={eps:g}"
+                    ),
                     mechanism="tatonnement",
-                    seeds=SEEDS["P1"],
+                    seeds=SEEDS["B7"],
                     lag=0,
                     noise=0.0,
                     sigma=0.0,
                     ar1=0.0,
                     price_elasticity=eps,
-                    shocks=(_capacity_shock(STANDARD_SECTOR, duration=0),),
-                    mechanism_params={"price_gain": 0.0},
-                    tags=("P1", "probe", "gain"),
+                    shocks=(_capacity_shock(sector, duration=0),),
+                    mechanism_params=_mech_params("tatonnement", 0.0),
+                    tags=("B7", "probe", "gain"),
                 )
                 cells.append(
                     Cell(
-                        block="P1",
+                        block="B7",
                         cell_id=cell_id,
                         mechanism="tatonnement",
                         scenario=sc,
-                        seeds=SEEDS["P1"],
+                        seeds=SEEDS["B7"],
                         treatment={
-                            "block": "P1",
+                            "block": "B7",
                             "mechanism": "tatonnement",
                             "price_elasticity": float(eps),
                             "sector": sector,
@@ -945,7 +1178,7 @@ def _build_p1() -> list[Cell]:
                             "gain": 0.0,
                             "shock_size": SHOCK_SIZE,
                             "shock_duration": 0,
-                            "shock_sector": STANDARD_SECTOR,
+                            "shock_sector": sector,
                             "stock_ratio": STOCK_RATIO,
                             "substrate": "eurostat",
                         },
@@ -980,7 +1213,7 @@ def _build_p2() -> list[Cell]:
                 ar1=0.0,
                 price_elasticity=0.0,
                 shocks=(),
-                mechanism_params={"revision_gain": 0.0, "balance_rounds": 3},
+                mechanism_params=_mech_params("material_balance", 0.0, balance_rounds=3),
                 tags=("P2", "probe", "gain"),
             )
             cells.append(
@@ -1033,24 +1266,33 @@ def _sector_names() -> tuple[str, ...]:
 
 _BLOCK_BUILDERS = {
     "B1": lambda: _build_b1(),
+    "B1b": lambda: _build_b1b(),
     "B2": lambda: _build_b2(),
     "B3": lambda: _build_b3(),
     "B4": lambda: _build_b4(),
     "B5": lambda: _build_b5(),
     "B6": lambda: _build_b6(),
+    "B8": lambda: _build_b8(),
     "B2L": lambda: _build_b2l(),
-    "P1": lambda: _build_p1(),
+    "B7": lambda: _build_b7(),
     "P2": lambda: _build_p2(),
 }
 
 #: block order used by ``scripts/run_all.py`` and ``scripts/reproduce.sh``
-BLOCK_ORDER: tuple[str, ...] = ("B1", "B2", "B3", "B4", "B5", "B6", "B2L", "P1", "P2")
+BLOCK_ORDER: tuple[str, ...] = (
+    "B1", "B1b", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B2L", "P2"
+)
 
 #: the pre-registered blocks, in protocol order
 BLOCKS: tuple[str, ...] = ("B1", "B2", "B3", "B4", "B5", "B6")
 
+#: B7 is the Lead's requested addition to the pre-registered design: the
+#: price-response probe that measures ``b_p`` and therefore makes the H1
+#: boundary a theory-vs-measurement comparison.  B2L (priority ladder) and P2
+#: (the ``b_T`` sign probe behind H1') are exploratory as well.
+
 #: blocks that are additions to the pre-registered design (recorded as such)
-EXPLORATORY_BLOCKS: tuple[str, ...] = ("B2L", "P1", "P2")
+EXPLORATORY_BLOCKS: tuple[str, ...] = ("B1b", "B8", "B2L", "P2")
 
 
 def build_cells(block: str) -> list[Cell]:

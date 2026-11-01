@@ -16,10 +16,15 @@ feature, relative to material-balance planning, is that the plan is *rigid*: the
 no iterative balancing office reconciling resources and needs round by round, only a
 ceiling with an administrative priority order behind it.
 
-**Experimental treatments.** ``quota_speed`` (how fast quotas follow observed needs)
-and ``priority_sectors`` (which sectors' inputs are ranked first) are the institution's
-knobs; ``price_gain`` exists only so that an administered price revision can be
-switched on as a contrast and defaults to ``0.0`` (prices fixed).
+**Experimental treatments.** ``revision_interval`` is the lag-sensitivity treatment used
+in block B2: a plan document fixed for several quarters is re-approved only on revision
+dates, so between them it carries *both* a stale quota and the capacity it was approved
+against (on the 6-sector fixture a 40% capacity shock costs 7.4% mean shortage at
+``revision_interval = 1`` and 24.6% at ``revision_interval = 16``).  ``quota_speed`` is
+the inertia of the revision itself, ``capacity_ceiling`` the quota's strictness (how far
+a quota may exceed the approved capacity), and ``priority_sectors`` selects which
+sectors' inputs are ranked first.  ``price_gain`` exists only so that an administered
+price revision can be switched on as a contrast; it defaults to ``0.0`` (prices fixed).
 
 **What differs from** :class:`planlab.mechanisms.material_balance.MaterialBalance`.
 Material balance revises targets *in proportion to the observed shortage rate* and then
@@ -37,7 +42,7 @@ from typing import Any, Mapping
 import numpy as np
 
 from ..core.state import Allocation, Observation, Plan, Realisation, State, Technology
-from ._util import require_range, sector_mask
+from ._util import require_int, require_range, sector_mask
 from .base import CoordinationMechanism
 
 __all__ = ["RationingPriority"]
@@ -60,12 +65,18 @@ class RationingPriority(CoordinationMechanism):
     default_params: Mapping[str, Any] = {
         #: speed at which a quota is revised towards observed needs (1.0 = jump)
         "quota_speed": 0.50,
+        #: how often the quotas are revised, in periods (1 = every period).  A plan
+        #: document fixed for several quarters sees information that is
+        #: ``revision_interval - 1`` periods staler on top of the reporting lag, so this
+        #: is the mechanism's lag-sensitivity treatment for block B2.
+        "revision_interval": 1,
         #: hard ceiling on a quota, as a multiple of the *approved* (observed) capacity
         "capacity_ceiling": 1.00,
         #: sectors whose intermediate inputs are ranked ahead of the rest
         "priority_sectors": "essentials",
-        #: share of the observed backlog added to this period's household claim
-        "backlog_carry": 0.0,
+        #: share of the observed backlog re-submitted as this period's household claim
+        #: (a queue; granted-but-not-demanded quantities end up in inventory)
+        "backlog_carry": 0.30,
         #: desired stock level as a multiple of base output (residual claimant, tier 5)
         "stock_target_ratio": 0.15,
         #: bounds on the planned quota, relative to base-year output
@@ -81,11 +92,14 @@ class RationingPriority(CoordinationMechanism):
         self._quota_speed = require_range(
             "quota_speed", self.param("quota_speed", 0.5), 0.0, 1.0, lo_open=True
         )
+        self._revision_interval = require_int(
+            "revision_interval", self.param("revision_interval", 1), 1, 400
+        )
         self._capacity_ceiling = require_range(
             "capacity_ceiling", self.param("capacity_ceiling", 1.0), 0.0, 5.0, lo_open=True
         )
         self._backlog_carry = require_range(
-            "backlog_carry", self.param("backlog_carry", 0.0), 0.0, 1.0
+            "backlog_carry", self.param("backlog_carry", 0.3), 0.0, 1.0
         )
         self._stock_ratio = require_range(
             "stock_target_ratio", self.param("stock_target_ratio", 0.15), 0.0, 5.0
@@ -100,9 +114,16 @@ class RationingPriority(CoordinationMechanism):
             raise ValueError("min_target_ratio must not exceed max_target_ratio")
         self._price_gain = require_range("price_gain", self.param("price_gain", 0.0), 0.0, 2.0)
         self._priority = sector_mask(self.tech, self.param("priority_sectors", "essentials"))
+        #: the approved quota document and the capacity it was approved against
+        #: (both are administrative documents, revised only on revision dates)
+        self._quota = np.asarray(self.tech.base_output, dtype=float).copy()
+        self._approved_ceiling = np.asarray(self.tech.base_output, dtype=float).copy()
+        self._periods_seen = 0
+        self._last_revision = 0
         # config is the public record of the mechanism; keep the validated values in it
         self.config.update(
             quota_speed=self._quota_speed,
+            revision_interval=self._revision_interval,
             capacity_ceiling=self._capacity_ceiling,
             backlog_carry=self._backlog_carry,
             stock_target_ratio=self._stock_ratio,
@@ -133,12 +154,23 @@ class RationingPriority(CoordinationMechanism):
             + self.invest_claim(obs)
             + self.stock_claim(obs)
         )
-        quota = np.asarray(self.targets, dtype=float)
-        needs = A @ quota + final_claim
-        quota_new = quota + self._quota_speed * (needs - quota)
+        self._periods_seen += 1
+        revised = (
+            self._periods_seen % self._revision_interval == 0
+            or self._revision_interval == 1
+        )
+        if revised:
+            # needs = the resources the quota commits the economy to deliver
+            needs = A @ self._quota + final_claim
+            self._quota = self._quota + self._quota_speed * (needs - self._quota)
+            # the approved capacity is re-approved together with the quota, so a plan
+            # document fixed for several quarters also carries a stale capacity
+            self._approved_ceiling = self._capacity_ceiling * cap_obs
+            self._last_revision = self._periods_seen
+        quota_new = self._quota
 
-        ceiling = np.minimum(self._capacity_ceiling * cap_obs, self._max_ratio * base)
         floor = self._min_ratio * base
+        ceiling = np.maximum(np.minimum(self._approved_ceiling, self._max_ratio * base), floor)
         targets = np.clip(np.minimum(quota_new, ceiling), floor, self._max_ratio * base)
 
         self.targets = targets
@@ -160,6 +192,9 @@ class RationingPriority(CoordinationMechanism):
                 #: fraction of the quota vector that was cut by the approved ceiling
                 "ceiling_bite": float(np.mean(targets < quota_new - 1e-12)),
                 "quota_total": float(targets.sum()),
+                "revised": float(revised),
+                "revision_interval": float(self._revision_interval),
+                "periods_since_revision": float(self._periods_seen - self._last_revision),
             },
         )
 

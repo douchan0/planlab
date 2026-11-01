@@ -139,12 +139,17 @@ def _safe_version(name: str) -> str:
         return "missing"
 
 
+_CODE_FP: dict[str, str] = {}
+
+
 def code_fingerprint(n_files: int = 400) -> str:
     """SHA-256 over the source of ``src/planlab`` and the experiment scripts.
 
     The checkout is not a git repository, so the manifest records a content
     fingerprint of the code instead of a commit id.
     """
+    if "value" in _CODE_FP:
+        return _CODE_FP["value"]
     import hashlib
 
     from planlab import paths
@@ -168,7 +173,8 @@ def code_fingerprint(n_files: int = 400) -> str:
         if path.exists():
             digest.update(extra.encode("utf-8"))
             digest.update(path.read_bytes())
-    return digest.hexdigest()[:16]
+    _CODE_FP["value"] = digest.hexdigest()[:16]
+    return _CODE_FP["value"]
 
 
 # ---------------------------------------------------------------------------
@@ -251,6 +257,37 @@ def _apply_probe(sim: Any, mech: Any, probe: Mapping[str, Any] | None, tech: Any
 
 
 # ---------------------------------------------------------------------------
+# instrumentation: does the planning step lower any target?
+# ---------------------------------------------------------------------------
+def _instrument_plan_lowering(mech: Any) -> dict[str, Any]:
+    """Wrap ``form_plan`` and count the periods in which it lowers a target.
+
+    The Lead's diagnostic for the material-balance decomposition: the balancing
+    pass is a *downward-only* filter on the plan, so the relevant object is whether
+    the targets that come out of ``form_plan`` are below the ones that went in.
+    The wrapper only reads ``mech.targets`` before and after the call; it never
+    changes behaviour.
+    """
+    stats: dict[str, Any] = {"lowered": 0, "raised": 0, "periods": 0}
+    original = mech.form_plan
+
+    def wrapped(obs: Any, state: Any) -> Any:
+        before = np.asarray(getattr(mech, "targets", np.zeros(0)), dtype=float).copy()
+        plan = original(obs, state)
+        after = np.asarray(getattr(mech, "targets", np.zeros(0)), dtype=float)
+        stats["periods"] += 1
+        if before.size and before.size == after.size:
+            if bool(np.any(after < before - 1e-12)):
+                stats["lowered"] += 1
+            if bool(np.any(after > before + 1e-12)):
+                stats["raised"] += 1
+        return plan
+
+    mech.form_plan = wrapped  # type: ignore[method-assign]
+    return stats
+
+
+# ---------------------------------------------------------------------------
 # per-run extraction
 # ---------------------------------------------------------------------------
 def _own_recovery(
@@ -290,9 +327,36 @@ def _shock_sector_index(shock: Any, tech: Any) -> int | None:
         return None
 
 
+def _accounting_residual(record: Any) -> float:
+    """Relative violation of the per-sector balance identity for one period.
+
+    Delegates to :func:`planlab.core.engine.balance_residual`, the repository's
+    single canonical definition (it includes the spoilage term).  The engine raises
+    on a violation, so this is a *recorded* diagnostic for the calibration table,
+    not a check that can silently fail.  The fallback exists only so that the
+    experiment layer still imports against an older core.
+    """
+    try:
+        from planlab.core.engine import balance_residual
+
+        return float(balance_residual(record))
+    except Exception:  # pragma: no cover - pre-spoilage core
+        supply = np.asarray(record.supply, dtype=float)
+        rhs = (
+            np.asarray(record.Z, dtype=float).sum(axis=1)
+            + np.asarray(record.C, dtype=float)
+            + np.asarray(record.G, dtype=float)
+            + np.asarray(record.invest, dtype=float)
+            + np.asarray(record.inventory_end, dtype=float)
+        )
+        scale = max(1.0, float(np.max(np.abs(supply))))
+        return float(np.max(np.abs(supply - rhs)) / scale)
+
+
 def _period_rows(res: Any, cell: Cell, seed: int) -> list[dict[str, Any]]:
     """One row per period: every period metric plus the cell's treatment columns."""
     treatment = dict(cell.treatment)
+    base_total = max(float(np.sum(np.asarray(res.technology.base_output, dtype=float))), 1e-12)
     rows: list[dict[str, Any]] = []
     for record in res.records:
         row: dict[str, Any] = {
@@ -304,6 +368,8 @@ def _period_rows(res: Any, cell: Cell, seed: int) -> list[dict[str, Any]]:
         }
         row.update(treatment)
         row.update({k: float(v) for k, v in record.metrics.items()})
+        row["accounting_residual_rel"] = _accounting_residual(record)
+        row["x_ratio"] = float(np.sum(np.asarray(record.x, dtype=float))) / base_total
         rows.append(row)
     return rows
 
@@ -461,12 +527,21 @@ def _protocol_amplification(
     return float(unmet.max() / loss), float(unmet.mean() / loss)
 
 
-def _summary_row(res: Any, cell: Cell, seed: int, tech: Any, scenario: Any, wall_s: float) -> dict[str, Any]:
+def _summary_row(
+    res: Any,
+    cell: Cell,
+    seed: int,
+    tech: Any,
+    scenario: Any,
+    wall_s: float,
+    instrumentation: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
     """Run-level statistics: everything the engine reports plus the cross-checks."""
     short = np.array([float(r.metrics.get("shortage_rate", 0.0)) for r in res.records])
     t = np.array([int(r.t) for r in res.records])
     used = t > int(scenario.burn_in)
     metrics = dict(res.run_metrics)
+    base_total = max(float(np.sum(np.asarray(tech.base_output, dtype=float))), 1e-12)
     amp_peak, amp_mean = _protocol_amplification(res, tech, scenario, cell)
     first_start = min((s.start for s in scenario.shocks), default=0)
     pre = short[(t < first_start) & used]
@@ -484,6 +559,17 @@ def _summary_row(res: Any, cell: Cell, seed: int, tech: Any, scenario: Any, wall
     rows.update(
         {
             "n_periods_used": float(int(used.sum())),
+            "output_ratio_mean": float(
+                np.mean(
+                    [
+                        float(np.sum(r.x)) / max(float(np.sum(np.asarray(tech.base_output, dtype=float))), 1e-12)
+                        for r, keep in zip(res.records, used)
+                        if keep
+                    ]
+                )
+            )
+            if used.any()
+            else float("nan"),
             "mean_shortage_window": float(np.mean(used_short)) if used_short.size else float("nan"),
             "peak_shortage_window": float(np.max(used_short)) if used_short.size else float("nan"),
             "pre_shock_shortage_own": baseline,
@@ -492,6 +578,58 @@ def _summary_row(res: Any, cell: Cell, seed: int, tech: Any, scenario: Any, wall
             ),
             "amp_protocol_peak": amp_peak,
             "amp_protocol_mean": amp_mean,
+            "mean_investment_ratio": float(
+                np.mean(
+                    [
+                        float(np.sum(np.asarray(r.invest, dtype=float))) / base_total
+                        for r, keep in zip(res.records, used)
+                        if keep
+                    ]
+                )
+            )
+            if used.any()
+            else float("nan"),
+            "mean_labour_utilisation": float(
+                np.mean(
+                    [
+                        float(np.dot(np.asarray(tech.labor, dtype=float), np.asarray(r.x, dtype=float)))
+                        / max(
+                            float(np.dot(np.asarray(tech.labor, dtype=float), np.asarray(tech.base_output, dtype=float)))
+                            * float(scenario.labor_supply_factor),
+                            1e-12,
+                        )
+                        for r, keep in zip(res.records, used)
+                        if keep
+                    ]
+                )
+            )
+            if used.any()
+            else float("nan"),
+            "capital_ratio_final": float(
+                np.sum(np.asarray(res.records[-1].capacity, dtype=float) * np.asarray(tech.kappa, dtype=float))
+                / max(float(np.sum(np.asarray(tech.kappa, dtype=float) * np.asarray(tech.base_output, dtype=float))), 1e-12)
+            )
+            if res.records
+            else float("nan"),
+            "capital_ratio_mean": float(
+                np.mean(
+                    [
+                        float(np.sum(np.asarray(r.capacity, dtype=float) * np.asarray(tech.kappa, dtype=float)))
+                        / max(float(np.sum(np.asarray(tech.kappa, dtype=float) * np.asarray(tech.base_output, dtype=float))), 1e-12)
+                        for r, keep in zip(res.records, used)
+                        if keep
+                    ]
+                )
+            )
+            if used.any()
+            else float("nan"),
+            "accounting_residual_max": float(
+                max((_accounting_residual(r) for r in res.records), default=0.0)
+            ),
+            "accounting_checks_passed": float(len(res.records)),
+            "plan_lowering_periods": float(instrumentation.get("lowered", 0)) if instrumentation else float("nan"),
+            "plan_raising_periods": float(instrumentation.get("raised", 0)) if instrumentation else float("nan"),
+            "plan_instrumented_periods": float(instrumentation.get("periods", 0)) if instrumentation else float("nan"),
             "wall_s": float(wall_s),
             "status": "ok",
         }
@@ -505,6 +643,137 @@ def _summary_row(res: Any, cell: Cell, seed: int, tech: Any, scenario: Any, wall
             unmet = np.array([float(np.sum(r.unmet)) for r in res.records])
             rows["probe_unmet_tail"] = float(unmet[tail].mean())
     return rows
+
+
+# ---------------------------------------------------------------------------
+# audit sample (the verifier's raw-array check)
+# ---------------------------------------------------------------------------
+_AUDIT_ARRAYS: tuple[str, ...] = (
+    "x",
+    "Z",
+    "C",
+    "G",
+    "invest",
+    "inventory_end",
+    "demand",
+    "unmet",
+    "capacity",
+    "plan_targets",
+    "supply",
+    "price",
+    "spoilage",
+)
+
+
+def _audit_periods(cell: Cell) -> list[int]:
+    """Which periods of one run enter the audit sample (deterministic)."""
+    periods = int(cell.scenario.get("periods", PERIODS))
+    burn = int(cell.scenario.get("burn_in", BURN_IN))
+    shocks = cell.scenario.get("shocks") or []
+    ts: list[int] = []
+    if shocks:
+        start = int(min(s["start"] for s in shocks))
+        end = int(max(int(s["start"]) + max(int(s["duration"]), 1) for s in shocks))
+        ts = [burn + 1, max(burn + 1, start - 1), start + 1, min(periods, end + 2), periods]
+    else:
+        span = max(1, periods - burn)
+        ts = [burn + 1, burn + span // 3, burn + 2 * span // 3, periods]
+    return sorted({int(t) for t in ts if 1 <= int(t) <= periods})
+
+
+def _audit_bucket(t: int, cell: Cell) -> str:
+    shocks = cell.scenario.get("shocks") or []
+    if not shocks:
+        return "steady"
+    start = int(min(s["start"] for s in shocks))
+    end = int(max(int(s["start"]) + max(int(s["duration"]), 1) for s in shocks))
+    burn = int(cell.scenario.get("burn_in", BURN_IN))
+    if t < start:
+        return "pre_shock" if t > burn else "burn_in"
+    if t < end:
+        return "shock"
+    return "post_shock"
+
+
+def audit_plan(cells: Sequence[Cell], target_records: int = 240) -> dict[str, dict[str, list[int]]]:
+    """Stratified sample of (run, period) records to persist for the verifier.
+
+    The sample is deterministic: runs are taken at a fixed stride through the
+    block's (cell, seed) list and each selected run contributes a few periods
+    chosen by :func:`_audit_periods` (pre-shock, in-shock, post-shock, first and
+    last period).  That gives every block at least ``target_records`` records
+    across its cells, periods and phases, without dumping the whole trajectory.
+    """
+    pairs: list[tuple[Cell, int]] = [(cell, int(seed)) for cell in cells for seed in cell.seeds]
+    if not pairs:
+        return {}
+    per_run = max(1, len(_audit_periods(pairs[0][0])))
+    n_runs = max(1, int(target_records) // per_run)
+    step = max(1, len(pairs) // n_runs)
+    chosen = pairs[::step][:n_runs]
+    plan: dict[str, dict[str, list[int]]] = {}
+    for cell, seed in chosen:
+        plan.setdefault(cell.cell_id, {})[str(seed)] = _audit_periods(cell)
+    return plan
+
+
+def _append_audit(
+    bucket: dict[str, list[Any]], cell: Cell, seed: int, record: Any, tech: Any
+) -> None:
+    """Append one (run, period) record to the audit sample.
+
+    The substrate is stored *per record* (``A``, ``base_output``, ``base_final``,
+    ``essentials``, ``consumption_weights``) so that the file is self-auditing even
+    for a block that mixes substrates or A-perturbations (B6): the verifier can
+    check ``Z == A diag(x)`` and the base-year identity without loading the data
+    layer or trusting the runner.
+    """
+    bucket["seed"].append(int(seed))
+    bucket["t"].append(int(record.t))
+    bucket["bucket"].append(_audit_bucket(int(record.t), cell))
+    bucket["cell_id"].append(cell.cell_id)
+    bucket["mechanism"].append(cell.mechanism)
+    bucket["scenario_id"].append(cell.scenario_id)
+    bucket["block"].append(cell.block)
+    bucket["n_sectors"].append(int(tech.n))
+    for name in _AUDIT_ARRAYS:
+        bucket[name].append(np.asarray(getattr(record, name), dtype=float).copy())
+    bucket.setdefault("spoilage", [])
+    bucket["A"].append(np.asarray(tech.A, dtype=float).copy())
+    bucket["sectors"].append(np.asarray(tech.sectors, dtype=str))
+    bucket["base_output"].append(np.asarray(tech.base_output, dtype=float).copy())
+    bucket["base_final"].append(np.asarray(tech.base_final, dtype=float).copy())
+    bucket["essentials"].append(np.asarray(tech.essentials, dtype=float).copy())
+    bucket["consumption_weights"].append(
+        np.asarray(tech.consumption_weights, dtype=float).copy()
+    )
+
+
+def _treatment_constants(cell: Cell) -> dict[str, Any]:
+    """Scalar treatment constants stored once per audit file."""
+    scenario = cell.scenario
+    return {
+        "periods": np.asarray(int(scenario.get("periods", PERIODS))),
+        "burn_in": np.asarray(int(scenario.get("burn_in", BURN_IN))),
+        "lag": np.asarray(int(scenario.get("info", {}).get("lag", 0))),
+        "noise": np.asarray(float(scenario.get("info", {}).get("noise", 0.0))),
+        "sigma_demand": np.asarray(float(scenario.get("demand", {}).get("sigma", 0.0))),
+        "ar1": np.asarray(float(scenario.get("demand", {}).get("ar1", 0.0))),
+        "price_elasticity": np.asarray(
+            float(scenario.get("demand", {}).get("price_elasticity", 0.0))
+        ),
+        "stock_ratio": np.asarray(float(scenario.get("stock_ratio", STOCK_RATIO))),
+        "a_perturb": np.asarray(float(cell.tech.get("a_perturb", 0.0) or 0.0)),
+        "shock_size": np.asarray(
+            float(max((s.get("size", 1.0) for s in scenario.get("shocks") or []), default=1.0))
+        ),
+        "shock_start": np.asarray(
+            int(min((s.get("start", 0) for s in scenario.get("shocks") or []), default=0))
+        ),
+        "shock_duration": np.asarray(
+            int(min((s.get("duration", 0) for s in scenario.get("shocks") or []), default=0))
+        ),
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -528,6 +797,14 @@ def _execute_cell(payload: Mapping[str, Any]) -> dict[str, Any]:
         "period_rows": [],
         "summary_rows": [],
         "sector_rows": [],
+        "audit": {name: [] for name in _AUDIT_ARRAYS}
+        | {
+            "seed": [], "t": [], "bucket": [], "cell_id": [], "mechanism": [],
+            "scenario_id": [], "block": [], "n_sectors": [], "A": [], "sectors": [], "base_output": [],
+            "base_final": [], "essentials": [], "consumption_weights": [],
+        },
+        "audit_constants": None,
+        "code_fingerprint": code_fingerprint(),
         "wall_s": 0.0,
     }
     try:
@@ -539,17 +816,26 @@ def _execute_cell(payload: Mapping[str, Any]) -> dict[str, Any]:
         scenario = scenario_from_dict(cell.scenario)
         for seed in cell.seeds:
             t0 = time.perf_counter()
+            mech = get_mechanism(cell.mechanism, tech, scenario.mechanism_params)
+            sim = Simulation(tech, mech, scenario, seed=int(seed))
+            instrumentation = _instrument_plan_lowering(mech)
             if cell.probe:
-                mech = get_mechanism(cell.mechanism, tech, scenario.mechanism_params)
-                sim = Simulation(tech, mech, scenario, seed=int(seed))
                 _apply_probe(sim, mech, cell.probe, tech)
-                res = sim.run()
-            else:
-                res = run_scenario(scenario, technology=tech, seed=int(seed))
+            res = sim.run()
             wall = time.perf_counter() - t0
             out["period_rows"].extend(_period_rows(res, cell, int(seed)))
-            out["summary_rows"].append(_summary_row(res, cell, int(seed), tech, scenario, wall))
+            out["summary_rows"].append(
+                _summary_row(res, cell, int(seed), tech, scenario, wall, instrumentation)
+            )
             out["sector_rows"].extend(_sector_rows(res, cell, int(seed), tech, scenario))
+            audit_ts = (payload.get("audit") or {}).get(str(seed)) or []
+            if audit_ts:
+                wanted = {int(t) for t in audit_ts}
+                for record in res.records:
+                    if int(record.t) in wanted:
+                        _append_audit(out["audit"], cell, int(seed), record, tech)
+                if out["audit_constants"] is None:
+                    out["audit_constants"] = _treatment_constants(cell)
     except Exception as exc:  # noqa: BLE001 - a failed cell is recorded, not raised
         out["status"] = "error"
         out["error"] = f"{type(exc).__name__}: {exc}"
@@ -588,6 +874,7 @@ def _write_shard(out_dir: Path, cell: Cell, result: Mapping[str, Any]) -> None:
         "block": cell.block,
         "mechanism": cell.mechanism,
         "cell_hash": cell.hash(),
+        "code_fingerprint": result.get("code_fingerprint", ""),
         "seeds": list(cell.seeds),
         "status": result.get("status", "ok"),
         "error": result.get("error", ""),
@@ -605,6 +892,29 @@ def _write_shard(out_dir: Path, cell: Cell, result: Mapping[str, Any]) -> None:
         pd.DataFrame(period_rows).to_parquet(data_path, index=False)
     elif data_path.exists():  # pragma: no cover - a cell that produced nothing
         data_path.unlink()
+    audit = result.get("audit") or {}
+    const = result.get("audit_constants")
+    if const and audit.get("x"):
+        payload = dict(const)
+        payload.update(
+            {
+                "seed": np.asarray(audit["seed"], dtype=np.int64),
+                "t": np.asarray(audit["t"], dtype=np.int64),
+                "bucket": np.asarray(audit["bucket"], dtype=str),
+                "block": np.asarray(audit["block"], dtype=str),
+                "cell_id": np.asarray(audit["cell_id"], dtype=str),
+                "mechanism": np.asarray(audit["mechanism"], dtype=str),
+                "scenario_id": np.asarray(audit["scenario_id"], dtype=str),
+            }
+        )
+        for name in _AUDIT_ARRAYS:
+            payload[name] = np.asarray(audit[name], dtype=float)
+        payload["A"] = np.asarray(audit["A"], dtype=float)          # (m, n, n)
+        payload["sectors"] = np.asarray(audit["sectors"], dtype=str)  # (m, n)
+        for name in ("base_output", "base_final", "essentials", "consumption_weights"):
+            payload[name] = np.asarray(audit[name], dtype=float)
+        payload["n_sectors"] = np.asarray(audit["n_sectors"], dtype=np.int64)
+        np.savez_compressed(out_dir / "cells" / f"{cell.cell_id}.audit.npz", **payload)
 
 
 def _default(obj: Any) -> Any:
@@ -698,17 +1008,21 @@ def run_cells(
     results: list[dict[str, Any]] = []
     if not todo:
         return results, skipped, 0
+    plan = audit_plan(todo)
     n = _n_workers(workers)
     if n == 1 or len(todo) == 1:
         for cell in todo:
             if verbose:
                 print(f"  [{cell.block}] {cell.cell_id} ({len(cell.seeds)} seeds)", flush=True)
-            result = _execute_cell(_payload(cell))
+            result = _execute_cell(_payload(cell, plan.get(cell.cell_id)))
             results.append(result)
             _write_shard(out, cell, result)
         return results, skipped, sum(1 for r in results if r["status"] != "ok")
     with ProcessPoolExecutor(max_workers=min(n, len(todo)), mp_context=_mp_context()) as pool:
-        futures = {pool.submit(_execute_cell, _payload(cell)): cell for cell in todo}
+        futures = {
+            pool.submit(_execute_cell, _payload(cell, plan.get(cell.cell_id))): cell
+            for cell in todo
+        }
         done = 0
         for future in as_completed(futures):
             cell = futures[future]
@@ -736,8 +1050,9 @@ def run_cells(
     return results, skipped, failed
 
 
-def _payload(cell: Cell) -> dict[str, Any]:
+def _payload(cell: Cell, audit: Mapping[str, list[int]] | None = None) -> dict[str, Any]:
     return {
+        "audit": dict(audit or {}),
         "block": cell.block,
         "cell_id": cell.cell_id,
         "mechanism": cell.mechanism,
@@ -768,6 +1083,8 @@ def _assemble_block(
     period_files: list[Path] = []
     failures: list[dict[str, Any]] = []
     hashes: dict[str, str] = {}
+    fingerprints: dict[str, int] = {}
+    scenario_hashes: dict[str, str] = {}
     runs_completed = 0
     for cell in cells:
         meta_path, data_path = _shard_paths(out, cell.cell_id)
@@ -782,17 +1099,30 @@ def _assemble_block(
             failures.append({"cell_id": cell.cell_id, "error": meta.get("error", "unknown")})
             continue
         hashes[cell.cell_id] = meta.get("cell_hash", "")
+        try:
+            from planlab.core.scenarios import scenario_from_dict, scenario_hash
+
+            scenario_hashes[cell.cell_id] = scenario_hash(
+                scenario_from_dict(cell.scenario_dict())
+            )
+        except Exception:  # pragma: no cover - invalid scenario never gets this far
+            scenario_hashes[cell.cell_id] = ""
+        fp = str(meta.get("code_fingerprint") or "")
+        fingerprints[fp] = fingerprints.get(fp, 0) + 1
         summaries.extend(meta.get("summary_rows") or [])
         sectors.extend(meta.get("sector_rows") or [])
         runs_completed += len(meta.get("summary_rows") or [])
         if data_path.exists():
             period_files.append(data_path)
 
+    treatment_keys = (
+        sorted(set().union(*[set(c.treatment.keys()) for c in cells])) if cells else []
+    )
     summary = pd.DataFrame(summaries)
     if not summary.empty:
         summary = summary.sort_values(["cell_id", "seed"]).reset_index(drop=True)
         summary.to_csv(out / "summary.csv", index=False)
-        aggregate = _aggregate_cells(summary)
+        aggregate = _aggregate_cells(summary, treatment_keys)
         aggregate.to_csv(out / "aggregate.csv", index=False)
     else:  # pragma: no cover - a block with no successful cell
         summary.to_csv(out / "summary.csv", index=False)
@@ -812,17 +1142,25 @@ def _assemble_block(
         panel = pd.DataFrame(sectors).sort_values(["cell_id", "seed", "sector"]).reset_index(drop=True)
         panel.to_parquet(out / "sector_panel.parquet", index=False)
 
+    audit_info = _assemble_audit(out)
+
     (out / "cells.json").write_text(
         json.dumps([cell.full_dict() for cell in cells], indent=2, sort_keys=True, default=_default),
         encoding="utf-8",
     )
 
+    identification = _identification_audit(cells)
     manifest = {
         "block": block,
+        "mechanism_base_params": dict(identification["common_params"]),
+        "mechanism_pinned_params": dict(identification["pinned_params"]),
+        "identification_audit": identification,
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
         "package_versions": package_versions(),
         "code_fingerprint": code_fingerprint(),
-        "git_commit": _git_commit(),
+        "code_fingerprints_seen": fingerprints,
+        "mixed_code_versions": len([k for k in fingerprints if k]) > 1,
+        **_git_state(),
         "environment": dict(BLOCK_ENVIRONMENT),
         "mechanisms_present": sorted(mechanisms_present),
         "mechanisms_missing": sorted(mechanisms_missing),
@@ -834,7 +1172,8 @@ def _assemble_block(
         "runs_completed": int(runs_completed),
         "runs_planned": int(sum(len(c.seeds) for c in cells)),
         "seeds_per_cell": {cell.cell_id: len(cell.seeds) for cell in cells},
-        "scenario_hashes": hashes,
+        "scenario_hashes": scenario_hashes,
+        "cell_hashes": hashes,
         "scenario_ids": sorted({cell.scenario_id for cell in cells}),
         "grid_fingerprint": grid_fingerprint_cells(cells),
         "workers": int(workers),
@@ -842,6 +1181,9 @@ def _assemble_block(
         "sum_cell_wall_time_s": round(float(sum(v.get("wall_s", 0.0) for v in summaries)), 3),
         "forced_rerun": bool(force),
         "substrates": sorted({str(c.tech.get("source", "eurostat")) for c in cells}),
+        "audit_records": audit_info.get("n_records", 0),
+        "audit_runs": audit_info.get("n_runs", 0),
+        "audit_file": audit_info.get("path"),
         "failures": failures,
     }
     (out / "manifest.json").write_text(
@@ -852,6 +1194,137 @@ def _assemble_block(
             json.dumps(failures, indent=2, sort_keys=True), encoding="utf-8"
         )
     return manifest
+
+
+def _identification_audit(cells: Sequence[Cell]) -> dict[str, Any]:
+    """Check that every cell received the common mechanism-parameter block.
+
+    The mechanism comparison is only identified if the household-side and
+    planning-side settings are *identical* across institutions (Lead, identification
+    review).  This audits the cell definitions, not the mechanism code: a cell whose
+    ``mechanism_params`` does not contain the common block is a design error and
+    raises here rather than producing an unidentified ranking.
+    """
+    from .grid import COMMON_MECHANISM_PARAMS, MECHANISM_BASE_PARAMS
+
+    problems: list[str] = []
+    checked = 0
+    for cell in cells:
+        params = dict(cell.scenario.get("mechanism_params") or {})
+        checked += 1
+        for key, expected in COMMON_MECHANISM_PARAMS.items():
+            if key not in params:
+                problems.append(f"{cell.cell_id}: missing {key}")
+                continue
+            value = params[key]
+            if isinstance(expected, float):
+                if not np.isclose(float(value), expected):
+                    problems.append(f"{cell.cell_id}: {key}={value} != {expected}")
+            elif value != expected:
+                problems.append(f"{cell.cell_id}: {key}={value} != {expected}")
+        for key, expected in MECHANISM_BASE_PARAMS.get(cell.mechanism, {}).items():
+            if key not in params:
+                problems.append(f"{cell.cell_id}: missing pinned {key}")
+            elif isinstance(expected, float):
+                if not np.isclose(float(params[key]), expected):
+                    problems.append(f"{cell.cell_id}: {key}={params[key]} != {expected}")
+    if problems:
+        raise AssertionError(
+            "identification audit failed (mechanism parameters differ between cells): "
+            + "; ".join(problems[:10])
+        )
+    return {
+        "common_params": dict(COMMON_MECHANISM_PARAMS),
+        "pinned_params": {k: dict(v) for k, v in MECHANISM_BASE_PARAMS.items()},
+        "cells_checked": checked,
+        "cells_compliant": checked,
+        "ok": True,
+        "institutional_knobs": ["revision_gain", "price_gain", "theta", "quota_speed"],
+    }
+
+
+def _assemble_audit(out: Path) -> dict[str, Any]:
+    """Concatenate the per-cell audit shards into ``audit_records.npz``.
+
+    The verifier gets raw per-period arrays for a stratified sample of (run,
+    period) records, together with the substrate of *each* record, so accounting
+    conservation, ``Z == A diag(x)``, ``C <= demand``, ``x <= capacity``, the
+    priority-ladder order and the metric formulas can all be re-derived without
+    re-running the simulation or trusting this code.
+
+    A block may mix substrates (B1 runs the toy fixture and the real table), so
+    array-valued records are padded to the largest sector count and ``n_sectors``
+    is stored per record: only the first ``n_sectors[i]`` entries of record ``i``
+    are meaningful.
+    """
+    files = sorted((out / "cells").glob("*.audit.npz"))
+    if not files:
+        return {"n_records": 0, "n_runs": 0, "path": None}
+    columns: dict[str, list[np.ndarray]] = {}
+    scalars: dict[str, np.ndarray] = {}
+    for path in files:
+        with np.load(path, allow_pickle=False) as data:
+            for key in data.files:
+                value = np.asarray(data[key])
+                if value.ndim == 0:
+                    scalars.setdefault(key, value)
+                elif value.ndim == 1 and value.dtype.kind not in "f":
+                    columns.setdefault(key, []).append(value)  # strings / ints per record
+                elif value.ndim >= 2 and value.dtype.kind in "UiUS":
+                    columns.setdefault(key, []).append(value)  # per-record sector labels
+                elif value.dtype.kind in "UiUS":
+                    scalars.setdefault(key, value)
+                else:
+                    columns.setdefault(key, []).append(value)
+    payload: dict[str, Any] = {}
+    for key, arrays in columns.items():
+        if key == "A":
+            payload[key] = _stack_padded(arrays)  # (N, n_max, n_max), NaN outside each record's n
+        elif key == "sectors":
+            width = max(a.shape[1] for a in arrays)
+            padded = np.full((sum(a.shape[0] for a in arrays), width), "", dtype="<U16")
+            row = 0
+            for a in arrays:
+                padded[row : row + a.shape[0], : a.shape[1]] = a
+                row += a.shape[0]
+            payload[key] = padded
+        elif any(a.ndim > 1 for a in arrays):
+            payload[key] = _stack_padded(arrays)
+        else:
+            payload[key] = np.concatenate([np.atleast_1d(a) for a in arrays], axis=0)
+    payload.update(scalars)
+    np.savez_compressed(out / "audit_records.npz", **payload)
+    index = pd.DataFrame(
+        {
+            "cell_id": payload.get("cell_id", []),
+            "mechanism": payload.get("mechanism", []),
+            "seed": payload.get("seed", []),
+            "t": payload.get("t", []),
+            "bucket": payload.get("bucket", []),
+        }
+    )
+    index.to_csv(out / "audit_index.csv", index=False)
+    n_records = int(len(index))
+    n_runs = (
+        int(len({(str(c), int(s)) for c, s in zip(index["cell_id"], index["seed"])}))
+        if n_records
+        else 0
+    )
+    return {"n_records": n_records, "n_runs": n_runs, "path": str(out / "audit_records.npz")}
+
+
+def _stack_padded(arrays: Sequence[np.ndarray]) -> np.ndarray:
+    """Concatenate arrays along axis 0, padding trailing axes with NaN."""
+    arrays = [np.atleast_2d(a) for a in arrays]
+    ndim = max(a.ndim for a in arrays)
+    target = [0] + [max(a.shape[i] for a in arrays) for i in range(1, ndim)]
+    padded = []
+    for arr in arrays:
+        pads = [(0, 0)] + [
+            (0, target[i] - arr.shape[i]) for i in range(1, arr.ndim)
+        ]
+        padded.append(np.pad(arr, pads, constant_values=np.nan))
+    return np.concatenate(padded, axis=0)
 
 
 def _skipped_missing_count(skipped_cells: Sequence[Cell], mechanisms_present: Sequence[str]) -> int:
@@ -867,27 +1340,51 @@ def grid_fingerprint_cells(cells: Sequence[Cell]) -> str:
     return hashlib.sha256("|".join(items).encode("utf-8")).hexdigest()[:16]
 
 
-def _git_commit() -> str | None:
-    """Commit id if the checkout is a git repository, else ``None``."""
+def _git_state() -> dict[str, Any]:
+    """Commit id, dirty flag and diff stat of the checkout (all optional).
+
+    The manifests must say which code made the numbers.  A dirty tree is recorded
+    rather than hidden: a reader can then decide whether the diff matters.  When
+    the checkout is not a git repository every field is ``None`` and the content
+    fingerprint in the manifest is the only provenance.
+    """
+    state: dict[str, Any] = {"git_commit": None, "git_dirty": None, "git_diff_stat": None}
     try:
         import subprocess
 
         from planlab import paths
 
-        out = subprocess.run(
-            ["git", "rev-parse", "HEAD"],
-            cwd=str(paths.project_root()),
-            capture_output=True,
-            text=True,
-            timeout=5,
-            check=False,
+        root = str(paths.project_root())
+        head = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True,
+            timeout=5, check=False,
         )
-        return out.stdout.strip() or None
-    except Exception:  # pragma: no cover - no git
-        return None
+        state["git_commit"] = head.stdout.strip() or None
+        if state["git_commit"]:
+            status = subprocess.run(
+                ["git", "status", "--porcelain"], cwd=root, capture_output=True,
+                text=True, timeout=5, check=False,
+            )
+            state["git_dirty"] = bool(status.stdout.strip())
+            diff = subprocess.run(
+                ["git", "diff", "--stat", "HEAD"], cwd=root, capture_output=True,
+                text=True, timeout=5, check=False,
+            )
+            lines = [line for line in diff.stdout.strip().splitlines() if line.strip()]
+            state["git_diff_stat"] = lines[-1] if lines else ""
+    except Exception:  # pragma: no cover - no git / no subprocess
+        pass
+    return state
 
 
-def _aggregate_cells(summary: pd.DataFrame) -> pd.DataFrame:
+def git_state() -> dict[str, Any]:
+    """Public alias of :func:`_git_state` (used by the block manifest)."""
+    return _git_state()
+
+
+def _aggregate_cells(
+    summary: pd.DataFrame, treatment_keys: Sequence[str] = ()
+) -> pd.DataFrame:
     """Per-cell mean/sd/95% CI across seeds of the primary run-level metrics."""
     metrics = [
         "mean_shortage_rate",
@@ -921,30 +1418,25 @@ def _aggregate_cells(summary: pd.DataFrame) -> pd.DataFrame:
         "penalised_welfare",
         "mean_consumption",
         "mean_output",
+        "output_ratio_mean",
+        "accounting_residual_max",
+        "mean_spoilage_rate",
+        "mean_spoilage",
+        "mean_investment_ratio",
+        "capital_ratio_final",
+        "capital_ratio_mean",
+        "mean_labour_utilisation",
+        "plan_lowering_periods",
+        "plan_raising_periods",
+        "accounting_checks_passed",
+        "probe_shortage_tail",
+        "probe_unmet_tail",
+        "pre_shock_shortage",
         "n_periods_used",
         "wall_s",
     ]
     present = [m for m in metrics if m in summary.columns]
-    treatment_cols = [
-        c
-        for c in summary.columns
-        if c
-        not in set(
-            present
-            + [
-                "block",
-                "cell_id",
-                "mechanism",
-                "seed",
-                "scenario_id",
-                "status",
-                "n_periods_used",
-                "wall_s",
-            ]
-        )
-    ]
-    group_cols = ["block", "cell_id", "mechanism"] + [c for c in treatment_cols if c not in {"block", "cell_id", "mechanism"}]
-    group_cols = [c for c in group_cols if c in summary.columns]
+    group_cols = [c for c in (["block", "cell_id", "mechanism"] + list(treatment_keys)) if c in summary.columns]
     rows: list[dict[str, Any]] = []
     for keys, frame in summary.groupby(group_cols, dropna=False, sort=True):
         if not isinstance(keys, tuple):

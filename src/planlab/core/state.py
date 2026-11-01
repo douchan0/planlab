@@ -450,4 +450,5 @@ class PeriodRecord:
     supply: np.ndarray
     plan_status: str
     iterations: int
+    spoilage: np.ndarray = field(default_factory=lambda: np.zeros(0))
     metrics: dict = field(default_factory=dict)

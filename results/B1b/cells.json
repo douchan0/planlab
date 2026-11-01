@@ -1,0 +1,802 @@
+[
+  {
+    "block": "B1b",
+    "cell_id": "B1b.lp_central",
+    "mechanism": "lp_central",
+    "notes": "no shock, no lag: the information rent of the institution",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B1b",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "lp_central",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "use_shadow_prices": 0.0
+      },
+      "name": "B1b information rent: lp_central, noise only (no shock, no lag)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B1b",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B1b",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B1b",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "lp_central",
+      "price_elasticity": 0.4,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B1b",
+    "cell_id": "B1b.material_balance",
+    "mechanism": "material_balance",
+    "notes": "no shock, no lag: the information rent of the institution",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B1b",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "material_balance",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "balance_rounds": 3,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "revision_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B1b information rent: material_balance, noise only (no shock, no lag)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B1b",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B1b",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B1b",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "material_balance",
+      "price_elasticity": 0.4,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B1b",
+    "cell_id": "B1b.rationing_priority",
+    "mechanism": "rationing_priority",
+    "notes": "no shock, no lag: the information rent of the institution",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B1b",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "rationing_priority",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "quota_speed": 0.5,
+        "revision_interval": 1,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B1b information rent: rationing_priority, noise only (no shock, no lag)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B1b",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B1b",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B1b",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "rationing_priority",
+      "price_elasticity": 0.4,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B1b",
+    "cell_id": "B1b.tatonnement",
+    "mechanism": "tatonnement",
+    "notes": "no shock, no lag: the information rent of the institution",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B1b",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "tatonnement",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "price_gain": 0.3,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B1b information rent: tatonnement, noise only (no shock, no lag)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B1b",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B1b",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B1b",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "tatonnement",
+      "price_elasticity": 0.4,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B1b",
+    "cell_id": "B1b.market",
+    "mechanism": "market",
+    "notes": "no shock, no lag: the information rent of the institution",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B1b",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "market",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1
+      },
+      "name": "B1b information rent: market, noise only (no shock, no lag)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B1b",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B1b",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B1b",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "market",
+      "price_elasticity": 0.4,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  },
+  {
+    "block": "B1b",
+    "cell_id": "B1b.hybrid_dual_track",
+    "mechanism": "hybrid_dual_track",
+    "notes": "no shock, no lag: the information rent of the institution",
+    "probe": null,
+    "scenario": {
+      "burn_in": 30,
+      "demand": {
+        "ar1": 0.3,
+        "growth": 0.0,
+        "income_elasticity": 1.0,
+        "price_elasticity": 0.4,
+        "sigma": 0.02
+      },
+      "depreciation": 0.02,
+      "discount": 0.98,
+      "gov_share": 0.1,
+      "household": {
+        "backlog_persistence": 0.5,
+        "essential_priority": 0.0,
+        "hoarding": 0.0
+      },
+      "id": "B1b",
+      "indexation": 0.0,
+      "info": {
+        "lag": 0,
+        "noise": 0.03,
+        "observe_backlog": true,
+        "observe_capacity": true,
+        "observe_inventory": true,
+        "planning_horizon": 1
+      },
+      "investment_share": 0.12,
+      "labor_supply_factor": 1.15,
+      "mechanism": "hybrid_dual_track",
+      "mechanism_params": {
+        "backlog_carry": 0.0,
+        "market_gain": 0.25,
+        "max_target_ratio": 2.5,
+        "min_target_ratio": 0.25,
+        "stock_target_ratio": 0.1,
+        "theta": 0.5
+      },
+      "name": "B1b information rent: hybrid_dual_track, noise only (no shock, no lag)",
+      "objective": {
+        "adjustment": 0.1,
+        "inequality": 0.0,
+        "inventory": 0.1,
+        "plan_deviation": 0.5,
+        "shortage": 1.0
+      },
+      "periods": 80,
+      "price_bounds": [
+        0.05,
+        20.0
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "shocks": [],
+      "stock_ratio": 0.1,
+      "tags": [
+        "B1b",
+        "information_rent"
+      ],
+      "technology": {
+        "n_sectors": 20,
+        "source": "eurostat",
+        "year": 2020
+      }
+    },
+    "scenario_id": "B1b",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "tech": {
+      "n_sectors": 20,
+      "source": "eurostat",
+      "year": 2020
+    },
+    "treatment": {
+      "block": "B1b",
+      "gain": 0.3,
+      "lag": 0,
+      "m": 1,
+      "mechanism": "hybrid_dual_track",
+      "price_elasticity": 0.4,
+      "shock_sector": null,
+      "shock_size": 1.0,
+      "sigma_demand": 0.02,
+      "sigma_obs": 0.03,
+      "stock_ratio": 0.1,
+      "substrate": "eurostat"
+    }
+  }
+]

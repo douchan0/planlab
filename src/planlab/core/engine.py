@@ -36,6 +36,7 @@ from .state import (
 
 __all__ = [
     "AccountingError",
+    "balance_residual",
     "ration_by_priority",
     "Simulation",
     "SimulationResult",
@@ -43,6 +44,33 @@ __all__ = [
     "run_scenario",
     "build_observation",
 ]
+
+
+def balance_residual(record: Any) -> float:
+    """Relative violation of the per-sector balance identity in one period record.
+
+    The identity is ``S0 + x = sum_j Z_ij + C + G + I + S_end + spoilage``.  Spoilage
+    is the part of output that is neither used nor storable (see
+    ``Scenario.max_stock_ratio``); omitting it from this check would make a glut look
+    like an accounting leak.
+
+    This is the *only* definition of the audit used in the repository: import it
+    rather than re-deriving it, so that a change in the accounting rule cannot leave
+    one test checking the old identity.
+    """
+    lhs = np.asarray(record.supply, dtype=float)
+    rhs = (
+        np.asarray(record.Z, dtype=float).sum(axis=1)
+        + np.asarray(record.C, dtype=float)
+        + np.asarray(record.G, dtype=float)
+        + np.asarray(record.invest, dtype=float)
+        + np.asarray(record.inventory_end, dtype=float)
+    )
+    sp = getattr(record, "spoilage", None)
+    if sp is not None and np.size(sp) == np.size(lhs):
+        rhs = rhs + np.asarray(sp, dtype=float)
+    scale = max(1.0, float(np.max(np.abs(lhs))))
+    return float(np.max(np.abs(lhs - rhs))) / scale
 
 
 class AccountingError(RuntimeError):
@@ -368,7 +396,7 @@ class Simulation:
 
             # ---- 5. feasibility fixed point + accounting ------------------
             (
-                x, Z, C, G, Inv, S_end, unmet, iterations, converged,
+                x, Z, C, G, Inv, S_end, unmet, iterations, converged, spoilage,
             ) = self._reconcile(
                 inventory=state.inventory,
                 plan=plan,
@@ -382,7 +410,7 @@ class Simulation:
 
             supply_realised = state.inventory + x
             self._audit(t, inventory=state.inventory, supply=supply_realised, Z=Z,
-                        C=C, G=G, Invest=Inv, S_end=S_end)
+                        C=C, G=G, Invest=Inv, S_end=S_end, spoilage=spoilage)
 
             # ---- 6. prices for next period -------------------------------
             realisation = Realisation(
@@ -405,6 +433,8 @@ class Simulation:
                 plan_targets=plan.targets, iterations=iterations,
                 prev_x=x_prev if t > 1 else None,
                 prev_price=price_prev if t > 1 else None,
+                spoilage=spoilage,
+                supply=supply_realised,
             )
             pm["converged"] = float(converged)
 
@@ -417,6 +447,7 @@ class Simulation:
                     plan_targets=plan.targets.copy(),
                     plan_final_targets=plan.final_targets.copy(),
                     supply=supply_realised.copy(),
+                    spoilage=spoilage.copy(),
                     plan_status=str(plan.meta.get("status", "")),
                     iterations=int(iterations),
                     metrics=pm,
@@ -561,10 +592,20 @@ class Simulation:
         G = np.minimum(parts["gov"], gov_demand)
         Inv = np.minimum(parts["invest"], invest_demand)
         used = Z.sum(axis=1) + C + G + Inv
-        S_end = np.maximum(supply - used, 0.0)
+        residual = np.maximum(supply - used, 0.0)
+        # Storage is finite.  Output that is neither used nor storable is spoilage: a
+        # real phenomenon (unsalable output in a shortage economy) that must be
+        # recorded rather than silently accumulated, because an unbounded stock would
+        # let a compositional mismatch hide inside the inventory series forever.
+        stock_cap = float(self.scenario.max_stock_ratio) * np.asarray(
+            self.tech.base_output, dtype=float
+        )
+        S_end = np.minimum(residual, np.maximum(stock_cap - inv, 0.0))
+        spoilage = residual - S_end
         unmet = np.maximum(demand - C, 0.0)
         self._last_status = status
-        return x, Z, C, G, Inv, S_end, unmet, n_passes, status in ("optimal", "infeasible-ub")
+        return (x, Z, C, G, Inv, S_end, unmet, n_passes,
+                status in ("optimal", "infeasible-ub"), spoilage)
 
     # -- feasibility sub-problem -------------------------------------------
     def _feasible_output(self, ub, inventory, reserve, labour_supply):
@@ -574,9 +615,12 @@ class Simulation:
             self.tech.labor, float(labour_supply or 0.0),
         )
 
-    def _audit(self, t: int, *, inventory, supply, Z, C, G, Invest, S_end) -> None:
+    def _audit(self, t: int, *, inventory, supply, Z, C, G, Invest, S_end,
+               spoilage=None) -> None:
         lhs = supply
         rhs = Z.sum(axis=1) + C + G + Invest + S_end
+        if spoilage is not None:
+            rhs = rhs + spoilage
         scale = max(1.0, float(np.max(np.abs(supply))))
         err = float(np.max(np.abs(lhs - rhs))) / scale
         if err > TOL_ACCOUNTING:

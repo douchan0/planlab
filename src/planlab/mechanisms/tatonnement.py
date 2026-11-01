@@ -82,8 +82,9 @@ class Tatonnement(CoordinationMechanism):
         "claim_elasticity": 0.0,
         #: ceiling on the planned target as a multiple of observed capacity
         "capacity_ceiling": 1.50,
-        #: share of the observed backlog added to this period's household claim
-        "backlog_carry": 0.0,
+        #: share of the observed backlog re-submitted as this period's household claim
+        #: (a queue; granted-but-not-demanded quantities end up in inventory)
+        "backlog_carry": 0.30,
         #: desired stock level as a multiple of base output
         "stock_target_ratio": 0.15,
         #: bounds on the planned target, relative to base-year output
@@ -112,7 +113,7 @@ class Tatonnement(CoordinationMechanism):
             "capacity_ceiling", self.param("capacity_ceiling", 1.5), 0.0, 5.0, lo_open=True
         )
         self._backlog_carry = require_range(
-            "backlog_carry", self.param("backlog_carry", 0.0), 0.0, 1.0
+            "backlog_carry", self.param("backlog_carry", 0.3), 0.0, 1.0
         )
         self._stock_ratio = require_range(
             "stock_target_ratio", self.param("stock_target_ratio", 0.15), 0.0, 5.0
@@ -197,13 +198,13 @@ class Tatonnement(CoordinationMechanism):
     def allocate(
         self, obs: Observation, state: State, plan: Plan, supply: np.ndarray
     ) -> Allocation:
-        """Willingness-to-pay ladder, with the price signal acting inside each tier.
+        """Willingness-to-pay ladder; the price signal acts on claim *magnitudes*.
 
-        Claim *magnitudes* are the observed notional demand: the board does not ration
-        household demand by price inside the period (see the module warning), it
-        rations by willingness-to-pay tier.  The price-mediated part of the mechanism
-        is the investment claim, which is deflated for goods whose observed price is
-        high relative to the price level (dear capital goods are bought later).
+        The household claim is the observed notional demand: the board does not ration
+        household demand by price inside the period (see the module warning), it rations
+        by willingness-to-pay tier.  The price-mediated part of the mechanism is the
+        investment claim, which is deflated for goods whose observed price is high
+        relative to the price level (dear capital goods are bought later).
         """
         alloc = self.build_allocation(
             targets=plan.targets,

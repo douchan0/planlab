@@ -34,7 +34,10 @@ def require_range(
     ValueError
         If the value is not finite or outside the documented range.
     """
-    v = float(value)
+    try:
+        v = float(value)
+    except (TypeError, ValueError):
+        raise ValueError(f"{name} must be a real number, got {value!r}") from None
     left = "(" if lo_open else "["
     right = ")" if hi_open else "]"
     if not np.isfinite(v):
@@ -47,9 +50,13 @@ def require_range(
 
 def require_int(name: str, value: Any, lo: int, hi: int) -> int:
     """Validate an integer parameter in ``[lo, hi]``."""
-    if isinstance(value, bool) or not float(value).is_integer():
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError):
+        raise ValueError(f"{name} must be an integer, got {value!r}") from None
+    if isinstance(value, bool) or not numeric.is_integer():
         raise ValueError(f"{name} must be an integer, got {value!r}")
-    v = int(value)
+    v = int(numeric)
     if not lo <= v <= hi:
         raise ValueError(f"{name} must lie in [{lo}, {hi}], got {v}")
     return v

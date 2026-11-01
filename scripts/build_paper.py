@@ -441,7 +441,10 @@ CITE_LIST_RE = re.compile(r"\[\[CITE:([A-Za-z0-9_:\-,\s]+)\]\]")
 def extract_refs_and_cites(src: str, st: BuildState) -> str:
     # the reference itself prints "Section", "Appendix", ... so a preceding noun
     # in the prose would be duplicated ("Section Section 4")
-    src = re.sub(r"\b(?:Sections?|Appendices|Appendix)\s+(?=\[\[REF:(?:sec|app):)", "", src)
+    src = re.sub(
+        r"\b(?:Sections?|Appendices|Appendix|Figures?|Tables?|Propositions?|Corollary|"
+        r"Corollaries|Lemmas?|Theorems?)\s+"
+        r"(?=\[\[REF:(?:sec|app|fig|tab|table|prop|cor|lem|thm):)", "", src)
 
     def do_ref(m: re.Match) -> str:
         kind, label = m.group(1).lower(), m.group(2)
@@ -1068,6 +1071,9 @@ def html_to_pdf(html_path: Path, pdf_path: Path, *, timeout: int = 180, budget: 
         "--disable-background-networking",
         "--disable-sync",
         "--run-all-compositor-stages-before-draw",
+        "--disable-breakpad",
+        "--disable-crash-reporter",
+        f"--crash-dumps-dir={BUILD / 'crash'}",
         "--no-pdf-header-footer",
         "--print-to-pdf-no-header",
         f"--user-data-dir={profile}",
@@ -1083,11 +1089,15 @@ def html_to_pdf(html_path: Path, pdf_path: Path, *, timeout: int = 180, budget: 
         warn(f"Edge timed out after {timeout}s")
         return False
     dt = time.time() - t0
-    if proc.returncode != 0:
-        warn(f"Edge exited {proc.returncode}: {proc.stderr.strip()[:600]}")
-    if not pdf_path.exists() or pdf_path.stat().st_size == 0:
-        warn("no PDF produced")
+    produced = pdf_path.exists() and pdf_path.stat().st_size > 0
+    if not produced:
+        warn(f"no PDF produced (Edge exit {proc.returncode}): {proc.stderr.strip()[:600]}")
         return False
+    if proc.returncode != 0:
+        # headless Edge often exits non-zero after writing the file, from crashpad
+        # noise it cannot write outside the workspace; the artefact is what matters
+        print(f"[build_paper] note: Edge exit {proc.returncode} after writing the PDF",
+              file=sys.stderr)
     info(f"PDF written in {dt:.1f}s ({pdf_path.stat().st_size/1024:.0f} KiB)")
     return True
 

@@ -123,6 +123,12 @@ class Scenario:
     name: str = ""
     # --- calibration knobs (documented defaults, overridable per scenario) ---
     stock_ratio: float = 0.15
+    #: storage capacity ceiling, as a multiple of base-year output per sector.
+    #: Output that cannot be sold and cannot be stored is spoilage (recorded, not
+    #: silently accumulated): without a bound the residual-to-stock accounting rule
+    #: permits unbounded accumulation of unsalable output, which is a property of the
+    #: accounting rule rather than of the economy.
+    max_stock_ratio: float = 2.0
     investment_share: float = 0.12
     gov_share: float = 0.10
     depreciation: float = 0.02
@@ -142,6 +148,8 @@ class Scenario:
             raise ValueError("burn_in must satisfy 0 <= burn_in < periods")
         if self.stock_ratio < 0:
             raise ValueError("stock_ratio must be >= 0")
+        if self.max_stock_ratio <= 0:
+            raise ValueError("max_stock_ratio must be strictly positive")
         if not 0 <= self.investment_share < 1:
             raise ValueError("investment_share must be in [0, 1)")
         if not 0 <= self.gov_share < 1:
@@ -205,6 +213,7 @@ class Scenario:
             },
             "mechanism_params": dict(self.mechanism_params),
             "stock_ratio": self.stock_ratio,
+            "max_stock_ratio": self.max_stock_ratio,
             "investment_share": self.investment_share,
             "gov_share": self.gov_share,
             "depreciation": self.depreciation,
@@ -228,7 +237,7 @@ def scenario_from_dict(data: Mapping[str, Any]) -> Scenario:
     known = {
         "id", "name", "mechanism", "technology", "periods", "seeds", "burn_in",
         "shocks", "info", "demand", "objective", "household", "mechanism_params",
-        "stock_ratio", "investment_share", "gov_share", "depreciation", "discount",
+        "stock_ratio", "max_stock_ratio", "investment_share", "gov_share", "depreciation", "discount",
         "labor_supply_factor", "indexation", "price_bounds", "tags",
     }
     unknown = set(data) - known
@@ -257,6 +266,7 @@ def scenario_from_dict(data: Mapping[str, Any]) -> Scenario:
         household=household,
         mechanism_params=dict(data.get("mechanism_params") or {}),
         stock_ratio=float(data.get("stock_ratio", 0.15)),
+        max_stock_ratio=float(data.get("max_stock_ratio", 2.0)),
         investment_share=float(data.get("investment_share", 0.12)),
         gov_share=float(data.get("gov_share", 0.10)),
         depreciation=float(data.get("depreciation", 0.02)),

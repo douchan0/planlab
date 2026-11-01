@@ -63,6 +63,8 @@ def period_metrics(
     iterations: int,
     prev_x: np.ndarray | None = None,
     prev_price: np.ndarray | None = None,
+    spoilage: np.ndarray | None = None,
+    supply: np.ndarray | None = None,
 ) -> dict[str, float]:
     """All per-period metrics, as a flat dictionary."""
     eps = 1e-12
@@ -97,6 +99,11 @@ def period_metrics(
         "price_dispersion": float(np.std(lprice)),
         "price_level": float(np.mean(lprice)),
         "iterations": float(iterations),
+        "spoilage_total": float(np.sum(spoilage)) if spoilage is not None else 0.0,
+        "spoilage_rate": (
+            float(np.sum(spoilage)) / max(float(np.sum(supply)), 1e-12)
+            if (spoilage is not None and supply is not None) else 0.0
+        ),
         "consumption_dispersion": float(
             np.std(np.where(demand > eps, C / np.maximum(demand, eps), 1.0))
         ),
@@ -220,6 +227,8 @@ def run_metrics(
         "max_iterations": float(np.max(series("iterations"))),
         "mean_consumption_dispersion": float(np.mean(series("consumption_dispersion"))),
         "mean_output": float(np.mean(series("output_total"))),
+        "mean_spoilage": float(np.mean(series("spoilage_total"))),
+        "mean_spoilage_rate": float(np.mean(series("spoilage_rate"))),
         "mean_consumption": float(np.mean(series("consumption_total"))),
     }
 
