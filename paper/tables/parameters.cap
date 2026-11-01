@@ -1,0 +1,1 @@
+Fixed parameters and treatment ranges. Quantities marked as varied are re-estimated or perturbed in the robustness block B6; every other parameter is fixed across the runs reported in the paper. The capital–output ratio is taken from the input–output coefficients where they permit it and set to a flat 2.5 otherwise, which is documented as a fallback in the data layer.

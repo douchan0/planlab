@@ -1,0 +1,21 @@
+sector_index,code,name_en,name_zh,aggregate,essential,n_source
+0,c01,"Agriculture, forestry & fishing",农、林、渔业,food_agriculture,1,3
+1,c02,Mining & quarrying,采矿与采石,mining_extraction,0,1
+2,c03,"Food, beverages & tobacco",食品、饮料与烟草,food_agriculture,1,1
+3,c04,"Textiles, apparel & leather",纺织、服装与皮革,manufacturing_light,0,1
+4,c05,"Wood, paper & printing",木材、造纸与印刷,manufacturing_light,0,3
+5,c06,Coke & refined petroleum,焦炭与精炼石油,energy_fuels,0,1
+6,c07,Chemicals & pharmaceuticals,化学品与医药,manufacturing_heavy,0,2
+7,c08,"Rubber, plastics & non-metallic minerals",橡胶、塑料与非金属矿物,manufacturing_heavy,0,2
+8,c09,Basic & fabricated metals,基础金属与金属制品,manufacturing_heavy,0,2
+9,c10,"Machinery, vehicles & electronics",机械、车辆与电子,capital_goods,0,5
+10,c11,"Furniture, other manufacturing & repair",家具、其他制造与修理,manufacturing_other,0,2
+11,c12,"Electricity, gas, water & waste",电力、燃气、水与废物处理,energy_utilities,1,3
+12,c13,Construction,建筑业,construction,0,1
+13,c14,Wholesale & retail trade,批发与零售贸易,trade,0,3
+14,c15,Transport & storage,运输与仓储,transport,0,5
+15,c16,Accommodation & food services,住宿与餐饮服务,hospitality,0,1
+16,c17,Information & communication,信息与通信,information,0,4
+17,c18,"Finance, insurance & real estate",金融、保险与房地产,finance_realestate,0,5
+18,c19,"Public administration, education & health",公共管理、教育与卫生,public_services,1,4
+19,c20,"Professional, business & other services",专业、商业及其他服务,professional_services,0,16

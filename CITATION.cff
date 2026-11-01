@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: "PlanLab: a mechanism-switchable computational laboratory for planned-economy coordination"
+abstract: >-
+  A simulation core in which the coordination institution of an input-output economy
+  is a replaceable module, used to compare material-balance planning, priority
+  rationing, Lange-type price coordination, competitive markets and dual-track
+  hybrids under controlled information delay and supply shocks.
+message: "If you use this software or its scenario library, please cite the paper and the repository."
+type: software
+license: MIT
+version: 0.1.0
+date-released: "2026-11-01"
+keywords:
+  - input-output economics
+  - material balance planning
+  - shortage economy
+  - computational experiment
+  - delay differential equations
+  - agent-based modelling
+  - reproducibility
+references:
+  - type: article
+    title: "When the Plan Lags: Information Delay, Shortage Propagation and Mechanism Design in an Input-Output Planned Economy"
+    year: 2026
+    notes: "Manuscript in preparation; see paper/main.pdf"

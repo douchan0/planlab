@@ -1,0 +1,471 @@
+---
+title: "Stale Information as the Binding Constraint"
+subtitle: "Information delay and the comparative stability of coordination institutions"
+kicker: "PlanLab · methodology paper"
+authors: "The PlanLab Project"
+affiliation: "A reproducible computational laboratory for planned-economy coordination mechanisms"
+version: "1.0"
+status: "working paper — results pending"
+date: "November 2026"
+abstract: "Administrative coordination of an input–output economy is limited less by computation than by the freshness of the information it may use. We derive a sharp boundary for proportional error correction driven by information $k$ periods old: the closed loop is locally stable if and only if the gain satisfies $g < g^\star(k) = 2\sin[\pi/(2(2k+1))] \approx \pi/(2k+1)$, so the gain–lag product is bounded by $\pi/2$, and the oscillation at the boundary has period exactly $2(2k+1)$ quarters. The boundary exists only for negative feedback, and the sign is an empirical property of the instrument rather than a modelling choice: a price that is raised reduces excess demand, but an output target that is raised in a capacity-constrained Leontief economy raises intermediate demand and therefore raises shortage, and a positive loop of this kind has no admissible gain at any delay. We expose six coordination institutions — an omniscient linear programme, material-balance planning, priority rationing, Langean tâtonnement, a competitive market and a dual track — to a common information lag, a common shock stream and a single 20-sector Eurostat input–output substrate, under a pre-registered design of the order of eight thousand runs. [[RESULTS:ABSTRACT_FINDINGS]]"
+---
+
+## Introduction {#sec:intro}
+
+Every coordinator works from a picture of the economy that is already out of date. The plan for the coming quarter is built out of last quarter's returns; the wholesale prices that feed a price index are collected months before the index is published; the inventory figures that tell a ministry whether a good is scarce describe a moment that has passed. Delay of this kind is usually treated as an engineering nuisance, something to be reduced with better statistics and otherwise absorbed by the resilience of whatever rule is in place. This paper takes the opposite view. We treat the freshness of information as a first-class property of a coordination institution, and we ask how much of it each institution needs in order to do its job without breaking into oscillation.
+
+The question has a long history, but it has usually been asked in a static form. The socialist calculation debate turned on whether a planning board could possess the knowledge that prices summarise. Mises argued that without markets for the means of production there are no prices, and without prices no rational comparison of alternatives [[@mises1920]]; Hayek added that the relevant knowledge is dispersed, tacit and constantly revised, so that even a benevolent planner with perfect goodwill could not assemble it in time [[@hayek1945]]. Lange's reply was, in effect, that the board need not assemble anything: it can behave like an auctioneer, adjusting prices in response to observed excess demand until the economy clears [[@lange1936]] [[@lange1937]]. The reply is formally sound, and it is the intellectual foundation of most subsequent arguments that a sufficiently well equipped centre could coordinate an economy. But it quietly assumes that the auctioneer's observations are current. An auctioneer who learns of excess demand only after a lag is not an auctioneer; he is a driver looking in the mirror.
+
+That difference is the subject of this paper. We distinguish two properties that the debate conflates. The first is how much information a coordination rule *uses*. The second is how much *fresh* information it needs in order to remain stable. The distinction is invisible in a static comparison of allocations, because at a steady state both rules produce the same plan. It becomes decisive as soon as the system is perturbed, because a rule that responds to a measured deviation converts its own lag into a loop, and whether that loop damps or ratchets depends on the sign of the feedback as much as on its strength.
+
+The sign is not a matter of taste; it is a property of the economy the rule operates in, and it differs between the two classic instruments. A price that is raised above its clearing level reduces excess demand, so the price loop is negative and can be stabilised if it is pushed gently enough. An output target that is raised in response to a shortage does not reduce the shortage in a capacity-constrained Leontief economy: it raises the intermediate demand for exactly the goods that are scarce, so a tauter plan produces a worse plan. The target loop is positive, and we show that a positive loop admits *no* stabilising gain at all, however small and however patiently applied. This is the thesis we develop: coordination institutions differ in how much fresh information they require, that requirement is governed by the loop gain each institution must run, and the delay enters as a hard budget on the gain. Delay is the dimension along which institutions separate, and its first act is to decide whether they can be run at all.
+
+The analytical core is a single linear difference equation. Suppose a signal is corrected in proportion to its deviation from the level that would clear the market, and the correction uses a measurement made $k$ periods earlier. Then the deviation $u_t=\log p_t-\log p^\star$ obeys
+
+$$
+u_{t+1} = u_t - g\,u_{t-k},
+$$ {#eq:law}
+
+where the gain $g>0$ collects the adjustment coefficient and the slope of excess demand. Its characteristic polynomial is $z^{k+1}-z^{k}+g$. Section [[REF:sec:theory]] proves that the zero solution is asymptotically stable if and only if
+
+$$
+0 \;<\; g \;<\; g^\star(k) \;:=\; 2\sin\!\left[\frac{\pi}{2(2k+1)}\right],
+$$ {#eq:boundary}
+
+that at the boundary the surviving roots lie on the unit circle at $e^{\pm i\theta_0}$ with $\theta_0=\pi/(2k+1)$, and hence that the oscillation at the boundary has period exactly $2(2k+1)$ quarters. The first values are $g^\star(0)=2$, $g^\star(1)=1$, $g^\star(2)=(\sqrt{5}-1)/2\approx0.618$ and $g^\star(3)\approx0.445$; asymptotically $g^\star(k)\sim\pi/(2k+1)$. Three corollaries matter for what follows. The period scales as roughly four times the lag, which makes the lag observable in the spectral signature of prices rather than merely inferable from them. The product $k\,g^\star(k)$ increases to $\pi/2$, so $g\,k$ — the fraction of a deviation a coordinator removes per quarter, multiplied by the number of quarters he is behind — is bounded: delay does not merely slow coordination down, it imposes a budget on how fast coordination may be attempted at all. And the boundary exists only for negative feedback. If the loop is positive, so that a higher instrument raises rather than lowers the measured gap, the characteristic polynomial takes a value of $-|g|$ at $z=1$ and grows without bound, so it has a real root above one for every positive gain: a positive loop is unstable at every gain, at every delay, with no safe operating point. That asymmetry, not the size of any coefficient, is what separates a price board from a plan target, and it is why the empirical test of the boundary is carried out on prices while the targets get a hypothesis of their own.
+
+The theoretical result is deliberately austere, and by itself it does not rank institutions. It does something more useful: it identifies the quantity on which a ranking should turn. An institution that must move prices briskly to clear markets is exposed to delay; an institution whose allocation rule is inertial is not, but pays for its immunity elsewhere, in the misallocation it tolerates. To put that trade-off on a common footing we build a laboratory in which the only thing that varies is the rule. PlanLab is a mechanism-switchable simulator of an input–output economy in which twenty sectors share a single technology calibrated to the Eurostat symmetric input–output table for the EU-27 in 2020 [[@eurostat_naio]] [[@eurostat_manual]], a single accounting audit and a single stochastic environment. Every institution receives the same observation object, constructed from data $k$ quarters old and corrupted by multiplicative measurement noise; every institution faces the same shock realisations, because the exogenous streams are derived from a common seed. Differences in outcome are therefore attributable to the coordination rule and not to the data, the technology or the luck of the draw. The design is pre-registered in six blocks, B1 to B6, covering calibration, a lag-by-mechanism grid, sectoral shock propagation, rationing against shadow prices, the dual-track share and robustness, for a grid whose declared factors give of the order of eight thousand runs.
+
+The argument is cumulative rather than point-by-point. Section [[REF:sec:related]] sets the calculation debate, the material-balance tradition, the shortage literature and the delay-and-stability literature against each other, and shows that the intersection is nearly empty: no one has compared coordination institutions on a common substrate while treating information lag as a treatment rather than as a nuisance parameter. Section [[REF:sec:model]] specifies the substrate, the observation object and the six institutions. Section [[REF:sec:theory]] contains the analysis. Beyond the boundary itself, it establishes that a positive feedback loop has no admissible gain, that the one-period map of the model is monotone on a compact lattice and therefore possesses a stationary plan even when that plan is not stable, and that a balanced plan does not eliminate shortage because the shortfall is fixed by the delivery frontier rather than by the balancing procedure. Section [[REF:sec:design]] gives the experimental design as amended, states the mapping between the simulator's reporting lag and the theory's effective delay, and reports a power calculation showing that near-threshold instabilities at long lags grow too slowly to be detected through amplitude within the pre-registered horizon, which is why the spectral criterion carries the inferential weight. Section [[REF:sec:results]] reports the results. [[RESULTS:INTRO_FINDINGS]]
+
+Three features of the design deserve emphasis at the outset, because they are what separate this exercise from a simulator demonstration. First, the analytical result is derived before any simulation is run and is used to *predict* the location of the empirical instability boundary; a discrepancy of more than one period of lag falsifies the mechanism, and the pre-registration says so in advance. Second, the comparison across institutions is a comparison of one economy under different rules, not a comparison of different models, which is what makes the phrase "institutional performance" mean something. Third, the welfare numbers are not treated as a ranking of real economies. They are the outcome of a controlled experiment in which the normative weights are explicit parameters, re-run at plus or minus fifty per cent in B6 and reported alongside measures of distribution, plan fulfilment and the computational effort of planning itself, because the same aggregate output can conceal opposite distributions.
+
+## Related work {#sec:related}
+
+### The calculation debate as an information problem
+
+The modern argument about planning begins with Mises's claim that a socialist commonwealth lacks the prices needed for economic calculation, a claim first advanced in 1920 and circulated in English in Hayek's 1935 collection [[@mises1920]]. Hayek's contribution shifted the ground from the absence of prices to the dispersion of knowledge: the data relevant to allocation exist only as the local, transient knowledge of particular agents, and no central authority can collect them in a form usable for a plan [[@hayek1945]]. Both arguments are informational, and both are, in the strict sense, about *time*: the knowledge that would be needed is not merely dispersed but obsolete by the time it could be centralised. This temporal element is rarely made explicit, and it is precisely the element this paper formalises.
+
+Lange's response, published in two parts, accepted the institutional challenge and answered it with a rule rather than with a computation: a central planning board sets prices, observes excess demand and adjusts, and in the limit the allocation reproduces the competitive outcome [[@lange1936]] [[@lange1937]]. The rule is a proportional controller, and its stability properties were not analysed. That is the gap this paper closes. It is worth being clear about what is and is not at issue. Nothing here disputes that a Langean board converges when information is current; [[REF:prop:delay]] confirms that it does, for gains below $g^\star(0)=2$. The question is what becomes of the convergence when the board's observation is $k$ periods old, and the answer turns out to be a boundary that falls roughly as $1/k$.
+
+### Material balances and the input–output tradition
+
+The accounting technology of Soviet-type planning was the material balance: a set of commodity balances in physical or value units, each asserting that the sources of a good equal its uses, solved by iterative adjustment at successively lower levels of the hierarchy, with the most important goods balanced first [[@ellman2014]] [[@ericson1991]]. Ericson's account is particularly useful because it emphasises the procedure rather than the ideology: the classical system is a priority-ordered, quantity-rationing mechanism whose outputs are plans rather than prices, and whose characteristic failure mode is not inefficiency in the static sense but the systematic reproduction of shortage [[@ericson1991]].
+
+The analytical apparatus came from two directions. Leontief's input–output accounting made the interdependence of sectors explicit and turned the balance into a linear system [[@leontief1936]] [[@leontief1941]]; the modern treatment, including capacity constraints and the relation between the quantity and price systems, is in Miller and Blair [[@miller_blair2009]]. Kantorovich's 1939 monograph, known in the West through its 1960 translation, recast the plan as a linear programme and thereby made optimisation, rather than balancing, the criterion [[@kantorovich1960]]; the intellectual history, including the long delay before Soviet economics absorbed it, is documented by Belykh [[@belykh2024]]. Von Neumann's growth model supplied the dual characterisation of the balanced path [[@neumann1945]]. What this tradition never did was ask how the balancing procedure behaves when the right-hand side of the balances — demand, capacity, stocks — is observed with a lag. It is a static technology applied quarterly.
+
+### Shortage, rationing and the disequilibrium tradition
+
+Kornai's contribution was to insist that shortage is not a residual but an equilibrium phenomenon of a particular institutional configuration, sustained by paternalism and by the soft budget constraint [[@kornai1992]] [[@kornai1986]] [[@kornai_maskin_roland2003]]. The formal counterpart is the theory of fix-price equilibria, in which quantities rather than prices clear markets and agents are rationed on the short side [[@dreze1975]] [[@barro_grossman1971]]; Kornai and Weibull supply the bargaining-theoretic microfoundation for buyer and seller markets [[@kornai_weibull1983]]. This literature supplies the objects the present model needs — a claim vector, a rationing rule, a priority order, a measure of shortage — but it is almost entirely static. Its equilibria are indexed by prices that are fixed, not by prices that are being adjusted against stale information, and so it cannot speak to the oscillatory behaviour that delay produces. Conversely, the literatures that do study oscillation are rarely about rationing. The two traditions meet at exactly the point this paper occupies.
+
+### Delay, cycles and the stability of difference equations
+
+The economics of delay begins with the cobweb, in which supply responds to last period's price and the resulting second-order difference equation is stable only if the ratio of demand and supply slopes is favourable [[@ezekiel1938]]; adaptive expectations generalise the mechanism [[@nerlove1958]], and nonlinear versions generate endogenous fluctuations and chaos [[@hommes1994]]. All of these are special cases of a first-order delay, $k=1$. The mathematical theory of the general case is classical: functional differential equations are treated by Hale [[@hale1977]], difference equations with delays by Elaydi [[@elaydi2005]], and the linear delay-difference equation itself by Levin and May in a note that is the closest antecedent of [[REF:prop:delay]] [[@levin_may1976]]. What is new here is not the stability algebra but its use: taking an algebraic boundary as a *pre-registered prediction* for a simulation in which the linearisation is only local, and then reading institutions off the gain they require.
+
+### Computational planning and the simulation of planned economies
+
+There is a substantial literature on whether computation dissolves the calculation problem. Cockshott and Cottrell argued that the computational complexity of solving a material-balance system is well within the reach of modern machines and that the relevant obstacle is institutional rather than technical [[@cockshott_cottrell1993]]; Dapprich and Greenwood review the recent revival of that argument and its critics [[@dapprich_greenwood2024]]. Chile's Cybersyn project is the one sustained attempt to build a real-time planning system, and Medina's account is explicit about how much of its design was devoted to managing the delay between plant-level events and central decisions [[@medina2011]]. Quantitative work on the Soviet economy has mostly been retrospective and structural, using neoclassical growth frameworks to decompose the sources of industrialisation rather than to model the coordination mechanism itself [[@cheremukhin2017]]. The gap is systematic: there is, to our knowledge, no controlled comparison of alternative coordination institutions operating on the same technology, observing the same delayed data and facing the same shocks. That is what the present design supplies.
+
+### Reform and the dual track
+
+China's dual-track reforms are the largest natural experiment in running two coordination mechanisms side by side. Sicular documented how plan and market prices interacted in agricultural commerce [[@sicular1988]]; Lau, Qian and Roland gave the dual track its canonical interpretation, showing how a plan track at administered prices can protect existing rents while a market track at the margin allocates new output [[@lau_qian_roland2000]]. Murphy, Shleifer and Vishny had earlier warned that partial reform can be worse than either extreme when the state sector retains priority access to inputs [[@murphy_shleifer_vishny1992]], and Weitzman's scepticism about the transferability of theory to transition is a useful corrective to over-confident comparative statics [[@weitzman1993]]. The dual track enters the present design as a genuinely parametric institution — a plan share $\theta$ — which allows the interior-optimum question to be posed as a testable hypothesis rather than as a narrative.
+
+### Positioning
+
+Three literatures supply the components of this paper and none supplies the synthesis. The calculation debate supplies the question but treats information as a stock to be possessed rather than as a flow with a lag. The material-balance and shortage literature supplies the institutions and the accounting but is static. The delay-and-stability literature supplies the mathematics but has been applied to markets and populations, not to the comparative study of coordination rules. The contribution here is to put a sharp stability boundary for delayed proportional correction at the centre of a controlled comparison of institutions, and to argue that the axis on which institutions differ is the freshness of the information their decision rules require.
+
+## Model {#sec:model}
+
+### The substrate
+
+The economy has $n=20$ sectors indexed $i,j=1,\dots,n$ and runs in quarterly periods $t=1,\dots,T$. All quantities are in constant-price value units of the source table: a sector's gross output $x_i$ is a value, the direct input coefficient $A_{ij}=Z_{ij}/x_j$ is the value of good $i$ embodied in one unit of value of good $j$, and no attempt is made to separate price from volume movements within a period. The matrix $A$ is obtained from the Eurostat symmetric input–output table at basic prices for the EU-27, reference year 2020, aggregated from sixty-four to twenty sectors by a documented mapping [[@eurostat_naio]] [[@eurostat_manual]]. A fully specified synthetic generator serves as an offline fallback and as a second substrate in the robustness block; it is documented in the repository and is not used for any headline result.
+
+The technology is Leontief: no substitution between inputs, constant returns, and fixed capital–output ratios $\kappa_i$ so that productive capacity is $\bar x_i=K_i/\kappa_i$. Labour requirements $\ell_i$ per unit of gross output are calibrated so that the base-year wage bill exhausts value added, which makes the column sums of $A$ strictly below one and hence guarantees that $A$ is productive: its spectral radius satisfies $\rho(A)<1$ and $(I-A)^{-1}\ge0$ exists with non-negative entries. That property is used repeatedly in Section [[REF:sec:theory]] and is checked when the technology is loaded rather than assumed.
+
+Two accounting disciplines are imposed on every period. First, the per-sector balance
+
+$$
+S^{0}_{i} + x_i + M_i \;=\; \sum_{j=1}^{n} Z_{ij} + C_i + G_i + I_i + S^{\mathrm{end}}_{i}
+$$ {#eq:balance}
+
+must hold to within $10^{-8}$ of scale, with $S^{0}_{i}$ the beginning inventory, $M_i$ imports (zero unless a scenario enables trade), $C_i$ household consumption, $G_i$ government and other final demand, $I_i$ investment and $S^{\mathrm{end}}_{i}$ the end-of-period inventory. A violation raises an error and aborts the run; it is not tolerated and repaired. Second, every allocation must be feasible in the sense that no sector receives more of a good than exists, which is enforced by the short-side map below rather than by post-hoc clipping.
+
+### The period
+
+Each period executes a fixed sequence, and the sequence is part of the model rather than an implementation detail, because it determines what information is available when each decision is taken. A shock is drawn, determining capacity, household demand and government demand. An observation is constructed from data $k$ periods old with multiplicative noise. The mechanism forms a plan. Nominal supply is assembled as beginning inventory plus planned output. The mechanism allocates that supply among claimants — intermediate users, households, government, investment and the inventory buffer — in an order determined by its own priority rule. The engine then solves for realised gross output as the short-side fixed point of the allocation, computes the accounting identities, audits them, and finally asks the mechanism for the price vector to be used next period. Metrics are recorded at the end of the period.
+
+The fifth and sixth steps are where the economics lives. The mechanism may claim whatever it likes, but the engine decides what is produced:
+
+$$
+x_j \;=\; \min\left\{\, \bar x_j,\ \ell\text{-bound},\ \min_{i:\,A_{ij}>0}\frac{\left(S^{0}_{i}+x_i-e_i-\sum_{l\ne j}A_{il}x_l\right)^{+}}{A_{ij}} \,\right\},
+$$ {#eq:shortside}
+
+iterated from $x^{(0)}=\min(\text{target},\text{capacity})$. Here $e_i$ collects the non-intermediate claims on good $i$ that have already been granted. A sector cannot produce more than its capacity permits, and it cannot produce more than its scarcest input permits given what the other sectors are taking; the fixed point of that statement is the largest output vector consistent with the granted claims. This is the channel through which a shortage in one sector propagates to its users, and it is the reason the model can represent the classical planning failure mode at all. The count of iterations required to reach the fixed point is recorded and is reported as a measure of planning effort rather than discarded as a diagnostic.
+
+### Information
+
+The coordinator never sees the current state. What it sees is an observation object
+
+$$
+\tilde o_t \;=\; o_{t-k}\odot\varepsilon_t,\qquad \log\varepsilon_{t,i}\sim\mathcal{N}\!\left(-\tfrac{1}{2}\sigma^{2},\,\sigma^{2}\right),
+$$ {#eq:observation}
+
+where $o$ ranges over demand, capacity, inventory, backlog, prices and labour, and $\odot$ is the elementwise product. The multiplicative form keeps the observation positive and makes $\sigma$ an approximate coefficient of variation; the correction term in the mean keeps the observation unbiased in levels. The lag $k$ is an integer number of quarters and is a treatment variable, not a calibration. It is important to be precise about what it counts, because a one-period error here would invalidate the whole comparison with Section [[REF:sec:theory]]. A realised outcome cannot be reported before the period that follows it, so even a perfectly informed coordinator reacts to last period's gap. The simulator's parameter $\ell$ (`info.lag`) counts *reporting* lags — how many complete additional periods of publication or transmission delay sit between the event and the observation — and the theory's lag is the total: $k_{\mathrm{eff}}=\ell+1$. Lag zero is therefore not clairvoyance but the earliest physically attainable case, the theoretical no-delay benchmark $k=0$ is unattainable in the simulator, and the smallest lag any experiment can exhibit is $k_{\mathrm{eff}}=1$. Every table and figure in this paper reports $k_{\mathrm{eff}}$ and labels it as such. The noise $\sigma$ is itself a treatment in the robustness block and is zero elsewhere, so that the pure delay effect can be isolated.
+
+The observation object is deliberately impoverished in one respect and enriched in another. It is impoverished because it is a vector of aggregates: the coordinator knows total demand for a good, not who demanded it. It is enriched because the same object is given to every institution, the market included. This is the identifying assumption of the whole design. Institutions differ in what they do with the observation, never in what they are allowed to see. A market that could see the current period's prices while a planning board could not would not be a comparison of institutions but of information sets.
+
+### Institutions
+
+Six coordination mechanisms are implemented against a single abstract interface with three decisions: form a plan, allocate supply among claimants, and set next period's prices. They are summarised in Table [[REF:tab:mechanisms]] and specified in Appendix [[REF:sec:appendix_mech]].
+
+[[TABLE:mechanisms]]
+
+The linear programme is included as an upper bound rather than as a candidate policy: it knows the current demand vector exactly, it solves the planner's problem exactly, and it therefore reports what would be achieved if the informational constraint were suspended. Its role is to normalise the welfare scale and, more importantly, to measure the *cost of the constraint*. The gap between its performance and the performance of the second-best institution at lag $k$ is an estimate of what freshness is worth.
+
+### Welfare, prices and metrics
+
+Welfare is a discounted sum of a logarithmic aggregate of consumption,
+
+$$
+W \;=\; \sum_{t=1}^{T}\beta^{\,t-1}\sum_{i=1}^{n} w_i\log\!\left(C_{i,t}+c_{0,i}\right), \qquad \beta=0.98,
+$$ {#eq:welfare}
+
+with $c_{0,i}=10^{-3}$ of base-year final consumption for sector $i$ to keep the logarithm finite when a good is entirely unavailable, and with weights $w_i=1$ except for essentials, which carry $w_i=1.2$. The weights are a normative choice and are treated as a scenario parameter, not as a truth; the robustness block re-runs every headline result with the shortage and inventory penalties moved by fifty per cent in each direction. The floor $c_0$ matters more than it looks: it makes the welfare function bounded below, so that a total shortage of one good produces a large but finite loss instead of an infinite one, which prevents a single catastrophic sector from dominating every comparison.
+
+Prices are indices with base $1.0$ in the base year and are set administratively by four of the six institutions and by the auctioneer in the other two. Reported price statistics are the dispersion $\mathrm{sd}(\log p)$ across sectors, the volatility $\mathrm{sd}(\Delta\log p)$ and — the object of the central test — the deviation of the mean log price from its own twenty-period moving average, together with its autocorrelation at lags one to four. Plan fulfilment, inventory ratios, capital utilisation, recovery half-life and the shortage Gini across sectors are reported as secondary outcomes. Aggregate output is computed but never reported alone, for the reason given in Section [[REF:sec:design]]: two economies with identical output can have opposite distributions of who bears the shortage.
+
+### What is held fixed
+
+The identifying claim is that differences in outcomes are attributable to the coordination rule. That claim is only as good as the list of things held fixed, so the list is explicit. The technology is fixed across institutions within a run set. The observation object is constructed once per period and passed to whichever institution is active, so the same lag, the same noise draw and the same vintage of data apply to all six. The exogenous shock streams are derived deterministically from the pair (scenario identifier, seed), so identical seeds produce identical shock paths across institutions; this is what makes the comparisons paired rather than independent, and it is preserved by construction in the grid generator rather than by convention. The welfare weights, the discount factor and the accounting tolerances are scenario parameters.
+
+What is not fixed, and cannot be, is the richness of each institution's internal state: a tâtonnement board carries a price vector, a material-balance office carries a plan, a market carries an order book. Institutions differ in their memory as well as in their rule, and that difference is part of what is being measured rather than a confound to be eliminated. The paper is explicit about the consequence in Appendix [[REF:sec:app:differences]]: a difference in performance between two institutions cannot be attributed to a single scalar, and the best the design can do is to measure the gain each one operates at and compare that measurement with the theory.
+
+## Theory {#sec:theory}
+
+### The adjustment rule
+
+Consider a signal that a coordinator revises in proportion to a gap he has already observed. Two instances matter, and they are the two classic instruments of administrative coordination. The first is an administered price, $\log p_{t}=\log p_{t-1}+\eta\,s_{t-k}$, where $s$ is the observed shortage rate or excess demand. The second is an output target, $\log T_{t}=\log T_{t-1}+\eta\,s_{t-k}$, where the plan is revised upward in response to an observed shortage. In both cases the revision coefficient is $\eta>0$ and the observation is $k$ periods old; the two rules differ only in the sign of the economic response that closes the loop.
+
+Let $u_t$ denote the log deviation of the instrument from its stationary value, and let the gap respond locally as $s_t=-b\,u_t+O(u_t^{2})$. The coefficient $b$ is not a free parameter of the model; it is an equilibrium object, and its sign is a property of the economy rather than of the administrator. For a price, $b>0$: a higher price reduces excess demand, through the household demand elasticity and through the substitution it induces. For an output target in a capacity-constrained Leontief economy, $b<0$: a higher planned output raises the intermediate demand for the goods that are already scarce, so the observed shortage rises rather than falls. Substituting the local response into the revision rule gives
+
+$$
+u_{t+1} = u_t - g\,u_{t-k}, \qquad g := \eta b,
+$$ {#eq:law2}
+
+for the price loop, and the same equation with $g<0$ for the target loop. This is the sense in which the analysis is local: [[REF:eq:law2]] is the linearisation of a nonlinear rule about a steady state, and the steady state, the elasticity $b$ and the effective gain $g$ are all computed numerically in the full model. The lag $k$ in [[REF:eq:law2]] is the *effective* delay of the loop, related to the simulator's reporting lag $\ell$ by $k=\ell+1$ as set out in Section [[REF:sec:model]]; the no-delay case $k=0$ is a theoretical benchmark that no coordinator can attain, and it is retained because it makes the boundary formula legible at its endpoint.
+
+Three remarks fix the scope. First, the linearisation is about the *deviation*, not about the technology: $A$, capacity and the rationing rule all enter through $b$ and through the location of the stationary point. Second, the rule is proportional, not integral or derivative; a coordinator who responds to the *change* in the gap rather than to its level faces a different characteristic polynomial, and we do not analyse that case. Third, the delay is treated as deterministic. Stochastic delay would smear the boundary rather than move it, and is left to future work. The sign of $b$, by contrast, is not an assumption to be relaxed: it is the object the next two subsections turn on.
+
+### The stability boundary
+
+::: {.prop #prop:delay}
+**Proposition 1 (delay-instability threshold).** Let $k\in\mathbb{N}$ and $g>0$, and consider
+
+$$
+u_{t+1}=u_t-g\,u_{t-k}.
+$$ {#eq:prop1}
+
+The zero solution is asymptotically stable if and only if $0<g<g^\star(k)$, where
+
+$$
+g^\star(k) := 2\sin\!\left[\frac{\pi}{2(2k+1)}\right],
+$$ {#eq:gstar}
+
+and it is unstable if $g>g^\star(k)$. At $g=g^\star(k)$ a conjugate pair of roots of the characteristic polynomial lies on the unit circle at $e^{\pm i\theta_0}$ with $\theta_0=\pi/(2k+1)$, all other roots lie strictly inside, and every solution is bounded and oscillatory but does not converge.
+:::
+
+*Proof.* Write $P_k(z,g)=z^{k+1}-z^{k}+g$, so that solutions of [[REF:eq:prop1]] are combinations of $z^{t}$ over the roots of $P_k(\cdot,g)$. The proof has three steps: locate the gains at which a root can cross the unit circle, show that every such crossing is outward, and count.
+
+*Step 1, crossing values.* Suppose $P_k(z,g)=0$ with $|z|=1$, and write $z=e^{i\theta}$ with $\theta\in(0,2\pi)$. Then $z^{k}(z-1)=-g$, so taking moduli gives $g=|z-1|=2\sin(\theta/2)$, where positivity of the sine uses $\theta\in(0,2\pi)$. Taking arguments, and using $z-1=2\sin(\theta/2)\,e^{i(\theta/2+\pi/2)}$,
+
+$$
+z^{k}(z-1) \;=\; 2\sin(\theta/2)\,\exp\!\left\{i\left[\left(k+\tfrac{1}{2}\right)\theta+\tfrac{\pi}{2}\right]\right\},
+$$
+
+and since $-g$ is real and negative the phase must equal $\pi$ modulo $2\pi$, that is
+
+$$
+\left(k+\tfrac{1}{2}\right)\theta \;\equiv\; \tfrac{\pi}{2}\pmod{2\pi}.
+$$ {#eq:phase}
+
+The solutions of [[REF:eq:phase]] are $\theta_m=\pi(1+4m)/(2k+1)$ for integers $m\ge0$, and the requirement $\theta_m<2\pi$ gives $1+4m<4k+2$, that is $m\le k$. Each $\theta_m$ yields the gain $g_m=2\sin[\pi(1+4m)/(2(2k+1))]$. The sequence $x_m=\pi(1+4m)/(2(2k+1))$ increases in $m$ from $x_0=\pi/(4k+2)$ to $x_k=\pi-x_0$, and since the sine is symmetric about $\pi/2$ and increasing on $(0,\pi/2)$ we have $\sin x_m\ge\sin x_0$ for every $m$ in range. Hence $g^\star(k)=g_0$ is the least gain at which $P_k$ has a root on the unit circle, and it is attained only at $m=0$ and $m=k$, both giving the same value.
+
+*Step 2, every crossing is outward.* Let $z(g)$ be the smooth branch of roots with $z(g_0)=e^{i\theta_0}$ at a crossing. Differentiating $P_k(z(g),g)=0$ gives $z'=-1/P_{k,z}$ with $P_{k,z}=z^{k-1}\big((k+1)z-k\big)$, which cannot vanish on $|z|=1$: its only zero in the closed unit disc would be $z=k/(k+1)$, of modulus less than one. Using $z^{k+1}=z^{k}-g$ at the root, the denominator simplifies to $z^{k}\big((k+1)z-k\big)=z^{k}-(k+1)g$. Since $|z|=1$ we have $\bar z=1/z$, so
+
+$$
+\frac{d\,|z|^{2}}{dg} \;=\; 2\,\mathrm{Re}\!\left(\bar z z'\right) \;=\; -2\,\frac{\cos(k\theta)-(k+1)g}{\left|z^{k}-(k+1)g\right|^{2}}.
+$$ {#eq:crossdir}
+
+At a crossing $g=g_m\ge g^\star(k)$, and therefore
+
+$$
+\cos(k\theta_m)\;\le\;1\;<\;(k+1)\,g^\star(k)\;\le\;(k+1)\,g_m,
+$$
+
+where the strict inequality is the elementary bound $g^\star(k)\ge 2/(2k+1)$, obtained from $\sin x\ge 2x/\pi$ on $[0,\pi/2]$, which gives $(k+1)g^\star(k)\ge 2(k+1)/(2k+1)>1$. The numerator in [[REF:eq:crossdir]] is therefore strictly negative and $d|z|^{2}/dg>0$: every crossing of the unit circle is outward as $g$ increases. Since the denominator does not vanish, each crossing root is simple, so the implicit function theorem applies and exactly two roots pass from inside to outside — one, when the crossing root is real, as happens at $k=0$.
+
+*Step 3, counting.* Let $N(g)$ be the number of roots in the open unit disc. Roots depend continuously on $g$ and a root can leave the disc only through the circle. By Step 1 there is no root on the circle for $g\in(0,g^\star)$, so $N$ is constant there. For small $g>0$ the roots of $P_k$ lie near those of $z^{k}(z-1)$, namely $z=1$ with multiplicity one and $z=0$ with multiplicity $k$; the root near $1$ is $1-g+O(g^{2})$, which lies inside the disc for small positive $g$, and the $k$ roots near $0$ have modulus of order $g^{1/k}$. Hence $N(g)=k+1$ on $(0,g^\star)$, so the spectral radius is strictly below one and the zero solution is asymptotically stable. At $g=g^\star$ a conjugate pair reaches the circle and by Step 2 it moves outside for $g>g^\star$; no later crossing can bring a root back inside, because by Step 2 every crossing in the admissible set is outward, so $N$ is non-increasing and $N<k+1$ for all $g>g^\star$. Therefore the spectral radius exceeds one for every $g>g^\star$ and the zero solution is unstable. At $g=g^\star$ the on-circle roots are simple and all others lie strictly inside, so every solution is a sum of bounded oscillatory modes and converges to a non-zero periodic component: it is bounded but not asymptotically stable. $\blacksquare$
+
+Three small cases give the formula a concrete feel. With $k=0$ there is no lag, $P_0(z)=z-1+g$, the root is $1-g$, and stability requires $|1-g|<1$, that is $0<g<2=g^\star(0)$. With $k=1$, $P_1(z)=z^{2}-z+g$, whose roots are $\tfrac{1}{2}\big(1\pm\sqrt{1-4g}\big)$; their product is $g$, so stability requires $g<1=g^\star(1)$. With $k=2$, $g^\star(2)=2\sin(\pi/10)=(\sqrt{5}-1)/2$, the reciprocal of the golden ratio — a pleasant accident rather than a structural fact. Table [[REF:tab:stability_boundary]] and Figure [[REF:fig:stability_boundary]] display the boundary, its angle and its period.
+
+[[TABLE:stability_boundary]]
+
+[[FIG:stability_boundary]]
+
+### What the boundary implies
+
+::: {.prop #cor:period}
+**Corollary 1 (period at the boundary).** At $g=g^\star(k)$ the dominant roots are $e^{\pm i\theta_0}$ with $\theta_0=\pi/(2k+1)$. Every real solution of [[REF:eq:prop1]] is a real linear combination of $\rho^{t}\cos(t\theta)$ and $\rho^{t}\sin(t\theta)$ over the roots $\rho e^{\pm i\theta}$; at the boundary the surviving pair contributes a sinusoid of period $2\pi/\theta_0$, and all other modes decay. Hence the oscillation period at the boundary is exactly
+
+$$
+\Pi(k) \;=\; 2(2k+1) \;=\; 4k+2 \ \text{quarters},
+$$ {#eq:period}
+
+independently of $g$, of the technology and of the welfare weights.
+:::
+
+*Proof.* Immediate from [[REF:prop:delay]] and the definition of angular frequency: a root $e^{i\theta}$ contributes a component of period $2\pi/\theta$, and $\theta_0=\pi/(2k+1)$. $\blacksquare$
+
+The corollary is what makes the lag measurable. A purely local stability test tells us only that a boundary exists somewhere; the period tells us *where* to look in the spectral density, and it predicts a quantity that grows linearly in the lag with slope four. If the simulated period at the empirical boundary is not approximately $4k+2$ quarters, then the linear mechanism is not the mechanism generating the oscillation, whatever else may be true. This is the sense in which the theory is falsifiable by the simulation rather than merely illustrated by it. Figure [[REF:fig:delay_response]] makes the prediction visual: at ninety per cent of the critical gain the impulse response decays, but it decays while oscillating at the period the corollary names.
+
+[[FIG:delay_response]]
+
+::: {.prop #cor:budget}
+**Corollary 2 (gain–lag budget).** For every $k\ge0$,
+
+$$
+k\,g^\star(k) \;<\; \frac{\pi}{2}, \qquad\text{and}\qquad \lim_{k\to\infty} k\,g^\star(k)=\frac{\pi}{2}.
+$$ {#eq:budget}
+:::
+
+*Proof.* Using $\sin x\le x$ for $x\ge0$, we get $k\,g^\star(k)=2k\sin[\pi/(2(2k+1))]\le 2k\cdot\pi/(2(2k+1))=k\pi/(2k+1)<\pi/2$. The limit follows from $\sin x/x\to1$ with $x=\pi/(2(2k+1))$: $k\,g^\star(k)=2kx\,(\sin x/x)\to 2k\pi/(2(2k+1))\to\pi/2$. $\blacksquare$
+
+[[REF:cor:budget]] is the quantitative form of the paper's thesis. The gain has units of "fraction of the deviation removed per quarter", the lag has units of quarters, and their product is dimensionless and bounded by $\pi/2\approx1.57$. An administrator who wishes to remove ten per cent of a deviation each quarter — $g=0.1$ — can tolerate a measurement lag of about fifteen quarters, which is comfortable. An administrator who must remove half of it each quarter — $g=0.5$ — can tolerate three. The budget is not a statement about the skill or the technology of the coordinator; it is a statement about the closed loop, and it binds on anyone whose rule responds to a measured deviation, whether that rule is implemented by a ministry, by a price board or by an auctioneer.
+
+It also explains why the two properties distinguished in Section [[REF:sec:intro]] are different. An institution may use a great deal of information and still need very little *fresh* information, provided its rule is inertial; and an institution may use a little information and need it fresh, provided its rule is aggressive. The budget is a constraint on the second property only, and therefore the second property — not the first — is the one along which institutions will separate under delay.
+
+[[REF:prop:delay]] assumes $g>0$, that is, negative feedback. The complementary case is not a mirror image, and it is the one that governs the revision of physical plans.
+
+::: {.prop #cor:posloop}
+**Corollary 4 (a positive loop has no admissible gain).** Suppose $b<0$, so that the loop is positive, and write $G=\eta|b|>0$. Then the characteristic polynomial of [[REF:eq:law2]] is $Q_k(z,G)=z^{k+1}-z^{k}-G$, and the zero solution is unstable for every $G>0$ and every $k\ge0$. There is no revision coefficient, however small, that stabilises a positive feedback loop.
+:::
+
+*Proof.* Evaluate at $z=1$: $Q_k(1,G)=1-1-G=-G<0$. Since $Q_k(z,G)\to+\infty$ as $z\to+\infty$ along the real axis, the intermediate value theorem gives a real root $r>1$. The spectral radius therefore exceeds one for every $G>0$, and the zero solution is unstable. $\blacksquare$
+
+The corollary is a statement about the whole class of proportional rules, not about a particular calibration: for a positive loop the admissible set of gains is empty, so the question "how gently must the planner revise?" has no answer other than "not at all". This is a sharper claim than the familiar observation that planning is difficult under shortage. It says that the revision of taut plans is self-defeating *in the linear approximation*, before any nonlinearity or capacity constraint is reached, and that the failure is not a matter of tuning. Table [[REF:tab:pilot_loop_sign]] shows the empirical counterpart in the pilot runs that motivated the amendment of the pre-registered boundary test: mean and peak shortage rise and welfare falls monotonically in the revision gain, from the smallest increment onward, exactly as a loop with $b<0$ and no admissible gain predicts.
+
+[[TABLE:pilot_loop_sign]]
+
+The asymmetry between the two loops is the analytical expression of the paper's thesis, and it is worth stating in one sentence. A price board is an institution whose loop is negative and whose admissible gain is therefore a positive number that delay shrinks; a plan target is an institution whose loop is positive and whose admissible gain is zero. Delay does not affect the two symmetrically — it converts a comfortable margin into a tight one in the first case, and it is irrelevant in the second because there was never a margin.
+
+### Existence of a stationary plan
+
+The second analytical result concerns the object the plan loop is trying to find. Corollary [[REF:cor:posloop]] says that a proportional revision of output targets cannot be stabilising in a capacity-constrained Leontief economy; the question then arises whether the system has a stationary plan at all, or whether the revision simply wanders. The answer is that a stationary plan exists and is the greatest fixed point of a monotone map, even though it is not attracting. Two lemmas establish the monotonicity.
+
+The engine does not compute realised output by a cascade of proportional cuts. It solves a small linear programme: the maximal output vector that the goods balance and the capacity bound jointly permit,
+
+$$
+R(\bar x,r,\rho)\;=\;\arg\max\Big\{\textstyle\sum_{j}x_j \;:\; Ax-x\le r-\rho,\ \ 0\le x\le\bar x,\ \ \ell\cdot x\le L\Big\},
+$$ {#eq:shortside-lp}
+
+where $\bar x$ is the vector of targets, $r$ the available stocks, $\rho$ the reserve that must be held back for final delivery, $\ell$ the labour requirements and $L$ available labour. This is the standard non-substitution short-side allocation: output is limited by what the goods balance allows, not by a proportional rule of thumb, and the programme is small enough that solving it exactly is cheaper than iterating towards it.
+
+::: {.prop #lem:mono}
+**Lemma A (the short side is monotone).** The operator $R$ of [[REF:eq:shortside-lp]] is monotone non-decreasing in the target vector $\bar x$ and in the stock vector $r$.
+:::
+
+*Proof.* Both $\bar x$ and $r$ enter the programme only through the constraint set, $\bar x$ through the upper bounds and $r$ through the right-hand side of the goods balance. Enlarging either componentwise enlarges the feasible set, and the optimal value of a maximisation problem cannot fall when the feasible set is enlarged. Taking the minimal optimal solution, by a lexicographic tie-break, makes the selection monotone. $\blacksquare$
+
+::: {.prop #lem:ration}
+**Lemma B (rationing is monotone and conservative).** Fix claims and priority tiers. The priority-filling rule $G$ is monotone non-decreasing in the supply vector and satisfies $\sum_j G_j(s)\le s$ componentwise.
+:::
+
+*Proof.* Each claimant receives $\min\{1,\,\text{remaining}/\text{claimed}\}$ times his claim, good by good, and "remaining" decreases by exactly what is granted. An increase in supply raises the multiplier for every claimant and leaves the claims unchanged, so every grant is non-decreasing. The grants for a good are bounded by the supply of that good because the multiplier never exceeds one and the remaining quantity never goes negative. $\blacksquare$
+
+::: {.prop #prop:stationary}
+**Proposition 2 (existence of a stationary plan).** Consider the one-period map $\Psi$ that takes a target vector $T_t$ to the next period's target by realising output through [[REF:eq:shortside-lp]], rationing it by Lemma [[REF:lem:ration]], observing the resulting gap, and revising: $\Psi(T)=T\odot\big(1+\eta\,s(T)\big)^{+}$. Then $\Psi$ is monotone non-decreasing on the compact lattice $[0,(1+\eta)T_{\max}]^{n}$, it maps that lattice into itself, and it possesses a greatest fixed point $T^{\star}$ and a least fixed point $T_{\star}$, obtained respectively by the descending iteration from the top and the ascending iteration from the bottom.
+:::
+
+*Proof.* By Lemma [[REF:lem:mono]] the realised output is non-decreasing in the targets; by Lemma [[REF:lem:ration]] the grants, and hence the observed gap $s$, are non-decreasing in the realised output and the supply. The revision factor $\big(1+\eta s\big)^{+}$ is therefore non-decreasing in $T$, and it is non-negative, so the product with $T$ is monotone non-decreasing in $T$. The image lies in $[0,(1+\eta)T_{\max}]^{n}$ by construction of the bound. A monotone map of a complete lattice into itself has a non-empty, complete fixed-point set by the Knaster–Tarski theorem [[@tarski1955]], and the two iterations named in the statement converge to its greatest and least elements respectively, because the orbit from the top is descending and the orbit from the bottom is ascending, and each converges to a fixed point that dominates, or is dominated by, every other. $\blacksquare$
+
+[[REF:prop:stationary]] and [[REF:cor:posloop]] must be read together, and the contrast between them is the point. Existence of a stationary plan is a lattice-theoretic fact about monotone maps; it holds whatever the sign of the feedback, and it is what allows the model to settle into a well-defined state rather than wandering. Stability of that plan is a different matter, governed by the spectral radius of the linearisation, and by Corollary [[REF:cor:posloop]] the plan loop fails that test for every positive gain. A planning office can therefore have a well-defined stationary plan that it can never reach by revising towards it. This is a more precise statement of the classical intuition that a shortage economy reproduces shortage: the reproduction is a stable fixed point of the *institutions*, not of the revision rule.
+
+### Why a balanced plan does not remove shortage
+
+::: {.prop #prop:shortside}
+**Proposition 3 (the short side).** Let $A\ge0$ with $\rho(A)<1$, let $\bar x>0$ be the output bound $\min(\text{target},\text{capacity})$, let $s\ge0$ be initial stocks and let $e\ge0$ be a vector of claims. Define the delivery frontier $\bar y:=(I-A)\bar x+s$. Then the set of attainable delivery vectors is
+
+$$
+Y=\left\{\,d\ge0 \;:\; d\le\bar y\,\right\},
+$$ {#eq:attainable}
+
+which is a complete lattice closed under componentwise max. The short-side rule delivers $d^\star=\min(e,\bar y)$, the greatest element of $Y$ not exceeding $e$, and a shortage of good $i$ occurs, $d^{\star}_{i}<e_i$, if and only if $e_i>\bar y_i$.
+:::
+
+*Proof.* A vector $d\ge0$ is attainable if there is $x$ with $0\le x\le\bar x$ and $(I-A)x\ge d-s$. Since $\rho(A)<1$ and $A\ge0$, the inverse $(I-A)^{-1}$ exists and is non-negative, so $(I-A)x\ge d-s$ if and only if $x\ge(I-A)^{-1}(d-s)$. Such an $x$ exists within the bound if and only if $(I-A)^{-1}(d-s)\le\bar x$, and multiplying by the non-negative matrix $I-A$ gives $d-s\le(I-A)\bar x$, that is $d\le\bar y$. The set $Y$ is a product of intervals, hence a complete lattice, and it is closed under componentwise maximum because $\max(d,d')\le\bar y$ whenever $d,d'\le\bar y$. The greatest element of $Y$ that does not exceed $e$ is the componentwise minimum $\min(e,\bar y)$, and $\min(e_i,\bar y_i)<e_i$ exactly when $e_i>\bar y_i$. $\blacksquare$
+
+The proposition is the formal version of a claim the shortage literature makes informally, and it has sharp policy content. Material balance guarantees that the *plan* is internally consistent: sources equal uses at the target vector. It does not and cannot guarantee that the target vector is large enough to satisfy claims, and when it is not, the shortfall is $\max(0,e-\bar y)$, which depends only on the delivery frontier and the claim vector. The balancing procedure, however many rounds it runs and however cleverly its priorities are ordered, cannot alter that total. What it can alter is who bears it.
+
+::: {.prop #cor:priority}
+**Corollary 3 (priority redistributes, it does not create).** Suppose the claims on each good exceed the frontier, $e>\bar y$ componentwise, and suppose the allocation rule exhausts the available quantity of every good. Then aggregate delivery $\sum_i d_i$ equals $\sum_i\bar y_i$ under every such rule, and the aggregate shortage rate is $\sum_i(e_i-\bar y_i)/\sum_i e_i$, independently of the priority order. The priority order determines only the sectoral incidence $d_i$. A comparison of institutions on aggregate shortage therefore measures their delivery frontier, while a comparison on shortage incidence measures their priorities; conflating the two is a specification error.
+:::
+
+*Proof.* If every good's available quantity $\bar y_i$ is fully allocated among the claimants of that good, then $\sum_i d_i=\sum_i\bar y_i$ regardless of the order in which claimants are served, and the shortage rate is determined by aggregate claims and the aggregate frontier. That the sectoral distribution $d_i$ depends on the order follows by considering two claimants of the same good at different priority ranks. $\blacksquare$
+
+[[REF:cor:priority]] is why Section [[REF:sec:design]] reports the shortage Gini across sectors alongside the mean shortage rate, and why the protocol forbids reporting aggregate output on its own. It also disciplines the interpretation of the mechanism ranking: if two institutions produce the same frontier and differ only in priority, their mean shortage rates will be identical by construction, and any welfare difference between them comes entirely from the distribution of the shortfall across sectors and across the household and non-household claimants.
+
+### Scope and what the theory does not say
+
+Three limits should be stated plainly. The analysis is local: [[REF:eq:law]] is a linearisation, the boundary is a statement about the spectral radius of a linear map, and a nonlinear system can leave the neighbourhood of its steady state before the linear instability manifests, or settle into a bounded cycle that the linear theory calls unstable. In the model, capacity constraints and the short-side map are precisely such nonlinearities, so the comparison between the analytic and the simulated boundary in B2 is a genuine test of whether the local approximation survives contact with them, not a tautology. The gain is not a primitive: it is $\eta a$, and $a$ depends on the rationing rule, the inventory position and the priority structure, so it must be measured numerically in the full model, and the paper treats it as an estimated object with a sampling distribution rather than as a known constant. And the theory says nothing about welfare. It identifies the constraint; whether the constraint binds more on one institution than on another, and what that costs in consumption, is an empirical question that the design in Section [[REF:sec:design]] is built to answer.
+
+## Experimental design {#sec:design}
+
+### Pre-registration and its status
+
+The design was frozen before any result was generated, in a protocol that names five hypotheses, six experiment blocks, six outcome measures, five statistical procedures and eight validity threats with their mitigations. The hypotheses are stated as falsifiable predictions with explicit falsification conditions. H1 asserts that a critical lag exists for tâtonnement and that the simulated boundary matches the analytic one to within one period of lag, and is falsified if the oscillation amplitude at $k\ge k^\star$ is not significantly larger than at $k=0$ by a one-sided Mann–Whitney test at $\alpha=0.05$. H2 asserts that welfare loss under delay is ordered by the freshness of information required, largest for the linear programme and smallest for material balance, and is falsified if the slope of welfare loss against $k$ is not largest for `lp_central`. H3 asserts that material balance does not eliminate shortage and is falsified if the mean shortage rate under a thirty per cent sectoral capacity shock falls below 0.5 per cent. H4 asserts downstream amplification of a single-sector capacity shock above unity and increasing in forward-linkage centrality. H5 asserts an interior optimum in the dual-track share $\theta$. Deviations from the protocol are recorded with date and reason in a separate file, and any result that was not pre-specified is labelled exploratory wherever it appears.
+
+This paper is written against the protocol and not after the fact. Sections [[REF:sec:model]] and [[REF:sec:theory]] were drafted from the frozen documents; the boundary in [[REF:prop:delay]] was derived independently of the simulator and is used to *predict* the location of the empirical boundary; and the design below is transcribed from the protocol rather than reconstructed. Where the analysis goes beyond the protocol — the effective-gain measurement of Section [[REF:sec:measuring_gain]] and the power calculation of Section [[REF:sec:power]] — the addition is flagged and recorded as a deviation, because adding a derived quantity to a pre-registered analysis is exactly the kind of quiet drift that pre-registration exists to prevent.
+
+Three amendments were made before the main grid was run, and all three are recorded with their dates, their reasons and their evidence in the amendments file, `docs/AMENDMENTS.md`, which accompanies this paper and should be read alongside the protocol. The first is substantive and is the origin of [[REF:cor:posloop]]: a pilot established that the loop carried by output targets is *positive*, so the pre-registered boundary test could not be run on the plan-revision mechanism. H1 is therefore tested on the price loop of tâtonnement, where the feedback is negative through the household demand elasticity, and a companion hypothesis H1', that taut plans are self-defeating, is reported with equal prominence on the target loop of material balance. The second amendment fixes the shock and buffer parameters from a pilot calibration: the initial stock ratio becomes $0.10$, and the standard capacity shock becomes a fifty per cent cut lasting eight quarters at period forty, because the pilot showed that a shock's cost is governed by its duration relative to the inventory buffer far more than by its depth. The third adds a gain axis to B2, since testing a boundary requires varying the gain and the pre-registered design varied only the lag. None of the amendments changes the outcomes, the statistical procedures or the seeds, and none was made after the main runs began.
+
+### Blocks
+
+The experiment is organised into six blocks, summarised in Table [[REF:tab:blocks]]. Block B1 is calibration and validation and is deterministic: it establishes that with no shock and no noise the economy reproduces its base-year input–output table to within the accounting tolerance, and that every mechanism reaches the same steady state when information is perfect. Block B2 is the core of the paper and, as amended, a three-way design: the gain — `price_gain` for tâtonnement, `revision_gain` for the target-revising institutions — crossed with the reporting lag $\ell\in\{0,\dots,6\}$ and the six institutions, over the gain grid $\{0.05,0.1,0.2,0.3,0.4,0.6,0.8,1.0,1.2,1.6\}$. Because the effective delay is $k=\ell+1$, the lags in B2 correspond to $k\in\{1,\dots,7\}$: the theoretical no-delay case is absent, as it must be, and the smallest lag in the experiment is the one in which the coordinator sees last period's outcome. The declared factors give $10\times7\times6=420$ cells, and at the pre-registered twenty seeds per cell this is 8,400 runs, though the manifest and not this sentence is the authority on the final count. Block B3 holds the institution fixed at three mechanisms and shocks each of the twenty sectors in turn, to measure propagation and amplification. B4 compares rationing against shadow prices at three shock sizes. B5 sweeps the dual-track share $\theta$ over eleven levels at two lags. B6 repeats a subset of cells under alternative substrates, adjustment coefficients, noise levels and a five per cent random perturbation of $A$, which is where the robustness of every headline claim is established.
+
+The standard scenario is eighty quarters with the first thirty discarded as burn-in, a capacity shock applied at period forty and lasting eight quarters, an initial stock ratio of $0.10$, and a shock size of $0.50$ in B3. The horizon is longer than the original sixty quarters and the shock is later and longer for the reasons given in Section [[REF:sec:power]] and in the amendments record: a near-threshold oscillation needs time to reveal itself, and a shock whose duration is short relative to the inventory buffer is absorbed before it can propagate.
+
+[[TABLE:blocks]]
+
+### Common random numbers
+
+The exogenous environment is a function of the pair (scenario, seed) and of nothing else. Demand noise, capacity shocks and measurement noise are all drawn from streams derived deterministically from that pair, so two runs with the same scenario and seed but different mechanisms see the same shock path, the same capacity draw and the same measurement error. This is not a convenience: it is what makes the comparison paired. With common random numbers the variance of the *difference* between two mechanisms is typically far smaller than the sum of their variances, because the shared environment cancels, and the paired Wilcoxon test the protocol specifies exploits this. The invariance is asserted in the test suite, because a design whose central identifying claim is violated by a refactoring is worth nothing.
+
+### Estimands and tests
+
+The unit of analysis is the run, never the period. Periods within a run are serially dependent, and pooling them would inflate the effective sample size by a factor of sixty while pretending that a single trajectory contains sixty independent observations. Run-level means of the primary outcomes are therefore formed first, and all inference is conducted on those: mean shortage rate, cumulative discounted welfare, welfare loss relative to the baseline, the oscillation statistics, the amplification ratio in B3 and mean plan fulfilment. Two-mechanism comparisons use paired differences with a Wilcoxon signed-rank test and a bootstrap confidence interval from ten thousand resamples; multi-mechanism comparisons use a Kruskal–Wallis test followed by Holm-corrected pairwise Mann–Whitney tests [[@wilcoxon1945]] [[@holm1979]] [[@davison_hinkley1997]]. The lag effect is estimated by regressing the run-level outcome on $k$ and $k^{2}$ with mechanism fixed effects and cluster-robust standard errors by seed. Effect sizes are reported always, as Cliff's $\delta$ or as the paired mean difference in units of the baseline standard deviation, because a $p$-value without an effect size is not a result.
+
+### Measuring the effective gain {#sec:measuring_gain}
+
+[[REF:prop:delay]] is stated in terms of a loop gain that is not a parameter of any mechanism. Two quantities have to be measured before the theory can be taken to the data. The first is the revision coefficient $\eta$, which is a parameter of the rule and is known by construction. The second is the response coefficient $b$, which is an equilibrium object: the negative of the derivative of the observed gap with respect to the instrument, evaluated at the stationary point. It is estimated by setting the revision coefficient to zero, displacing the instrument of one sector by a small amount, running to the new stationary point, and differencing the gap. The loop gain is then $g=\eta b$, its *sign* is the sign of $b$, and its magnitude for the price loop converts the boundary of [[REF:prop:delay]] into an admissible range for the adjustment coefficient, $\eta^{\star}(k)=g^{\star}(k)/b_p$ with $b_p$ the measured price response.
+
+The measurement is not a formality, because the sign of $b$ differs across institutions and the theory gives different predictions for the two cases. For tâtonnement, $b_p>0$ and the predicted boundary is a positive number that falls with the lag. For the target-revising institutions, $b_T<0$, so [[REF:cor:posloop]] applies and the prediction is not a boundary but the absence of one: every positive revision gain should raise shortage. Reporting the estimated $b$ with its standard deviation across seeds, rather than assuming either sign, is what makes the test of [[REF:cor:posloop]] a test rather than a restatement, and it is what permits the comparison of the measured product $|g|k$ with the $\pi/2$ budget of [[REF:cor:budget]]. The procedure is an addition to the pre-registered analysis and is recorded as a deviation.
+
+### Locating the boundary, and why the horizon is what it is {#sec:power}
+
+The protocol specifies the empirical stability boundary as the smallest $k$ at which the lag-one autocorrelation of the price deviation exceeds $0.5$ *and* the oscillation amplitude exceeds the $k=0$ amplitude by at least three standard deviations. That conjunction deserves scrutiny, because its two arms have very different power, and the difference follows from [[REF:prop:delay]] rather than from any particular implementation.
+
+Above the boundary but close to it the divergence rate is governed by how far the spectral radius exceeds one, and the excess is small. For the linear system the radius at gain $g=(1+\delta)g^\star(k)$ is approximately $1+c(k)\delta$ with $c$ decreasing in $k$; numerically, at $k=1$ and $g=1.04\,g^\star$ we have $\rho-1\approx0.020$ and a perturbation grows by a factor $2.2$ over the forty quarters that follow the shock, whereas at $k=4$ and the same relative excess $\rho-1\approx0.0063$, the growth factor over the same window is only $1.28$ and the e-folding time is about $160$ quarters. At $k=8$ and a two per cent excess the growth factor over forty quarters is $1.07$ and the e-folding time is about $600$ quarters. At a two per cent excess and $k=4$ the growth is $1.13$. These figures are computed from the characteristic polynomial by `paper/make_figures.py` and do not depend on the simulator. Their implication is unambiguous: for lags of four or more, an instability only a few per cent above threshold will not produce a detectable increase in amplitude within the post-shock window, and the amplitude arm of the pre-registered criterion therefore has almost no power exactly where the theory predicts the interesting behaviour.
+
+The autocorrelation arm is a different matter. A spectral radius just above or just below one produces a lag-one autocorrelation close to one either way, and the information lies in the *sign pattern*: a system near its delay boundary has an autocorrelation function that oscillates with period $4k+2$, so its first negative trough appears near half that period whether the amplitude is growing or decaying. The discriminating statistic is the shape of the autocorrelation function, not its scale. That is why B2 records autocorrelations at lags one through four for every run rather than the amplitude alone, and why the paper reports the two arms separately rather than as a conjunction that can only be satisfied by the easier of them. The independent verification of the boundary reports measured periods of 5.97, 9.94, 13.93, 17.89, 21.90 and 25.84 quarters against predicted values of 6, 10, 14, 18, 22 and 26, so the period prediction is accurate enough to serve as a discriminating statistic at the lags the experiment reaches.
+
+Because the horizon has been extended to eighty quarters, the post-shock window is forty quarters rather than the original twenty-eight, which raises the power of the amplitude arm at short and moderate lags without making it adequate at long ones. We state the limitation rather than paper over it, and we report the two arms of the pre-registered criterion separately so that a reader can see which of them is doing the work.
+
+### Robustness and validity
+
+The validity threats identified in the protocol are addressed by design rather than by caveat. Computational feasibility is not confused with institutional feasibility, because the planner never sees current data and because planning effort is reported as an outcome rather than hidden. The welfare weights are normative, so every headline result is re-run at plus or minus fifty per cent on the shortage and inventory penalties in B6. The unit convention is constant-price value, which is stated as a limitation rather than defended. The calibration rests on one input–output table for one year, so B6 repeats the core cells on a synthetic substrate and on a five per cent random perturbation of $A$. Mechanism confounds are addressed by the common observation object and the common shock streams, and their residual force is stated in Appendix [[REF:sec:app:differences]]. Multiplicity is addressed by Holm correction within each block at $\alpha=0.05$, with the number of tests declared in advance.
+
+## Results {#sec:results}
+
+*This section is written in the second wave, when the numbers exist. Its structure is fixed here so that the tables and figures it will contain are known in advance and cannot be chosen after the fact.*
+
+### Calibration and validation (B1)
+
+[[RESULTS:B1]] The base-year reproduction check, the steady-state comparison across mechanisms under perfect information, and the assertion counts from the accounting audit belong here. Table [[REF:tab:calibration]] will report the maximum absolute accounting residual and the base-year output error for each mechanism.
+
+### The delay grid (B2)
+
+[[RESULTS:B2]] The central result. Table [[REF:tab:main_lag_grid]] will report, for each cell of the gain-by-lag-by-institution grid, the mean and dispersion across seeds of the six primary outcomes; Figure [[REF:fig:welfare_vs_lag]] will plot welfare loss against lag with mechanism fixed effects; Figure [[REF:fig:stability_boundary_empirical]] will overlay the measured boundary on the analytic curve of [[REF:prop:delay]], with measured $\eta^{\star}$ against the predicted $g^{\star}(k)/b_p$. The pre-registered test of H1 on the price loop, the companion test of H1' on the target loop, the ordering test of H2 and the $|g|k$ test of [[REF:cor:budget]] are reported in that order, and H1' is reported with the same prominence as H1 because it is the test that [[REF:cor:posloop]] predicts will fail to find any stable gain.
+
+### Propagation (B3)
+
+[[RESULTS:B3]] Amplification of a single-sector capacity shock, by shocked sector and by institution, with forward-linkage centrality as the regressor for H4. Two distinct statistics are reported and must not be confused: `shock_output_amplification`, the ratio of the output loss share to the output-weighted capacity-loss share, which is the primary H4 statistic and which the pilot places between 1.25 and 5.7 across sectors; and `shock_amplification`, the ratio of the shortage share to the capacity-loss share, which is a distributional measure and which the pilot places between 2 and 11. Table [[REF:tab:incidence]] will report the incidence of the shortfall — the pilot finds that intermediate users are protected relative to households, with up to 85 per cent of the unmet demand for the shocked good falling on final consumers — because Corollary [[REF:cor:priority]] says that the aggregate and the incidence are separate objects and that reporting the first without the second is a specification error.
+
+### Rationing versus shadow prices (B4)
+
+[[RESULTS:B4]] The comparison at three shock sizes, and the decomposition of the welfare difference into a frontier component and an incidence component, following [[REF:cor:priority]].
+
+### The dual track (B5)
+
+[[RESULTS:B5]] Welfare and price volatility as functions of the plan share $\theta$, at two lags, with the interior-optimum test for H5.
+
+### Robustness (B6)
+
+[[RESULTS:B6]] Replication of the headline ordering under the alternative substrate, the alternative adjustment coefficient, the noise treatment and the perturbed input–output matrix.
+
+## Discussion {#sec:discussion}
+
+*Deferred to the second wave. The argument will be organised around three questions, in this order: whether the delay dimension orders the institutions as the theory predicts, and where it fails to; what the failure of the ordering would imply for the informational reading of the calculation debate, given that the linear programme — the institution with the strongest information requirements — is predicted to degrade fastest; and what the dual-track results imply for the claim that hybrid institutions dominate both extremes.* [[RESULTS:DISCUSSION]]
+
+## Limitations {#sec:limitations}
+
+The limitations of this study are substantial and are stated here in the order of their importance to the conclusions rather than in the order that is most flattering to them.
+
+The unit convention is the first and most serious. All quantities are constant-price values, so a "shortage" of a good is a shortfall in value terms and cannot distinguish a shortage of the right goods from a shortage of the wrong ones. An economy that produces the correct total value in the wrong composition will look as good as one that produces the correct composition, and the logarithmic welfare function mitigates this only partially. Real-volume heterogeneity is out of scope.
+
+The calibration rests on a single input–output table for a single year, and the technology is Leontief and therefore rigid: there is no substitution in production, no technical change, and no reallocation of capital across sectors within a run. In a paper whose subject is the propagation of shortage through a network, the absence of substitution is a substantive assumption, because substitution is the main channel through which a real economy absorbs a sectoral shock. The synthetic substrate and the perturbed matrix in B6 probe sensitivity to the coefficients but not to the absence of substitution itself, which is left to future work.
+
+The model has no money and no finance. Prices are indices; there is no cash-in-advance constraint, no credit, and no distinction between nominal and real adjustment. Investment is a demand category rather than a decision, and there is no intertemporal optimisation by households. Behaviour is entirely mechanical: households do not learn, do not anticipate policy and do not respond strategically to rationing. In particular there is no incentive or gaming behaviour — no hidden capacity, no falsified returns, no ratchet effect — even though the soft-budget literature that motivates the shortage mechanism is largely about precisely those behaviours [[@kornai_maskin_roland2003]]. The model therefore captures the *accounting* consequences of soft budgets without capturing their *behavioural* causes, and any conclusion about the welfare cost of soft budgets drawn from it should be read as a lower bound.
+
+The information treatment is deliberately narrow. Lag is deterministic and common to all variables; noise is multiplicative, log-normal and independent across sectors and periods. Real statistical systems have heterogeneous lags, correlated revisions and systematic bias, and a planner may know that some series are more reliable than others and weight them accordingly. None of that is modelled. Nor is the strategic dimension: the observation object is the same for every institution, which is what makes the comparison clean, but it also removes the possibility that an institution might invest in better data, and the possibility that agents might report strategically to the institution.
+
+Finally, the normative content of the welfare function should not be mistaken for welfare economics. The weights, the discount factor and the penalty coefficients are parameters chosen to be reasonable and then varied; they are not estimates of a social welfare function, and no result should be read as a claim about what a society should prefer. The paper's claim is comparative and conditional: given these weights, how do the institutions rank, and does the ranking depend on the lag. A reader who rejects the weights can re-run them.
+
+## Reproducibility {#sec:repro}
+
+Every number in this paper is generated by code that is in the repository, and the mapping from claim to script is stated in the claim's neighbourhood rather than gathered in an appendix. The simulation core, the mechanisms, the experiment grid, the aggregation and the figure generation are separate modules with declared interfaces, and the build of this document is itself a script.
+
+The manuscript is built by `scripts/build_paper.py`, which converts `paper/main.md` to a standalone HTML document with mathematics typeset in the browser by KaTeX from a content delivery network, numbered sections, numbered figures, tables and equations, and resolved cross-references, and then prints that document to PDF with Microsoft Edge in headless mode. No LaTeX installation and no pandoc are required, which is a deliberate choice: the pipeline must run on a clean machine with a browser. The analytic figures and the boundary table are produced by `paper/make_figures.py`, which implements [[REF:prop:delay]] directly from the characteristic polynomial and regenerates every number quoted in Sections [[REF:sec:theory]] and [[REF:sec:design]] from scratch; the script asserts the identities it relies on, so a change to the algebra that broke the closed form would fail loudly rather than silently. The simulation results are produced by the block runner and aggregated by the experiment module, and each block writes a manifest recording the commit, the Python, NumPy and SciPy versions, the scenario hashes, the seed list, the wall time and a timestamp.
+
+Determinism is enforced rather than hoped for. All randomness flows through NumPy's generator interface seeded from the pair (scenario, seed); there is no global random state and no unseeded call anywhere in the simulation path. Two runs with the same scenario and seed produce bit-identical exogenous streams across mechanisms, which is asserted in the test suite, and the paired design depends on that assertion. The accounting audit is not a diagnostic that can be switched off: a residual above $10^{-8}$ of scale raises an error and aborts the run, so a run that completes has passed every identity check in every period.
+
+The model description follows the ODD protocol for simulation models in its second revision, which prescribes a structured account of purpose, entities, state variables, process overview and scheduling, design concepts, initialisation, input data and submodels [[@grimm2020]]. Sections [[REF:sec:model]] and [[REF:sec:appendix_mech]] are organised to supply those elements, and the submodel specifications give each institution's decision rules in enough detail to be re-implemented without reference to the source. An independent verification pass re-runs a random sample of cells from scratch and re-derives the analytic boundary of [[REF:prop:delay]] from the characteristic polynomial without using the code that produced it; its report is a separate artefact and its disagreements, if any, are reported rather than reconciled silently.
+
+Two things are deliberately not reproducible in the narrow sense. The seed-to-cell assignment is fixed by the protocol, so an analyst cannot choose a favourable subset of seeds; and the hypotheses are stated with their falsification conditions in advance, so a result that fails the test is reported as a failure. The repository therefore contains the negative results as prominently as the positive ones, which is the only sense in which reproducibility means anything for a paper of this kind.
+
+## Supporting arguments {#sec:appendix_a .appendix}
+
+### From the Langean rule to the linear form {#sec:app:lin}
+
+The reduction of the descriptive rule to [[REF:eq:law]] is used in Section [[REF:sec:theory]] and is set out here in full. Let $D(p,\cdot)$ be the excess demand for a good as a function of its administered price and of the rest of the state. Suppose a steady state $(p^\star,\cdot)$ with $D(p^\star,\cdot)=0$, and suppose $D$ is continuously differentiable with $\partial D/\partial\log p=-a$ at the steady state, $a>0$; the sign is the normal one, excess demand falling as the administered price rises. The coordinator observes excess demand with a lag of $k$ periods and applies the proportional rule $\log p_{t+1}=\log p_t+\eta\widehat{D}_{t-k}$, where $\widehat{D}$ is measured excess demand. Substituting the first-order expansion $D(p,\cdot)\approx-a(\log p-\log p^\star)$ and writing $u_t=\log p_t-\log p^\star$ gives $u_{t+1}=u_t-\eta a\,u_{t-k}$, which is [[REF:eq:law]] with $g=\eta a$.
+
+Two features of the reduction deserve comment. The elasticity $a$ is not a constant of nature: it depends on the rationing rule, on the inventory position and on the priority structure, so the same administrator with the same $\eta$ faces a different effective gain in different states of the world. That is why the paper measures the gain rather than assuming it. And the measured excess demand differs from the true one by the measurement noise of [[REF:eq:observation]]; the linear analysis treats the noise as absent, and the noise treatment in B6 establishes how much the boundary moves when it is present.
+
+### The algebra of the crossing condition {#sec:app:crossing}
+
+Section [[REF:sec:theory]] uses two identities whose derivations are worth recording. First, for $\theta\in(0,2\pi)$,
+
+$$
+e^{i\theta}-1 \;=\; e^{i\theta/2}\left(e^{i\theta/2}-e^{-i\theta/2}\right) \;=\; 2i\sin(\theta/2)\,e^{i\theta/2} \;=\; 2\sin(\theta/2)\,e^{i(\theta/2+\pi/2)},
+$$
+
+which supplies both the modulus $|e^{i\theta}-1|=2\sin(\theta/2)$ and the argument used in Step 1 of the proof. Second, the simplification of the derivative denominator: at a root of $P_k(\cdot,g)$ we have $z^{k+1}=z^{k}-g$, hence
+
+$$
+z^{k}\big((k+1)z-k\big) \;=\; (k+1)z^{k+1}-kz^{k} \;=\; (k+1)(z^{k}-g)-kz^{k} \;=\; z^{k}-(k+1)g,
+$$
+
+which is the form used in [[REF:eq:crossdir]]. Since $|z|=1$ we have $\bar z=1/z$ and $\mathrm{Re}(\bar z z')=-\mathrm{Re}\big(1/[z^{k}((k+1)z-k)]\big)$; multiplying numerator and denominator by the conjugate of $z^{k}-(k+1)g$ gives the real part $-(\cos k\theta-(k+1)g)/|z^{k}-(k+1)g|^{2}$, which is the expression quoted.
+
+The elementary inequality $2x/\pi\le\sin x\le x$ on $[0,\pi/2]$ is used twice: in Step 1 to bound the crossing values from below, and in [[REF:cor:budget]] to obtain $kg^\star(k)<\pi/2$. The first use needs the weaker direction at the point $x=\pi/(2(2k+1))\le\pi/2$, which holds for every $k\ge0$; the second needs the stronger direction at the same point, together with the limit $\sin x/x\to1$ as $x\to0$.
+
+### Numerical verification of the boundary {#sec:app:numeric}
+
+The proposition is verified independently of the algebra by root-finding. For each $k\le12$ and for gains $0.999\,g^\star(k)$ and $1.001\,g^\star(k)$, the roots of $z^{k+1}-z^{k}+g$ are computed numerically and the spectral radius is reported. This is a genuine test rather than a restatement: the boundary formula is not used in the root-finding, only in the choice of the two gains, so a wrong closed form would put the roots on the wrong side. The verification script asserts that the radius lies below one at the lower gain and above one at the upper gain for every $k$ in the range, that the roots on the unit circle at $g=g^\star(k)$ have argument $\pi/(2k+1)$ to within $10^{-9}$, and that the amplitude growth rate estimated from a simulated impulse response equals the spectral radius to within $10^{-6}$. The second assertion ties the algebra to observable dynamics: it checks that the period quoted in [[REF:cor:period]] is the period that actually appears in the time series, which is the prediction the simulation is asked to confirm.
+
+An independent implementation in `verification/verify_theorem.py`, written without reference to the derivation, confirms the closed form against the spectral radius of $z^{k+1}-z^{k}+g$ by bisection for $k=1,\dots,14$, with agreement to $10^{-13}$; it confirms that the envelope growth rate changes sign between $0.9\,g^\star$ and $1.1\,g^\star$; and it measures the boundary period as 5.97, 9.94, 13.93, 17.89, 21.90 and 25.84 quarters for $k=1,\dots,6$, against predicted values of 6, 10, 14, 18, 22 and 26. The small shortfall in the measured periods is the expected consequence of estimating a period from a finite sample with a slowly decaying envelope, and it is reported rather than smoothed.
+
+## Mechanism specifications {#sec:appendix_mech .appendix}
+
+### Common interface {#sec:app:interface}
+
+Every institution implements three decisions against a single interface and is forbidden from mutating the shared state. In the plan step it receives the observation object of [[REF:eq:observation]] and returns gross-output targets, intended final deliveries, an optional priority vector and a diagnostics record. In the allocation step it receives the same observation, the state and the plan, together with the nominal supply vector — beginning inventory plus planned output — and returns a matrix of intermediate allocations, vectors of final, government, investment and inventory allocations, and the vector of unmet household demand. In the price step it receives the observation, the state, the plan, the allocation and a read-only view of the realised period, and returns the price vector for the next period. The engine owns all accounting and all feasibility; a mechanism that over-claims has its claims scaled down and the event is recorded, and the shipped implementations are asserted in the test suite not to trigger that path under calm conditions.
+
+### Institution-specific rules {#sec:app:rules}
+
+The linear programme maximises the weighted sum of final deliveries subject to the Leontief constraint and the capacity bound, $w\cdot y$ subject to $(I-A)x\ge y$ and $x\le\bar x$, using the observed demand and capacity; its solution is the upper bound against which the other institutions are measured, and its fulfilment rule is pro rata across claimants. Material balance revises output targets in proportion to the observed shortage, with the revision coefficient as its gain parameter, and allocates proportionally within priority tiers with the priority tier served first. Its realised output is not produced by a cascade of proportional cuts: the engine solves the short-side programme [[REF:eq:shortside-lp]] exactly, which is the correct short side for a capacity-constrained Leontief economy, and the cascade is retained only as a diagnostic of planning effort. This is the institution for which [[REF:cor:posloop]] predicts that no revision coefficient is admissible. Priority rationing issues administrative quotas by priority tier, exhausting the higher tier before the lower, and allocates pro rata within each. Tâtonnement allocates by willingness to pay and updates prices by the Langean rule of [[REF:eq:law2]] with adjustment coefficient $\eta$. The market clears within the period by Walrasian tâtonnement on the current price vector, which is the only institution permitted to iterate prices *inside* a period; this is its defining institutional privilege rather than an implementation accident. The dual track splits every good into a plan track of share $\theta$ at the administered price and a market track of share $1-\theta$ at the clearing price, with the plan track served first and the market track clearing the residual.
+
+[[TABLE:parameters]]
+
+### What the institutions do not share {#sec:app:differences}
+
+It would be dishonest to claim that the six implementations differ only in a single scalar. The linear programme carries the demand vector and the inverse of a matrix; material balance carries a plan and a priority order; tâtonnement carries a price vector and its own history; the market carries an order book; the dual track carries both a plan and a price. The institutions therefore differ in the state they maintain as well as in the rule they apply, and the information treatment holds only the *observation* fixed, not the internal memory. This is a feature of what is being compared — an institution is partly its memory — but it does mean that a difference in performance between two institutions at a given lag cannot be attributed to a single parameter. The effective-gain measurement of Section [[REF:sec:measuring_gain]] is the closest the design comes to isolating the relevant dimension, and it is a measurement, not an identification strategy. The claim the paper defends is therefore comparative and conditional: given that these are the institutions, and given that delay is the treatment, the ordering of their performance is predicted by the freshness of the information their rules require.

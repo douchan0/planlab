@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "planlab"
+version = "0.1.0"
+description = "PlanLab: a mechanism-switchable computational laboratory for planned-economy coordination"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "PlanLab contributors"}]
+keywords = ["input-output", "planning", "material balance", "shortage", "simulation", "agent-based"]
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "scipy>=1.10",
+  "matplotlib>=3.7",
+  "PyYAML>=6.0",
+  "pyarrow>=14.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "nbformat>=5.9", "nbclient>=0.9", "markdown>=3.5"]
+notebooks = ["nbformat>=5.9", "nbclient>=0.9", "ipykernel>=6.0"]
+
+[project.scripts]
+planlab = "planlab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = [
+  "slow: long-running integration tests",
+  "network: needs network access",
+]
+
+[tool.coverage.run]
+source = ["planlab"]
+omit = ["*/tests/*"]

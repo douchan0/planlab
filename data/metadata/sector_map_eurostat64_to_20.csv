@@ -1,0 +1,66 @@
+code64,name_en,sector20_code,mapping_note
+CPA_A01,"Products of agriculture, hunting and related services",c01,"agriculture, forestry & fishing; essential"
+CPA_A02,"Products of forestry, logging and related services",c01,"agriculture, forestry & fishing; essential"
+CPA_A03,Fish and other fishing products; aquaculture products; support services to fishing,c01,"agriculture, forestry & fishing; essential"
+CPA_B,Mining and quarrying,c02,mining & quarrying (head-code; no sub-split is populated)
+CPA_C10-12,"Food, beverages and tobacco products",c03,"food, beverages & tobacco; essential"
+CPA_C13-15,"Textiles, wearing apparel, leather and related products",c04,"textiles, apparel & leather"
+CPA_C16,"Wood and of products of wood and cork, except furniture; articles of straw and plaiting materials",c05,wood & cork products
+CPA_C17,Paper and paper products,c05,paper & paper products
+CPA_C18,Printing and recording services,c05,printing & recording services
+CPA_C19,Coke and refined petroleum products,c06,coke & refined petroleum (kept separate: energy input to transport)
+CPA_C20,Chemicals and chemical products,c07,chemicals
+CPA_C21,Basic pharmaceutical products and pharmaceutical preparations,c07,pharmaceuticals
+CPA_C22,Rubber and plastic products,c08,rubber & plastics
+CPA_C23,Other non-metallic mineral products,c08,other non-metallic mineral products
+CPA_C24,Basic metals,c09,basic metals
+CPA_C25,"Fabricated metal products, except machinery and equipment",c09,fabricated metal products
+CPA_C26,"Computer, electronic and optical products",c10,"computer, electronic & optical products"
+CPA_C27,Electrical equipment,c10,electrical equipment
+CPA_C28,Machinery and equipment n.e.c.,c10,machinery & equipment n.e.c.
+CPA_C29,"Motor vehicles, trailers and semi-trailers",c10,motor vehicles
+CPA_C30,Other transport equipment,c10,other transport equipment
+CPA_C31_32,Furniture and other manufactured goods,c11,furniture & other manufactured goods
+CPA_C33,Repair and installation services of machinery and equipment,c11,repair & installation of machinery
+CPA_D,"Electricity, gas, steam and air conditioning",c12,"electricity, gas, steam & air conditioning; essential"
+CPA_E36,Natural water; water treatment and supply services,c12,natural water; supply services; essential
+CPA_E37-39,"Sewerage services; sewage sludge; waste collection, treatment and disposal services; materials recovery services; remediation services and other waste management services",c12,"sewerage, waste & remediation; essential"
+CPA_F,Constructions and construction works,c13,construction
+CPA_G45,Wholesale and retail trade and repair services of motor vehicles and motorcycles,c14,trade & repair of motor vehicles
+CPA_G46,"Wholesale trade services, except of motor vehicles and motorcycles",c14,wholesale trade
+CPA_G47,"Retail trade services, except of motor vehicles and motorcycles",c14,retail trade
+CPA_H49,Land transport services and transport services via pipelines,c15,land transport & pipelines
+CPA_H50,Water transport services,c15,water transport
+CPA_H51,Air transport services,c15,air transport
+CPA_H52,Warehousing and support services for transportation,c15,warehousing & transport support
+CPA_H53,Postal and courier services,c15,postal & courier
+CPA_I,Accommodation and food services,c16,accommodation & food services
+CPA_J58,Publishing services,c17,publishing
+CPA_J59_60,"Motion picture, video and television programme production services, sound recording and music publishing; programming and broadcasting services",c17,"film, TV, music & broadcasting"
+CPA_J61,Telecommunications services,c17,telecommunications
+CPA_J62_63,"Computer programming, consultancy and related services; Information services",c17,IT & information services
+CPA_K64,"Financial services, except insurance and pension funding",c18,financial services
+CPA_K65,"Insurance, reinsurance and pension funding services, except compulsory social security",c18,insurance & pension funding
+CPA_K66,Services auxiliary to financial services and insurance services,c18,services auxiliary to finance
+CPA_L68A,Imputed rents of owner-occupied dwellings,c18,imputed rents of owner-occupied dwellings
+CPA_L68B,Real estate services excluding imputed rents,c18,real estate services excl. imputed rents
+CPA_M69_70,Legal and accounting services; services of head offices; management consultancy services,c20,"legal, accounting, head offices & management consulting"
+CPA_M71,Architectural and engineering services; technical testing and analysis services,c20,"architecture, engineering & technical testing"
+CPA_M72,Scientific research and development services,c20,scientific research & development
+CPA_M73,Advertising and market research services,c20,advertising & market research
+CPA_M74_75,"Other professional, scientific and technical services and veterinary services",c20,"other professional, scientific & veterinary services"
+CPA_N77,Rental and leasing services,c20,rental & leasing
+CPA_N78,Employment services,c20,employment services
+CPA_N79,"Travel agency, tour operator and other reservation services and related services",c20,travel agency & reservation services
+CPA_N80-82,"Security and investigation services; services to buildings and landscape; office administrative, office support and other business support services",c20,"security, cleaning & office support"
+CPA_O,Public administration and defence services; compulsory social security services,c19,public administration & defence; essential (public services)
+CPA_P,Education services,c19,education; essential (public services)
+CPA_Q86,Human health services,c19,human health services; essential
+CPA_Q87_88,Residential care services; social work services without accommodation,c19,residential care & social work; essential
+CPA_R90-92,"Creative, arts, entertainment, library, archive, museum, other cultural services; gambling and betting services",c20,"creative, arts, culture & gambling"
+CPA_R93,Sporting services and amusement and recreation services,c20,sporting & recreation
+CPA_S94,Services furnished by membership organisations,c20,membership organisations
+CPA_S95,Repair services of computers and personal and household goods,c20,repair of computers & household goods
+CPA_S96,Other personal services,c20,other personal services
+CPA_T,Services of households as employers; undifferentiated goods and services produced by households for own use,c20,households as employers & own-account production
+CPA_U,Services provided by extraterritorial organisations and bodies,c20,extraterritorial organisations (zero output in the EU27 aggregate)

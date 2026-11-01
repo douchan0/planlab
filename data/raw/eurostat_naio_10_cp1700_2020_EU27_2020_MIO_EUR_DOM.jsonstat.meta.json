@@ -1,0 +1,7 @@
+{
+  "bytes": 102822,
+  "downloaded_utc": "2026-11-01T07:58:51+00:00",
+  "from_cache": false,
+  "sha256": "f3c69cf70374c7c37a4fff9a500ccd31fb7f86a1a293932c0ec9a59b231c6c72",
+  "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/naio_10_cp1700?format=JSON&lang=EN&freq=A&geo=EU27_2020&time=2020&unit=MIO_EUR&stk_flow=DOM"
+}

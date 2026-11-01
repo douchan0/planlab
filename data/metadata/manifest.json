@@ -1,0 +1,269 @@
+{
+  "aggregation": {
+    "groups": [
+      {
+        "aggregate": "food_agriculture",
+        "code": "c01",
+        "n_source": 3
+      },
+      {
+        "aggregate": "mining_extraction",
+        "code": "c02",
+        "n_source": 1
+      },
+      {
+        "aggregate": "food_agriculture",
+        "code": "c03",
+        "n_source": 1
+      },
+      {
+        "aggregate": "manufacturing_light",
+        "code": "c04",
+        "n_source": 1
+      },
+      {
+        "aggregate": "manufacturing_light",
+        "code": "c05",
+        "n_source": 3
+      },
+      {
+        "aggregate": "energy_fuels",
+        "code": "c06",
+        "n_source": 1
+      },
+      {
+        "aggregate": "manufacturing_heavy",
+        "code": "c07",
+        "n_source": 2
+      },
+      {
+        "aggregate": "manufacturing_heavy",
+        "code": "c08",
+        "n_source": 2
+      },
+      {
+        "aggregate": "manufacturing_heavy",
+        "code": "c09",
+        "n_source": 2
+      },
+      {
+        "aggregate": "capital_goods",
+        "code": "c10",
+        "n_source": 5
+      },
+      {
+        "aggregate": "manufacturing_other",
+        "code": "c11",
+        "n_source": 2
+      },
+      {
+        "aggregate": "energy_utilities",
+        "code": "c12",
+        "n_source": 3
+      },
+      {
+        "aggregate": "construction",
+        "code": "c13",
+        "n_source": 1
+      },
+      {
+        "aggregate": "trade",
+        "code": "c14",
+        "n_source": 3
+      },
+      {
+        "aggregate": "transport",
+        "code": "c15",
+        "n_source": 5
+      },
+      {
+        "aggregate": "hospitality",
+        "code": "c16",
+        "n_source": 1
+      },
+      {
+        "aggregate": "information",
+        "code": "c17",
+        "n_source": 4
+      },
+      {
+        "aggregate": "finance_realestate",
+        "code": "c18",
+        "n_source": 5
+      },
+      {
+        "aggregate": "public_services",
+        "code": "c19",
+        "n_source": 4
+      },
+      {
+        "aggregate": "professional_services",
+        "code": "c20",
+        "n_source": 16
+      }
+    ],
+    "mapping_file": "data/metadata/sector_map_eurostat64_to_20.csv",
+    "mapping_sha256": "661fe199032335d53013e1f499baee2101ca2e1eabe2d2864a411c65bd1f078f",
+    "n_groups": 20,
+    "n_source_sectors": 65
+  },
+  "checks_n20": {
+    "a_column_sums_max": 0.674910889995681,
+    "a_column_sums_min": 0.25224338726955375,
+    "aggregate_intermediate_share": 0.4438110271747656,
+    "all_column_sums_below_one": true,
+    "finite": true,
+    "identity_max_abs_residual_n65": 0.08999999985098839,
+    "identity_max_rel_residual_n65": 4.998685642872735e-08,
+    "n65_a_column_sums_max": 0.6783054636741701,
+    "n_sectors_ok": true,
+    "productive": true,
+    "spectral_radius": 0.4676283587758551,
+    "totals": {
+      "compensation_of_employees": 6613781.33,
+      "final_demand": 13984653.18,
+      "gross_output": 25143704.520000003,
+      "gross_value_added": 12147083.21,
+      "household_consumption": 5724438.970000001,
+      "intermediate_uses": 11159053.33
+    }
+  },
+  "dataset": "naio_10_cp1700",
+  "eurostat": {
+    "dataset_label": "Symmetric input-output table at basic prices (product by product)",
+    "dataset_updated": "2026-09-30T23:00:00+0200",
+    "datastructure": {
+      "agencyId": "ESTAT",
+      "dataset_version": "1.0",
+      "id": "NAIO_10_CP1700",
+      "version": "61.0"
+    },
+    "defined_cells": 5712,
+    "downloaded_utc": "2026-11-01T07:58:51+00:00",
+    "filters": {
+      "freq": "A",
+      "geo": "EU27_2020",
+      "stk_flow": "DOM",
+      "time": "2020",
+      "unit": "MIO_EUR"
+    },
+    "id": [
+      "freq",
+      "unit",
+      "stk_flow",
+      "prd_use",
+      "prd_ava",
+      "geo",
+      "time"
+    ],
+    "raw_bytes": 102822,
+    "raw_sha256": "f3c69cf70374c7c37a4fff9a500ccd31fb7f86a1a293932c0ec9a59b231c6c72",
+    "size": [
+      1,
+      1,
+      1,
+      121,
+      123,
+      1,
+      1
+    ],
+    "status_counts": {},
+    "total_cells": 14883,
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/naio_10_cp1700?format=JSON&lang=EN&freq=A&geo=EU27_2020&time=2020&unit=MIO_EUR&stk_flow=DOM"
+  },
+  "files": [
+    "data/processed/eurostat_2020_n20_A.csv",
+    "data/processed/eurostat_2020_n20_labels.csv",
+    "data/processed/eurostat_2020_n20_meta.json",
+    "data/processed/eurostat_2020_n20_vectors.csv",
+    "data/processed/eurostat_2020_n65_Z.csv",
+    "data/processed/eurostat_2020_n65_meta.json",
+    "data/processed/eurostat_2020_n65_vectors.csv",
+    "data/processed/synthetic_2020_n20_A.csv",
+    "data/processed/synthetic_2020_n20_labels.csv",
+    "data/processed/synthetic_2020_n20_meta.json",
+    "data/processed/synthetic_2020_n20_vectors.csv"
+  ],
+  "generated_utc": "2026-11-01T07:59:29+00:00",
+  "identity_check_n65": {
+    "max_abs_residual": 0.08999999985098839,
+    "max_rel_residual": 4.998685642872735e-08,
+    "passed": true,
+    "tolerance_rel": 1e-06
+  },
+  "n_sectors": 20,
+  "n_source_sectors": 65,
+  "substrates": {
+    "eurostat_2020_n20": {
+      "a_sha256": "57f2c1627bad1670b9a6fd26a3a8acbcdb1b68f14f201c9e709bef5bbd994216",
+      "labels_sha256": "220b0c6edd044262a816de6358c608bfa889fb9dc2fd072af2bf352be5653a7b",
+      "meta_file": "data/processed/eurostat_2020_n20_meta.json"
+    },
+    "synthetic_2020_n20": {
+      "a_sha256": "a8234f47ed1e59547c08e7d7aa4c24c669f6d28a807d7b76e1cf0e7aa510339f",
+      "labels_sha256": "220b0c6edd044262a816de6358c608bfa889fb9dc2fd072af2bf352be5653a7b",
+      "meta_file": "data/processed/synthetic_2020_n20_meta.json"
+    }
+  },
+  "synthetic": {
+    "achieved_totals": {
+      "gross_output": 25143704.520000003,
+      "household_consumption": 5724438.970000002,
+      "total_final_demand": 13984651.189999998,
+      "total_intermediate_uses": 11159053.33
+    },
+    "clipping": {
+      "phi_high": 0.9,
+      "phi_low": 0.05
+    },
+    "copied_from_reference": {
+      "compensation_of_employees": "sum 6613781.3",
+      "gross_output": "sum 25143704.5",
+      "gross_value_added": "sum 12147083.2",
+      "intermediate_budget": "sum 11159053.3",
+      "total_final_demand": "sum 13984653.2"
+    },
+    "drawn": {
+      "final_demand_split": "real component proportions applied to the calibrated total",
+      "intermediate_flow_matrix": "log-normal topology with diagonal/link bonuses, RAS-scaled to the calibrated row and column margins"
+    },
+    "final_demand_total_abs_diff_vs_reference": 1.9900000020861626,
+    "generator": "planlab.data.synthetic",
+    "identity_residual_max_abs": 1.0040588676929474e-05,
+    "ras": {
+      "iterations": 15,
+      "max_iter": 500,
+      "tol": 1e-12
+    },
+    "rounding_note": "The published table is rounded to 0.01 MIO EUR, so x - Z*1 and the reported y total differ by ~2 MIO EUR.  The synthetic table preserves the column budgets (which fix the sectoral GVA shares) exactly and lets that sub-ppm rounding pass into the final-demand total.",
+    "seed": 20200101,
+    "sigma": 0.9,
+    "version": "1"
+  },
+  "transform_version": "1",
+  "validation": {
+    "implied_gva_total_mio_eur": 12147083.21,
+    "published_gva": {
+      "geo": "EU27_2020",
+      "na_item": "B1G",
+      "published_label": "Gross domestic product (GDP) and main components (output, expenditure and income) - annual data",
+      "published_updated": "2026-10-22T23:00:00+0200",
+      "retrieved_utc": "2026-11-01T07:59:29+00:00",
+      "status": "ok",
+      "unit": "CP_MEUR",
+      "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nama_10_gdp?format=JSON&lang=EN&unit=CP_MEUR&na_item=B1G&geo=EU27_2020&time=2020",
+      "value": 12168845.7
+    },
+    "published_gva_total_mio_eur": 12168845.7,
+    "relative_deviation": -0.0017883775122564305,
+    "verdict": "consistent"
+  },
+  "versions": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "planlab": "0.1.0",
+    "python": "3.10.13",
+    "sys_platform": "darwin"
+  },
+  "year": 2020
+}

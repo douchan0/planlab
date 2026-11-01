@@ -1,0 +1,27 @@
+# data & caches
+.venv/
+.tools/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+
+# raw downloads are cached locally, not committed (manifest + processed are committed)
+data/raw/*.jsonstat
+data/raw/*.zip
+data/raw/*.xlsx
+data/raw/*.csv
+
+# large run outputs: keep summaries, drop the per-period dump
+results/**/runs.parquet
+results/**/runs_*.parquet
+
+# OS
+.DS_Store
+
+# local run artefacts
+paper/.build/
+notebooks/.ipynb_checkpoints/
+*.log
