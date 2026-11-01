@@ -1,7 +1,7 @@
 # Tutorial 05 — dual track and shadow prices
 
 **Notebook:** [`notebooks/05_dual_track_and_shadow_prices.ipynb`](../../notebooks/05_dual_track_and_shadow_prices.ipynb)
-· **Runtime:** ~14 s · **Prerequisites:** tutorials 03 (the programme) and 04 (the registry)
+· **Runtime:** ~3 s · **Prerequisites:** tutorials 03 (the programme) and 04 (the registry)
 
 ## Learning objectives
 

@@ -1,7 +1,7 @@
 # Tutorial 04 — the mechanism zoo
 
 **Notebook:** [`notebooks/04_mechanism_zoo.ipynb`](../../notebooks/04_mechanism_zoo.ipynb)
-· **Runtime:** ~6 s · **Prerequisites:** tutorials 01 and 03
+· **Runtime:** ~4 s · **Prerequisites:** tutorials 01 and 03
 
 ## Learning objectives
 

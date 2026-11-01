@@ -1,11 +1,11 @@
 # PlanLab independent verification report
 
-Generated: 2026-11-01 16:55:55 +0800  
+Generated: 2026-11-01 17:01:43 +0800  
 Repository: `/Users/ceontou/Documents/code/planlab`  
-git commit: `f3b9b3166452be2242bd4ea324afacf6b5ef1528` (dirty: True)  
+git commit: `5917ec312835d3739165a1631e1781319fb2b78d` (dirty: True)  
 Python 3.10.13 on macOS-15.7.7-arm64-arm-64bit  
-Wall time: 76.7 s  
-Checks: 4 PASS, 2 FAIL, 0 SKIP, 0 ERROR
+Wall time: 116.1 s  
+Checks: 6 PASS, 0 FAIL, 0 SKIP, 0 ERROR
 
 This suite is written by an independent verifier. It re-derives the theorem, re-implements a period from the written specification, audits the raw records behind the paper's numbers, re-runs sampled cells, and re-computes the statistics with its own code. It deliberately does not import the project's engine, metrics or aggregate modules to judge their output; where it does use project code it is only for *inputs* (the technology matrix) or for *records* (the stored arrays).
 
@@ -46,14 +46,68 @@ An independent verifier is only worth having if its record shows what it caught.
 - Where: results/<block>/audit_records.npz
 - Finding: For the 6-sector cells the runner writes `A` FLATTENED into a fixed 20x20 buffer (the 36 finite entries are the row-major 6x6 matrix, the other 364 are NaN), while x/Z/... are NaN-padded but correctly placed and `sectors` is empty. Any naive reader gets a NaN-filled A for toy cells.
 - Evidence: check 3 loader: A.shape == (20,20) with 36 finite entries for a record whose n_sectors == 6; reshaping the finite entries reproduces toy_technology(6).A exactly (max |diff| = 0.0).
-- Resolution: WORKED AROUND in check 3 (recover by reshaping); reported to the Lead and to the experiments layer. Fix recommended before the final grid.
+- Resolution: FIXED before the final grid: the final audit files store A in the [:n, :n] block (the remaining padding is NaN but the valid prefix is correct); check 3 now reads it directly. Recorded here because the earlier dumps were unusable for toy cells.
 
 ### F6 — bug (provenance) (2026-11-01)
 
 - Where: results/<block>/cells.json
 - Finding: The 6-sector B1 cells record scenario.technology = {source: eurostat, year: 2020, n_sectors: 20} while the authoritative cell technology is {toy: 6}. The recorded scenario therefore does not reproduce the cell (a re-run from the scenario dict alone produces 20-sector arrays), and the manifest's scenario_hashes hash the cell dict rather than the scenario.
 - Evidence: check 4: re-running the recorded scenario with cell.tech gives bit-identical results, with scenario.technology it does not (0.436 relative difference in x).
-- Resolution: REPORTED to the Lead and the experiments layer; check 4 resolves the technology from cell.tech and notes the disagreement.
+- Resolution: FIXED before the final grid: cells.json now records the cell technology ({toy: 6}) instead of the eurostat placeholder; re-running from the recorded scenario reproduces the cell.
+
+### F7 — error (paper, results interpretation) (2026-11-01)
+
+- Where: paper/main.md §6.6 against results/B4/cells.json and paper/tables/rationing_shadow.csv
+- Finding: The B4 cells are named loss50/loss70/loss90 and pass scenario shock `size` = 0.5/0.3/0.1; because Shock.factor treats `size` as the capacity MULTIPLIER, the realised capacity losses are 50%/70%/90%, not the protocol's 10%/30%/50% losses. The paper labels the 70% cell 'thirty per cent' and the 90% cell 'ten per cent', and the narrative built on those labels does not survive: the output gap reverses sign between the 50% and 70% cells (-0.9pp, rationing ahead, then +3.35pp, tatonnement ahead) and widens to +4.97pp at 90%. The protocol (docs/PROTOCOL.md §4 B4) and Amendment 2 ('keeps its pre-registered size sweep {0.10, 0.30, 0.50}') are silent on the multiplier-vs-loss ambiguity.
+- Evidence: check 5's data audit and the B4 cell definitions; numbers reproduced from paper/tables/rationing_shadow.csv.
+- Resolution: REPORTED; needs relabelling (or a re-run at size 0.9/0.7/0.5) before submission. This is the paper's most referee-visible error in §6.
+
+### F8 — overclaim (paper, H4) (2026-11-01)
+
+- Where: paper/main.md §6.5 'Both halves are confirmed' against results/tables/tests.csv
+- Finding: The H4 centrality half rests on raw Spearman p-values. The project's own test log applies the pre-registered Holm correction and marks EVERY centrality test non-significant: material_balance rho=0.5128 p=0.0208 p_holm=0.166; tatonnement rho=0.5669 p=0.0091 p_holm=0.082; priority rationing rho=0.4135 p=0.0699 p_holm=0.489. My 10,000-draw permutation test agrees with the raw p (0.024 / 0.012 / 0.077) and with the rho values to 1e-6, so the numbers are right and the INTERPRETATION is not: after the paper's own multiplicity rule, the centrality result is not significant for any of the three mechanisms. The only significant centrality rows in tests.csv use shock_output_amplification (p_holm 0.0011/0.0073/0.00024), which the paper itself demotes as a small-denominator artefact. A second, independent sensitivity: with the textbook forward-linkage measure (row sums of A) the correlation is only 0.31-0.33 (p about 0.15-0.18).
+- Evidence: check 5 (5c) recomputation from summary.csv + permutation null; results/tables/tests.csv H4-centrality rows.
+- Resolution: REPORTED; the text should say two of the three raw correlations are significant but none survives Holm, and should report the row-sum measure as a null. Not yet fixed in the manuscript.
+
+### F9 — factual error (paper) (2026-11-01)
+
+- Where: paper/main.md §6.5
+- Finding: "The most damaging sectors are c05, c20, c02 and c12 under all three institutions" is false for priority rationing: its top four are c20, c19, c05, c02 (c12 is fifth; c19 is second). The sentence holds for material balance and tatonnement.
+- Evidence: paper/tables/propagation.csv ranks by output_loss.
+- Resolution: REPORTED; one-clause fix (or say 'under two of the three').
+
+### F10 — stale text (paper) (2026-11-01)
+
+- Where: paper/main.md §6.7
+- Finding: The paragraph warns that the theta column of the dual-track file 'repeats a single value' and says the table is read by row order. The regenerated results/tables/dual_track.csv has all 11 theta values (0.0-1.0) and 22 rows, so the caveat now describes a defect that no longer exists. The quoted welfare ranges (252.21-252.34 at lag 0; 251.64-251.74 at lag 3) do match the regenerated table.
+- Evidence: results/tables/dual_track.csv, check 5's data audit.
+- Resolution: REPORTED; remove the caveat or regenerate the table from the final results.
+
+### F11 — claim not matching the table (paper) (2026-11-01)
+
+- Where: paper/main.md §6.4, abstract; §6.1
+- Finding: (a) §6.4: 'the detrended amplitude of the mean log price sits between 0.017 and 0.041 across the whole grid, the lag-one autocorrelation between 0.93 and 0.95'. At the reference gain 0.3 the amplitude spans 0.000-0.170 (market 0.124-0.170, tatonnement 0.128-0.146) and the acf spans 0.65-0.95; the 0.017-0.041 range corresponds to tatonnement at gains 0.05-0.1, not to the lag grid at the reference gain. (b) §6.1 calls 259.568805 'cumulative welfare'; it is the mean per-period welfare (cum_welfare = 12978.44). (c) The abstract says the loss 'vanishes at eighty' per cent labour slack, while §6.3 and §6.8 report it vanishing at labour_supply_factor 2.00 (100% slack), with 0.4% left at 1.40. (d) The abstract's 'a factor of two to fifty below it' mixes the most-responsive sector's 1.9 with the median sector's 12-50.
+- Evidence: results/tables/main_lag_grid.csv, results/B1/summary.csv, paper/tables/labour_slack.csv.
+- Resolution: REPORTED; all four are sentence-level corrections.
+
+### F12 — governance / documentation (2026-11-01)
+
+- Where: docs/ARCHITECTURE.md §2, docs/AMENDMENTS.md, the engine
+- Finding: The engine gained a bounded-storage SPOILAGE channel (Scenario.max_stock_ratio, default 2.0; S_end = min(residual, max(stock_cap - inv, 0)); spoilage = residual - S_end) which changes the balance identity to S0 + x = Z 1 + C + G + I + S_end + spoilage. It is in the results and the paper's tables but not in docs/ARCHITECTURE.md (whose 'frozen' identity omits it) nor in AMENDMENTS/DEVIATIONS, contrary to the project's own 'no silent amendments' rule. My audit finds up to 16% of supply destroyed in a single record (1.2-3.3% in the reference cells), so an external replicator implementing the documented identity would see a 1-16% discrepancy and call it a leak.
+- Evidence: check 3 (identity holds to 1.6e-16 WITH spoilage, and fails by the spoilage amount without it); docs greps.
+- Resolution: REPORTED; add an amendment entry and update ARCHITECTURE §2.
+
+## What remains unverified
+
+An honest verification report has to say where it stops. These are the gaps that a
+reader should treat as open, not as verified by silence.
+
+* **The paper's prose is checked against `paper/tables/*.csv`, and the tables against `results/`, but not every table was re-derived from the raw runs.** Check 4 re-executes 80 of 7 364 runs and reproduces every stored run-level metric bit-for-bit; check 3 audits 2 344 raw period records. A table built from a run outside those samples would be caught only if its inputs were among the 80.
+* **The H4 primitive is audited at the summary level, not from the sector panel.** I recompute the amplification statistic from `summary.csv` and replicate the paper's rho to 1e-6, but I did not rebuild `shock_output_loss` from `sector_panel.parquet`; a bug in the per-period aggregation would be invisible to me.
+* **The measured response coefficients b (price and target) are taken from `results/tables/t12_bp_by_sector.csv`, not independently re-estimated by me.** The theory-to-simulation mapping g = eta*b therefore inherits whatever the experiments layer's probe procedure does; I verified the probe contract reproduces the stored cells (check 4), not that the probe measures what it claims to measure.
+* **The dynamic stability boundary of the full simulation is not independently located.** Check 1 verifies Proposition 1 for the linear recursion; whether the simulation follows it is the paper's H1 question, and I audit the stored test statistics rather than re-running the boundary search.
+* **Reproducibility is tested on this machine and this code state.** A different BLAS, a different HiGHS build, or a change to `A` would move the last digits; nothing here certifies cross-machine reproducibility or the long-term availability of the grid.
+* **The paper is a moving target.** F7-F11 were found against the manuscript and tables of 2026-11-01 16:5x; if the tables or the prose are regenerated, the traceability claims must be re-checked (the suite is re-runnable in about three minutes).
 
 ## Check theorem — Independent re-derivation of Proposition 1
 
@@ -89,7 +143,7 @@ Measured:
     - m=10, predicted=42, zero_cross=42, fft=41.796, root_arg=42
     - m=11, predicted=46, zero_cross=46, fft=45.511, root_arg=46
     - m=12, predicted=50, zero_cross=50, fft=49.951, root_arg=50
-- `wall_s`: 0.76
+- `wall_s`: 2.55
 
 Notes:
 
@@ -117,7 +171,7 @@ Measured:
 - `n_collapse_forced`: 10
 - `n_first_pass_optimality_probes`: 182
 - `max_cascade_exit_deficit_rel`: 2.34915e-16
-- `wall_s`: 2.21
+- `wall_s`: 3.79
 
 What this does not prove. I implemented the *published* algorithm, so agreement shows that the code does what the specification says; it does not show that the specification is the right model. The per-period comparison also cannot detect a bias that is present identically in both my implementation and the engine's (e.g. a shared but wrong definition of a claim row).
 
@@ -149,7 +203,7 @@ Measured:
 - `ladder_violations`: 0
 - `cells_rerun`: 83
 - `max_period_reproduction_diff`: 0
-- `wall_s`: 41.12
+- `wall_s`: 48.36
 
 Notes:
 
@@ -180,7 +234,7 @@ Measured:
 - `n_manifest_blocks_ok`: 11
 - `n_consistency_checks_4e`: 14728
 - `n_scenario_yamls_rerun`: 16
-- `wall_s`: 15.82
+- `wall_s`: 25.84
 
 Notes:
 
@@ -216,7 +270,9 @@ What this does not prove. Reproducibility is not validity: it shows that the sto
 
 ## Check statistics — Statistical audit (Wilcoxon/bootstrap/Holm/H4)
 
-**Status: FAIL**
+**Status: PASS**
+
+5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap reproducible); 5b 1 paired tests and 37 Holm values recomputed; 5c H4 correlations recomputed with a permutation null
 
 Measured:
 
@@ -227,52 +283,43 @@ Measured:
 - `5a_permutation_vs_exact`: perm=0.0157992, exact=0.0166667
 - `5a_bootstrap_ci`: ci=(-0.6462720519005788, 0.10470015457123541), ci_other_seed=(-0.6491652296509687, 0.11330669802630018)
 - `5b_n_rows`: 59
-- `5b_paired_rows_checked`: 0
-- `5b_p_values_checked`: 0
-- `5b_worst_p_diff`: 0
+- `5b_paired_rows_checked`: 1
+- `5b_p_values_checked`: 1
+- `5b_worst_p_diff`: 1.36719e-12
 - `5b_worst_effect_rel_diff`: 0
 - `5b_holm_values_checked`: 37
 - `5b_status`: AUDITED
-- `5c_n_cells`: 63
+- `5c_n_cells`: 60
 - `5c_h4`:
-    - mechanism=hybrid_dual_track, predictor=forward_rowsum_A, rho=nan, p_perm=nan, n=1
-    - mechanism=hybrid_dual_track, predictor=forward_intermediate_share, rho=nan, p_perm=nan, n=1
-    - mechanism=hybrid_dual_track, predictor=leontief_colsum, rho=nan, p_perm=nan, n=1
-    - mechanism=hybrid_dual_track, predictor=leontief_rowsum, rho=nan, p_perm=nan, n=1
-    - mechanism=lp_central, predictor=forward_rowsum_A, rho=nan, p_perm=nan, n=1
-    - mechanism=lp_central, predictor=forward_intermediate_share, rho=nan, p_perm=nan, n=1
-    - mechanism=lp_central, predictor=leontief_colsum, rho=nan, p_perm=nan, n=1
-    - mechanism=lp_central, predictor=leontief_rowsum, rho=nan, p_perm=nan, n=1
-    - mechanism=market, predictor=forward_rowsum_A, rho=nan, p_perm=nan, n=1
-    - mechanism=market, predictor=forward_intermediate_share, rho=nan, p_perm=nan, n=1
-    - mechanism=market, predictor=leontief_colsum, rho=nan, p_perm=nan, n=1
-    - mechanism=market, predictor=leontief_rowsum, rho=nan, p_perm=nan, n=1
-    - mechanism=material_balance, predictor=forward_rowsum_A, rho=-0.282707, p_perm=0.224078, n=20
-    - mechanism=material_balance, predictor=forward_intermediate_share, rho=0.754887, p_perm=0.0001, n=20
-    - mechanism=material_balance, predictor=leontief_colsum, rho=0.311278, p_perm=0.184682, n=20
-    - mechanism=material_balance, predictor=leontief_rowsum, rho=-0.365414, p_perm=0.114689, n=20
-    - mechanism=rationing_priority, predictor=forward_rowsum_A, rho=-0.390977, p_perm=0.088591, n=20
-    - mechanism=rationing_priority, predictor=forward_intermediate_share, rho=0.688722, p_perm=0.0011, n=20
-    - mechanism=rationing_priority, predictor=leontief_colsum, rho=0.239098, p_perm=0.309269, n=20
-    - mechanism=rationing_priority, predictor=leontief_rowsum, rho=-0.458647, p_perm=0.043096, n=20
+    - mechanism=material_balance, outcome=output_loss, predictor=forward_rowsum_A, rho=0.329323, p_perm=0.154085, n=20
+    - mechanism=material_balance, outcome=output_loss, predictor=forward_intermediate_share, rho=0.512782, p_perm=0.024298, n=20
+    - mechanism=material_balance, outcome=output_loss, predictor=leontief_colsum, rho=0.019549, p_perm=0.937306, n=20
+    - mechanism=material_balance, outcome=output_loss, predictor=leontief_rowsum, rho=0.368421, p_perm=0.108089, n=20
+    - mechanism=material_balance, outcome=amplification, predictor=forward_rowsum_A, rho=-0.294737, p_perm=0.20438, n=20
+    - mechanism=material_balance, outcome=amplification, predictor=forward_intermediate_share, rho=0.759398, p_perm=0.0001, n=20
+    - mechanism=material_balance, outcome=amplification, predictor=leontief_colsum, rho=0.312782, p_perm=0.180382, n=20
+    - mechanism=material_balance, outcome=amplification, predictor=leontief_rowsum, rho=-0.377444, p_perm=0.10369, n=20
+    - mechanism=rationing_priority, outcome=output_loss, predictor=forward_rowsum_A, rho=0.312782, p_perm=0.176482, n=20
+    - mechanism=rationing_priority, outcome=output_loss, predictor=forward_intermediate_share, rho=0.413534, p_perm=0.076792, n=20
+    - mechanism=rationing_priority, outcome=output_loss, predictor=leontief_colsum, rho=-0.040602, p_perm=0.866913, n=20
+    - mechanism=rationing_priority, outcome=output_loss, predictor=leontief_rowsum, rho=0.365414, p_perm=0.113189, n=20
+    - mechanism=rationing_priority, outcome=amplification, predictor=forward_rowsum_A, rho=-0.392481, p_perm=0.087591, n=20
+    - mechanism=rationing_priority, outcome=amplification, predictor=forward_intermediate_share, rho=0.691729, p_perm=0.0012, n=20
+    - mechanism=rationing_priority, outcome=amplification, predictor=leontief_colsum, rho=0.245113, p_perm=0.29687, n=20
+    - mechanism=rationing_priority, outcome=amplification, predictor=leontief_rowsum, rho=-0.46015, p_perm=0.042396, n=20
+    - mechanism=tatonnement, outcome=output_loss, predictor=forward_rowsum_A, rho=0.311278, p_perm=0.179782, n=20
+    - mechanism=tatonnement, outcome=output_loss, predictor=forward_intermediate_share, rho=0.566917, p_perm=0.011599, n=20
+    - mechanism=tatonnement, outcome=output_loss, predictor=leontief_colsum, rho=0.016541, p_perm=0.947705, n=20
+    - mechanism=tatonnement, outcome=output_loss, predictor=leontief_rowsum, rho=0.35188, p_perm=0.127387, n=20
+- `5c_permutation_vs_paper`:
+    - mechanism=material_balance, predictor=forward_intermediate_share, rho=0.512782, p_perm=0.024298, paper_p=0.0207797, paper_p_holm=0.166238, paper_significant=no
+    - mechanism=material_balance, predictor=leontief_colsum, rho=0.019549, p_perm=0.937306, paper_p=0.934803, paper_p_holm=1, paper_significant=no
+    - mechanism=rationing_priority, predictor=forward_intermediate_share, rho=0.413534, p_perm=0.076792, paper_p=0.0699207, paper_p_holm=0.489445, paper_significant=no
+    - mechanism=rationing_priority, predictor=leontief_colsum, rho=-0.040602, p_perm=0.866913, paper_p=0.865047, paper_p_holm=1, paper_significant=no
+    - mechanism=tatonnement, predictor=forward_intermediate_share, rho=0.566917, p_perm=0.011599, paper_p=0.00914627, paper_p_holm=0.0823164, paper_significant=no
+    - mechanism=tatonnement, predictor=leontief_colsum, rho=0.016541, p_perm=0.947705, paper_p=0.944817, paper_p_holm=1, paper_significant=no
 - `5c_status`: AUDITED
-- `wall_s`: 6.89
-
-Failures:
-
-- 5b: block B3: Holm-adjusted p disagrees by 2.00e-06
-- 5c: hybrid_dual_track/forward_rowsum_A: undefined Spearman rho
-- 5c: hybrid_dual_track/forward_intermediate_share: undefined Spearman rho
-- 5c: hybrid_dual_track/leontief_colsum: undefined Spearman rho
-- 5c: hybrid_dual_track/leontief_rowsum: undefined Spearman rho
-- 5c: lp_central/forward_rowsum_A: undefined Spearman rho
-- 5c: lp_central/forward_intermediate_share: undefined Spearman rho
-- 5c: lp_central/leontief_colsum: undefined Spearman rho
-- 5c: lp_central/leontief_rowsum: undefined Spearman rho
-- 5c: market/forward_rowsum_A: undefined Spearman rho
-- 5c: market/forward_intermediate_share: undefined Spearman rho
-- 5c: market/leontief_colsum: undefined Spearman rho
-- 5c: market/leontief_rowsum: undefined Spearman rho
+- `wall_s`: 19.04
 
 Notes:
 
@@ -282,7 +329,9 @@ What this does not prove. I can recompute the test statistics and their multipli
 
 ## Check claims — Mechanism claims for the headline interaction (Lead's target)
 
-**Status: FAIL**
+**Status: PASS**
+
+Interaction reproduced (1.0000 either alone vs 0.9089 together, σ_obs=0.03), the inventory asymmetry exists at the goods-balance frontier (gain +0.00% / loss -8.71%) and disappears in the operating regime; labour ×3 removes the loss, so the explanation holds as a labour-projection effect.
 
 Measured:
 
@@ -298,15 +347,12 @@ Measured:
 - `6d_labour_binding_fraction`: 0.862132
 - `6d_goods_tightness_max`: -0.161008
 - `6d_min_sector_fill_mean`: 0.845039
-- `6_explanation_status`: REFUTED
-- `wall_s`: 9.86
-
-Failures:
-
-- 6: the stated explanation (inventory-estimate asymmetry) does not hold in the regime that produces the loss; the interaction is labour-driven (see 6b/6c/6d numbers)
+- `6_current_claim_status`: SUPPORTED
+- `6_old_inventory_claim_status`: REFUTED
+- `wall_s`: 16.52
 
 Notes:
 
-- The interaction is reproduced, and the inventory asymmetry the Lead described is real at the goods-balance frontier (0 gain / -8.7% loss), but in the mechanism's operating regime (+-10% inventory changes R by 0.0e+00, R(r_est=0) changes nothing, labour x3 makes the loss vanish, labour used/L = 0.992, goods tightness max -0.161). The loss is driven by the one-sided projection onto the LABOUR-constrained feasible set, not by the inventory estimate. This is a claim-level failure, not a code bug.
+- The interaction is reproduced (1.0000 either alone vs 0.9089 together). The corrected mechanism is supported: inventory estimates are irrelevant in the operating regime (r_est=0 gives 0.9069 vs 0.9089), labour x3 removes the loss (1.0000), the mechanism's own balancing calls are labour-binding (used/L = 0.992 mean, 86% of calls) and the inventory asymmetry exists only at the knife-edge goods-balance frontier (gain +0.00%, loss -8.71%), where the mechanism never operates. The earlier 'inventory-estimate asymmetry' explanation is therefore refuted (finding F4).
 
 What this does not prove. This checks the claims I was asked to check, on one substrate and one calibration. It does not establish that the labour-projection mechanism is the only cause of the interaction (only that it is the binding margin in the tested configuration), nor that the interaction is economically meaningful outside the tested grid of gains, rounds and labour supply factors.

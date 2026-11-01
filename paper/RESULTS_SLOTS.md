@@ -3,22 +3,40 @@
 ## Status: CLOSED (final build)
 
 All slots are filled or deliberately dropped. The paper builds with **zero open slots**,
-15 tables, 3 figures and 19 numbered equations, at 32 pages. This file is kept as the
+16 tables, 3 figures and 19 numbered equations, at 34 pages. This file is kept as the
 record of what was asked for, what arrived, and what was deliberately not used — which
 is the half of the audit trail a referee actually asks about.
 
+## Reconciliation log (final pass)
+
+Six claim-versus-file mismatches were found by the verifier and corrected in the prose,
+not in the files: shock sizes are capacity *multipliers* (0.1/0.3/0.5 = 90/70/50 per cent
+realised loss); forward linkage is the intermediate-use share $(Ax)_i/x_i$ and the
+textbook row-sum version gives a null that is reported as a limitation; the top-damaging
+sector list is institution-specific; the theta-column caveat is gone because the column
+is fixed; the amplitude and autocorrelation ranges were re-derived from the reference-gain
+slice; and `mean_welfare` was distinguished from `cum_welfare`.
+
+One item could **not** be reconciled before submission and is disclosed rather than
+hidden: `paper/tables/lag_grid_reference.csv` (reference-gain slice, 20 seeds) and
+`results/tables/t03_lag_mechanism.csv` (pooled over ten gain levels, 200 seeds for
+material balance and tâtonnement) are different objects, and for those two institutions
+the pooled shortage figures are up to 67 per cent higher. The paper's Table 9 is the
+reference-gain slice and §6.4 says so in terms, naming both files. `experiments` was
+inactive, so the table could not be regenerated before the deadline.
+
 ## Floats that were deliberately **not** used
 
-* `incidence` — **dropped.** The engine records shortage on household demand only, so a
-  claimant decomposition of unmet demand is not a quantity the model produces; reporting
-  one would have meant a table of numbers nobody computed. Section 6.5 states the
-  aggregate-versus-incidence point from Corollary 3 and points at the ladder table,
-  which is the table that does measure the institutional margin.
-* `stability_boundary_empirical` — **dropped.** It needed the measured price-loop
-  response coefficients plotted against the analytic bound, and those coefficients were
-  never delivered as a file. Rather than draw the panel from prose, Section 6.4 makes
-  the same argument in words with the numbers that do exist, and Section 5.6 explains
-  why the unreachability of the bound is itself the result.
+* `incidence` — **reinstated.** `results/tables/t07_incidence.csv` appeared in the final
+  pass and does carry a claimant decomposition (household, intermediate, government and
+  investment shares of rationed quantities), so the table returned with its real columns.
+* `stability_boundary_empirical` — **dropped, finally.** `results/tables/t05_stability_boundary.csv`
+  now carries the measured response coefficients, so the panel could have been drawn; it
+  was not, because §6.4's argument changed shape when the coefficients arrived. The
+  finding is not "the measured gain sits near the bound" but "the rule fires once, below
+  the bound, and is therefore not specific", which is a table of eighteen cells, not a
+  scatter with a 45° line. The coefficients are reported in the text and in the caption
+  of the lag table.
 * `[[TABLE:main_lag_grid]]` — **not reproduced in the body.** The full grid is 204 cells
   and would have added roughly eight pages; the text carries the 36-row reference slice
   (`lag_grid_reference.csv`) and the full grid lives in `paper/tables/` and the data

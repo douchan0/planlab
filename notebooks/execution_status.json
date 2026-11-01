@@ -11,8 +11,8 @@
    "n_code_cells": 14,
    "n_outputs": 18,
    "ok": true,
-   "seconds": 3.75,
-   "sha256": "67bb392b18a778e2f89c3ab0a46512903a261d9a432d4c414ec15893eecf2771"
+   "seconds": 2.37,
+   "sha256": "7727cbd1ddfcbc698cb0b49ac0de05bdeca02fb7138d29534e568c817bf8e33d"
   },
   "02_delay_theorem.ipynb": {
    "cells": 22,
@@ -21,8 +21,8 @@
    "n_code_cells": 12,
    "n_outputs": 15,
    "ok": true,
-   "seconds": 2.19,
-   "sha256": "7cef3d2a3ce5dfc52b868cdce6a582cd761e63a7b65ef956dd1bfefcdc484868"
+   "seconds": 1.57,
+   "sha256": "7b35b1a7faf40e2b9819be7ded098b2ff9912d317e128e6cf3fadd77e4f64bfe"
   },
   "03_one_period_walkthrough.ipynb": {
    "cells": 35,
@@ -31,8 +31,8 @@
    "n_code_cells": 18,
    "n_outputs": 20,
    "ok": true,
-   "seconds": 3.47,
-   "sha256": "5ae057d3a87925ffa5002fe1750d5c4f325338724081458dbf3765087f3dc5ba"
+   "seconds": 2.16,
+   "sha256": "8944fae9080a052281dd672967d98e60a881e3504e2c6ae5d3b9d8be4d0d653a"
   },
   "04_mechanism_zoo.ipynb": {
    "cells": 21,
@@ -41,8 +41,8 @@
    "n_code_cells": 11,
    "n_outputs": 14,
    "ok": true,
-   "seconds": 6.44,
-   "sha256": "480347a6cd77c4faa8e5321ad16ac0d8217703e0ff247e0de77c33e6fe5b05fa"
+   "seconds": 3.81,
+   "sha256": "ba4cd7198100e4a236133fd8dfa61f83f3aae8bdc69345562f02bc9f99fbeeb2"
   },
   "05_dual_track_and_shadow_prices.ipynb": {
    "cells": 16,
@@ -51,21 +51,21 @@
    "n_code_cells": 8,
    "n_outputs": 11,
    "ok": true,
-   "seconds": 4.35,
-   "sha256": "509a1cd1d6942c38b35f699b90c6e749e901de45392fe3dbf9f64067aae5683d"
+   "seconds": 2.62,
+   "sha256": "01d029caec345fbf1841d1a3d76199ed549c83e266b4e7d7808e469d9ea53c40"
   },
   "06_reproduce_a_paper_table.ipynb": {
-   "cells": 18,
+   "cells": 20,
    "error": null,
    "kernel": "planlab-venv",
-   "n_code_cells": 9,
-   "n_outputs": 11,
+   "n_code_cells": 10,
+   "n_outputs": 12,
    "ok": true,
-   "seconds": 5.35,
-   "sha256": "e7e3b786902f708cfd3da9ef11a83eea534bd32b81b7854971b4add56fab8304"
+   "seconds": 3.07,
+   "sha256": "f3abaec4ea2bbc3c6944972c5132ccf8b774445b48ce13d9160c8e9bba32e66f"
   }
  },
  "platform": "macOS-15.7.7-arm64-arm-64bit",
  "python": "3.10.13",
- "total_seconds": 5.35
+ "total_seconds": 15.6
 }

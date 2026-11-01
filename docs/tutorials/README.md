@@ -7,12 +7,12 @@ is the index (including the suggested three-hour teaching sequence).
 
 | page | notebook | runtime |
 |---|---|---|
-| [01 — input–output foundations](01_io_foundations.md) | `01_io_foundations.ipynb` | ~8 s |
-| [02 — the delay theorem](02_delay_theorem.md) | `02_delay_theorem.ipynb` | ~5 s |
-| [03 — one period, opened up](03_one_period_walkthrough.md) | `03_one_period_walkthrough.ipynb` | ~13 s |
-| [04 — the mechanism zoo](04_mechanism_zoo.md) | `04_mechanism_zoo.ipynb` | ~6 s |
-| [05 — dual track and shadow prices](05_dual_track_and_shadow_prices.md) | `05_dual_track_and_shadow_prices.ipynb` | ~14 s |
-| [06 — reproducing a paper table](06_reproduce_a_paper_table.md) | `06_reproduce_a_paper_table.ipynb` | ~14 s |
+| [01 — input–output foundations](01_io_foundations.md) | `01_io_foundations.ipynb` | ~2 s |
+| [02 — the delay theorem](02_delay_theorem.md) | `02_delay_theorem.ipynb` | ~2 s |
+| [03 — one period, opened up](03_one_period_walkthrough.md) | `03_one_period_walkthrough.ipynb` | ~2 s |
+| [04 — the mechanism zoo](04_mechanism_zoo.md) | `04_mechanism_zoo.ipynb` | ~4 s |
+| [05 — dual track and shadow prices](05_dual_track_and_shadow_prices.md) | `05_dual_track_and_shadow_prices.ipynb` | ~3 s |
+| [06 — reproducing a paper table](06_reproduce_a_paper_table.md) | `06_reproduce_a_paper_table.ipynb` | ~3 s |
 
 ## Order
 

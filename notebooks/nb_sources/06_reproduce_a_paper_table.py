@@ -160,10 +160,13 @@ def pick_table(inventory):
 
 
 def match_block(table, blocks):
-    """Find the (block, reference elasticity) whose run counts reproduce n_seeds.
+    """Find the (block, elasticity, gain filter) whose run counts reproduce n_seeds.
 
-    This is how the notebook identifies what the table was built from, instead of
-    hard-coding a block name or an elasticity: the artefact has to be self-consistent.
+    The notebook does not assume the aggregation rule: it searches the plausible rules
+    (which block, which reference elasticity, all gain levels pooled or only the
+    reference gain) and keeps the one that reproduces the table's own n_seeds column
+    exactly. That is the honest way round - the artefact has to be self-consistent with
+    its source, and a mismatch is a finding rather than something to paper over.
     """
     if "n_seeds" not in table.columns:
         return None
@@ -177,13 +180,22 @@ def match_block(table, blocks):
             continue
         eps_values = (sorted(summary["price_elasticity"].round(2).unique())
                       if "price_elasticity" in summary.columns else [None])
+        gain_values = ([None] + sorted(summary["gain"].round(4).unique().tolist())
+                       if "gain" in summary.columns else [None])
         for eps in eps_values:
-            sub = summary if eps is None else summary[np.isclose(summary["price_elasticity"], eps)]
-            counts = sub.groupby(["mechanism", "lag"]).size().rename("n_runs").reset_index()
-            hit = (probe.merge(counts, on=["mechanism", "lag"], how="left")["n_runs"]
-                   .eq(probe["n_seeds"]).mean())
-            if best is None or float(hit) > best[2]:
-                best = (name, eps, float(hit))
+            for gain in gain_values:
+                sub = summary
+                if eps is not None:
+                    sub = sub[np.isclose(sub["price_elasticity"], eps)]
+                if gain is not None:
+                    sub = sub[np.isclose(sub["gain"], gain)]
+                if len(sub) == 0:
+                    continue
+                counts = sub.groupby(["mechanism", "lag"]).size().rename("n_runs").reset_index()
+                hit = float((probe.merge(counts, on=["mechanism", "lag"], how="left")
+                             ["n_runs"].eq(probe["n_seeds"]).mean()))
+                if best is None or hit > best[3]:
+                    best = (name, eps, gain, hit)
     return best
 
 
@@ -191,6 +203,7 @@ TABLE = pick_table(inventory)
 table_frame = None
 BLOCK = None
 EPS_REF = None
+GAIN_REF = None
 if TABLE is not None:
     table_frame = pd.read_csv(TABLE)
     print(f"table under test: {TABLE.relative_to(ROOT)}")
@@ -201,9 +214,11 @@ if TABLE is not None:
     print(f"mechanisms: {sorted(table_frame['mechanism'].unique())}")
     matched = match_block(table_frame, inventory["blocks"]) if LAG_COL in table_frame.columns else None
     if matched is not None:
-        BLOCK, EPS_REF, agreement = matched
-        print(f"\nidentified the source block by matching run counts: block {BLOCK!r}, "
-              f"reference elasticity {EPS_REF} (n_seeds agreement {100*agreement:.0f}%)")
+        BLOCK, EPS_REF, GAIN_REF, agreement = matched
+        rule = ("all gain levels pooled" if GAIN_REF is None else f"gain == {GAIN_REF}")
+        print(f"\nidentified the aggregation rule by matching run counts:")
+        print(f"  block {BLOCK!r}, reference elasticity {EPS_REF}, {rule}")
+        print(f"  n_seeds agreement {100*agreement:.0f}%")
         if agreement < 1.0:
             BLOCK = None
     else:
@@ -288,12 +303,21 @@ if BLOCK is None or table_frame is None:
 else:
     summary = pd.read_csv(RESULTS / BLOCK / "summary.csv")
     lag_col = "lag_reporting" if "lag_reporting" in table_frame.columns else "lag"
-    subset = (summary if EPS_REF is None
-              else summary[np.isclose(summary["price_elasticity"], EPS_REF)]).copy()
-    print(f"source block {BLOCK!r}, reference elasticity {EPS_REF}, "
+    subset = summary
+    if EPS_REF is not None:
+        subset = subset[np.isclose(subset["price_elasticity"], EPS_REF)]
+    rule = "all gain levels pooled"
+    if GAIN_REF is not None:
+        subset = subset[np.isclose(subset["gain"], GAIN_REF)]
+        rule = f"gain == {GAIN_REF}"
+    subset = subset.copy()
+    print(f"source block {BLOCK!r}, reference elasticity {EPS_REF}, {rule}: "
           f"{len(subset):,} runs of {len(summary):,} in the block")
-    print("  (the block and the elasticity were identified in section 2 by matching n_seeds,")
-    print("   not assumed - the artefact has to be self-consistent with its source)")
+    print("  (this rule was identified in section 2 by matching n_seeds, not assumed -")
+    print("   the artefact has to be self-consistent with its source)")
+    if "gain" in summary.columns and summary["gain"].nunique() > 1:
+        print(f"  the block sweeps {summary['gain'].nunique()} gain levels; the table's")
+        print(f"  n_seeds column reveals that this table pools them ({rule}).")
 
     # the welfare LOSS is relative to a baseline run, so it needs one more artefact:
     # the calm central-LP trajectory of block B1 on the same substrate
@@ -377,9 +401,72 @@ else:
     print()
     print(f"PASS: all {len(numeric)} numeric columns agree within {tol:.0e} relative,")
     print("      which is the precision at which the committed CSV stores them.")
-    print("      Not recomputed here: mean_welfare_loss, which needs the B1 baseline")
-    print("      convention (exercise 1 asks you to reconstruct it).")
+    print("      Every data column of the table has now been recomputed from scratch:")
+    print("      the two integers exactly, the ten numeric columns to storage precision.")
+    print("      What is NOT re-derived is the table writer's formatting code - we")
+    print("      recompute the numbers, not the LaTeX. That is deliberate: a test of the")
+    print("      LaTeX would test a template, not the science.")
 """),
+
+    ("md", r'''
+### 4.1 · 两个"同一张表"：结果层 vs 论文层
+
+复现到这一步会撞上一个比小数位重要得多的问题：**仓库里有两张看起来是同一件事的表。**
+
+* `results/tables/<...>_lag_mechanism.csv`（本 notebook 第 2–4 节复现的那张）——实验层的产物；
+* `paper/tables/lag_grid_reference.csv`——论文 Table 9 引用的那张，来自 Lead 的独立参考运行。
+
+两张表的表头都写着 "mechanism × reporting lag"，但它们的**聚合规则不同**：如果结果层把带增益扫描的机制的 10 个增益档池化平均，而论文层只取参考增益 `0.30` 那一档，那么对 `material_balance` 和 `tatonnement` 就会出现几十个百分点的差异——而其他四个机制（增益不是处理变量）会逐位相同。
+
+这正是"复现一张表"最难的部分：**先弄清楚这张表是什么，再去比数字。** 下面把两张表逐行对照，并且把结论分成两类：
+（a）两次运行完全相同的那部分，必须**逐位相等**；
+（b）聚合规则不同的那部分，把差异**量化并解释**，而不是让它悄悄通过。
+
+如果 (b) 的差异大到会让论文里的数字对不上，那是必须报告的问题——本 notebook 的职责是把它量出来，而不是替它选一个好看的解释。
+
+*Two artefacts in the repository look like the same table: the results-layer one and the paper's reference-gain one. If the former pools the gain grid for the swept institutions while the latter takes the reference-gain slice, they will differ by tens of percent for exactly those mechanisms. The notebook asserts bit-equality where the two runs are the same object and quantifies the difference where the aggregation rules differ — rather than letting it pass quietly.*
+'''),
+    ("code", r'''
+paper_status = "graceful path"
+PAPER_REF = ROOT / "paper" / "tables" / "lag_grid_reference.csv"
+if level1 is None or not PAPER_REF.exists():
+    print("skipped: need the results-layer table and paper/tables/lag_grid_reference.csv")
+else:
+    reference = pd.read_csv(PAPER_REF)
+    print(f"paper-side table: {PAPER_REF.relative_to(ROOT)}  ({len(reference)} rows)")
+    cross = (level1[["mechanism", "lag", "mean_shortage_rate", "n_seeds"]]
+             .merge(reference, left_on=["mechanism", "lag"],
+                    right_on=["mechanism", "lag_reporting"], how="inner"))
+    cross["rel_diff"] = ((cross["mean_shortage_rate"] - cross["shortage"]).abs()
+                         / cross["shortage"].abs())
+    n_smallest = int(cross.groupby("mechanism")["n_seeds"].max().min())
+    same = cross[cross["n_seeds"] == n_smallest]
+    pooled = cross[cross["n_seeds"] > n_smallest]
+    print(f"\nrows matched: {len(cross)} (per-mechanism run counts: "
+          f"{cross.groupby('mechanism')['n_seeds'].max().to_dict()})")
+    print(cross[["mechanism", "lag", "n_seeds", "mean_shortage_rate", "shortage",
+                 "rel_diff"]].round(6).to_string(index=False))
+
+    print(f"\nsingle-gain mechanisms ({len(same)} rows): max relative difference "
+          f"{same['rel_diff'].max():.3e}")
+    # the same storage-precision tolerance as section 4: both CSVs are rounded
+    assert same["rel_diff"].max() < 1e-5, (
+        "the two artefacts disagree on mechanisms whose aggregation rule cannot differ")
+    if len(pooled):
+        worst = pooled.loc[pooled["rel_diff"].idxmax()]
+        print(f"gain-pooled mechanisms ({len(pooled)} rows): max relative difference "
+              f"{pooled['rel_diff'].max():.1%} "
+              f"({worst['mechanism']}, lag {int(worst['lag'])}: "
+              f"{worst['mean_shortage_rate']:.6f} pooled vs {worst['shortage']:.6f} reference)")
+        print("\nThat difference is not a rounding error and not a bug in either run: it is")
+        print("the two tables answering different questions. But it means the results-layer")
+        print("table cannot be used to check a paper row that reports the reference-gain")
+        print("slice for a gain-swept institution. Report it; do not average it away.")
+        paper_status = (f"cross-checked: single-gain exact, pooled up to "
+                        f"{pooled['rel_diff'].max():.1%} apart")
+    else:
+        paper_status = "cross-checked: all rows agree"
+'''),
 
     ("md", r'''
 ## 5 · 复现一张图：逐像素比较
@@ -634,6 +721,8 @@ full_path = [
     ("per-run metrics recomputed from periods", level2 is not None,
      "level 2" if level2 is not None else "skipped"),
     ("full table recomputed", level1 is not None, "level 1" if level1 is not None else "skipped"),
+    ("results table cross-checked against the paper table",
+     paper_status != "graceful path", paper_status),
     ("figure reproduced", figure_status != "graceful path", figure_status),
     ("manifest audited", manifest_status != "graceful path", manifest_status),
 ]

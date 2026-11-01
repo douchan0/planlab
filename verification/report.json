@@ -1,11 +1,11 @@
 {
-  "generated": "2026-11-01 16:55:55 +0800",
+  "generated": "2026-11-01 17:01:43 +0800",
   "git": {
-    "commit": "f3b9b3166452be2242bd4ea324afacf6b5ef1528",
+    "commit": "5917ec312835d3739165a1631e1781319fb2b78d",
     "dirty": true,
-    "diff_stat": "  46 +-\n scripts/run_all.py                                 |   13 +\n src/planlab/experiments/aggregate.py               |   26 +-\n src/planlab/experiments/figures.py                 |    4 +-\n tests/test_exp_grid.py                             |    2 +-\n verification/check2_engine.py                      |    6 +-\n verification/check3_accounting.py                  |   69 +-\n verification/check4_repro.py                       |   49 +-\n 631 files changed, 22123 insertions(+), 17057 deletions(-)"
+    "diff_stat": "d                                      |   54 +-\n paper/main.pdf                                     |  Bin 2051759 -> 2208940 bytes\n paper/tables/balance_decomposition.csv             |   26 +-\n paper/tables/lag_grid_reference.cap                |    3 +-\n verification/check5_stats.py                       |  106 +-\n verification/check6_claims.py                      |   55 +-\n verification/run_all.py                            |  159 ++-\n 27 files changed, 1125 insertions(+), 4298 deletions(-)"
   },
-  "elapsed_s": 76.66,
+  "elapsed_s": 116.11,
   "checks": [
     {
       "key": "theorem",
@@ -193,7 +193,7 @@
             "root_arg": 50.0
           }
         ],
-        "wall_s": 0.76
+        "wall_s": 2.55
       },
       "failures": [],
       "notes": [
@@ -240,7 +240,7 @@
         "n_collapse_forced": 10,
         "n_first_pass_optimality_probes": 182,
         "max_cascade_exit_deficit_rel": 2.3491519726445077e-16,
-        "wall_s": 2.21
+        "wall_s": 3.79
       },
       "failures": [],
       "notes": []
@@ -287,7 +287,7 @@
         "ladder_violations": 0,
         "cells_rerun": 83,
         "max_period_reproduction_diff": 0.0,
-        "wall_s": 41.12
+        "wall_s": 48.36
       },
       "failures": [],
       "notes": [
@@ -320,7 +320,7 @@
         "n_manifest_blocks_ok": 11,
         "n_consistency_checks_4e": 14728,
         "n_scenario_yamls_rerun": 16,
-        "wall_s": 15.82
+        "wall_s": 25.84
       },
       "failures": [],
       "notes": [
@@ -356,8 +356,8 @@
     {
       "key": "statistics",
       "title": "Statistical audit (Wilcoxon/bootstrap/Holm/H4)",
-      "status": "FAIL",
-      "summary": "",
+      "status": "PASS",
+      "summary": "5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap reproducible); 5b 1 paired tests and 37 Holm values recomputed; 5c H4 correlations recomputed with a permutation null",
       "numbers": {
         "5a_wilcoxon_exact_max_diff": 0.0,
         "5a_wilcoxon_normal_max_diff": 1.6653345369377348e-16,
@@ -390,201 +390,267 @@
           ]
         },
         "5b_n_rows": 59,
-        "5b_paired_rows_checked": 0,
-        "5b_p_values_checked": 0,
-        "5b_worst_p_diff": 0.0,
+        "5b_paired_rows_checked": 1,
+        "5b_p_values_checked": 1,
+        "5b_worst_p_diff": 1.3671875000427025e-12,
         "5b_worst_effect_rel_diff": 0.0,
         "5b_holm_values_checked": 37,
         "5b_status": "AUDITED",
-        "5c_n_cells": 63,
+        "5c_n_cells": 60,
         "5c_h4": [
           {
-            "mechanism": "hybrid_dual_track",
-            "predictor": "forward_rowsum_A",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
-            "mechanism": "hybrid_dual_track",
-            "predictor": "forward_intermediate_share",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
-            "mechanism": "hybrid_dual_track",
-            "predictor": "leontief_colsum",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
-            "mechanism": "hybrid_dual_track",
-            "predictor": "leontief_rowsum",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
-            "mechanism": "lp_central",
-            "predictor": "forward_rowsum_A",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
-            "mechanism": "lp_central",
-            "predictor": "forward_intermediate_share",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
-            "mechanism": "lp_central",
-            "predictor": "leontief_colsum",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
-            "mechanism": "lp_central",
-            "predictor": "leontief_rowsum",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
-            "mechanism": "market",
-            "predictor": "forward_rowsum_A",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
-            "mechanism": "market",
-            "predictor": "forward_intermediate_share",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
-            "mechanism": "market",
-            "predictor": "leontief_colsum",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
-            "mechanism": "market",
-            "predictor": "leontief_rowsum",
-            "rho": NaN,
-            "p_perm": NaN,
-            "n": 1
-          },
-          {
             "mechanism": "material_balance",
+            "outcome": "output_loss",
             "predictor": "forward_rowsum_A",
-            "rho": -0.282707,
-            "p_perm": 0.224078,
+            "rho": 0.329323,
+            "p_perm": 0.154085,
             "n": 20
           },
           {
             "mechanism": "material_balance",
+            "outcome": "output_loss",
             "predictor": "forward_intermediate_share",
-            "rho": 0.754887,
+            "rho": 0.512782,
+            "p_perm": 0.024298,
+            "n": 20
+          },
+          {
+            "mechanism": "material_balance",
+            "outcome": "output_loss",
+            "predictor": "leontief_colsum",
+            "rho": 0.019549,
+            "p_perm": 0.937306,
+            "n": 20
+          },
+          {
+            "mechanism": "material_balance",
+            "outcome": "output_loss",
+            "predictor": "leontief_rowsum",
+            "rho": 0.368421,
+            "p_perm": 0.108089,
+            "n": 20
+          },
+          {
+            "mechanism": "material_balance",
+            "outcome": "amplification",
+            "predictor": "forward_rowsum_A",
+            "rho": -0.294737,
+            "p_perm": 0.20438,
+            "n": 20
+          },
+          {
+            "mechanism": "material_balance",
+            "outcome": "amplification",
+            "predictor": "forward_intermediate_share",
+            "rho": 0.759398,
             "p_perm": 0.0001,
             "n": 20
           },
           {
             "mechanism": "material_balance",
+            "outcome": "amplification",
             "predictor": "leontief_colsum",
-            "rho": 0.311278,
-            "p_perm": 0.184682,
+            "rho": 0.312782,
+            "p_perm": 0.180382,
             "n": 20
           },
           {
             "mechanism": "material_balance",
+            "outcome": "amplification",
             "predictor": "leontief_rowsum",
-            "rho": -0.365414,
-            "p_perm": 0.114689,
+            "rho": -0.377444,
+            "p_perm": 0.10369,
             "n": 20
           },
           {
             "mechanism": "rationing_priority",
+            "outcome": "output_loss",
             "predictor": "forward_rowsum_A",
-            "rho": -0.390977,
-            "p_perm": 0.088591,
+            "rho": 0.312782,
+            "p_perm": 0.176482,
             "n": 20
           },
           {
             "mechanism": "rationing_priority",
+            "outcome": "output_loss",
             "predictor": "forward_intermediate_share",
-            "rho": 0.688722,
-            "p_perm": 0.0011,
+            "rho": 0.413534,
+            "p_perm": 0.076792,
             "n": 20
           },
           {
             "mechanism": "rationing_priority",
+            "outcome": "output_loss",
             "predictor": "leontief_colsum",
-            "rho": 0.239098,
-            "p_perm": 0.309269,
+            "rho": -0.040602,
+            "p_perm": 0.866913,
             "n": 20
           },
           {
             "mechanism": "rationing_priority",
+            "outcome": "output_loss",
             "predictor": "leontief_rowsum",
-            "rho": -0.458647,
-            "p_perm": 0.043096,
+            "rho": 0.365414,
+            "p_perm": 0.113189,
+            "n": 20
+          },
+          {
+            "mechanism": "rationing_priority",
+            "outcome": "amplification",
+            "predictor": "forward_rowsum_A",
+            "rho": -0.392481,
+            "p_perm": 0.087591,
+            "n": 20
+          },
+          {
+            "mechanism": "rationing_priority",
+            "outcome": "amplification",
+            "predictor": "forward_intermediate_share",
+            "rho": 0.691729,
+            "p_perm": 0.0012,
+            "n": 20
+          },
+          {
+            "mechanism": "rationing_priority",
+            "outcome": "amplification",
+            "predictor": "leontief_colsum",
+            "rho": 0.245113,
+            "p_perm": 0.29687,
+            "n": 20
+          },
+          {
+            "mechanism": "rationing_priority",
+            "outcome": "amplification",
+            "predictor": "leontief_rowsum",
+            "rho": -0.46015,
+            "p_perm": 0.042396,
             "n": 20
           },
           {
             "mechanism": "tatonnement",
+            "outcome": "output_loss",
+            "predictor": "forward_rowsum_A",
+            "rho": 0.311278,
+            "p_perm": 0.179782,
+            "n": 20
+          },
+          {
+            "mechanism": "tatonnement",
+            "outcome": "output_loss",
+            "predictor": "forward_intermediate_share",
+            "rho": 0.566917,
+            "p_perm": 0.011599,
+            "n": 20
+          },
+          {
+            "mechanism": "tatonnement",
+            "outcome": "output_loss",
+            "predictor": "leontief_colsum",
+            "rho": 0.016541,
+            "p_perm": 0.947705,
+            "n": 20
+          },
+          {
+            "mechanism": "tatonnement",
+            "outcome": "output_loss",
+            "predictor": "leontief_rowsum",
+            "rho": 0.35188,
+            "p_perm": 0.127387,
+            "n": 20
+          },
+          {
+            "mechanism": "tatonnement",
+            "outcome": "amplification",
             "predictor": "forward_rowsum_A",
             "rho": -0.270677,
-            "p_perm": 0.244976,
+            "p_perm": 0.246875,
             "n": 20
           },
           {
             "mechanism": "tatonnement",
+            "outcome": "amplification",
             "predictor": "forward_intermediate_share",
-            "rho": 0.798496,
+            "rho": 0.803008,
             "p_perm": 0.0001,
             "n": 20
           },
           {
             "mechanism": "tatonnement",
+            "outcome": "amplification",
             "predictor": "leontief_colsum",
-            "rho": 0.300752,
-            "p_perm": 0.19848,
+            "rho": 0.326316,
+            "p_perm": 0.160584,
             "n": 20
           },
           {
             "mechanism": "tatonnement",
+            "outcome": "amplification",
             "predictor": "leontief_rowsum",
-            "rho": -0.348872,
-            "p_perm": 0.132787,
+            "rho": -0.360902,
+            "p_perm": 0.116788,
             "n": 20
           }
         ],
+        "5c_permutation_vs_paper": [
+          {
+            "mechanism": "material_balance",
+            "predictor": "forward_intermediate_share",
+            "rho": 0.512782,
+            "p_perm": 0.024298,
+            "paper_p": 0.0207797,
+            "paper_p_holm": 0.166238,
+            "paper_significant": "no"
+          },
+          {
+            "mechanism": "material_balance",
+            "predictor": "leontief_colsum",
+            "rho": 0.019549,
+            "p_perm": 0.937306,
+            "paper_p": 0.934803,
+            "paper_p_holm": 1.0,
+            "paper_significant": "no"
+          },
+          {
+            "mechanism": "rationing_priority",
+            "predictor": "forward_intermediate_share",
+            "rho": 0.413534,
+            "p_perm": 0.076792,
+            "paper_p": 0.0699207,
+            "paper_p_holm": 0.489445,
+            "paper_significant": "no"
+          },
+          {
+            "mechanism": "rationing_priority",
+            "predictor": "leontief_colsum",
+            "rho": -0.040602,
+            "p_perm": 0.866913,
+            "paper_p": 0.865047,
+            "paper_p_holm": 1.0,
+            "paper_significant": "no"
+          },
+          {
+            "mechanism": "tatonnement",
+            "predictor": "forward_intermediate_share",
+            "rho": 0.566917,
+            "p_perm": 0.011599,
+            "paper_p": 0.00914627,
+            "paper_p_holm": 0.0823164,
+            "paper_significant": "no"
+          },
+          {
+            "mechanism": "tatonnement",
+            "predictor": "leontief_colsum",
+            "rho": 0.016541,
+            "p_perm": 0.947705,
+            "paper_p": 0.944817,
+            "paper_p_holm": 1.0,
+            "paper_significant": "no"
+          }
+        ],
         "5c_status": "AUDITED",
-        "wall_s": 6.89
+        "wall_s": 19.04
       },
-      "failures": [
-        "5b: block B3: Holm-adjusted p disagrees by 2.00e-06",
-        "5c: hybrid_dual_track/forward_rowsum_A: undefined Spearman rho",
-        "5c: hybrid_dual_track/forward_intermediate_share: undefined Spearman rho",
-        "5c: hybrid_dual_track/leontief_colsum: undefined Spearman rho",
-        "5c: hybrid_dual_track/leontief_rowsum: undefined Spearman rho",
-        "5c: lp_central/forward_rowsum_A: undefined Spearman rho",
-        "5c: lp_central/forward_intermediate_share: undefined Spearman rho",
-        "5c: lp_central/leontief_colsum: undefined Spearman rho",
-        "5c: lp_central/leontief_rowsum: undefined Spearman rho",
-        "5c: market/forward_rowsum_A: undefined Spearman rho",
-        "5c: market/forward_intermediate_share: undefined Spearman rho",
-        "5c: market/leontief_colsum: undefined Spearman rho",
-        "5c: market/leontief_rowsum: undefined Spearman rho"
-      ],
+      "failures": [],
       "notes": [
         "5c: H4 correlations recomputed from summary.csv with a 10,000-draw permutation null; the paper's reported rho should match the forward_rowsum_A or forward_intermediate_share row for the same mechanism."
       ]
@@ -592,8 +658,8 @@
     {
       "key": "claims",
       "title": "Mechanism claims for the headline interaction (Lead's target)",
-      "status": "FAIL",
-      "summary": "",
+      "status": "PASS",
+      "summary": "Interaction reproduced (1.0000 either alone vs 0.9089 together, \u03c3_obs=0.03), the inventory asymmetry exists at the goods-balance frontier (gain +0.00% / loss -8.71%) and disappears in the operating regime; labour \u00d73 removes the loss, so the explanation holds as a labour-projection effect.",
       "numbers": {
         "6a_grid": {
           "gain0.0_rounds0": {
@@ -665,14 +731,13 @@
         "6d_labour_binding_fraction": 0.8621323529411765,
         "6d_goods_tightness_max": -0.1610081695780044,
         "6d_min_sector_fill_mean": 0.845039204605018,
-        "6_explanation_status": "REFUTED",
-        "wall_s": 9.86
+        "6_current_claim_status": "SUPPORTED",
+        "6_old_inventory_claim_status": "REFUTED",
+        "wall_s": 16.52
       },
-      "failures": [
-        "6: the stated explanation (inventory-estimate asymmetry) does not hold in the regime that produces the loss; the interaction is labour-driven (see 6b/6c/6d numbers)"
-      ],
+      "failures": [],
       "notes": [
-        "The interaction is reproduced, and the inventory asymmetry the Lead described is real at the goods-balance frontier (0 gain / -8.7% loss), but in the mechanism's operating regime (+-10% inventory changes R by 0.0e+00, R(r_est=0) changes nothing, labour x3 makes the loss vanish, labour used/L = 0.992, goods tightness max -0.161). The loss is driven by the one-sided projection onto the LABOUR-constrained feasible set, not by the inventory estimate. This is a claim-level failure, not a code bug."
+        "The interaction is reproduced (1.0000 either alone vs 0.9089 together). The corrected mechanism is supported: inventory estimates are irrelevant in the operating regime (r_est=0 gives 0.9069 vs 0.9089), labour x3 removes the loss (1.0000), the mechanism's own balancing calls are labour-binding (used/L = 0.992 mean, 86% of calls) and the inventory asymmetry exists only at the knife-edge goods-balance frontier (gain +0.00%, loss -8.71%), where the mechanism never operates. The earlier 'inventory-estimate asymmetry' explanation is therefore refuted (finding F4)."
       ]
     }
   ]

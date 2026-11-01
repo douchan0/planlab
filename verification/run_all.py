@@ -114,8 +114,10 @@ FINDINGS = [
         "evidence": "check 3 loader: A.shape == (20,20) with 36 finite entries for a record whose "
                     "n_sectors == 6; reshaping the finite entries reproduces toy_technology(6).A "
                     "exactly (max |diff| = 0.0).",
-        "resolution": "WORKED AROUND in check 3 (recover by reshaping); reported to the Lead and "
-                      "to the experiments layer. Fix recommended before the final grid.",
+        "resolution": "FIXED before the final grid: the final audit files store A in the "
+                      "[:n, :n] block (the remaining padding is NaN but the valid prefix is "
+                      "correct); check 3 now reads it directly. Recorded here because the "
+                      "earlier dumps were unusable for toy cells.",
     },
     {
         "id": "F6",
@@ -130,8 +132,121 @@ FINDINGS = [
         "evidence": "check 4: re-running the recorded scenario with cell.tech gives bit-identical "
                     "results, with scenario.technology it does not (0.436 relative difference in "
                     "x).",
-        "resolution": "REPORTED to the Lead and the experiments layer; check 4 resolves the "
-                      "technology from cell.tech and notes the disagreement.",
+        "resolution": "FIXED before the final grid: cells.json now records the cell technology "
+                      "({toy: 6}) instead of the eurostat placeholder; re-running from the "
+                      "recorded scenario reproduces the cell.",
+    },
+    {
+        "id": "F7",
+        "date": "2026-11-01",
+        "severity": "error (paper, results interpretation)",
+        "where": "paper/main.md §6.6 against results/B4/cells.json and "
+                 "paper/tables/rationing_shadow.csv",
+        "finding": "The B4 cells are named loss50/loss70/loss90 and pass scenario shock "
+                   "`size` = 0.5/0.3/0.1; because Shock.factor treats `size` as the capacity "
+                   "MULTIPLIER, the realised capacity losses are 50%/70%/90%, not the protocol's "
+                   "10%/30%/50% losses. The paper labels the 70% cell 'thirty per cent' and the "
+                   "90% cell 'ten per cent', and the narrative built on those labels does not "
+                   "survive: the output gap reverses sign between the 50% and 70% cells "
+                   "(-0.9pp, rationing ahead, then +3.35pp, tatonnement ahead) and widens to "
+                   "+4.97pp at 90%. The protocol (docs/PROTOCOL.md §4 B4) and Amendment 2 "
+                   "('keeps its pre-registered size sweep {0.10, 0.30, 0.50}') are silent on "
+                   "the multiplier-vs-loss ambiguity.",
+        "evidence": "check 5's data audit and the B4 cell definitions; numbers reproduced from "
+                    "paper/tables/rationing_shadow.csv.",
+        "resolution": "REPORTED; needs relabelling (or a re-run at size 0.9/0.7/0.5) before "
+                      "submission. This is the paper's most referee-visible error in §6.",
+    },
+    {
+        "id": "F8",
+        "date": "2026-11-01",
+        "severity": "overclaim (paper, H4)",
+        "where": "paper/main.md §6.5 'Both halves are confirmed' against results/tables/tests.csv",
+        "finding": "The H4 centrality half rests on raw Spearman p-values. The project's own "
+                   "test log applies the pre-registered Holm correction and marks EVERY "
+                   "centrality test non-significant: material_balance rho=0.5128 p=0.0208 "
+                   "p_holm=0.166; tatonnement rho=0.5669 p=0.0091 p_holm=0.082; priority "
+                   "rationing rho=0.4135 p=0.0699 p_holm=0.489. My 10,000-draw permutation "
+                   "test agrees with the raw p (0.024 / 0.012 / 0.077) and with the rho values "
+                   "to 1e-6, so the numbers are right and the INTERPRETATION is not: after the "
+                   "paper's own multiplicity rule, the centrality result is not significant for "
+                   "any of the three mechanisms. The only significant centrality rows in "
+                   "tests.csv use shock_output_amplification (p_holm 0.0011/0.0073/0.00024), "
+                   "which the paper itself demotes as a small-denominator artefact. A second, "
+                   "independent sensitivity: with the textbook forward-linkage measure (row "
+                   "sums of A) the correlation is only 0.31-0.33 (p about 0.15-0.18).",
+        "evidence": "check 5 (5c) recomputation from summary.csv + permutation null; "
+                    "results/tables/tests.csv H4-centrality rows.",
+        "resolution": "REPORTED; the text should say two of the three raw correlations are "
+                      "significant but none survives Holm, and should report the row-sum "
+                      "measure as a null. Not yet fixed in the manuscript.",
+    },
+    {
+        "id": "F9",
+        "date": "2026-11-01",
+        "severity": "factual error (paper)",
+        "where": "paper/main.md §6.5",
+        "finding": "\"The most damaging sectors are c05, c20, c02 and c12 under all three "
+                   "institutions\" is false for priority rationing: its top four are c20, c19, "
+                   "c05, c02 (c12 is fifth; c19 is second). The sentence holds for material "
+                   "balance and tatonnement.",
+        "evidence": "paper/tables/propagation.csv ranks by output_loss.",
+        "resolution": "REPORTED; one-clause fix (or say 'under two of the three').",
+    },
+    {
+        "id": "F10",
+        "date": "2026-11-01",
+        "severity": "stale text (paper)",
+        "where": "paper/main.md §6.7",
+        "finding": "The paragraph warns that the theta column of the dual-track file 'repeats a "
+                   "single value' and says the table is read by row order. The regenerated "
+                   "results/tables/dual_track.csv has all 11 theta values (0.0-1.0) and 22 "
+                   "rows, so the caveat now describes a defect that no longer exists. The "
+                   "quoted welfare ranges (252.21-252.34 at lag 0; 251.64-251.74 at lag 3) do "
+                   "match the regenerated table.",
+        "evidence": "results/tables/dual_track.csv, check 5's data audit.",
+        "resolution": "REPORTED; remove the caveat or regenerate the table from the final "
+                      "results.",
+    },
+    {
+        "id": "F11",
+        "date": "2026-11-01",
+        "severity": "claim not matching the table (paper)",
+        "where": "paper/main.md §6.4, abstract; §6.1",
+        "finding": "(a) §6.4: 'the detrended amplitude of the mean log price sits between 0.017 "
+                   "and 0.041 across the whole grid, the lag-one autocorrelation between 0.93 "
+                   "and 0.95'. At the reference gain 0.3 the amplitude spans 0.000-0.170 "
+                   "(market 0.124-0.170, tatonnement 0.128-0.146) and the acf spans "
+                   "0.65-0.95; the 0.017-0.041 range corresponds to tatonnement at gains "
+                   "0.05-0.1, not to the lag grid at the reference gain. (b) §6.1 calls "
+                   "259.568805 'cumulative welfare'; it is the mean per-period welfare "
+                   "(cum_welfare = 12978.44). (c) The abstract says the loss 'vanishes at "
+                   "eighty' per cent labour slack, while §6.3 and §6.8 report it vanishing at "
+                   "labour_supply_factor 2.00 (100% slack), with 0.4% left at 1.40. (d) The "
+                   "abstract's 'a factor of two to fifty below it' mixes the most-responsive "
+                   "sector's 1.9 with the median sector's 12-50.",
+        "evidence": "results/tables/main_lag_grid.csv, results/B1/summary.csv, "
+                    "paper/tables/labour_slack.csv.",
+        "resolution": "REPORTED; all four are sentence-level corrections.",
+    },
+    {
+        "id": "F12",
+        "date": "2026-11-01",
+        "severity": "governance / documentation",
+        "where": "docs/ARCHITECTURE.md §2, docs/AMENDMENTS.md, the engine",
+        "finding": "The engine gained a bounded-storage SPOILAGE channel (Scenario."
+                   "max_stock_ratio, default 2.0; S_end = min(residual, max(stock_cap - inv, "
+                   "0)); spoilage = residual - S_end) which changes the balance identity to "
+                   "S0 + x = Z 1 + C + G + I + S_end + spoilage. It is in the results and the "
+                   "paper's tables but not in docs/ARCHITECTURE.md (whose 'frozen' identity "
+                   "omits it) nor in AMENDMENTS/DEVIATIONS, contrary to the project's own "
+                   "'no silent amendments' rule. My audit finds up to 16% of supply destroyed "
+                   "in a single record (1.2-3.3% in the reference cells), so an external "
+                   "replicator implementing the documented identity would see a 1-16% "
+                   "discrepancy and call it a leak.",
+        "evidence": "check 3 (identity holds to 1.6e-16 WITH spoilage, and fails by the "
+                    "spoilage amount without it); docs greps.",
+        "resolution": "REPORTED; add an amendment entry and update ARCHITECTURE §2.",
     },
 ]
 
@@ -324,7 +439,41 @@ def main(argv: list[str] | None = None) -> int:
         findings.append(f"- Resolution: {f['resolution']}")
         findings.append("")
 
-    body = "\n".join(_section(r) for r in results)
+    remaining = [
+        "## What remains unverified",
+        "",
+        "An honest verification report has to say where it stops. These are the gaps that a",
+        "reader should treat as open, not as verified by silence.",
+        "",
+        "* **The paper's prose is checked against `paper/tables/*.csv`, and the tables against "
+        "`results/`, but not every table was re-derived from the raw runs.** Check 4 re-executes "
+        "80 of 7\u202f364 runs and reproduces every stored run-level metric bit-for-bit; check 3 "
+        "audits 2\u202f344 raw period records. A table built from a run outside those samples "
+        "would be caught only if its inputs were among the 80.",
+        "* **The H4 primitive is audited at the summary level, not from the sector panel.** I "
+        "recompute the amplification statistic from `summary.csv` and replicate the paper's "
+        "rho to 1e-6, but I did not rebuild `shock_output_loss` from `sector_panel.parquet`; a "
+        "bug in the per-period aggregation would be invisible to me.",
+        "* **The measured response coefficients b (price and target) are taken from "
+        "`results/tables/t12_bp_by_sector.csv`, not independently re-estimated by me.** The "
+        "theory-to-simulation mapping g = eta*b therefore inherits whatever the experiments "
+        "layer's probe procedure does; I verified the probe contract reproduces the stored "
+        "cells (check 4), not that the probe measures what it claims to measure.",
+        "* **The dynamic stability boundary of the full simulation is not independently "
+        "located.** Check 1 verifies Proposition 1 for the linear recursion; whether the "
+        "simulation follows it is the paper's H1 question, and I audit the stored test "
+        "statistics rather than re-running the boundary search.",
+        "* **Reproducibility is tested on this machine and this code state.** A different "
+        "BLAS, a different HiGHS build, or a change to `A` would move the last digits; nothing "
+        "here certifies cross-machine reproducibility or the long-term availability of the "
+        "grid.",
+        "* **The paper is a moving target.** F7-F11 were found against the manuscript and "
+        "tables of 2026-11-01 16:5x; if the tables or the prose are regenerated, the "
+        "traceability claims must be re-checked (the suite is re-runnable in about three "
+        "minutes).",
+        "",
+    ]
+    body = "\n".join(remaining) + "\n" + "\n".join(_section(r) for r in results)
     report = "\n".join(header) + "\n" + "\n".join(findings) + "\n" + body
     Path = __import__("pathlib").Path
     Path(args.report).write_text(report, encoding="utf-8")

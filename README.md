@@ -87,11 +87,17 @@ Reproduce the paper end to end:
 bash scripts/reproduce.sh          # or: make reproduce
 ```
 
-Run the tests:
+Run the tests, and the teaching notebooks:
 
 ```bash
 .venv/bin/python -m pytest tests/ -q
+.venv/bin/python notebooks/execute_all.py     # six executed notebooks, ~30 s
 ```
+
+The notebooks are the fastest way into the model: `notebooks/README.md` has a
+three-hour teaching sequence, and `03_one_period_walkthrough.ipynb` re-derives a
+single period from the written specification and checks it against the engine
+bit-for-bit.
 
 ## What the paper claims
 
@@ -100,7 +106,9 @@ Four findings the design is built to test:
 1. **Delay has a closed-form cost.** For a signal revised in proportion to an
    observed gap with effective delay `m` periods, the loop is stable iff the loop
    gain `g < g*(m) = 2 sin(π/(2(2m+1)))`, and at the boundary it oscillates with
-   period `2(2m+1)`. Every extra period of delay roughly halves the admissible gain.
+   period `2(2m+1)`. Since `g*(m) ~ π/(2m+1)`, **doubling the delay roughly halves
+   the admissible gain** — the first period is the expensive one (2 → 1), and it is
+   the product `m·g*` that delay bounds, at `π/2`, not the gain alone.
 2. **Taut plans are self-defeating.** In a capacity-constrained input–output
    economy the revision of *output targets* is a positive feedback loop: raising
    targets raises intermediate demand, which raises shortage, which raises targets.

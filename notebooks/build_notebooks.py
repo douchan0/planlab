@@ -5,6 +5,11 @@ committed *with their executed outputs* (see ``notebooks/README.md``).  Their
 prose and code are kept in reviewable plain-Python form under ``nb_sources/`` so
 that a diff of a teaching notebook is a diff of text rather than a diff of JSON.
 
+Naming convention (one convention, enforced by ``tests/test_nb_notebooks.py``):
+the source of ``NN_name.ipynb`` is ``nb_sources/NN_name.py`` — the module stem is
+exactly the notebook stem, and this file derives the module name from the file
+name rather than keeping a second mapping.
+
 Workflow
 --------
 ::
@@ -17,9 +22,9 @@ Workflow
 the previous outputs over whenever a cell's source is unchanged, which is what
 you want when only a markdown cell was edited.
 
-Writing rule (enforced by ``tests/test_nb_notebooks.py``): every code cell must
-produce output, so that a reader can tell whether they are reading a fresh
-execution or a stale one.
+Writing rule (enforced by the test suite): every code cell must produce output,
+so that a reader can tell whether they are reading a fresh execution or a stale
+one.
 """
 
 from __future__ import annotations
@@ -34,14 +39,14 @@ import nbformat
 HERE = Path(__file__).resolve().parent
 SOURCE_DIR = HERE / "nb_sources"
 
-#: notebook file name -> module under ``nb_sources/`` that defines ``CELLS``
+#: the notebooks, in teaching order; the source is ``nb_sources/<stem>.py``
 NOTEBOOKS = [
-    ("01_io_foundations.ipynb", "nb01_io_foundations"),
-    ("02_delay_theorem.ipynb", "nb02_delay_theorem"),
-    ("03_one_period_walkthrough.ipynb", "nb03_one_period_walkthrough"),
-    ("04_mechanism_zoo.ipynb", "nb04_mechanism_zoo"),
-    ("05_dual_track_and_shadow_prices.ipynb", "nb05_dual_track"),
-    ("06_reproduce_a_paper_table.ipynb", "nb06_reproduce"),
+    "01_io_foundations.ipynb",
+    "02_delay_theorem.ipynb",
+    "03_one_period_walkthrough.ipynb",
+    "04_mechanism_zoo.ipynb",
+    "05_dual_track_and_shadow_prices.ipynb",
+    "06_reproduce_a_paper_table.ipynb",
 ]
 
 KERNELSPEC = {
@@ -51,9 +56,16 @@ KERNELSPEC = {
 }
 
 
-def _load_source(module_name: str):
-    path = SOURCE_DIR / f"{module_name}.py"
-    spec = importlib.util.spec_from_file_location(f"_nb_source_{module_name}", path)
+def source_path(filename: str) -> Path:
+    """The authoring source of a notebook: same stem, ``.py``, under ``nb_sources/``."""
+    return SOURCE_DIR / (Path(filename).stem + ".py")
+
+
+def _load_source(filename: str):
+    path = source_path(filename)
+    if not path.exists():  # pragma: no cover - checked by the caller
+        raise FileNotFoundError(path)
+    spec = importlib.util.spec_from_file_location(f"_nb_source_{path.stem}", path)
     if spec is None or spec.loader is None:  # pragma: no cover - defensive
         raise RuntimeError(f"cannot load notebook source {path}")
     module = importlib.util.module_from_spec(spec)
@@ -76,8 +88,8 @@ def _previous_outputs(path: Path) -> dict[str, list]:
     return out
 
 
-def build_one(filename: str, module_name: str, *, keep_outputs: bool) -> Path:
-    module = _load_source(module_name)
+def build_one(filename: str, *, keep_outputs: bool) -> Path:
+    module = _load_source(filename)
     cells = list(module.CELLS)
     title = getattr(module, "TITLE", filename)
     target = HERE / filename
@@ -91,7 +103,7 @@ def build_one(filename: str, module_name: str, *, keep_outputs: bool) -> Path:
                               "mimetype": "text/x-python", "file_extension": ".py"},
             "title": title,
             # the notebooks are generated from nb_sources/ so that their diffs are readable
-            "planlab": {"source": f"notebooks/nb_sources/{module_name}.py",
+            "planlab": {"source": f"notebooks/nb_sources/{source_path(filename).name}",
                         "builder": "notebooks/build_notebooks.py"},
         }
     )
@@ -105,7 +117,7 @@ def build_one(filename: str, module_name: str, *, keep_outputs: bool) -> Path:
                 cell["outputs"] = previous[text]
             nb.cells.append(cell)
         else:  # pragma: no cover - authoring error
-            raise ValueError(f"unknown cell kind {kind!r} in {module_name}")
+            raise ValueError(f"unknown cell kind {kind!r} in {filename}")
     nbformat.validate(nb)
     nbformat.write(nb, target)
     return target
@@ -121,14 +133,15 @@ def main(argv: list[str] | None = None) -> int:
 
     built = 0
     missing = 0
-    for filename, module_name in NOTEBOOKS:
+    for filename in NOTEBOOKS:
         if args.only and filename != args.only:
             continue
-        if not (SOURCE_DIR / f"{module_name}.py").exists():
-            print(f"skip   {filename}  (no source: nb_sources/{module_name}.py)", file=sys.stderr)
+        if not source_path(filename).exists():
+            print(f"skip   {filename}  (no source: nb_sources/{source_path(filename).name})",
+                  file=sys.stderr)
             missing += 1
             continue
-        path = build_one(filename, module_name, keep_outputs=args.keep_outputs)
+        path = build_one(filename, keep_outputs=args.keep_outputs)
         print(f"built {path.relative_to(HERE)}")
         built += 1
     if not built:
@@ -136,7 +149,11 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     if missing and args.only:
         return 1
-    print("\nNow run:  python notebooks/execute_all.py")
+    if not args.keep_outputs:
+        print("\nStored outputs were discarded. Until you run execute_all.py, the "
+              "notebooks are\nNOT in a committable state and "
+              "tests/test_nb_notebooks.py will (correctly) fail.")
+    print("Now run:  python notebooks/execute_all.py")
     return 0
 
 

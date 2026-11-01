@@ -1,21 +1,21 @@
 {
   "bibliography_entries": 39,
   "bibliography_uncited": [],
-  "built": "2026-11-01T08:53:55Z",
+  "built": "2026-11-01T09:03:25Z",
   "citations_used": 39,
-  "civil_words_body": 17.7,
+  "civil_words_body": 18.2,
   "duplicated_nouns": [],
-  "elapsed_s": 2.24,
+  "elapsed_s": 1.86,
   "equations": 19,
   "figures": 3,
-  "html_bytes": 213408,
+  "html_bytes": 230734,
   "markdown": "3.10.3",
   "missing_captions": [],
   "missing_figure_files": [],
   "missing_table_files": [],
   "pdf": "paper/main.pdf",
-  "pdf_bytes": 2051759,
-  "pdf_pages": 32,
+  "pdf_bytes": 2208940,
+  "pdf_pages": 34,
   "python": "3.10.13",
   "sections": {
     "app:crossing": "A.2",
@@ -100,8 +100,8 @@
     "why-a-balanced-plan-does-not-remove-shortage": "4.5"
   },
   "source": "paper/main.md",
-  "tables": 15,
+  "tables": 16,
   "unresolved_slots": [],
   "words_bibliography": 802,
-  "words_body": 17679
+  "words_body": 18236
 }

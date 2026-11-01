@@ -1,7 +1,7 @@
 # Tutorial 02 — the delay theorem
 
 **Notebook:** [`notebooks/02_delay_theorem.ipynb`](../../notebooks/02_delay_theorem.ipynb)
-· **Runtime:** ~5 s · **Prerequisites:** tutorial 01 is *not* needed; only linear algebra
+· **Runtime:** ~2 s · **Prerequisites:** tutorial 01 is *not* needed; only linear algebra
 
 ## Learning objectives
 

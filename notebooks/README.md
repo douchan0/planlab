@@ -161,7 +161,7 @@ The notebooks are generated from plain-Python cell lists so that a diff of a
 teaching notebook is a diff of text rather than a diff of JSON:
 
 ```
-notebooks/nb_sources/nbNN_*.py   -- the cells (markdown + code), reviewable in a diff
+notebooks/nb_sources/NN_*.py     -- the cells (markdown + code), one per notebook
         |  build_notebooks.py    -- writes the .ipynb skeletons
         v
 notebooks/NN_*.ipynb             -- the deliverable (executed, outputs committed)

@@ -320,7 +320,18 @@ def _audit_test_log(res: CheckResult) -> None:
 
     for _, row in tests.iterrows():
         comparison = str(row.get("comparison", ""))
-        outcome = str(row.get("outcome", ""))
+        outcome_raw = str(row.get("outcome", ""))
+        test_name = str(row.get("test", ""))
+        # only the paired two-mechanism tests; the OLS/Spearman/Kruskal rows are
+        # audited elsewhere (5c and the regression re-estimation below)
+        if "paired wilcoxon" not in test_name.lower():
+            continue
+        # the paper's outcome names are not always the summary column names
+        outcome = {
+            "x_over_base": "output_ratio_mean",
+            "welfare_loss_vs_baseline": "mean_welfare",
+            "shock_output_loss": "shock_output_loss",
+        }.get(outcome_raw, outcome_raw)
         if outcome not in summary.columns:
             continue
         found = [m for m in mechanisms if m in comparison]
@@ -387,9 +398,12 @@ def _audit_test_log(res: CheckResult) -> None:
             good = np.isfinite(stored) & np.isfinite(mine)
             if good.any():
                 holm_checked += int(good.sum())
-                res.check(np.max(np.abs(mine[good] - stored[good])) < 1e-9,
-                          f"5b: block {block}: Holm-adjusted p disagrees by "
-                          f"{np.max(np.abs(mine[good] - stored[good])):.2e}")
+                # the CSV stores p-values to 6 decimals, so the adjusted values can only
+                # be reproduced to the propagated rounding error (~m * 1e-6)
+                worst = float(np.max(np.abs(mine[good] - stored[good])))
+                res.check(worst < 2e-5,
+                          f"5b: block {block}: Holm-adjusted p disagrees by {worst:.2e} "
+                          f"(beyond CSV rounding)")
 
     res.numbers["5b_paired_rows_checked"] = n_pair_rows
     res.numbers["5b_p_values_checked"] = n_checked
@@ -420,19 +434,32 @@ def _linkage_predictors() -> dict[str, dict[str, float]]:
 
 
 def _amplification_by_sector() -> pd.DataFrame:
-    """Mean run-level amplification per (mechanism, shocked sector) from summary.csv."""
+    """Mean run-level outcome per (mechanism, shocked sector) from summary.csv.
+
+    Both H4 statistics are returned: ``loss`` (``shock_output_loss``, the paper's
+    primary statistic) and ``amp`` (``shock_output_amplification``, the ratio the
+    paper itself calls a small-denominator artefact).
+    """
     summary = _load_summary()
     if summary.empty or "shock_sector" not in summary.columns:
         return pd.DataFrame()
     sub = summary[summary["shock_sector"].notna()]
     if sub.empty:
         return pd.DataFrame()
-    col = "shock_output_amplification"
-    if col not in sub.columns:
-        return pd.DataFrame()
+    for col in ("shock_output_amplification", "shock_output_loss"):
+        if col not in sub.columns:
+            return pd.DataFrame()
+    # B4/B6 also shock sectors, but only a handful and at different sizes; H4 is a
+    # cross-section over the 20 sectors of B3, so keep only the block that gives each
+    # mechanism its full sector panel.
+    coverage = sub.groupby(["block", "mechanism"])["shock_sector"].nunique().reset_index()
+    keep = coverage.sort_values("shock_sector", ascending=False).drop_duplicates("mechanism")
+    sub = sub.merge(keep[["block", "mechanism"]], on=["block", "mechanism"], how="inner")
     out = (
         sub.groupby(["mechanism", "shock_sector"])
-        .agg(amp=(col, "mean"), amp_sd=(col, "std"), n=("seed", "nunique"))
+        .agg(amp=("shock_output_amplification", "mean"),
+             loss=("shock_output_loss", "mean"),
+             n=("seed", "nunique"))
         .reset_index()
     )
     return out
@@ -445,26 +472,184 @@ def _audit_h4(res: CheckResult) -> None:
         res.numbers["5c_status"] = "SKIPPED_NO_SHOCK_CELLS"
         return
     predictors = _linkage_predictors()
+    # other blocks (B4/B6) also shock sectors but only one or two of them; a rank
+    # correlation needs a real cross-section, so keep mechanisms with >= 8 sectors
+    amp = amp[amp.groupby("mechanism")["shock_sector"].transform("nunique") >= 8]
     res.numbers["5c_n_cells"] = int(len(amp))
     rows = []
     for mechanism, grp in amp.groupby("mechanism"):
         sectors = grp["shock_sector"].astype(str).tolist()
-        values = grp["amp"].to_numpy(dtype=float)
-        for name, table in predictors.items():
-            pred = np.array([table.get(s, np.nan) for s in sectors])
-            perm = spearman_permutation(pred, values)
-            rows.append({
-                "mechanism": mechanism, "predictor": name,
-                "rho": round(perm["rho"], 6), "p_perm": round(perm["p_perm"], 6),
-                "n": perm["n"],
+        for outcome, values in (("output_loss", grp["loss"].to_numpy(dtype=float)),
+                                ("amplification", grp["amp"].to_numpy(dtype=float))):
+            for name, table in predictors.items():
+                pred = np.array([table.get(s, np.nan) for s in sectors])
+                perm = spearman_permutation(pred, values)
+                rows.append({
+                    "mechanism": mechanism, "outcome": outcome, "predictor": name,
+                    "rho": round(perm["rho"], 6), "p_perm": round(perm["p_perm"], 6),
+                    "n": perm["n"],
+                })
+                res.check(np.isfinite(perm["rho"]),
+                          f"5c: {mechanism}/{outcome}/{name}: undefined Spearman rho")
+        res.numbers.setdefault("5c_h4", []).extend(
+            [r for r in rows if r["mechanism"] == mechanism])
+
+    # ---- cross-check against the paper's own tests.csv H4-centrality rows -----
+    tests_path = TABLES / "tests.csv"
+    if tests_path.exists():
+        tests = pd.read_csv(tests_path)
+        centrality = tests[tests["hypothesis"] == "H4-centrality"]
+        mine = {(r["mechanism"], r["predictor"]): r
+                for r in res.numbers.get("5c_h4", [])
+                if r["outcome"] == "output_loss"}
+        for _, row in centrality.iterrows():
+            comparison = str(row.get("comparison", ""))
+            mech = next((m for m in amp["mechanism"].unique() if m in comparison), None)
+            if mech is None:
+                continue
+            if "forward linkage" in comparison:
+                pred = "forward_intermediate_share"
+            elif "Leontief column sum" in comparison:
+                pred = "leontief_colsum"
+            else:
+                continue
+            entry = mine.get((mech, pred))
+            if entry is None:
+                continue
+            stored_rho = float(row["statistic"])
+            res.check(abs(entry["rho"] - stored_rho) <= 2e-3,
+                      f"5c: tests.csv rho {stored_rho:.4f} for {mech}/{pred} != my "
+                      f"{entry['rho']:.4f} recomputed from summary.csv")
+            res.numbers.setdefault("5c_permutation_vs_paper", []).append({
+                "mechanism": mech, "predictor": pred,
+                "rho": entry["rho"], "p_perm": entry["p_perm"],
+                "paper_p": float(row["p_value"]),
+                "paper_p_holm": float(row["p_holm"]),
+                "paper_significant": str(row.get("significant_05", "")),
             })
-            res.check(np.isfinite(perm["rho"]),
-                      f"5c: {mechanism}/{name}: undefined Spearman rho")
-        res.numbers.setdefault("5c_h4", []).extend([r for r in rows if r["mechanism"] == mechanism])
     res.numbers["5c_status"] = "AUDITED"
     res.note("5c: H4 correlations recomputed from summary.csv with a 10,000-draw permutation "
              "null; the paper's reported rho should match the forward_rowsum_A or "
              "forward_intermediate_share row for the same mechanism.")
+
+
+
+
+# ---------------------------------------------------------------------------
+# 5d — every headline table must be regenerable from results/
+# ---------------------------------------------------------------------------
+#: (table file, source block, group keys, optional row filter, {table column: (summary column, stat)})
+TABLE_SPECS = (
+    ("balance_decomposition.csv", "B8", ["revision_gain", "balance_rounds"], None,
+     {"output_base": ("output_ratio_mean", "mean"),
+      "output_base_sd": ("output_ratio_mean", "std"),
+      "shortage": ("mean_shortage_rate", "mean"),
+      "shortage_sd": ("mean_shortage_rate", "std"),
+      "spoilage_rate": ("mean_spoilage_rate", "mean")}),
+    ("noise_only.csv", "B1b", ["mechanism"], None,
+     {"output_base": ("output_ratio_mean", "mean"),
+      "output_base_sd": ("output_ratio_mean", "std"),
+      "shortage": ("mean_shortage_rate", "mean"),
+      "welfare": ("mean_welfare", "mean"),
+      "spoilage_rate": ("mean_spoilage_rate", "mean")}),
+    ("propagation.csv", "B3", ["mechanism", "shock_sector"], None,
+     {"output_loss": ("shock_output_loss", "mean"),
+      "output_loss_sd": ("shock_output_loss", "std"),
+      "output_amplification": ("shock_output_amplification", "mean")}),
+    ("rationing_shadow.csv", "B4", ["mechanism", "shock_size"], None,
+     {"mean_shortage_rate_mean": ("mean_shortage_rate", "mean"),
+      "mean_welfare_mean": ("mean_welfare", "mean"),
+      "output_ratio_mean_mean": ("output_ratio_mean", "mean")}),
+    ("dual_track.csv", "B5", ["theta", "lag"], None,
+     {"welfare": ("mean_welfare", "mean"),
+      "shortage": ("mean_shortage_rate", "mean"),
+      "output_base": ("output_ratio_mean", "mean")}),
+    ("robustness.csv", "B6", ["variant"], None,
+     {"mean_shortage_rate": ("mean_shortage_rate", "mean"),
+      "mean_x_over_base": ("output_ratio_mean", "mean")}),
+    ("main_lag_grid.csv", "B2", ["mechanism", "gain", "lag_reporting"], None,
+     {"welfare": ("mean_welfare", "mean"),
+      "output_base": ("output_ratio_mean", "mean"),
+      "shortage": ("mean_shortage_rate", "mean")}),
+)
+
+
+def _load_block_summary(block_name: str) -> pd.DataFrame:
+    path = RESULTS / block_name / "summary.csv"
+    if not path.exists():
+        return pd.DataFrame()
+    return pd.read_csv(path)
+
+
+def _audit_tables(res: CheckResult) -> None:
+    """Recompute each headline table from results/ and compare (the traceability rule)."""
+    paper_tables = RESULTS.parent / "paper" / "tables"
+    if not paper_tables.exists():
+        res.note("5d: no paper/tables yet")
+        res.numbers["5d_status"] = "SKIPPED"
+        return
+    checked = 0
+    worst = 0.0
+    worst_where = ""
+    tables_seen = 0
+    for table_name, block, keys, where, mapping in TABLE_SPECS:
+        table_path = paper_tables / table_name
+        if not table_path.exists():
+            res.note(f"5d: {table_name} missing from results/tables")
+            continue
+        published = pd.read_csv(table_path)
+        summary = _load_block_summary(block)
+        if summary.empty:
+            res.note(f"5d: {table_name}: no results/{block}/summary.csv")
+            continue
+        if where is not None:
+            summary = summary.query(where)
+            published = published.query(where)
+        # the laminar key is never a grouping key
+        keys = [k for k in keys if k in summary.columns and k in published.columns]
+        if not keys:
+            res.note(f"5d: {table_name}: no shared keys")
+            continue
+        # tolerate renamed keys in the published table
+        rename = {"lag_reporting": "lag", "lag": "lag_reporting"}
+        pub_keys = list(keys)
+        for k in list(keys):
+            alt = rename.get(k)
+            if k not in published.columns and alt in published.columns:
+                pub_keys[pub_keys.index(k)] = alt
+        if any(k not in published.columns for k in pub_keys):
+            continue
+        agg = summary.groupby(keys).agg(**{
+            new: (col, stat) for new, (col, stat) in mapping.items()
+            if col in summary.columns
+        }).reset_index()
+        pub = published.rename(columns={alt: k for k, alt in zip(keys, pub_keys)})
+        merged = agg.merge(pub, on=keys, how="inner", suffixes=("_mine", ""))
+        if merged.empty:
+            res.note(f"5d: {table_name}: no matching rows after the join")
+            continue
+        tables_seen += 1
+        for new in mapping:
+            mine_col = f"{new}_mine"
+            if mine_col not in merged or new not in merged:
+                continue
+            mine = merged[mine_col].to_numpy(dtype=float)
+            pub_vals = merged[new].to_numpy(dtype=float)
+            ok = np.isfinite(mine) & np.isfinite(pub_vals)
+            if not ok.any():
+                continue
+            err = np.abs(mine[ok] - pub_vals[ok]) / np.maximum(1.0, np.abs(pub_vals[ok]))
+            e = float(np.max(err))
+            checked += int(ok.sum())
+            if e > worst:
+                worst, worst_where = e, f"{table_name}:{new}"
+            res.check(e <= 2e-6,
+                      f"5d: {table_name}: column {new} differs from results/{block} by {e:.2e}")
+    res.numbers["5d_tables_checked"] = tables_seen
+    res.numbers["5d_values_checked"] = checked
+    res.numbers["5d_worst_rel_diff"] = worst
+    res.numbers["5d_worst_at"] = worst_where
+    res.numbers["5d_status"] = "AUDITED"
 
 
 # ---------------------------------------------------------------------------
@@ -474,6 +659,7 @@ def _body(res: CheckResult) -> None:
     _self_tests(res)
     _audit_test_log(res)
     _audit_h4(res)
+    _audit_tables(res)
     if res.status == "PASS":
         parts = ["5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs "
                  "statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap "
@@ -487,8 +673,14 @@ def _body(res: CheckResult) -> None:
             parts.append("5c H4 correlations recomputed with a permutation null")
         else:
             parts.append("5c skipped (no shock cells)")
+        if res.numbers.get("5d_status") == "AUDITED":
+            parts.append(f"5d {res.numbers['5d_values_checked']} published table values "
+                         f"re-derived from results/ ({res.numbers['5d_tables_checked']} tables, "
+                         f"worst {res.numbers['5d_worst_rel_diff']:.1e})")
+        else:
+            parts.append("5d skipped (no results/tables)")
         res.summary = "; ".join(parts)
-        if "SKIPPED" in str(res.numbers.get("5b_status", "")) + str(res.numbers.get("5c_status", "")):
+        if "SKIPPED" in str(res.numbers.get("5b_status", "")) + str(res.numbers.get("5c_status", "")) + str(res.numbers.get("5d_status", "")):
             res.status = "SKIP"
             res.summary += " — the statistical audit of the PAPER's numbers is NOT complete yet."
 

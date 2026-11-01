@@ -203,25 +203,42 @@ def _body(res: CheckResult) -> None:
     res.numbers["6d_goods_tightness_max"] = float(d[:, 1].max())
     res.numbers["6d_min_sector_fill_mean"] = float(d[:, 2].mean())
 
-    # ---- verdict on the *explanation* ----------------------------------
-    explanation_holds = (not inventory_irrelevant) and (not labor_drives)
-    if not explanation_holds:
-        res.numbers["6_explanation_status"] = "REFUTED"
-        res.notes.append(
-            "The interaction is reproduced, and the inventory asymmetry the Lead described is "
-            "real at the goods-balance frontier (0 gain / -8.7% loss), but in the mechanism's "
-            "operating regime (+-10% inventory changes R by 0.0e+00, R(r_est=0) changes nothing, "
-            "labour x3 makes the loss vanish, labour used/L = "
-            f"{res.numbers['6d_labour_used_over_supply_mean']:.3f}, goods tightness max "
-            f"{res.numbers['6d_goods_tightness_max']:.3f}). The loss is driven by the one-sided "
-            "projection onto the LABOUR-constrained feasible set, not by the inventory estimate. "
-            "This is a claim-level failure, not a code bug."
-        )
-        res.fail("6: the stated explanation (inventory-estimate asymmetry) does not hold in the "
-                 "regime that produces the loss; the interaction is labour-driven "
-                 "(see 6b/6c/6d numbers)")
-    else:
-        res.numbers["6_explanation_status"] = "SUPPORTED"
+    # ---- verdict ---------------------------------------------------------
+    # The paper now states the corrected mechanism: the loss is created by the
+    # one-sided projection onto the LABOUR-constrained feasible set, is conditional
+    # on labour slack, and is NOT an inventory-estimate effect.  That is what this
+    # check certifies.  The refuted earlier explanation (inventory asymmetry) is
+    # recorded as a finding in verification/report.md, with these same numbers.
+    corrected = (
+        interaction_size > 0.05
+        and inventory_irrelevant
+        and labor_drives
+        and res.numbers["6b_operating_regime_is_symmetric"]
+        and res.numbers["6d_labour_binding_fraction"] > 0.5
+        and abs(front["gain_+10"]) < CLAIM_TOL and front["loss_-10"] < -0.01
+    )
+    res.numbers["6_current_claim_status"] = "SUPPORTED" if corrected else "REFUTED"
+    res.numbers["6_old_inventory_claim_status"] = "REFUTED"
+    res.notes.append(
+        "The interaction is reproduced ("
+        f"{alone:.4f} either alone vs {both:.4f} together). The corrected mechanism is "
+        "supported: inventory estimates are irrelevant in the operating regime "
+        f"(r_est=0 gives {isolation['no_inventory_estimate'][0]:.4f} vs {baseline:.4f}), "
+        f"labour x3 removes the loss ({isolation['labor_x3'][0]:.4f}), the mechanism's own "
+        f"balancing calls are labour-binding (used/L = "
+        f"{res.numbers['6d_labour_used_over_supply_mean']:.3f} mean, "
+        f"{res.numbers['6d_labour_binding_fraction']:.0%} of calls) and the inventory "
+        f"asymmetry exists only at the knife-edge goods-balance frontier "
+        f"(gain {front['gain_+10']:+.2%}, loss {front['loss_-10']:+.2%}), where the "
+        f"mechanism never operates. The earlier 'inventory-estimate asymmetry' "
+        f"explanation is therefore refuted (finding F4)."
+    )
+    res.check(corrected,
+              "6: the corrected (labour-projection) mechanism claim is not supported by the "
+              "measurements: see the 6a-6d numbers")
+    res.check(inventory_irrelevant,
+              "6: the inventory estimate does matter, contrary to the corrected claim")
+    res.check(labor_drives, "6: making labour slack does not remove the loss")
 
     if res.status == "PASS":
         res.summary = (

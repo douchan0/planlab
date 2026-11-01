@@ -1,7 +1,7 @@
 # Tutorial 06 — reproducing a paper table (and a figure)
 
 **Notebook:** [`notebooks/06_reproduce_a_paper_table.ipynb`](../../notebooks/06_reproduce_a_paper_table.ipynb)
-· **Runtime:** ~14 s (longer if `results/` is large) · **Prerequisites:** tutorials 01–05, and a populated `results/`
+· **Runtime:** ~3 s (longer if `results/` is large) · **Prerequisites:** tutorials 01–05, and a populated `results/`
 
 ## Learning objectives
 
@@ -22,9 +22,19 @@
 
 * Per-run metrics in `summary.csv` are reproduced from `runs.parquet` to **below
   1e-12** for every run (it is the same floats, re-aggregated).
-* The publication table is reproduced from `summary.csv` within **1e-5 relative** —
-  the precision at which the committed CSV stores its numbers. Integer columns
-  (`n_seeds`) and `lag_effective = lag + 1` match **exactly**.
+* The publication table is reproduced **completely** from `summary.csv`: the two
+  integer columns (`n_seeds`, `lag_effective = lag + 1`) match **exactly**, and all
+  ten numeric columns agree within **1e-5 relative** — the precision at which the
+  committed CSV stores its numbers.
+* The *aggregation rule itself* is inferred from the artefact: the notebook searches
+  (block × reference elasticity × gain filter) and keeps the combination that
+  reproduces the table's `n_seeds` column exactly, rather than assuming one.
+* §4.1 cross-checks the results-layer table against the paper's own
+  `paper/tables/lag_grid_reference.csv`. For the four mechanisms whose gain is not a
+  treatment, the two agree to **1.6e-16 relative**; for the two gain-swept ones they
+  differ by up to **67.5%** (material_balance, lag 1: 0.0597 pooled vs 0.0356 at the
+  reference gain). That is not a rounding difference: the two tables answer different
+  questions, and the notebook says so instead of averaging it away.
 * The source block and the reference elasticity are **identified by matching run
   counts**, not assumed: the notebook finds the block whose grouped counts reproduce
   the table's `n_seeds` column.
@@ -49,6 +59,9 @@ do when `results/` is missing, plus exercises.
 2. Record the worst relative difference in §4. Raise the stored precision from 6 to 15
    significant digits in the table writer (in `src/planlab/experiments/`, not here) and
    say what the tolerance should become.
+2b. Reproduce the paper's `lag_grid_reference.csv` *from the results layer* by adding the
+   `gain == 0.30` filter. Do the pooled and sliced tables then agree for all six
+   mechanisms? Which one belongs in a caption that says "at the reference gain"?
 3. Compare "mean over periods, then over runs" with "mean over all period-run rows".
    When do they differ materially?
 4. What would a data-only comparison of the figure miss? (Answer: axis limits, legends,
@@ -70,5 +83,7 @@ artefact was missing — neither is faked.
 * Comparing to 1e-12 what was stored at 6 significant digits.
 * Regenerating a figure without the module's `_style()`: the sizes do not even match
   (and you would wrongly conclude the figure is stale).
+* Comparing a gain-**pooled** results table with a reference-gain **slice** and calling
+  the difference a bug (or, worse, hiding it by widening the tolerance).
 * Writing the regenerated figure over the committed one: an audit must not modify
   what it audits.
