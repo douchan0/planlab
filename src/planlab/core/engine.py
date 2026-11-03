@@ -600,7 +600,7 @@ class Simulation:
         stock_cap = float(self.scenario.max_stock_ratio) * np.asarray(
             self.tech.base_output, dtype=float
         )
-        S_end = np.minimum(residual, np.maximum(stock_cap - inv, 0.0))
+        S_end = np.minimum(residual, stock_cap)
         spoilage = residual - S_end
         unmet = np.maximum(demand - C, 0.0)
         self._last_status = status
@@ -612,7 +612,7 @@ class Simulation:
         """Delegate to :func:`planlab.core.feasibility.feasible_output`."""
         return feasible_output(
             self.tech.A, ub, inventory, reserve,
-            self.tech.labor, float(labour_supply or 0.0),
+            self.tech.labor, labour_supply,
         )
 
     def _audit(self, t: int, *, inventory, supply, Z, C, G, Invest, S_end,

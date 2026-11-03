@@ -56,7 +56,9 @@ fi
 
 if [ "$PAPER" = "1" ]; then
   echo "-- building the paper"
+  "$PLANLAB_PY" scripts/paper_tables.py
   "$PLANLAB_PY" scripts/build_paper.py
+  "$PLANLAB_PY" scripts/build_paper.py --lang zh
 fi
 
 END=$(date +%s)

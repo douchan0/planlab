@@ -34,7 +34,7 @@ import sys
 import time
 import warnings
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
@@ -810,6 +810,7 @@ def _execute_cell(payload: Mapping[str, Any]) -> dict[str, Any]:
     try:
         from planlab.core.engine import Simulation, run_scenario  # noqa: PLC0415
         from planlab.core.scenarios import scenario_from_dict  # noqa: PLC0415
+        from planlab.core.shocks import ShockPath  # noqa: PLC0415
         from planlab.mechanisms import get_mechanism  # noqa: PLC0415
 
         tech = load_cell_technology(cell.tech)
@@ -824,9 +825,22 @@ def _execute_cell(payload: Mapping[str, Any]) -> dict[str, Any]:
             res = sim.run()
             wall = time.perf_counter() - t0
             out["period_rows"].extend(_period_rows(res, cell, int(seed)))
-            out["summary_rows"].append(
-                _summary_row(res, cell, int(seed), tech, scenario, wall, instrumentation)
-            )
+            summary = _summary_row(res, cell, int(seed), tech, scenario, wall, instrumentation)
+            if cell.block == "B3":
+                # The control keeps the scenario ID and seed, so its exogenous draws match.
+                control = run_scenario(replace(scenario, shocks=()), technology=tech, seed=int(seed))
+                start = min(shock.start for shock in scenario.shocks)
+                end = max(shock.start + shock.duration for shock in scenario.shocks)
+                base_total = float(tech.base_output.sum())
+                loss = max(
+                    (float(no_shock.x.sum()) - float(shocked.x.sum())) / base_total
+                    for no_shock, shocked in zip(control.records, res.records)
+                    if shocked.t > scenario.burn_in and start <= shocked.t <= end + 12
+                )
+                intensity = ShockPath(scenario.shocks, tech.sectors).peak_capacity_loss(tech.base_output)
+                summary["paired_shock_output_loss"] = loss
+                summary["paired_shock_output_amplification"] = loss / intensity
+            out["summary_rows"].append(summary)
             out["sector_rows"].extend(_sector_rows(res, cell, int(seed), tech, scenario))
             audit_ts = (payload.get("audit") or {}).get(str(seed)) or []
             if audit_ts:
@@ -1417,6 +1431,8 @@ def _aggregate_cells(
         "shock_peak_shortage",
         "shock_amplification",
         "shock_output_loss",
+        "paired_shock_output_loss",
+        "paired_shock_output_amplification",
         "shock_output_amplification",
         "recovery_half_life",
         "recovery_half_life_own",

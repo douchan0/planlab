@@ -245,7 +245,11 @@ def t_propagation(blocks: dict[str, pd.DataFrame]) -> None:
         "shortage_amplification": col(sub, "shock_amplification"),
         "peak_shortage": col(sub, "shock_peak_shortage"),
         "recovery_half_life": col(sub, "recovery_half_life"),
-    }).sort_values(["mechanism", "output_loss"], ascending=[True, False])
+    })
+    if "paired_shock_output_loss_mean" in sub:
+        out["paired_output_loss"] = col(sub, "paired_shock_output_loss")
+        out["paired_output_amplification"] = col(sub, "paired_shock_output_amplification")
+    out = out.sort_values(["mechanism", "output_loss"], ascending=[True, False])
     write_table(
         "propagation", out,
         "Sectoral shock propagation. The primary statistic is the total output loss "
@@ -337,40 +341,29 @@ def t_labour_slack(blocks: dict[str, pd.DataFrame]) -> None:
     )
 
 
-def t_h4_correlations(blocks: dict[str, pd.DataFrame]) -> None:
-    """Rank correlations behind the propagation claim, written where the paper cites them."""
-    df = blocks.get("B3")
-    if df is None:
-        return
-    from scipy import stats as _st
-
-    from planlab.data import load_technology
-
-    tech = load_technology("eurostat", 2020, 20)
-    A, x = tech.A, tech.base_output
-    fwd = (A * x.reshape(1, -1)).sum(axis=1) / x
-    lsum = np.linalg.inv(np.eye(tech.n) - A).sum(axis=0) - 1.0
-    loss = col(df, "shock_output_loss")
-    out = []
-    for mech in df["mechanism"].unique():
-        m = df["mechanism"] == mech
-        pred = {"forward_linkage": df["shock_sector"].map(dict(zip(tech.sectors, fwd))),
-                "leontief_multiplier": df["shock_sector"].map(dict(zip(tech.sectors, lsum))),
-                "output_share": df["shock_sector"].map(dict(zip(tech.sectors, x / x.sum())))}
-        for name, series in pred.items():
-            rho, p = _st.spearmanr(series[m], loss[m])
-            out.append({"mechanism": mech, "predictor": name, "spearman_rho": round(float(rho), 4),
-                        "p_value": round(float(p), 4), "n_sectors": int(m.sum()),
-                        "statistic": "shock_output_loss"})
-    path = RESULTS / "tables" / "t06_propagation.csv"
-    path.parent.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame(out).to_csv(path, index=False)
-    print(f"  wrote {path.relative_to(ROOT)}  ({len(out)} rows)")
+def t_adjudication() -> None:
+    """Publish the verdicts from the analysis layer without a second test pipeline."""
+    source = pd.read_csv(RESULTS / "tables" / "t00_hypotheses.csv")
+    hypotheses = ["H1", "H1'", "H2", "H3", "H4", "H5"]
+    evidence = source.set_index("hypothesis").loc[hypotheses].reset_index()
+    tests = pd.read_csv(RESULTS / "tables" / "tests.csv")
+    h3 = tests.loc[tests["hypothesis"] == "H3", "note"].iloc[0]
+    evidence.loc[evidence["hypothesis"] == "H3", "verdict"] += f" ({h3})"
+    evidence["n_significant_holm_05"] = evidence["n_significant_holm_05"].astype(int)
+    evidence["n_tests"] = evidence["n_tests"].astype(int)
+    evidence = evidence[["hypothesis", "verdict", "n_tests", "n_significant_holm_05"]]
+    write_table(
+        "hypothesis_adjudication",
+        evidence.rename(columns={
+            "hypothesis": "Hypothesis", "verdict": "Result",
+            "n_tests": "Tests", "n_significant_holm_05": "Holm < 0.05",
+        }),
+        "Decisions generated from the experiment test log.",
+    )
 
 
 BUILDERS = [t_calibration, t_noise_only, t_decomposition, t_lag_grid,
-            t_propagation, t_dual_track, t_boundary, t_labour_slack,
-            t_h4_correlations]
+            t_propagation, t_dual_track, t_boundary, t_labour_slack]
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -394,6 +387,8 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     _SOURCE[0] = args.source
     print(f"\nwriting {TABLES.relative_to(ROOT)}/")
+    if args.source == "results" and args.blocks is None:
+        t_adjudication()
     for builder in BUILDERS:
         try:
             builder(blocks)

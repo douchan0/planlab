@@ -202,7 +202,7 @@ def make_gain_sweep(bundle: A.ResultsBundle, out_dir: Path, written: list[dict[s
             ).reset_index()
             axes[1].plot(stats["gain"], stats["value"], marker="s", label=f"$k={int(lag)+1}$")
         axes[1].set_xlabel("administered price gain (tatonnement)")
-        axes[1].set_ylabel("price oscillation amplitude")
+        axes[1].set_ylabel("detrended log-price amplitude")
         axes[1].set_title("(b) The price loop stays quiet (H1)")
         axes[1].legend(title="effective delay", ncol=2, loc="upper left")
         axes[1].set_yscale("log")
@@ -214,7 +214,7 @@ def make_gain_sweep(bundle: A.ResultsBundle, out_dir: Path, written: list[dict[s
 # 3. stability boundary (H1)
 # ---------------------------------------------------------------------------
 def make_stability_boundary(bundle: A.ResultsBundle, out_dir: Path, written: list[dict[str, Any]]) -> None:
-    """Amplitude against gain, and the measured boundary against ``g*(m)/b_p``."""
+    """Plot descriptive amplitude and the separate scalar stability bound."""
     import matplotlib.pyplot as plt
 
     if not bundle.has("B2"):
@@ -223,9 +223,7 @@ def make_stability_boundary(bundle: A.ResultsBundle, out_dir: Path, written: lis
     tat = frame[frame["mechanism"] == "tatonnement"]
     if tat.empty:
         return
-    cells, per_m, _per_gain = A.boundary_cells(tat)
-    gains = A.gain_estimate(bundle)
-    bp = A.bp_summary(gains)
+    cells, _, _ = A.boundary_cells(tat)
     fig, axes = plt.subplots(1, 2, figsize=(7.0, 3.0))
     eps_used = float(tat["price_elasticity"].mode().iloc[0])
     sub = cells[np.isclose(cells["price_elasticity"], eps_used)]
@@ -236,39 +234,17 @@ def make_stability_boundary(bundle: A.ResultsBundle, out_dir: Path, written: lis
         axes[0].plot(block["gain"], block["amp"], marker="o",
                      color=cmap(i / max(len(ms) - 1, 1)), label=f"$k={int(m)}$")
     axes[0].set_xlabel("price gain $\\eta$")
-    axes[0].set_ylabel("price oscillation amplitude")
+    axes[0].set_ylabel("detrended log-price amplitude")
     axes[0].set_title(f"(a) Amplitude against gain ($\\varepsilon={eps_used:g}$)")
     axes[0].legend(title="effective delay", ncol=2)
 
-    if not bp.empty:
-        b_row = bp[np.isclose(bp["price_elasticity"], eps_used)]
-        b = float(b_row["b_p_mean"].iloc[0]) if not b_row.empty else float("nan")
-        if np.isfinite(b) and b > 0:
-            mm = np.array([1, 2, 3, 4, 5, 6, 7], dtype=float)
-            theory = np.array([A.G_STAR(int(v)) / b for v in mm])
-            axes[1].plot(theory, mm, "k-", linewidth=1.0, label="theory $g^*(m)/b_p$")
-            if not per_m.empty:
-                got = per_m[np.isclose(per_m["price_elasticity"], eps_used)].dropna(
-                    subset=["gain_star"]
-                )
-                axes[1].plot(got["gain_star"], got["lag_effective"], "o", color="#b2182b",
-                             label="measured $\\eta^*$")
-            gain_max = float(tat["gain"].max())
-            g_max = gain_max * b
-            axes[1].axvline(gain_max, color="#777777", linestyle=":", linewidth=1.0)
-            axes[1].annotate(
-                f"largest gain tested\n($\\eta={gain_max:g}$, $g={g_max:.3g}$)",
-                xy=(gain_max, 4.0), xytext=(-4, 0), textcoords="offset points",
-                fontsize=7, ha="right", va="center", color="#555555",
-            )
-            axes[1].axvline(min(A.G_STAR(1) / b, gain_max), color="#bbbbbb", linewidth=0.0)
-            axes[1].set_xlabel("critical price gain $\\eta^*$")
-            axes[1].set_ylabel("effective delay $k=\\ell+1$")
-            axes[1].set_title("(b) Where the boundary is")
-            axes[1].legend(loc="lower right")
-            axes[1].set_xlim(left=0)
-    _save(fig, out_dir, "fig_stability_boundary", written, block="B2/B7",
-          what="amplitude against gain and the analytic boundary g*(m)/b_p against measurement (H1)")
+    delays = range(8)
+    axes[1].plot(delays, [A.G_STAR(delay) for delay in delays], "k-o", linewidth=1.0)
+    axes[1].set_xlabel("effective delay $k$")
+    axes[1].set_ylabel(r"scalar stability bound $g^*(k)$")
+    axes[1].set_title("(b) Signed scalar rule")
+    _save(fig, out_dir, "fig_stability_boundary", written, block="B2",
+          what="detrended price amplitude and the separate signed scalar stability bound")
 
 
 # ---------------------------------------------------------------------------
@@ -311,10 +287,12 @@ def make_shock_propagation(bundle: A.ResultsBundle, out_dir: Path, written: list
     summary = A.merged_summary(bundle, ["B3"])
     summary = A._substrate(summary)
     summary = summary[summary["mechanism"] == "material_balance"]
+    paired = "paired_shock_output_amplification" in summary
+    outcome = "paired_shock_output_amplification" if paired else "shock_output_amplification"
     stats = summary.groupby("shock_sector").agg(
-        amp=("shock_output_amplification", "mean"),
-        amp_sd=("shock_output_amplification", "std"),
-        n=("shock_output_amplification", "size"),
+        amp=(outcome, "mean"),
+        amp_sd=(outcome, "std"),
+        n=(outcome, "size"),
     ).reset_index()
     stats["centrality"] = stats["shock_sector"].map(centrality)
     stats = stats.sort_values("centrality")
@@ -327,7 +305,7 @@ def make_shock_propagation(bundle: A.ResultsBundle, out_dir: Path, written: list
     axes[1].set_yticklabels(stats["shock_sector"], fontsize=6.5)
     axes[1].set_xlabel("output amplification $\\mathrm{Amp}^{\\mathrm{out}}$")
     axes[1].set_ylabel("shocked sector (increasing forward linkage $\\rightarrow$)")
-    axes[1].set_title("(b) Network amplification (H4)")
+    axes[1].set_title("(b) Paired output amplification" if paired else "(b) Loss relative to base output")
     _save(fig, out_dir, "fig_shock_propagation", written, block="B3",
           what="sector x sector incidence of the shortage and output amplification by shocked sector")
 

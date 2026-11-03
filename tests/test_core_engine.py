@@ -210,3 +210,25 @@ def test_burn_in_excludes_early_periods():
             "id": "bad", "mechanism": "material_balance",
             "technology": {"toy": 6}, "periods": 10, "burn_in": 10,
         })
+
+
+def test_calm_inventory_below_total_stock_cap_is_kept(run_calm, toy_tech):
+    result = run_calm(periods=2, burn_in=0, stock_ratio=0.8, max_stock_ratio=1.0)
+    for record in result.records:
+        np.testing.assert_allclose(record.inventory_end, 0.8 * toy_tech.base_output)
+        np.testing.assert_allclose(record.spoilage, 0.0, atol=1e-10)
+
+
+def test_zero_labour_shock_stops_labour_using_production(run_calm):
+    result = run_calm(
+        periods=3, burn_in=0,
+        shocks=[{"type": "labour", "start": 2, "duration": 1, "size": 0.0}],
+    )
+    assert result.records[0].x.sum() > 0
+    np.testing.assert_allclose(result.records[1].x, 0.0, atol=1e-10)
+    assert result.records[2].x.sum() > 0
+
+
+def test_scenario_rejects_unimplemented_price_shock():
+    with pytest.raises(ValueError, match="price shocks are not supported"):
+        make_scenario(shocks=[{"type": "price", "start": 2, "duration": 1, "size": 0.1}])

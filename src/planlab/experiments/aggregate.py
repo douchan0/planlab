@@ -716,12 +716,7 @@ def _at_reference_gain(frame: pd.DataFrame) -> pd.DataFrame:
     if frame.empty:
         return frame
     out = frame.copy()
-    if "gain_axis" in out.columns:
-        swept = out["gain_axis"].astype(str) == "swept"
-        ref = np.isclose(out["gain"].astype(float), 0.30, atol=1e-9)
-        out = out[swept | ref]
-    else:
-        out = out[np.isclose(out["gain"].astype(float), 0.30, atol=1e-9)]
+    out = out[np.isclose(out["gain"].astype(float), 0.30, atol=1e-9)]
     if "price_elasticity" in out.columns:
         out = out[np.isclose(out["price_elasticity"].astype(float), 0.4, atol=1e-9)]
     return out
@@ -952,46 +947,41 @@ def table_lag_mechanism(bundle: ResultsBundle, writer: TableWriter, tests: TestL
         digits=4,
     )
 
-    # ---- H2: the slope of welfare loss against the effective delay per mechanism
-    slopes: dict[str, dict[str, float]] = {}
-    for mechanism, group in frame.groupby("mechanism"):
-        fit = ols_cluster(
-            group, "welfare_loss_vs_baseline", ["lag"], cluster="seed"
-        )
-        slopes[mechanism] = fit["params"]
-        tests.add(
-            block=block,
-            hypothesis="H2",
-            outcome="welfare_loss_vs_baseline",
-            comparison=f"{mechanism}: slope against reporting lag",
-            test="OLS with cluster-robust SE by seed",
-            statistic=float(fit["params"].get("lag", np.nan)),
-            df=float(max(int(fit.get("n", 0)) - 2, 1)),
-            p_value=float(fit["p"].get("lag", np.nan)),
-            effect_name="dWelfareLoss/dlag",
-            effect_value=float(fit["params"].get("lag", np.nan)),
-            n_units=int(fit.get("n", 0)),
-            n_runs=int(fit.get("n", 0)),
-            note=f"cluster-robust se={fit['se'].get('lag', float('nan')):.4g}",
-        )
+    # H2 compares slopes within a seed at the shared operating point.
+    from scipy.stats import ttest_1samp
+
+    slopes = []
+    for (mechanism, seed), group in frame.groupby(["mechanism", "seed"]):
+        if group["lag"].nunique() < 2:
+            continue
+        # A negative slope of mean utility is a positive slope of utility loss.
+        slope = np.polyfit(group["lag"], -group["mean_welfare"], 1)[0]
+        slopes.append({"mechanism": mechanism, "seed": seed, "slope": slope})
     if slopes:
-        ranked = sorted(slopes.items(), key=lambda kv: kv[1].get("lag", -np.inf), reverse=True)
-        tests.add(
-            block=block,
-            hypothesis="H2",
-            outcome="welfare_loss_vs_baseline",
-            comparison="ordering of lag slopes across mechanisms",
-            test="max-slope mechanism",
-            statistic=float(ranked[0][1].get("lag", np.nan)),
-            p_value=float("nan"),
-            effect_name="steepest mechanism",
-            effect_value=float(MECH_ORDER.index(ranked[0][0])) if ranked[0][0] in MECH_ORDER else float("nan"),
-            n_units=len(ranked),
-            note=(
-                "H2 predicts lp_central has the steepest slope; measured order: "
-                + ", ".join(name for name, _ in ranked)
-            ),
-        )
+        paired = pd.DataFrame(slopes).pivot(index="seed", columns="mechanism", values="slope")
+        if "lp_central" in paired:
+            for mechanism in paired.columns.drop("lp_central"):
+                pair = paired[["lp_central", mechanism]].dropna()
+                if len(pair) < 2:
+                    continue
+                diff = pair["lp_central"] - pair[mechanism]
+                fit = ttest_1samp(diff, 0.0, alternative="greater")
+                ci = ttest_1samp(diff, 0.0).confidence_interval()
+                tests.add(
+                    block=block,
+                    hypothesis="H2",
+                    outcome="mean_welfare",
+                    comparison=f"lp_central vs {mechanism}: welfare-loss slope",
+                    test="one-sided paired t-test on per-seed slopes",
+                    statistic=fit.statistic,
+                    p_value=fit.pvalue,
+                    effect_name="slope difference (utility points per period of delay)",
+                    effect_value=diff.mean(),
+                    n_units=len(diff),
+                    note=(f"lp_central={pair['lp_central'].mean():.6g}; "
+                          f"{mechanism}={pair[mechanism].mean():.6g}; "
+                          f"unadjusted two-sided CI=[{ci.low:.6g}, {ci.high:.6g}]"),
+                )
     return table
 
 
@@ -1084,52 +1074,50 @@ def table_gain_sweep(bundle: ResultsBundle, writer: TableWriter, tests: TestLog)
             n_units=int(len(cell)),
             note="positive rho = taut plans raise shortage (positive feedback loop)",
         )
-        low = mb[np.isclose(mb["gain"], 0.05)].sort_values(["lag", "seed"])
-        high = mb[np.isclose(mb["gain"], 1.6)].sort_values(["lag", "seed"])
-        if len(low) == len(high) and len(low) > 0:
-            res = paired_test(high["mean_shortage_rate"], low["mean_shortage_rate"],
-                              alternative="greater")
+        wide = mb.pivot(index=["lag", "seed"], columns="gain", values="mean_shortage_rate")
+        if 0.05 in wide and 1.6 in wide:
+            matched = wide[[0.05, 1.6]].dropna().groupby("seed").mean()
+            res = paired_test(matched[1.6], matched[0.05], alternative="greater")
             tests.add(
                 block=block,
                 hypothesis="H1'",
                 outcome="mean_shortage_rate",
-                comparison="material_balance gain 1.6 vs 0.05 (paired by seed and lag)",
+                comparison="material_balance gain 1.6 vs 0.05 (paired by seed, averaged over lags)",
                 test="paired Wilcoxon signed-rank (one-sided, greater)",
                 statistic=res["wilcoxon_stat"],
                 p_value=res["p_value"],
                 effect_name="paired mean difference",
                 effect_value=res["mean_diff"],
                 n_units=int(res["n_pairs"]),
-                n_runs=int(len(low) + len(high)),
+                n_runs=2 * len(wide[[0.05, 1.6]].dropna()),
                 note=f"ci95=[{res['ci95_lo']:.4f},{res['ci95_hi']:.4f}], cliff={res['cliffs_delta']:.2f}",
             )
 
-    # ---- H1: amplitude growth with the delay at high gain -------------------
+    # Compare each reported delay to zero within the same elasticity and seed.
     tat = frame[frame["mechanism"] == "tatonnement"]
     if not tat.empty:
         top = tat[np.isclose(tat["gain"], tat["gain"].max())]
-        by_lag = top.groupby("lag")["oscillation_amplitude"].agg(["mean", "std", "size"])
-        by_lag = by_lag.reset_index()
-        worst = by_lag.sort_values("mean", ascending=False).iloc[0]
-        res = paired_test(
-            top[np.isclose(top["lag"], worst["lag"])].sort_values("seed")["oscillation_amplitude"],
-            top[np.isclose(top["lag"], 0)].sort_values("seed")["oscillation_amplitude"],
-            alternative="greater",
-        )
-        tests.add(
-            block=block,
-            hypothesis="H1",
-            outcome="oscillation_amplitude",
-            comparison=f"tatonnement at gain={tat['gain'].max():g}: lag {int(worst['lag'])} vs lag 0",
-            test="paired Wilcoxon signed-rank (one-sided, greater)",
-            statistic=res["wilcoxon_stat"],
-            p_value=res["p_value"],
-            effect_name="paired mean difference",
-            effect_value=res["mean_diff"],
-            n_units=int(res["n_pairs"]),
-            n_runs=int(top.shape[0]),
-            note=f"ci95=[{res['ci95_lo']:.4f},{res['ci95_hi']:.4f}]",
-        )
+        for elasticity, group in top.groupby("price_elasticity"):
+            wide = group.pivot(index="seed", columns="lag", values="oscillation_amplitude")
+            if 0 not in wide:
+                continue
+            for lag in wide.columns.drop(0):
+                pair = wide[[lag, 0]].dropna()
+                res = paired_test(pair[lag], pair[0], alternative="greater")
+                tests.add(
+                    block=block,
+                    hypothesis="H1-amplitude",
+                    outcome="oscillation_amplitude",
+                    comparison=f"gain {tat['gain'].max():g}, elasticity {elasticity:g}: lag {lag} vs 0",
+                    test="one-sided paired Wilcoxon by seed",
+                    statistic=res["wilcoxon_stat"],
+                    p_value=res["p_value"],
+                    effect_name="paired amplitude difference",
+                    effect_value=res["mean_diff"],
+                    n_units=len(pair),
+                    n_runs=2 * len(pair),
+                    note="Descriptive evidence about detrended amplitude, not a stability test.",
+                )
     return table
 
 
@@ -1310,15 +1298,7 @@ def table_bp_by_sector(bundle: ResultsBundle, writer: TableWriter, tests: TestLo
 def table_stability_boundary(
     bundle: ResultsBundle, writer: TableWriter, tests: TestLog
 ) -> pd.DataFrame:
-    """t05 — is the analytic stability boundary approachable, and where is it?
-
-    Two questions, kept separate because the answer differs (Lead's identification
-    review): *where* the boundary lies, ``eta*(m) = g*(m)/b_p``, and *whether the
-    mechanism's loop gain can reach it*, ``g_max = eta_max * b_p`` against
-    ``g*(m)``.  The measured critical gain is filled in only where the
-    pre-registered instability rule actually fired; a grid in which it never fires
-    is reported as "boundary not approachable", never as a crossed boundary.
-    """
+    """t05 — compare scalar benchmarks with diagnostics from the one-sided rule."""
     block = "B2"
     if not bundle.has(block):
         return pd.DataFrame()
@@ -1327,7 +1307,7 @@ def table_stability_boundary(
     frame = frame[frame["mechanism"] == "tatonnement"]
     if frame.empty:
         return pd.DataFrame()
-    cells, per_m, per_gain = boundary_cells(frame)
+    _, per_m, _ = boundary_cells(frame)
     gains = gain_estimate(bundle)
     bp = bp_summary(gains)
     bp_map = {float(row["price_elasticity"]): row for _, row in bp.iterrows()} if not bp.empty else {}
@@ -1342,16 +1322,6 @@ def table_stability_boundary(
             theory_gain = G_STAR(m) / b if np.isfinite(b) and b > 0 else float("nan")
             g_max = gain_max * b if np.isfinite(b) else float("nan")
             measured = float(row["gain_star"])
-            # measured oscillation period at the highest gain tested for this m
-            period_measured = float("nan")
-            if not cells.empty:
-                sub = cells[
-                    np.isclose(cells["price_elasticity"], eps)
-                    & (cells["m"] == m)
-                    & np.isclose(cells["gain"], gain_max)
-                ]
-                if not sub.empty and "oscillation_period" not in sub.columns:
-                    period_measured = float("nan")
             rows.append(
                 {
                     "lag_reporting": int(row["lag_reporting"]),
@@ -1361,18 +1331,18 @@ def table_stability_boundary(
                     "b_p_min": float(info["b_p_min"]) if info is not None else float("nan"),
                     "b_p_max": float(info["b_p_max"]) if info is not None else float("nan"),
                     "g_star_m": G_STAR(m),
-                    "eta_star_theory": theory_gain,
-                    "eta_star_measured": measured,
-                    "measured_over_theory": (
+                    "scalar_gain_benchmark": theory_gain,
+                    "diagnostic_first_trigger_gain": measured,
+                    "trigger_over_scalar_benchmark": (
                         measured / theory_gain
                         if np.isfinite(theory_gain) and theory_gain > 0 and np.isfinite(measured)
                         else float("nan")
                     ),
                     "gain_max_tested": gain_max,
-                    "g_max_achieved": g_max,
-                    "g_max_over_bound": g_max / G_STAR(m) if G_STAR(m) > 0 else float("nan"),
-                    "boundary_approachable": bool(np.isfinite(g_max) and g_max >= G_STAR(m)),
-                    "rule_fired_below_bound": bool(
+                    "gain_times_mean_response": g_max,
+                    "proxy_over_scalar_bound": g_max / G_STAR(m) if G_STAR(m) > 0 else float("nan"),
+                    "proxy_meets_scalar_bound": bool(np.isfinite(g_max) and g_max >= G_STAR(m)),
+                    "diagnostic_trigger_below_scalar_bound": bool(
                         np.isfinite(measured) and np.isfinite(b) and measured * b < G_STAR(m)
                     ),
                     "period_theory": PERIOD_STAR(m),
@@ -1389,64 +1359,24 @@ def table_stability_boundary(
         "t05_stability_boundary",
         table,
         caption=(
-            "Where the analytic stability boundary lies, and whether the price loop can reach it "
-            "(H1). The bound is $g^*(m)=2\\sin(\\pi/(2(2m+1)))$ on the loop gain "
-            "$g=\\eta\\,b_p$; the local gain $b_p$ is measured sector by sector in block B7 "
-            "(table~\\ref{tab:bp_sector}). ``$g_{\\max}$'' is the largest loop gain the tested "
-            "gain grid can produce, $\\eta_{\\max}b_p$, so "
-            "``$g_{\\max}/g^*$'' below one means the boundary is **not approachable** in this "
-            "economy at any adjustment speed inside the grid, whatever its position."
+            "Scalar stability benchmark and diagnostics for the simulated one-sided price rule. "
+            "The sector-average price response is a descriptive proxy, not a bound on dynamic eigenvalues."
         ),
         label="tab:stability_boundary",
         notes=(
-            "The measured critical gain is reported only where the pre-registered rule fired "
-            "(lag-1 autocorrelation of the detrended price deviation above 0.5 and amplitude more "
-            "than three seed standard deviations above the lag-0 cell of the same gain); ``--'' "
-            "means it never fired. Source: \\texttt{results/B2/} and \\texttt{results/B7/}."
+            "The first diagnostic trigger uses autocorrelation and detrended amplitude. "
+            "A trigger does not identify a stability crossing."
         ),
         digits=3,
         formatters={
-            "boundary_approachable": lambda v: "yes" if bool(v) else "no",
-            "rule_fired_below_bound": lambda v: "yes" if bool(v) else "no",
+            "proxy_meets_scalar_bound": lambda v: "yes" if bool(v) else "no",
+            "diagnostic_trigger_below_scalar_bound": lambda v: "yes" if bool(v) else "no",
         },
     )
-    for _, row in table.iterrows():
-        tests.add(
-            block=block,
-            hypothesis="H1",
-            outcome="loop_gain_over_bound",
-            comparison=(
-                f"price_elasticity={row['price_elasticity']:g}, m={int(row['lag_effective'])}: "
-                "largest achievable loop gain vs the analytic bound"
-            ),
-            test="ratio g_max/g*(m)",
-            statistic=float(row["g_max_over_bound"]),
-            p_value=float("nan"),
-            effect_name="g_max/g*",
-            effect_value=float(row["g_max_over_bound"]),
-            n_units=int(row["n_seeds"]),
-            note=(
-                f"b_p={row['b_p_mean']:.4g}; eta*_theory={row['eta_star_theory']:.3g}; "
-                f"eta*_measured={row['eta_star_measured']:.3g}"
-            ),
-        )
-    approachable = table[table["boundary_approachable"]]
     tests.add(
-        block=block,
-        hypothesis="H1",
-        outcome="boundary_approachable",
-        comparison="any (elasticity, m) cell inside the tested gain grid",
-        test="count of approachable cells",
-        statistic=float(len(approachable)),
-        p_value=float("nan"),
-        effect_name="fraction approachable",
-        effect_value=float(len(approachable) / len(table)) if len(table) else float("nan"),
-        n_units=int(len(table)),
-        note=(
-            "H1's falsification clause (boundary off by more than one lag period) can only be "
-            "evaluated where the boundary is approachable; where it is not, the honest result is "
-            "that price adjustment never destabilises this economy."
-        ),
+        block=block, hypothesis="H1", outcome="stability_threshold",
+        comparison="scalar threshold versus simulated one-sided price rule",
+        test="identification assessment", note="Threshold not identified by this design.",
     )
     return table
 
@@ -1460,6 +1390,8 @@ def table_propagation(bundle: ResultsBundle, writer: TableWriter, tests: TestLog
     frame = _substrate(summary)
     if frame.empty:
         return pd.DataFrame()
+    paired_columns = {"paired_shock_output_amplification", "paired_shock_output_loss"}
+    has_controls = paired_columns.issubset(frame.columns)
     rows: list[dict[str, Any]] = []
     for (mechanism, sector), group in frame.groupby(["mechanism", "shock_sector"]):
         rows.append(
@@ -1467,6 +1399,8 @@ def table_propagation(bundle: ResultsBundle, writer: TableWriter, tests: TestLog
                 "mechanism": mechanism,
                 "shocked_sector": sector,
                 "n_seeds": int(len(group)),
+                **({name: float(group[name].mean()) for name in sorted(paired_columns)}
+                   if has_controls else {}),
                 "shock_output_amplification": float(group["shock_output_amplification"].mean()),
                 "shock_output_amplification_sd": float(group["shock_output_amplification"].std(ddof=1)),
                 "shock_amplification_distributional": float(group["shock_amplification"].mean()),
@@ -1495,51 +1429,53 @@ def table_propagation(bundle: ResultsBundle, writer: TableWriter, tests: TestLog
         caption=(
             "Sectoral propagation (block B3): a 50 per cent capacity cut lasting eight quarters, "
             "one shocked sector at a time, 20 seeds each. "
-            "$\\mathrm{Amp}^{\\mathrm{out}}$ is the peak aggregate output loss divided by the "
-            "output-weighted capacity loss (the like-for-like amplification of H4); the "
-            "distributional ratio divides the peak *shortage* share by the same denominator and "
-            "is always larger because it compares a demand-side with a supply-side share."
+            "Paired loss compares each run to the same-seed no-shock control. "
+            "The original loss relative to base-year output is retained as a separate column."
         ),
         label="tab:propagation",
-        notes=(
-            "Forward linkage is the intermediate share of a sector's own output, "
-            "$(A x)_j/x_j$: how much of what the sector makes other sectors need as input. "
-            "The Leontief column-sum multiplier is reported as a secondary predictor only: it "
-            "divides by the sector's output share, so for a sector that is 0.27 per cent of "
-            "output it yields an 'amplification' of 87$\\times$ --- a small-denominator "
-            "artefact, not network amplification. Source: \\texttt{results/B3/}."
-        ),
+        notes="Forward linkage is the intermediate share of a sector's own output.",
         formatters={"mechanism": lambda v: _tex_escape(v), "shocked_sector": lambda v: _tex_escape(v)},
         digits=3,
     )
-    # ---- H4: output loss as the primary statistic, forward linkage as predictor
-    predictors = linkage_predictors(bundle)
+    # H3 uses a fixed threshold, so no p-value or Holm count is assigned.
+    mb = table.loc[table["mechanism"] == "material_balance", "mean_shortage_rate"]
+    if not mb.empty:
+        below = int((mb < 0.005).sum())
+        tests.add(
+            block=block, hypothesis="H3", outcome="mean_shortage_rate",
+            comparison="material balance by shocked sector versus 0.5% shortage",
+            test="descriptive threshold check", statistic=float(mb.min()),
+            effect_name="cells below threshold", effect_value=below, n_units=len(mb),
+            note=f"{below}/{len(mb)} below 0.5%; min={mb.min():.6g}, mean={mb.mean():.6g}, max={mb.max():.6g}",
+        )
+
+    # H4 requires a no-shock counterfactual. Historical summaries lack one.
+    if not has_controls:
+        return table
     for mechanism, group in table.groupby("mechanism"):
-        loss = group["shock_output_loss"].to_numpy(dtype=float)
-        amp = group["shock_output_amplification"].to_numpy(dtype=float)
+        loss = group["paired_shock_output_loss"].to_numpy(dtype=float)
+        amp = group["paired_shock_output_amplification"].to_numpy(dtype=float)
         fwd = np.array([predictors.get("forward", {}).get(str(s), np.nan) for s in group["shocked_sector"]])
         colsum = np.array([predictors.get("leontief", {}).get(str(s), np.nan) for s in group["shocked_sector"]])
         share = np.array([predictors.get("share", {}).get(str(s), np.nan) for s in group["shocked_sector"]])
-        from scipy.stats import wilcoxon
+        from scipy.stats import ttest_1samp
 
-        try:
-            res = wilcoxon(amp - 1.0, alternative="greater")
-            stat, p_value = float(res.statistic), float(res.pvalue)
-        except Exception:  # pragma: no cover
-            stat, p_value = float("nan"), float("nan")
+        runs = frame[frame["mechanism"] == mechanism]
+        per_seed = runs.groupby("seed")["paired_shock_output_amplification"].mean()
+        fit = ttest_1samp(per_seed, 1.0, alternative="greater") if len(per_seed) > 1 else None
         tests.add(
             block=block,
             hypothesis="H4",
-            outcome="shock_output_amplification",
-            comparison=f"{mechanism}: mean amplification over 20 shocked sectors vs 1",
-            test="one-sided Wilcoxon signed-rank vs 1",
-            statistic=stat,
-            p_value=p_value,
+            outcome="paired_shock_output_amplification",
+            comparison=f"{mechanism}: mean amplification across fixed sectors vs 1",
+            test="one-sided t-test on per-seed sector means",
+            statistic=float(fit.statistic) if fit is not None else float("nan"),
+            p_value=float(fit.pvalue) if fit is not None else float("nan"),
             effect_name="mean amplification - 1",
-            effect_value=float(np.nanmean(amp) - 1.0),
-            n_units=int(len(amp)),
-            n_runs=int(group["n_seeds"].sum()),
-            note=f"mean={np.nanmean(amp):.3f}; output loss spans {np.nanmin(loss):.4f}-{np.nanmax(loss):.4f}",
+            effect_value=float(per_seed.mean() - 1.0),
+            n_units=len(per_seed),
+            n_runs=len(runs),
+            note=f"mean={per_seed.mean():.3f}; paired output loss spans {np.nanmin(loss):.4f}-{np.nanmax(loss):.4f}",
         )
         for label, values in (("forward linkage", fwd), ("Leontief column sum", colsum),
                               ("output share", share)):
@@ -1547,7 +1483,7 @@ def table_propagation(bundle: ResultsBundle, writer: TableWriter, tests: TestLog
             tests.add(
                 block=block,
                 hypothesis="H4-centrality",
-                outcome="shock_output_loss",
+                outcome="paired_shock_output_loss",
                 comparison=f"{mechanism}: output loss vs {label}",
                 test="Spearman rank correlation",
                 statistic=rho,
@@ -1563,7 +1499,7 @@ def table_propagation(bundle: ResultsBundle, writer: TableWriter, tests: TestLog
         tests.add(
             block=block,
             hypothesis="H4-multiplier",
-            outcome="shock_output_amplification",
+            outcome="paired_shock_output_amplification",
             comparison=f"{mechanism}: amplification vs forward linkage",
             test="Spearman rank correlation",
             statistic=rho_m,
@@ -1823,41 +1759,29 @@ def table_dual_track(bundle: ResultsBundle, writer: TableWriter, tests: TestLog)
         notes="20 seeds per cell. Source: \\texttt{results/B5/}.",
         digits=4,
     )
-    # ---- H5: interior optimum ----------------------------------------------
-    for lag, group in table.groupby("lag_reporting"):
-        ordered = group.sort_values("theta")
-        rho, p_rho = spearman(ordered["theta"], ordered["mean_welfare"])
-        best = ordered.loc[ordered["mean_welfare"].idxmax()]
-        interior = 0.0 < float(best["theta"]) < 1.0
-        endpoints = ordered[ordered["theta"].isin([0.0, 1.0])]
-        best_welfare = float(best["mean_welfare"])
-        margin = best_welfare - float(endpoints["mean_welfare"].max())
-        # an "interior optimum" must be larger than the seed noise to count: the
-        # pre-registered test asks whether welfare is monotone in theta, so a grid
-        # point that wins by less than two seed standard deviations is not evidence
-        # of an interior optimum.
-        best_sd = float(best["mean_welfare_sd"]) if "mean_welfare_sd" in best else 0.0
-        detectable = bool(interior and margin > 2.0 * (best_sd if np.isfinite(best_sd) else 0.0))
-        monotone = bool(abs(rho) > 0.9 and p_rho < 0.05)
-        verdict = "supported" if detectable and not monotone else "falsified (no detectable interior optimum)"
-        tests.add(
-            block=block,
-            hypothesis="H5",
-            outcome="mean_welfare",
-            comparison=f"lag {lag}: interior optimum in theta",
-            test="argmax over the theta grid (monotonicity check via Spearman)",
-            statistic=float(best["theta"]),
-            p_value=p_rho,
-            effect_name="theta* (argmax welfare)",
-            effect_value=float(best["theta"]),
-            n_units=int(len(ordered)),
-            n_runs=int(group["n_seeds"].sum()),
-            note=(
-                f"verdict={verdict}; interior grid point={bool(interior)}, "
-                f"margin={margin:.4f} vs 2SD={2.0 * (best_sd if np.isfinite(best_sd) else 0.0):.4f}, "
-                f"monotone={monotone}, rho(theta, welfare)={rho:.3f}"
-            ),
-        )
+    # To beat both endpoints a candidate must pass both one-sided comparisons.
+    # The maximum of their p-values tests that joint claim. Holm covers all candidates.
+    for lag, group in frame.groupby("lag"):
+        wide = group.pivot(index="seed", columns="theta", values="mean_welfare")
+        if 0.0 not in wide or 1.0 not in wide:
+            continue
+        for theta in wide.columns[(wide.columns > 0) & (wide.columns < 1)]:
+            paired = wide[[theta, 0.0, 1.0]].dropna()
+            if paired.empty:
+                continue
+            left = paired_test(paired[theta], paired[0.0], alternative="greater")
+            right = paired_test(paired[theta], paired[1.0], alternative="greater")
+            tests.add(
+                block=block, hypothesis="H5", outcome="mean_welfare",
+                comparison=f"lag {lag}, theta {theta:g} vs both endpoints",
+                test="intersection of two one-sided paired Wilcoxon tests",
+                statistic=theta, p_value=max(left["p_value"], right["p_value"]),
+                effect_name="smaller paired mean advantage",
+                effect_value=min(left["mean_diff"], right["mean_diff"]),
+                n_units=len(paired), n_runs=3 * len(paired),
+                note=(f"vs 0: {left['mean_diff']:.6g} (p={left['p_value']:.6g}); "
+                      f"vs 1: {right['mean_diff']:.6g} (p={right['p_value']:.6g})"),
+            )
     return table
 
 
@@ -2121,16 +2045,14 @@ def table_hypotheses(tests: TestLog, writer: TableWriter) -> pd.DataFrame:
             "freshest information (\\texttt{lp\\_central})."
         ),
         "H3": (
-            "Material balance does not eliminate shortage: mean shortage under a sectoral "
-            "capacity shock is positive."
+            "Each shocked-sector mean shortage is at least 0.5 per cent."
         ),
         "H4": (
             "A single-sector shock amplifies through the network: the like-for-like output "
             "amplification exceeds one on average over the twenty shocked sectors."
         ),
         "H5": (
-            "The dual track has an interior optimum in the plan share $\\theta$: welfare is not "
-            "monotone in $\\theta$ over the tested grid."
+            "An interior plan share improves on both endpoint shares."
         ),
     }
     # tests that belong to a hypothesis but carry a sub-label are folded in
@@ -2147,10 +2069,26 @@ def table_hypotheses(tests: TestLog, writer: TableWriter) -> pd.DataFrame:
         if sub.empty:
             continue
         sig = sub[sub["significant_05"] == "yes"]
+        if hypothesis == "H1":
+            verdict = "Threshold not identified"
+        elif hypothesis == "H3":
+            verdict = "Threshold met in every cell" if sub["effect_value"].iloc[0] == 0 else "Threshold missed"
+        elif hypothesis == "H4":
+            amplification = (sig["outcome"] == "paired_shock_output_amplification") & sig["test"].str.startswith("one-sided t-test")
+            # Centrality and average amplification answer separate questions.
+            centrality = sig["outcome"] == "paired_shock_output_loss"
+            verdict = f"{int(amplification.sum())} amplification tests; {int(centrality.sum())} centrality tests"
+        elif hypothesis == "H2":
+            verdict = "LP steepest" if len(sig) == len(MECH_ORDER) - 1 else "Ordering not established"
+        elif hypothesis == "H5":
+            verdict = "Interior advantage detected" if not sig.empty else "Interior advantage not established"
+        else:
+            verdict = "See test log"
         verdicts.append(
             {
                 "hypothesis": hypothesis,
-                "n_tests": int(len(sub)),
+                "verdict": verdict,
+                "n_tests": int(sub["p_value"].notna().sum()),
                 "n_significant_holm_05": int(len(sig)),
                 "key_statistic": float(sub["statistic"].iloc[0]),
                 "key_p_value": float(sub["p_value"].iloc[0]),
@@ -2170,10 +2108,10 @@ def table_hypotheses(tests: TestLog, writer: TableWriter) -> pd.DataFrame:
         notes=(
             "``Key statistic'' is the first test of the hypothesis; the full list is in "
             "\\texttt{tests.csv}. A hypothesis with no significant test after Holm correction is "
-            "reported as unsupported, not as a null result to be buried."
+            "interpreted using the stated test or descriptive threshold."
         ),
         digits=4,
-        alignment="lll" + "r" * (len(table.columns) - 3) if len(table.columns) > 3 else None,
+        alignment="llrrrrrl",
     )
     return table
 

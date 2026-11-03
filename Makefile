@@ -36,7 +36,9 @@ figures:
 	@$(RUN) python -m planlab.experiments.figures
 
 paper:
+	@$(RUN) python scripts/paper_tables.py
 	@$(RUN) python scripts/build_paper.py
+	@$(RUN) python scripts/build_paper.py --lang zh
 
 reproduce:
 	@bash scripts/reproduce.sh

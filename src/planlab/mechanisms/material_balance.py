@@ -137,7 +137,7 @@ class MaterialBalance(CoordinationMechanism):
         for _ in range(max(0, rounds)):
             balanced, _status = feasible_output(
                 A, targets, inv_est, np.minimum(reserve, inv_est),
-                self.tech.labor, float(obs.labour or 0.0),
+                self.tech.labor, obs.labour,
             )
             detail["fill_min"] = float(
                 min(detail["fill_min"], float(np.min(balanced / np.maximum(targets, 1e-12))))

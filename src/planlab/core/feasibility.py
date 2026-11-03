@@ -34,7 +34,7 @@ def is_feasible(
     inventory: np.ndarray,
     reserve: np.ndarray,
     labor: np.ndarray | None = None,
-    labour_supply: float = 0.0,
+    labour_supply: float | None = None,
     tol: float = 1e-9,
 ) -> bool:
     """Cheap check of whether ``x`` satisfies the goods and labour constraints."""
@@ -42,7 +42,7 @@ def is_feasible(
     lhs = A @ x - x
     if np.max(lhs - (inventory - reserve)) > tol * scale:
         return False
-    if labor is not None and labour_supply > 0:
+    if labor is not None and labour_supply is not None:
         if float(np.dot(labor, x)) > labour_supply * (1.0 + 1e-12):
             return False
     return True
@@ -54,7 +54,7 @@ def feasible_output(
     inventory: np.ndarray,
     reserve: np.ndarray | None = None,
     labor: np.ndarray | None = None,
-    labour_supply: float = 0.0,
+    labour_supply: float | None = None,
     *,
     objective: np.ndarray | None = None,
     tol: float = 1e-9,
@@ -74,7 +74,7 @@ def feasible_output(
         (e.g. essential consumption under a "consumption first" ladder).  Clipped
         to ``inventory`` so that the programme is always feasible.
     labor, labour_supply:
-        optional labour constraint.
+        optional labour constraint. A supply of zero binds, while None disables it.
     objective:
         optional ``(n,)`` weights in the maximisation; default is all ones
         (maximise total gross output).
@@ -100,7 +100,7 @@ def feasible_output(
     c = -(np.ones(n) if objective is None else np.asarray(objective, dtype=float))
     A_ub = [A - np.eye(n)]
     b_ub = [inventory - reserve]
-    if labor is not None and labour_supply and labour_supply > 0:
+    if labor is not None and labour_supply is not None:
         A_ub.append(np.asarray(labor, dtype=float).reshape(1, -1))
         b_ub.append(np.array([float(labour_supply)]))
     try:

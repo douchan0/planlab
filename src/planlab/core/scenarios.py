@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -161,6 +162,10 @@ class Scenario:
         lo, hi = self.price_bounds
         if not (0 < lo < hi):
             raise ValueError("price_bounds must satisfy 0 < lo < hi")
+        if not math.isfinite(self.labor_supply_factor) or self.labor_supply_factor < 0:
+            raise ValueError("labor_supply_factor must be finite and >= 0")
+        if any(shock.type == "price" for shock in self.shocks):
+            raise ValueError("price shocks are not supported in scenarios; use an experimental price probe")
         if not self.seeds:
             raise ValueError("at least one seed is required")
 

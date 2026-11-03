@@ -47,8 +47,10 @@ class Shock:
             raise ValueError(f"unknown shock type {self.type!r}; allowed: {sorted(_ALLOWED)}")
         if self.start < 0:
             raise ValueError("shock.start must be >= 0")
-        if self.type != "price" and self.size <= 0:
-            raise ValueError("shock.size must be > 0 for multiplicative shocks")
+        if self.type == "labour" and self.size < 0:
+            raise ValueError("labour shock.size must be >= 0")
+        if self.type in {"capacity", "demand"} and self.size <= 0:
+            raise ValueError("shock.size must be > 0 for capacity and demand shocks")
 
     def factor(self, t: int) -> float:
         """Multiplicative factor at period ``t`` (1.0 outside the shock window)."""

@@ -146,6 +146,10 @@ def _body(res: CheckResult) -> None:
     per_period_worst = 0.0
     tech_disagreements = 0
 
+    missing_panels = [block.name for block in blocks if not (block / "runs.parquet").exists()]
+    if missing_panels:
+        res.note("4c/4e: per-period checks skipped for missing runs.parquet: " + ", ".join(missing_panels))
+
     for block_name, cell_id, seed in sample:
         cell = cells_by_block.get(block_name, {}).get(cell_id)
         summ = summaries[block_name]
@@ -203,7 +207,7 @@ def _body(res: CheckResult) -> None:
                                          abs(value - stored_val) / max(1.0, abs(value)))
 
         # ---- 4c per-period reproducibility ------------------------------
-        rp = block_path = next((b / "runs.parquet" for b in blocks if b.name == block_name), None)
+        rp = next((b / "runs.parquet" for b in blocks if b.name == block_name), None)
         if rp is not None and rp.exists():
             per = pd.read_parquet(rp)
             per = per[(per["cell_id"] == cell_id) & (per["seed"] == seed)]
@@ -360,6 +364,7 @@ def _body(res: CheckResult) -> None:
         "worst_run_metric_diff_at": worst_metric_where,
         "independent_metric_worst": dict(independent_worst),
         "per_period_comparisons": per_period_checked,
+        "per_period_blocks_skipped": missing_panels,
         "per_period_worst_diff": per_period_worst,
         "n_cells_without_definition": missing_cells,
         "n_tech_spec_disagreements": tech_disagreements,
@@ -377,7 +382,7 @@ def _body(res: CheckResult) -> None:
             f"{max([v for v in independent_worst.values()] or [0]):.1e}; "
             f"{per_period_checked} per-period metric values re-checked (worst "
             f"{per_period_worst:.1e}); manifests carry versions, git commit and scenario "
-            f"hashes that match; runs.parquet and summary.csv agree; "
+            f"hashes that match; {n_int} panel/summary consistency comparisons; "
             f"{n_yaml} scenario YAML(s) re-run."
         )
 

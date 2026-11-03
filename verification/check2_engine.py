@@ -73,7 +73,7 @@ def solve_goods_balance(A, ub, r, reserve, labor, labour_supply, method="highs")
     n = A.shape[0]
     A_ub = [A - np.eye(n)]
     b_ub = [np.asarray(r, dtype=float) - np.asarray(reserve, dtype=float)]
-    if labor is not None and labour_supply > 0:
+    if labor is not None and labour_supply is not None:
         A_ub.append(np.asarray(labor, dtype=float).reshape(1, -1))
         b_ub.append(np.array([float(labour_supply)]))
     res = linprog(
@@ -167,7 +167,7 @@ def independent_period(*, A, labor, targets, capacity, inventory, labour_supply,
     else:
         # bounded storage: output that is neither used nor storable is spoilage
         stock_cap = float(max_stock_ratio) * np.asarray(base_output, dtype=float)
-        S_end = np.minimum(residual, np.maximum(stock_cap - r, 0.0))
+        S_end = np.minimum(residual, stock_cap)
         spoilage = residual - S_end
     unmet = np.maximum(demand - C, 0.0)
     return {
