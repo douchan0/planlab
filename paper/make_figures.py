@@ -182,7 +182,7 @@ def figure_response() -> None:
     for k in (1, 2, 4):
         u = impulse_response(k, 0.90 * boundary_gain(k), horizon)
         ax1.plot(np.arange(horizon), u / np.max(np.abs(u)), lw=1.1, color=colours[k],
-                 label=rf"$k={k}$  (period {2 * (2 * k + 1)} quarters)")
+                 label=rf"$k={k}$")
     ax1.axhline(0.0, lw=0.6, color="#999999")
     ax1.set_xlabel("quarter $t$")
     ax1.set_ylabel(r"$u_t / \max_t |u_t|$")

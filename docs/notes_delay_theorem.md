@@ -1,44 +1,27 @@
 # Derivation notes: delay-induced instability of administratively revised signals
 
-**For the paper's Section 4.** These notes contain the derivation, the numerical
-verification recipe, and the exact mapping from the model's parameters to the
-theorem's. The writer must check every step independently and is free to improve
-the presentation; what must not change is the substance.
+The notation here uses `m` for effective delay, corresponding to `k` in the
+paper. If the realised signal is drawn from period `t-1-ell`, then
+`m = ell + 1`.
 
----
+## 1. Signed feedback
 
-## 1. The feedback loop
+Let `u_t` be the deviation of a scalar tool from equilibrium. Suppose the
+reported error can have either sign and locally equals
+`s_t = -b u_t + O(u_t^2)` with `b > 0`. Linearising proportional
+adjustment with coefficient `eta > 0` gives
 
-Consider any signal that a coordinator revises in proportion to a gap it has
-*already observed*. Two instances in PlanLab:
+    u[t+1] = u[t] - g u[t-m],    g = eta b.
 
-* **plan revision** (`material_balance`): output targets move with the observed
-  shortage,
-  `T_t = T_{t-1} (1 + eta * s_{t-1-k})`;
-* **administered price revision**: `log p_t = log p_{t-1} + eta_p * s_{t-1-k}`.
+The equilibrium must admit a two-sided derivative to interpret this as an
+ordinary scalar linearisation.
 
-In both cases `s` is a shortage *rate* (a relative gap), the revision coefficient
-is `eta`, and the observation is stale by `k` reporting lags. Because a realised
-outcome can only be reported after the period in which it happened, the **effective
-delay is `m = k + 1`** periods: even a perfectly informed coordinator reacts to
-last period's gap. PlanLab's `info.lag = k` therefore corresponds to
-`m = k + 1` in the theory, and every figure must state which of the two is plotted.
+## 2. Interpretation
 
-## 2. Linearisation
-
-Let `u_t = log T_t - log T*` (or `log p_t - log p*`) be the deviation of the
-instrument from its stationary value, and let the gap respond locally as
-
-    s_t = - b * u_t + O(u_t^2),        b > 0
-
-(a higher planned output, or a higher price, reduces the observed gap). Substituting,
-
-    u_{t+1} = u_t - g * u_{t-m},        g := eta * b > 0,   m >= 1.        (★)
-
-`g` is the **loop gain**: the product of how hard the coordinator pushes (`eta`)
-and how strongly the gap reacts to the instrument (`b`). `b` is not a free parameter
-of the model — it is an equilibrium object that must be *measured* in the
-simulation (see §5).
+The factor `g` combines the policy adjustment coefficient and the local
+response of the signed error. For the scalar recurrence the proof below is
+exact. For a nonlinear system this is a local prediction conditional on
+the stated linearisation.
 
 ## 3. Proposition (stability boundary)
 
@@ -49,8 +32,9 @@ simulation (see §5).
 >
 > Numerically `g*(0) = 2`, `g*(1) = 1`, `g*(2) = 0.61803... = 1/phi`,
 > `g*(3) = 0.44504...`, and `g*(m) ~ pi/(2m+1)` for large `m`. At `g = g*(m)` the
-> system has a pair of roots on the unit circle at angle
-> `theta = pi/(2m+1)`, so the oscillation period is `2pi/theta = 2(2m+1)` periods.
+> system has a conjugate pair on the unit circle for `m >= 1`, at angles
+> `+/- pi/(2m+1)`. A nonzero critical mode has period `2(2m+1)`.
+> For `m = 0` the single critical root is -1 and the period is 2.
 
 **Proof.** The characteristic polynomial of (★) is
 
@@ -116,54 +100,24 @@ further period falls rather than staying proportional: it is the *product* of ga
 and lag, not the gain alone, that delay constrains. Delay is not a nuisance, it is
 a budget.
 
-## 4. Why this is the right object for the model
+## 4. Relation to the simulator
 
-The model's period map is: observe `(k)` -> plan -> claims -> **feasibility
-programme** -> ration -> record. Two lemmas make the reduction to (★) legitimate:
+The implemented tâtonnement reacts to nonnegative unmet demand. Its raw
+administered price only rises or stays flat. Changes in the amplitude of
+its detrended price are descriptive. They cannot locate the crossing of a
+two-sided linear recurrence. Sector-wise price probes describe sensitivity
+but do not determine the eigenvalues of the full dynamic system.
 
-> **Lemma 1 (monotonicity of the short side).** Let `R(ub, r, reserve)` be the
-> maximal feasible output of the goods-balance programme
-> `max 1'x  s.t.  A x - x <= r - reserve, 0 <= x <= ub`. Then `R` is monotone
-> non-decreasing in `ub` and in `r`. Consequently the realised output is a monotone
-> function of the planned targets, which is exactly the property needed for the
-> planner's revision loop to be a monotone feedback system.
+The short-side programme maximises total output under goods, capacity and
+labour constraints. Enlarging the feasible set weakly raises the optimal
+total. Individual entries of the optimal vector can fall. For example, with
+labour coefficients (2,1), available labour 2 and bounds (1,0.5), the solution
+is (0.75,0.5). Relaxing the second bound to 2 changes it to (0,2). This prevents
+using the componentwise monotonicity argument for a greatest stationary plan.
+The paper provides the full counterexample and states the corrected linear
+description of feasible delivery.
 
-*Proof.* Both `ub` and `r` enter only through the right-hand side and the upper
-bounds of the programme; enlarging either enlarges the feasible set, so the optimal
-value of a maximisation problem cannot fall. ∎
-
-> **Lemma 2 (rationing is monotone and conservative).** For fixed claims and tiers
-> the priority-filling rule `G` is monotone non-decreasing in supply and satisfies
-> `sum_j G_j(s) <= s` componentwise.
-
-*Proof.* Each claimant receives `min(1, remaining/claimed) * claimed` on a
-good-by-good basis, and `remaining` decreases by exactly what is granted. ∎
-
-Together, Lemmas 1-2 imply that the composition
-"plan revision -> short side -> rationing -> observed gap" is a monotone map on the
-compact box `[0, (1+eta) * target_max]`, so by Tarski it has a greatest fixed point
-(hence a stationary plan exists), and its linearisation around that fixed point is
-(★).
-
-> **Proposition 2 (existence of a stationary plan).** The one-period map of the
-> model with a proportional revision rule maps the complete lattice
-> `[0, T_max]^n` into itself monotonically, hence possesses a greatest fixed point.
-
-## 5. How to test it in the simulation
-
-1. **Estimate `b`.** Hold the shock fixed, set `eta = 0` (no revision), perturb the
-   steady-state price (or target) of one sector by `+/- 5%`, run to the steady state,
-   and measure `ds/dlog T`. `b` is the negative of that slope. Do this per sector and
-   use the mean.
-2. **Predict.** For each `m = k+1`, compute `g*(m)` and the predicted critical gain
-   `eta*(m) = g*(m)/b`.
-3. **Measure.** For a grid of `eta` and `k`, run the shock scenario with many seeds
-   and record the oscillation amplitude (std of the detrended log price level) and
-   the lag-1..4 autocorrelations. Declare "unstable" when the amplitude exceeds the
-   `eta = 0` amplitude by at least 3 standard deviations and the lag-1
-   autocorrelation of the detrended series exceeds 0.5 (pre-registered).
-4. **Compare** the measured `eta*(m)` with the predicted one, and the measured
-   period with `2(2m+1)`.
+## 5. Verification
 
 ### Exact numerical verification of the proposition itself (no economics)
 Iterate `u_{t+1} = u_t - g u_{t-m}` from a small perturbation for `m = 1..8` and a
@@ -186,12 +140,3 @@ table paired `g*(0..5)` with the periods of `m = 1..6` and said the gain "halves
 every period"; both were wrong and were caught by the independent verifier
 (`verification/check1_theorem.py`). The paper (`paper/main.md` §4) always had the
 correct version.
-
-## 6. Statement hygiene for the paper
-
-* Say "local linearisation", "small-gain", "delay-difference equation"; do not claim
-  a global result.
-* Report `k` (reporting lag) and `m = k+1` (effective delay) explicitly in every
-  table, and label which one a figure's axis shows.
-* The theorem is about a *linear* loop; the simulation is nonlinear. Agreement is a
-  hypothesis test, disagreement must be reported as a finding, not buried.

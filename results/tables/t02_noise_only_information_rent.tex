@@ -1,19 +1,19 @@
 \begin{table}[htbp]
 \centering
-\caption{The information rent of a coordination institution (block B1b): no capacity shock, no reporting lag, only measurement noise ($\sigma=0.03$) and AR(1) demand noise (ar1 $=0.3$, $\sigma=0.02$). Since every institution reproduces the base year exactly when information is perfect (Table~\ref{tab:validation}), any departure here is attributable to the institution's use of information.}
+\caption{B1b combines measurement error and demand innovations at zero reporting lag and without an external capacity shock.}
 \label{tab:noise_only}
 \begin{tabular}{lrrrrrrrrrr}
 \toprule
 mechanism & n\_seeds & x\_over\_base\_mean & x\_over\_base\_sd & mean\_shortage\_rate\_mean & mean\_shortage\_rate\_sd & mean\_welfare\_mean & mean\_welfare\_sd & mean\_spoilage\_rate & mean\_plan\_fulfilment\_mean & mean\_iterations\_mean \\
 \midrule
 lp\_central & 20 & 0.9710 & 0.0022 & 0.0164 & 0.0011 & 258.7797 & 0.0583 & 0.0000 & 0.9993 & 1.0000 \\
-material\_balance & 20 & 0.9371 & 0.0087 & 0.0469 & 0.0084 & 256.8228 & 0.2762 & 0.0123 & 0.7761 & 1.0000 \\
+material\_balance & 20 & 0.9371 & 0.0087 & 0.0469 & 0.0084 & 256.8228 & 0.2762 & 0.0026 & 0.7761 & 1.0000 \\
 rationing\_priority & 20 & 0.9822 & 0.0023 & 0.0165 & 0.0012 & 259.0175 & 0.0537 & 0.0000 & 0.9968 & 1.0000 \\
-tatonnement & 20 & 0.9938 & 0.0010 & 0.0156 & 0.0011 & 257.2240 & 0.0563 & 0.0186 & 0.9941 & 1.0000 \\
+tatonnement & 20 & 0.9938 & 0.0010 & 0.0156 & 0.0011 & 257.2240 & 0.0563 & 0.0071 & 0.9941 & 1.0000 \\
 market & 20 & 0.9908 & 0.0016 & 0.0162 & 0.0011 & 259.1969 & 0.0550 & 0.0000 & 0.9929 & 1.0000 \\
 hybrid\_dual\_track & 20 & 0.9951 & $9.36\times10^{-4}$ & 0.0163 & 0.0011 & 259.2909 & 0.0343 & 0.0000 & 0.9931 & 1.0000 \\
 \bottomrule
 \end{tabular}
 \par\smallskip
-\begin{minipage}{\linewidth}\footnotesize 20 seeds per institution, real 20-sector Eurostat 2020 substrate, $\bar x$ = base-year gross output. **Read the shortage column with the ratio columns, never alone**: household demand is income-elastic in this model, so an institution that destroys output also destroys the demand that would have been recorded as unmet --- the shortage rate is scale-free by construction and is near-invariant across institutions (1.56--1.64 per cent for five of six) while output ranges over 2.4 points and welfare over 2.7. Source: \texttt{results/B1b/}.\end{minipage}
+\begin{minipage}{\linewidth}\footnotesize Twenty seeds per rule. Read household shortage alongside output and delivery.\end{minipage}
 \end{table}

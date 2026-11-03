@@ -1,12 +1,12 @@
 # PlanLab independent verification report
 
-Generated: 2026-11-01 17:19:28 +0800  
-Repository: `/Users/ceontou/Documents/code/planlab`  
-git commit: `647fdf12fd5dcd688c01ec8193fb0c2b0b395364` (dirty: True)  
-Python 3.10.13 on macOS-15.7.7-arm64-arm-64bit  
-Artefacts audited (mtime): paper/main.md 2026-11-01 17:14:23; paper/tables 2026-11-01 17:13:16; results/tables/tests.csv 2026-11-01 16:55:18; results/tables/t00_hypotheses.csv 2026-11-01 16:55:18  
-Wall time: 64.3 s  
-Checks: 5 PASS, 1 FAIL, 0 SKIP, 0 ERROR
+Generated: 2026-11-03 22:12:17 +0800
+Repository: `/Users/ceontou/Documents/code/planlab`
+git commit: `984b1d60f607b03f0363d47796437b6928029248` (dirty: True)
+Python 3.10.13 on macOS-15.7.7-arm64-arm-64bit
+Artefacts audited (mtime): paper/main.md 2026-11-03 22:12:16; paper/tables 2026-11-03 22:10:30; results/tables/tests.csv 2026-11-03 22:10:30; results/tables/t00_hypotheses.csv 2026-11-03 22:10:30
+Wall time: 57.6 s
+Checks: 6 PASS, 0 FAIL, 0 SKIP, 0 ERROR
 
 This suite is written by an independent verifier. It re-derives the theorem, re-implements a period from the written specification, audits the raw records behind the paper's numbers, re-runs sampled cells, and re-computes the statistics with its own code. It deliberately does not import the project's engine, metrics or aggregate modules to judge their output; where it does use project code it is only for *inputs* (the technology matrix) or for *records* (the stored arrays).
 
@@ -186,7 +186,7 @@ Measured:
     - m=10, predicted=42, zero_cross=42, fft=41.796, root_arg=42
     - m=11, predicted=46, zero_cross=46, fft=45.511, root_arg=46
     - m=12, predicted=50, zero_cross=50, fft=49.951, root_arg=50
-- `wall_s`: 0.56
+- `wall_s`: 0.52
 
 Notes:
 
@@ -207,14 +207,14 @@ Measured:
 - `regime_counts`: calm=101, capacity=18, tier=91
 - `max_rel_diff_by_regime`: calm=0, capacity=0, tier=0
 - `max_relative_difference`: 0
-- `max_relative_difference_at`: 
+- `max_relative_difference_at`:
 - `ladder_violations`: 0
 - `engine_status_counts`: infeasible-ub=180, optimal=12
 - `n_collapse_periods`: 10
 - `n_collapse_forced`: 10
 - `n_first_pass_optimality_probes`: 182
 - `max_cascade_exit_deficit_rel`: 2.34915e-16
-- `wall_s`: 1.46
+- `wall_s`: 1.3
 
 What this does not prove. I implemented the *published* algorithm, so agreement shows that the code does what the specification says; it does not show that the specification is the right model. The per-period comparison also cannot detect a bias that is present identically in both my implementation and the engine's (e.g. a shared but wrong definition of a claim row).
 
@@ -222,13 +222,13 @@ What this does not prove. I implemented the *published* algorithm, so agreement 
 
 **Status: PASS**
 
-2344 audit records across 11 blocks: balance identity worst 1.63e-16 (tol 1e-08), Z=A diag(x) worst 0.00e+00, no negative arrays, C<=demand / x<=capacity / x<=targets all hold, unmet=demand-C holds; recomputed shortage_rate, welfare, plan_fulfilment and four aggregates match runs.parquet to 0.00e+00; the priority ladder was verified exactly on 381 re-run periods (0 violations) and the stored arrays reproduce from the current code to 0.00e+00.
+2344 audit records across 11 blocks: balance identity worst 2.06e-16 (tol 1e-08), Z=A diag(x) worst 0.00e+00, no negative arrays, C<=demand / x<=capacity / x<=targets all hold, unmet=demand-C holds; recomputed shortage_rate, welfare, plan_fulfilment and four aggregates match runs.parquet to 0.00e+00; the priority ladder was verified exactly on 381 re-run periods (0 violations) and the stored arrays reproduce from the current code to 0.00e+00.
 
 Measured:
 
 - `n_audit_records`: 2344
 - `n_blocks`: 11
-- `max_balance_identity_residual`: 1.62532e-16
+- `max_balance_identity_residual`: 2.05839e-16
 - `max_Z_vs_Ax_residual`: 0
 - `max_metric_error`: shortage_rate=0, welfare=0, plan_fulfilment=0, consumption_total=0, demand_total=0, output_total=0, unmet_total=0
 - `n_metric_comparisons`: shortage_rate=2344, welfare=2344, plan_fulfilment=2344, consumption_total=2344, demand_total=2344, output_total=2344, unmet_total=2344
@@ -237,16 +237,16 @@ Measured:
 - `n_records_x_gt_capacity`: 0
 - `n_records_bad_unmet`: 0
 - `n_substrate_mismatches`: 0
-- `runner_reported_residual_max`: 1.62532e-16
+- `runner_reported_residual_max`: 2.05839e-16
 - `runner_residual_vs_mine`: 0
 - `n_duplicate_metric_rows`: 0
-- `max_spoilage_share_of_supply`: 0.159973
-- `n_sectors_with_implied_cap_ratios`: 0
+- `max_spoilage_share_of_supply`: 0.0825925
+- `n_sectors_with_implied_cap_ratios`: 73
 - `ladder_records_checked`: 381
 - `ladder_violations`: 0
 - `cells_rerun`: 83
 - `max_period_reproduction_diff`: 0
-- `wall_s`: 26.52
+- `wall_s`: 23.51
 
 Notes:
 
@@ -259,25 +259,26 @@ What this does not prove. The balance identity is imposed by construction inside
 
 **Status: PASS**
 
-80 of 7364 (cell, seed) runs re-executed across 11 block(s): 2960 stored run-level metrics match to 0.0e+00; my independent recomputation of mean_shortage_rate, cum_welfare and mean_plan_fulfilment agrees to 2.0e-16; 147120 per-period metric values re-checked (worst 0.0e+00); manifests carry versions, git commit and scenario hashes that match; runs.parquet and summary.csv agree; 16 scenario YAML(s) re-run.
+80 of 7364 (cell, seed) runs re-executed across 11 block(s): 2974 stored run-level metrics match to 0.0e+00; my independent recomputation of mean_shortage_rate, cum_welfare and mean_plan_fulfilment agrees to 2.0e-16; 147120 per-period metric values re-checked (worst 0.0e+00); manifests carry versions, git commit and scenario hashes that match; 14728 panel/summary consistency comparisons; 16 scenario YAML(s) re-run.
 
 Measured:
 
 - `n_runs_available`: 7364
 - `n_runs_sampled`: 80
 - `n_samples`: 80
-- `n_metric_comparisons_4a`: 2960
+- `n_metric_comparisons_4a`: 2974
 - `worst_run_metric_diff_4a`: 0
-- `worst_run_metric_diff_at`: 
+- `worst_run_metric_diff_at`:
 - `independent_metric_worst`: mean_shortage_rate=9.71445e-17, cum_welfare=2.02723e-16, mean_plan_fulfilment=1.11022e-16, n_periods_used=0
 - `per_period_comparisons`: 147120
+- `per_period_blocks_skipped`: []
 - `per_period_worst_diff`: 0
 - `n_cells_without_definition`: 0
 - `n_tech_spec_disagreements`: 0
 - `n_manifest_blocks_ok`: 11
 - `n_consistency_checks_4e`: 14728
 - `n_scenario_yamls_rerun`: 16
-- `wall_s`: 14.63
+- `wall_s`: 14.9
 
 Notes:
 
@@ -315,7 +316,7 @@ What this does not prove. Reproducibility is not validity: it shows that the sto
 
 **Status: PASS**
 
-5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap reproducible); 5b 1 paired tests and 37 Holm values recomputed; 5c H4 correlations recomputed with a permutation null; 5d 1018 published table values re-derived from results/ (7 tables, worst 5.0e-07)
+5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap reproducible); 5b 1 paired tests and 26 revised mean tests; 61 Holm values recomputed; 5c H4 correlations recomputed with a permutation null; 5d 1138 published table values re-derived from results/ (7 tables, worst 5.0e-07)
 
 Measured:
 
@@ -325,49 +326,50 @@ Measured:
 - `5a_spearman_max_diff`: 1.11022e-16
 - `5a_permutation_vs_exact`: perm=0.0157992, exact=0.0166667
 - `5a_bootstrap_ci`: ci=(-0.6462720519005788, 0.10470015457123541), ci_other_seed=(-0.6491652296509687, 0.11330669802630018)
-- `5b_n_rows`: 59
+- `5b_n_rows`: 71
+- `5b_revised_mean_tests_checked`: 26
 - `5b_paired_rows_checked`: 1
 - `5b_p_values_checked`: 1
 - `5b_worst_p_diff`: 1.36719e-12
 - `5b_worst_effect_rel_diff`: 0
-- `5b_holm_values_checked`: 37
+- `5b_holm_values_checked`: 61
 - `5b_status`: AUDITED
 - `5c_n_cells`: 60
 - `5c_h4`:
-    - mechanism=material_balance, outcome=output_loss, predictor=forward_rowsum_A, rho=0.329323, p_perm=0.154085, n=20
-    - mechanism=material_balance, outcome=output_loss, predictor=forward_intermediate_share, rho=0.512782, p_perm=0.024298, n=20
-    - mechanism=material_balance, outcome=output_loss, predictor=leontief_colsum, rho=0.019549, p_perm=0.937306, n=20
-    - mechanism=material_balance, outcome=output_loss, predictor=leontief_rowsum, rho=0.368421, p_perm=0.108089, n=20
-    - mechanism=material_balance, outcome=amplification, predictor=forward_rowsum_A, rho=-0.294737, p_perm=0.20438, n=20
-    - mechanism=material_balance, outcome=amplification, predictor=forward_intermediate_share, rho=0.759398, p_perm=0.0001, n=20
-    - mechanism=material_balance, outcome=amplification, predictor=leontief_colsum, rho=0.312782, p_perm=0.180382, n=20
-    - mechanism=material_balance, outcome=amplification, predictor=leontief_rowsum, rho=-0.377444, p_perm=0.10369, n=20
+    - mechanism=material_balance, outcome=output_loss, predictor=forward_rowsum_A, rho=0.330827, p_perm=0.153385, n=20
+    - mechanism=material_balance, outcome=output_loss, predictor=forward_intermediate_share, rho=0.496241, p_perm=0.030197, n=20
+    - mechanism=material_balance, outcome=output_loss, predictor=leontief_colsum, rho=0.031579, p_perm=0.89821, n=20
+    - mechanism=material_balance, outcome=output_loss, predictor=leontief_rowsum, rho=0.366917, p_perm=0.111089, n=20
+    - mechanism=material_balance, outcome=amplification, predictor=forward_rowsum_A, rho=-0.018045, p_perm=0.941206, n=20
+    - mechanism=material_balance, outcome=amplification, predictor=forward_intermediate_share, rho=0.902256, p_perm=0.0001, n=20
+    - mechanism=material_balance, outcome=amplification, predictor=leontief_colsum, rho=0.350376, p_perm=0.129587, n=20
+    - mechanism=material_balance, outcome=amplification, predictor=leontief_rowsum, rho=-0.114286, p_perm=0.627737, n=20
     - mechanism=rationing_priority, outcome=output_loss, predictor=forward_rowsum_A, rho=0.312782, p_perm=0.176482, n=20
     - mechanism=rationing_priority, outcome=output_loss, predictor=forward_intermediate_share, rho=0.413534, p_perm=0.076792, n=20
     - mechanism=rationing_priority, outcome=output_loss, predictor=leontief_colsum, rho=-0.040602, p_perm=0.866913, n=20
     - mechanism=rationing_priority, outcome=output_loss, predictor=leontief_rowsum, rho=0.365414, p_perm=0.113189, n=20
-    - mechanism=rationing_priority, outcome=amplification, predictor=forward_rowsum_A, rho=-0.392481, p_perm=0.087591, n=20
-    - mechanism=rationing_priority, outcome=amplification, predictor=forward_intermediate_share, rho=0.691729, p_perm=0.0012, n=20
-    - mechanism=rationing_priority, outcome=amplification, predictor=leontief_colsum, rho=0.245113, p_perm=0.29687, n=20
-    - mechanism=rationing_priority, outcome=amplification, predictor=leontief_rowsum, rho=-0.46015, p_perm=0.042396, n=20
+    - mechanism=rationing_priority, outcome=amplification, predictor=forward_rowsum_A, rho=-0.123308, p_perm=0.606739, n=20
+    - mechanism=rationing_priority, outcome=amplification, predictor=forward_intermediate_share, rho=0.768421, p_perm=0.0002, n=20
+    - mechanism=rationing_priority, outcome=amplification, predictor=leontief_colsum, rho=0.061654, p_perm=0.794121, n=20
+    - mechanism=rationing_priority, outcome=amplification, predictor=leontief_rowsum, rho=-0.120301, p_perm=0.617338, n=20
     - mechanism=tatonnement, outcome=output_loss, predictor=forward_rowsum_A, rho=0.311278, p_perm=0.179782, n=20
     - mechanism=tatonnement, outcome=output_loss, predictor=forward_intermediate_share, rho=0.566917, p_perm=0.011599, n=20
     - mechanism=tatonnement, outcome=output_loss, predictor=leontief_colsum, rho=0.016541, p_perm=0.947705, n=20
     - mechanism=tatonnement, outcome=output_loss, predictor=leontief_rowsum, rho=0.35188, p_perm=0.127387, n=20
 - `5c_permutation_vs_paper`:
-    - mechanism=material_balance, predictor=forward_intermediate_share, rho=0.512782, p_perm=0.024298, paper_p=0.0207797, paper_p_holm=0.166238, paper_significant=no
-    - mechanism=material_balance, predictor=leontief_colsum, rho=0.019549, p_perm=0.937306, paper_p=0.934803, paper_p_holm=1, paper_significant=no
+    - mechanism=material_balance, predictor=forward_intermediate_share, rho=0.496241, p_perm=0.030197, paper_p=0.0260515, paper_p_holm=0.208412, paper_significant=no
+    - mechanism=material_balance, predictor=leontief_colsum, rho=0.031579, p_perm=0.89821, paper_p=0.894854, paper_p_holm=1, paper_significant=no
     - mechanism=rationing_priority, predictor=forward_intermediate_share, rho=0.413534, p_perm=0.076792, paper_p=0.0699207, paper_p_holm=0.489445, paper_significant=no
     - mechanism=rationing_priority, predictor=leontief_colsum, rho=-0.040602, p_perm=0.866913, paper_p=0.865047, paper_p_holm=1, paper_significant=no
     - mechanism=tatonnement, predictor=forward_intermediate_share, rho=0.566917, p_perm=0.011599, paper_p=0.00914627, paper_p_holm=0.0823164, paper_significant=no
     - mechanism=tatonnement, predictor=leontief_colsum, rho=0.016541, p_perm=0.947705, paper_p=0.944817, paper_p_holm=1, paper_significant=no
 - `5c_status`: AUDITED
 - `5d_tables_checked`: 7
-- `5d_values_checked`: 1018
-- `5d_worst_rel_diff`: 4.98353e-07
+- `5d_values_checked`: 1138
+- `5d_worst_rel_diff`: 4.9803e-07
 - `5d_worst_at`: robustness.csv:mean_x_over_base
 - `5d_status`: AUDITED
-- `wall_s`: 11.33
+- `wall_s`: 9.46
 
 Notes:
 
@@ -377,7 +379,9 @@ What this does not prove. I can recompute the test statistics and their multipli
 
 ## Check claims — Mechanism claims for the headline interaction (Lead's target)
 
-**Status: FAIL**
+**Status: PASS**
+
+Interaction reproduced (1.0000 either alone vs 0.9089 together, σ_obs=0.03), the inventory asymmetry exists at the goods-balance frontier (gain +0.00% / loss -8.71%) and disappears in the operating regime; labour ×3 removes the loss, so the explanation holds as a labour-projection effect.
 
 Measured:
 
@@ -386,7 +390,7 @@ Measured:
 - `6b_regimes`: capacity(=base_output)={'R': 25143704.520000003, 'gain_+10': 0.0, 'loss_-10': 0.0}, goods_balance_frontier={'R': 69604096.66419159, 'gain_+10': 0.0, 'loss_-10': -0.08709849708381157}, mechanism_ub(1.4*base)={'R': 32151896.43165186, 'gain_+10': 0.0, 'loss_-10': 0.0}
 - `6b_operating_regime_is_symmetric`: True
 - `6b_capacity_regime_is_symmetric`: True
-- `6c_isolation`: labor_x3={'mean': 1.0, 'sd': 0.0}, no_inventory_estimate={'mean': 0.9069411767373234, 'sd': 0.004692443583169586}, stock_ratio_0={'mean': 0.9064146660204067, 'sd': 0.007471058628637053}, stock_ratio_0.5={'mean': 0.9106420076198702, 'sd': 0.007114084658695494}, no_capacity_estimate={'mean': 0.9040740178005819, 'sd': 0.008503385704784542}, no_backlog_estimate={'mean': 0.9062722807402683, 'sd': 0.004843373297985909}
+- `6c_isolation`: labor_x3={'mean': 1.0, 'sd': 0.0}, no_inventory_estimate={'mean': 0.9069411767373234, 'sd': 0.004692443583169586}, stock_ratio_0={'mean': 0.9064146660204067, 'sd': 0.007471058628637053}, stock_ratio_0.5={'mean': 0.9106420076198702, 'sd': 0.007114084658695494}, no_capacity_estimate={'mean': 0.9040722978988459, 'sd': 0.008507189547270635}, no_backlog_estimate={'mean': 0.9062722807402683, 'sd': 0.004843373297985909}
 - `6c_inventory_estimate_irrelevant`: True
 - `6c_labor_drives_loss`: True
 - `6d_labour_used_over_supply_mean`: 0.99179
@@ -395,15 +399,11 @@ Measured:
 - `6d_min_sector_fill_mean`: 0.845039
 - `6_current_claim_status`: SUPPORTED
 - `6_old_inventory_claim_status`: REFUTED
-- `6e_hypothesis_rows`: ['H1', "H1'", 'H2', 'H4', 'H5', 'incidence', 'ladder']
-- `6e_H3_statistic`: n_cells=20, min=0.0116237, max=0.0603803, mean=0.0293487, threshold=0.005, min_ratio=2.32475, max_ratio=12.0761, cells_below_threshold=0
+- `6e_hypothesis_rows`: ['H1', "H1'", 'H2', 'H3', 'H4', 'H5', 'incidence', 'ladder']
+- `6e_H3_statistic`: n_cells=20, min=0.0116237, max=0.0603656, mean=0.0293667, threshold=0.005, min_ratio=2.32475, max_ratio=12.0731, cells_below_threshold=0
 - `6e_H3_shock_size`: [0.5]
 - `6e_status`: AUDITED
-- `wall_s`: 9.79
-
-Failures:
-
-- 6e: the hypothesis adjudication table has no row for ['H3'] (present: ['H1', "H1'", 'H2', 'H4', 'H5', 'incidence', 'ladder'])
+- `wall_s`: 7.95
 
 Notes:
 

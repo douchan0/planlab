@@ -215,3 +215,8 @@ def test_manuscript_builds_and_has_no_dangling_references(tmp_path):
     assert "$g^\\star(k)$" in html or "g^\\star(k)" in html
     assert "katex" in html.lower()
     assert html.count('class="equation"') >= 15
+
+
+def test_equation_markup_preserves_less_than_and_alignment(builder):
+    equation = builder._equation_html(r"0<g<g^\star; a&b", 1, "inequality")
+    assert r"0&lt;g&lt;g^\star; a&amp;b" in equation

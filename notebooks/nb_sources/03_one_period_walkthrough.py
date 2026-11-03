@@ -690,20 +690,20 @@ print("keeps it honest by capping the upper bound at the actual capacity.")
 '''),
     ("code", r'''
 def feasible_output_by_hand(A_mat, ub, inventory, reserve, labor=None,
-                            labour_supply=0.0, tol=1e-9):
+                            labour_supply=None, tol=1e-9):
     """Largest x <= ub satisfying the goods balance (and labour), or ub if it already is."""
     ub = np.maximum(np.asarray(ub, float), 0.0)
     inventory = np.maximum(np.asarray(inventory, float), 0.0)
     reserve = np.clip(np.asarray(reserve, float), 0.0, inventory)
     scale = max(1.0, float(np.max(np.abs(inventory) + np.abs(ub))))
     feasible = np.max((A_mat @ ub - ub) - (inventory - reserve)) <= tol * scale
-    if labor is not None and labour_supply > 0:
+    if labor is not None and labour_supply is not None:
         feasible = feasible and (float(np.dot(labor, ub)) <= labour_supply * (1.0 + 1e-12))
     if feasible:
         return ub, "targets already feasible"
     A_ub = [A_mat - np.eye(A_mat.shape[0])]
     b_ub = [inventory - reserve]
-    if labor is not None and labour_supply and labour_supply > 0:
+    if labor is not None and labour_supply is not None:
         A_ub.append(np.asarray(labor, float).reshape(1, -1))
         b_ub.append(np.array([float(labour_supply)]))
     res = linprog(-np.ones(A_mat.shape[0]), A_ub=np.vstack(A_ub),
@@ -761,7 +761,8 @@ def reconcile_by_hand(tech_obj, inventory, plan, capacity, labour_supply, alloc,
     G = np.minimum(parts["gov"], gov_demand)
     I = np.minimum(parts["invest"], invest_demand)
     used = Z.sum(axis=1) + C + G + I
-    S_end = np.maximum(supply - used, 0.0)
+    residual = np.maximum(supply - used, 0.0)
+    S_end = np.minimum(residual, 2.0 * tech_obj.base_output)
     unmet = np.maximum(demand - C, 0.0)
     return {"x": x, "Z": Z, "C": C, "G": G, "invest": I, "S_end": S_end,
             "unmet": unmet, "supply": supply, "grants": grants, "claims": claims,

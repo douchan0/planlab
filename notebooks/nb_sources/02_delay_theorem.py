@@ -18,7 +18,7 @@ $$u_{t+1} \;=\; u_t \;-\; g\,u_{t-m}, \qquad g>0,\quad m\ge 1. \tag{$\star$}$$
 
 $$0 \;<\; g \;<\; g^*(m) \;=\; 2\sin\!\frac{\pi}{2(2m+1)},$$
 
-而且在边界 `g = g*(m)` 上系统以周期 `2(2m+1)` 期持续振荡。
+而且在边界 `g = g*(m)` 上，非零临界模态以周期 `2(2m+1)` 期持续振荡。
 
 *The equation is one line; the proposition is that the zero solution is locally asymptotically stable iff ``0 < g < 2 sin(pi/(2(2m+1)))``, and that exactly at the boundary the loop oscillates with period ``2(2m+1)``.*
 '''),
@@ -426,7 +426,7 @@ print(f"m = {m}: boundary gain {gb:.6f}, boundary period {2*(2*m+1)} quarters.")
 最后两件事，正好对应模型里两个会让定理"看起来失败"的地方：
 
 1. **可容许增益随延迟衰减的实际速度**（上面已经算过）；
-2. **正反馈的情形**。如果 `b < 0`（工具调高反而让缺口变大），(★) 变成 `u_{t+1} = u_t + |g| u_{t-m}`。下面直接模拟：这个系统对**任何** `|g| > 0` 都不收敛。这就是"紧绷的计划自我挫败"（H1'）的线性化影子，也是 `material_balance` 的 `revision_gain` 为什么不能像 `price_gain` 那样有"安全区间"的原因。
+2. **正反馈的情形**。如果 `b < 0`（工具调高反而让缺口变大），(★) 变成 `u_{t+1} = u_t + |g| u_{t-m}`。下面直接模拟：这个系统对**任何** `|g| > 0` 都不收敛。这个推论针对标量正反馈方程。实际的目标修订还受多部门投入和资源约束影响，需要另行检验反馈符号。
 '''),
     ("code", r'''
 def simulate_positive_loop(g: float, m: int, periods: int = 60, u0: float = 1.0) -> np.ndarray:
@@ -491,7 +491,7 @@ print("PASS: the sign of b decides whether a stability interval exists at all.")
 3. **相位条件的另一个根。** 上面只取了 `j = 0`。请说明为什么 `j = 1` 给出的 `θ` 对应的 `g` 更大（提示：`sin(θ/2)` 在 `θ ∈ (0, 2π)` 上的形状）。
 4. **换一个增益定义。** 把 (★) 改成 `u_{t+1} = (1-α)u_t - g u_{t-m}`（"局部调整"版本）。用数值方法找新的边界，并解释为什么 `α > 0` 会扩大稳定区间。
 5. **进阶：估计 `b`。** 读 `docs/notes_delay_theorem.md` §5 的四步流程，然后想一想：为什么 `b` 必须在**完整模型**里测，而不能从 `A` 推出来？（提示：`b` 是"缺口对工具"的均衡反应，涉及家庭需求的价格弹性、库存和优先级阶梯。）
-6. **预言 vs 模拟。** 如果你手上有 `results/`（实验层跑完之后），把 `tatonnement` 在不同 `k` 下测到的临界 `price_gain` 与 `g*(k+1)/b_p` 画在一张图上。差多少？`docs/PROTOCOL.md` §6 规定"差超过一个滞后周期就算证伪"——这是全套实验里最硬的一条检验。
+6. **两种价格规则。** 先在本 notebook 的有符号标量方程中跨过临界增益，再查看实际 `tatonnement` 记录。短缺率非负，原始价格只会上涨或持平。即使去趋势后的振幅变大，两种规则也不能用同一个临界值解释。
 
 *Exercises: verify ``m=2`` analytically; derive the ``m=0`` special case; explain why ``j=0`` is the active branch; add a partial-adjustment term; and think about why ``b`` must be measured in the full model rather than derived from ``A``.*
 '''),

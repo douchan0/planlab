@@ -351,10 +351,12 @@ def find_figure(name: str) -> Path | None:
 
 
 def find_table(name: str) -> Path | None:
-    for ext in (".md", ".csv", ".tex"):
-        p = TAB_DIR / f"{name}{ext}"
-        if p.exists():
-            return p
+    names = (f"{name}.{SETTINGS.lang}", name)
+    for stem in names:
+        for ext in (".md", ".csv", ".tex"):
+            p = TAB_DIR / f"{stem}{ext}"
+            if p.exists():
+                return p
     return None
 
 
@@ -865,7 +867,7 @@ def _equation_html(tex: str, number: int, label: str) -> str:
     anchor = f' id="eq-{label}"' if label else ""
     return (
         f'<div class="equation"{anchor}>'
-        f'<div class="eqbody">$$\n{tex}\n$$</div>'
+        f'<div class="eqbody">$$\n{html.escape(tex, quote=False)}\n$$</div>'
         f'<div class="eqno">({number})</div>'
         f"</div>"
     )
@@ -1004,7 +1006,7 @@ nav.toc .tocnum { display: inline-block; min-width: 2.4em; color: var(--accent);
 
 @media print {
   :root { --width: 44rem; }
-  html { font-size: 10.2pt; }
+  html { font-size: 11pt; }
   @page { size: A4; margin: 20mm 19mm 18mm; }
   @page :first { margin-top: 16mm; }
   body { padding: 0; max-width: none; line-height: __PRINT_LH__; }
@@ -1099,7 +1101,7 @@ def build_toc(st: BuildState) -> str:
 def build_references(st: BuildState, entries: dict[str, dict[str, str]]) -> str:
     if not entries:
         return ""
-    order = st.cite_order + [k for k in entries if k not in st.cite_order]
+    order = st.cite_order
     out = ['<div class="references">']
     for i, key in enumerate(order, 1):
         e = entries[key]
@@ -1158,6 +1160,7 @@ def html_to_pdf(html_path: Path, pdf_path: Path, *, timeout: int = 180, budget: 
         html_path.resolve().as_uri(),
     ]
     info(f"Edge: {' '.join(cmd[:9])} … {pdf_path.name}")
+    previous_mtime = pdf_path.stat().st_mtime_ns if pdf_path.exists() else None
     t0 = time.time()
     try:
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
@@ -1165,7 +1168,11 @@ def html_to_pdf(html_path: Path, pdf_path: Path, *, timeout: int = 180, budget: 
         warn(f"Edge timed out after {timeout}s")
         return False
     dt = time.time() - t0
-    produced = pdf_path.exists() and pdf_path.stat().st_size > 0
+    produced = (
+        pdf_path.exists()
+        and pdf_path.stat().st_size > 0
+        and pdf_path.stat().st_mtime_ns != previous_mtime
+    )
     if not produced:
         warn(f"no PDF produced (Edge exit {proc.returncode}): {proc.stderr.strip()[:600]}")
         return False
@@ -1369,8 +1376,6 @@ def build(args: argparse.Namespace) -> int:
             problems.append("missing figure files")
         if report["missing_table_files"]:
             problems.append("missing table files")
-        if report["bibliography_uncited"]:
-            problems.append(f"{len(report['bibliography_uncited'])} uncited bib entries")
         if not args.no_pdf and not pdf_ok:
             problems.append("PDF not produced")
         if problems:
@@ -1395,10 +1400,13 @@ def main(argv: list[str] | None = None) -> int:
     if args.input:
         src = Path(args.input)
         globals()["MAIN_MD"] = src if src.is_absolute() else (ROOT / src)
-    if args.out_stem:
-        globals()["MAIN_HTML"] = PAPER / f"{args.out_stem}.html"
-        globals()["MAIN_PDF"] = PAPER / f"{args.out_stem}.pdf"
-        globals()["REPORT"] = PAPER / f"build_report_{args.out_stem}.json"
+    elif args.lang == "zh":
+        globals()["MAIN_MD"] = PAPER / "main_zh.md"
+    out_stem = args.out_stem or ("main_zh" if args.lang == "zh" and not args.input else None)
+    if out_stem:
+        globals()["MAIN_HTML"] = PAPER / f"{out_stem}.html"
+        globals()["MAIN_PDF"] = PAPER / f"{out_stem}.pdf"
+        globals()["REPORT"] = PAPER / f"build_report_{out_stem}.json"
     if args.stats_only:
         raw = MAIN_MD.read_text(encoding="utf-8")
         meta, body = split_front_matter(raw)

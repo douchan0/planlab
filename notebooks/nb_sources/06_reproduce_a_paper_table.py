@@ -409,22 +409,10 @@ else:
 """),
 
     ("md", r'''
-### 4.1 · 两个"同一张表"：结果层 vs 论文层
+### 4.1 · 核对论文参考切片
 
-复现到这一步会撞上一个比小数位重要得多的问题：**仓库里有两张看起来是同一件事的表。**
-
-* `results/tables/<...>_lag_mechanism.csv`（本 notebook 第 2–4 节复现的那张）——实验层的产物；
-* `paper/tables/lag_grid_reference.csv`——论文 Table 9 引用的那张，来自 Lead 的独立参考运行。
-
-两张表的表头都写着 "mechanism × reporting lag"，但它们的**聚合规则不同**：如果结果层把带增益扫描的机制的 10 个增益档池化平均，而论文层只取参考增益 `0.30` 那一档，那么对 `material_balance` 和 `tatonnement` 就会出现几十个百分点的差异——而其他四个机制（增益不是处理变量）会逐位相同。
-
-这正是"复现一张表"最难的部分：**先弄清楚这张表是什么，再去比数字。** 下面把两张表逐行对照，并且把结论分成两类：
-（a）两次运行完全相同的那部分，必须**逐位相等**；
-（b）聚合规则不同的那部分，把差异**量化并解释**，而不是让它悄悄通过。
-
-如果 (b) 的差异大到会让论文里的数字对不上，那是必须报告的问题——本 notebook 的职责是把它量出来，而不是替它选一个好看的解释。
-
-*Two artefacts in the repository look like the same table: the results-layer one and the paper's reference-gain one. If the former pools the gain grid for the swept institutions while the latter takes the reference-gain slice, they will differ by tens of percent for exactly those mechanisms. The notebook asserts bit-equality where the two runs are the same object and quantifies the difference where the aggregation rules differ — rather than letting it pass quietly.*
+新版结果表和论文侧参考表均取调整增益 0.30、价格弹性 0.4。
+按机制和报告滞后匹配前先检查键是否唯一，再核对短缺率。旧版参考运行单独存放。
 '''),
     ("code", r'''
 paper_status = "graceful path"
@@ -432,40 +420,14 @@ PAPER_REF = ROOT / "paper" / "tables" / "lag_grid_reference.csv"
 if level1 is None or not PAPER_REF.exists():
     print("skipped: need the results-layer table and paper/tables/lag_grid_reference.csv")
 else:
-    reference = pd.read_csv(PAPER_REF)
-    print(f"paper-side table: {PAPER_REF.relative_to(ROOT)}  ({len(reference)} rows)")
-    cross = (level1[["mechanism", "lag", "mean_shortage_rate", "n_seeds"]]
-             .merge(reference, left_on=["mechanism", "lag"],
-                    right_on=["mechanism", "lag_reporting"], how="inner"))
-    cross["rel_diff"] = ((cross["mean_shortage_rate"] - cross["shortage"]).abs()
-                         / cross["shortage"].abs())
-    n_smallest = int(cross.groupby("mechanism")["n_seeds"].max().min())
-    same = cross[cross["n_seeds"] == n_smallest]
-    pooled = cross[cross["n_seeds"] > n_smallest]
-    print(f"\nrows matched: {len(cross)} (per-mechanism run counts: "
-          f"{cross.groupby('mechanism')['n_seeds'].max().to_dict()})")
-    print(cross[["mechanism", "lag", "n_seeds", "mean_shortage_rate", "shortage",
-                 "rel_diff"]].round(6).to_string(index=False))
-
-    print(f"\nsingle-gain mechanisms ({len(same)} rows): max relative difference "
-          f"{same['rel_diff'].max():.3e}")
-    # the same storage-precision tolerance as section 4: both CSVs are rounded
-    assert same["rel_diff"].max() < 1e-5, (
-        "the two artefacts disagree on mechanisms whose aggregation rule cannot differ")
-    if len(pooled):
-        worst = pooled.loc[pooled["rel_diff"].idxmax()]
-        print(f"gain-pooled mechanisms ({len(pooled)} rows): max relative difference "
-              f"{pooled['rel_diff'].max():.1%} "
-              f"({worst['mechanism']}, lag {int(worst['lag'])}: "
-              f"{worst['mean_shortage_rate']:.6f} pooled vs {worst['shortage']:.6f} reference)")
-        print("\nThat difference is not a rounding error and not a bug in either run: it is")
-        print("the two tables answering different questions. But it means the results-layer")
-        print("table cannot be used to check a paper row that reports the reference-gain")
-        print("slice for a gain-swept institution. Report it; do not average it away.")
-        paper_status = (f"cross-checked: single-gain exact, pooled up to "
-                        f"{pooled['rel_diff'].max():.1%} apart")
-    else:
-        paper_status = "cross-checked: all rows agree"
+    reference = pd.read_csv(PAPER_REF).rename(columns={"lag_reporting": "lag"})
+    assert reference["gain"].eq(0.30).all()
+    assert reference["price_elasticity"].eq(0.4).all()
+    cross = level1.merge(reference, on=["mechanism", "lag"], validate="one_to_one")
+    assert len(cross) == len(level1) == len(reference)
+    np.testing.assert_allclose(cross["mean_shortage_rate"], cross["shortage"], rtol=1e-5)
+    paper_status = f"cross-checked: all {len(cross)} reference rows agree"
+    print(paper_status)
 '''),
 
     ("md", r'''

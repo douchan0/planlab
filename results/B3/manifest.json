@@ -69,9 +69,9 @@
   "cells_failed": 0,
   "cells_planned": 60,
   "cells_skipped_missing_mechanism": 0,
-  "code_fingerprint": "83343c436f192205",
+  "code_fingerprint": "b9f60c3451e5dcef",
   "code_fingerprints_seen": {
-    "83343c436f192205": 60
+    "b9f60c3451e5dcef": 60
   },
   "environment": {
     "burn_in": 30,
@@ -85,9 +85,9 @@
   },
   "failures": [],
   "forced_rerun": false,
-  "generated_at": "2026-11-01T16:49:59+0800",
-  "git_commit": "f3b9b3166452be2242bd4ea324afacf6b5ef1528",
-  "git_diff_stat": " 1012 files changed, 11935 insertions(+), 1097042 deletions(-)",
+  "generated_at": "2026-11-03T22:00:53+0800",
+  "git_commit": "984b1d60f607b03f0363d47796437b6928029248",
+  "git_diff_stat": " 113 files changed, 9744 insertions(+), 12589 deletions(-)",
   "git_dirty": true,
   "grid_fingerprint": "73dacd05ac391365",
   "identification_audit": {
@@ -313,7 +313,7 @@
   "substrates": [
     "eurostat"
   ],
-  "sum_cell_wall_time_s": 379.673,
-  "wall_time_s": 59.809,
+  "sum_cell_wall_time_s": 106.248,
+  "wall_time_s": 30.275,
   "workers": 7
 }

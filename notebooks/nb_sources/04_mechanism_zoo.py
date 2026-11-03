@@ -344,7 +344,7 @@ print("seed would be uninformative — which is why the protocol pre-registers 2
 
 * `rationing_priority`：行政配额，价格默认**完全不动**（`price_gain = 0`）；
 * `material_balance`：行政价格，按观察到的短缺缓慢上调（`price_gain = 0.05`）；
-* `tatonnement`：价格是**唯一的工具**，`log p' = log p + price_gain · 观察到的短缺`——它就是 notebook 02 里那个延迟定理的对象；
+* `tatonnement`：价格是**唯一的工具**，`log p' = log p + price_gain · 观察到的短缺`。由于短缺率非负，原始价格只涨或持平。notebook 02 的标量规则使用可正可负的缺口；
 * `market`：期内瓦尔拉斯试错，价格在**期内部**就动了很多次；
 * `lp_central`：计划是数量型的；默认不把影子价格写成价格（`use_shadow_prices = 0`）。打开它就能得到 Kantorovich 的"结算乘数"——那是 notebook 05 的主题；
 * `hybrid_dual_track`：计划轨价格行政固定、市场轨价格随超额需求调整。
@@ -472,7 +472,7 @@ print("as a ranking of how a fixed welfare functional scores them.")
 1. **把机制名字写死会怎样？** 把 `MECHANISMS = available_mechanisms()` 改成 `["material_balance", "lp_central"]`，然后把新机制注册进去（或者想象一下）。这个 notebook 会不会因此错过一个更好的机制？`available_mechanisms()` 为什么是更好的写法？
 2. **拆掉配对。** 把 `run_cell` 里的 `scenario_id` 改成 `f"{CELL_ID}_{name}"`（每个机制一个 id），重跑第 2 节。排序变了吗？差距变大还是变小了？请用第 4 节的机制解释：这是"噪声"还是"偏差"？
 3. **把噪声关掉会发生什么？** 把 `noise=0.05` 改成 `0.0`，`sigma=0.02` 改成 `0.0`。这时第 4 节的两个断言还成立吗？为什么"相同外生流"在这种情况下是**平凡**的？
-4. **价格与延迟。** 用 `tatonnement`，把 `price_gain` 从 0.1 扫到 1.0，看 `peak_shortage` 和 `oscillation_amplitude` 怎么变。你预期在 `price_gain` 多大时开始振荡？（提示：notebook 02 给出 `g*(m) = 2 sin(π/(2(2m+1)))`，`m = lag + 1`；但 `g = price_gain × b_p`，而 `b_p` 要测。）
+4. **价格与延迟。** 用 `tatonnement` 扫描 `price_gain`，比较 `peak_shortage` 和去趋势的振幅，再画出原始价格。上涨速度的变化可以产生去趋势波动。观察原始价格有没有下降。
 5. **公平的比赛存在吗？** 每个机制至少有一个"努力程度"参数（`revision_gain`、`price_gain`、`theta`、`quota_speed`）。如果为每个机制选一个最优参数再比较，比较还成立吗？协议怎么处理这个问题（提示：B6 的 `eta`/`σ`/`A` 扰动；以及"报告效应量而不只是显著性"）。
 '''),
 ]

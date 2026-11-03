@@ -530,16 +530,16 @@ def main(argv: list[str] | None = None) -> int:
     header = [
         "# PlanLab independent verification report",
         "",
-        f"Generated: {stamp}  ",
-        f"Repository: `{ROOT}`  ",
-        f"git commit: `{git['commit'] or 'n/a'}` (dirty: {git['dirty']})  ",
-        f"Python {platform.python_version()} on {platform.platform()}  ",
+        f"Generated: {stamp}",
+        f"Repository: `{ROOT}`",
+        f"git commit: `{git['commit'] or 'n/a'}` (dirty: {git['dirty']})",
+        f"Python {platform.python_version()} on {platform.platform()}",
         f"Artefacts audited (mtime): paper/main.md {_stamp(ROOT / 'paper' / 'main.md')}; "
         f"paper/tables {_stamp(ROOT / 'paper' / 'tables')}; "
         f"results/tables/tests.csv {_stamp(ROOT / 'results' / 'tables' / 'tests.csv')}; "
         f"results/tables/t00_hypotheses.csv "
-        f"{_stamp(ROOT / 'results' / 'tables' / 't00_hypotheses.csv')}  ",
-        f"Wall time: {elapsed:.1f} s  ",
+        f"{_stamp(ROOT / 'results' / 'tables' / 't00_hypotheses.csv')}",
+        f"Wall time: {elapsed:.1f} s",
         f"Checks: {n_pass} PASS, {n_fail} FAIL, {n_skip} SKIP, {n_err} ERROR",
         "",
         "This suite is written by an independent verifier. It re-derives the theorem, "

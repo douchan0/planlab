@@ -1,11 +1,11 @@
 {
-  "generated": "2026-11-01 17:19:28 +0800",
+  "generated": "2026-11-03 22:12:17 +0800",
   "git": {
-    "commit": "647fdf12fd5dcd688c01ec8193fb0c2b0b395364",
+    "commit": "984b1d60f607b03f0363d47796437b6928029248",
     "dirty": true,
-    "diff_stat": "verification/report.json |  51 +++++++++++++++++------\n verification/report.md   |  68 +++++++++++++++++++++---------\n verification/run_all.py  | 105 ++++++++++++++++++++++++++++++++++++++++-------\n 3 files changed, 177 insertions(+), 47 deletions(-)"
+    "diff_stat": "   24 +-\n .../tables/t13_material_balance_decomposition.tex  |   24 +-\n results/tables/tests.csv                           |  106 +-\n scripts/build_paper.py                             |   34 +-\n scripts/paper_tables.py                            |  112 +-\n src/planlab/experiments/aggregate.py               |   38 +-\n verification/check4_repro.py                       |   18 +\n verification/check5_stats.py                       |   40 +\n 144 files changed, 10515 insertions(+), 12261 deletions(-)"
   },
-  "elapsed_s": 64.3,
+  "elapsed_s": 57.64,
   "checks": [
     {
       "key": "theorem",
@@ -193,7 +193,7 @@
             "root_arg": 50.0
           }
         ],
-        "wall_s": 0.56
+        "wall_s": 0.52
       },
       "failures": [],
       "notes": [
@@ -240,7 +240,7 @@
         "n_collapse_forced": 10,
         "n_first_pass_optimality_probes": 182,
         "max_cascade_exit_deficit_rel": 2.3491519726445077e-16,
-        "wall_s": 1.46
+        "wall_s": 1.3
       },
       "failures": [],
       "notes": []
@@ -249,11 +249,11 @@
       "key": "accounting",
       "title": "Accounting audit over the experiment records",
       "status": "PASS",
-      "summary": "2344 audit records across 11 blocks: balance identity worst 1.63e-16 (tol 1e-08), Z=A diag(x) worst 0.00e+00, no negative arrays, C<=demand / x<=capacity / x<=targets all hold, unmet=demand-C holds; recomputed shortage_rate, welfare, plan_fulfilment and four aggregates match runs.parquet to 0.00e+00; the priority ladder was verified exactly on 381 re-run periods (0 violations) and the stored arrays reproduce from the current code to 0.00e+00.",
+      "summary": "2344 audit records across 11 blocks: balance identity worst 2.06e-16 (tol 1e-08), Z=A diag(x) worst 0.00e+00, no negative arrays, C<=demand / x<=capacity / x<=targets all hold, unmet=demand-C holds; recomputed shortage_rate, welfare, plan_fulfilment and four aggregates match runs.parquet to 0.00e+00; the priority ladder was verified exactly on 381 re-run periods (0 violations) and the stored arrays reproduce from the current code to 0.00e+00.",
       "numbers": {
         "n_audit_records": 2344,
         "n_blocks": 11,
-        "max_balance_identity_residual": 1.625317268236057e-16,
+        "max_balance_identity_residual": 2.058387222914537e-16,
         "max_Z_vs_Ax_residual": 0.0,
         "max_metric_error": {
           "shortage_rate": 0.0,
@@ -278,16 +278,16 @@
         "n_records_x_gt_capacity": 0,
         "n_records_bad_unmet": 0,
         "n_substrate_mismatches": 0,
-        "runner_reported_residual_max": 1.625317268236057e-16,
+        "runner_reported_residual_max": 2.058387222914537e-16,
         "runner_residual_vs_mine": 0.0,
         "n_duplicate_metric_rows": 0,
-        "max_spoilage_share_of_supply": 0.15997316970171474,
-        "n_sectors_with_implied_cap_ratios": 0,
+        "max_spoilage_share_of_supply": 0.08259253940908196,
+        "n_sectors_with_implied_cap_ratios": 73,
         "ladder_records_checked": 381,
         "ladder_violations": 0,
         "cells_rerun": 83,
         "max_period_reproduction_diff": 0.0,
-        "wall_s": 26.52
+        "wall_s": 23.51
       },
       "failures": [],
       "notes": [
@@ -299,12 +299,12 @@
       "key": "reproducibility",
       "title": "Reproducibility audit of the stored results",
       "status": "PASS",
-      "summary": "80 of 7364 (cell, seed) runs re-executed across 11 block(s): 2960 stored run-level metrics match to 0.0e+00; my independent recomputation of mean_shortage_rate, cum_welfare and mean_plan_fulfilment agrees to 2.0e-16; 147120 per-period metric values re-checked (worst 0.0e+00); manifests carry versions, git commit and scenario hashes that match; runs.parquet and summary.csv agree; 16 scenario YAML(s) re-run.",
+      "summary": "80 of 7364 (cell, seed) runs re-executed across 11 block(s): 2974 stored run-level metrics match to 0.0e+00; my independent recomputation of mean_shortage_rate, cum_welfare and mean_plan_fulfilment agrees to 2.0e-16; 147120 per-period metric values re-checked (worst 0.0e+00); manifests carry versions, git commit and scenario hashes that match; 14728 panel/summary consistency comparisons; 16 scenario YAML(s) re-run.",
       "numbers": {
         "n_runs_available": 7364,
         "n_runs_sampled": 80,
         "n_samples": 80,
-        "n_metric_comparisons_4a": 2960,
+        "n_metric_comparisons_4a": 2974,
         "worst_run_metric_diff_4a": 0.0,
         "worst_run_metric_diff_at": "",
         "independent_metric_worst": {
@@ -314,13 +314,14 @@
           "n_periods_used": 0.0
         },
         "per_period_comparisons": 147120,
+        "per_period_blocks_skipped": [],
         "per_period_worst_diff": 0.0,
         "n_cells_without_definition": 0,
         "n_tech_spec_disagreements": 0,
         "n_manifest_blocks_ok": 11,
         "n_consistency_checks_4e": 14728,
         "n_scenario_yamls_rerun": 16,
-        "wall_s": 14.63
+        "wall_s": 14.9
       },
       "failures": [],
       "notes": [
@@ -357,7 +358,7 @@
       "key": "statistics",
       "title": "Statistical audit (Wilcoxon/bootstrap/Holm/H4)",
       "status": "PASS",
-      "summary": "5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap reproducible); 5b 1 paired tests and 37 Holm values recomputed; 5c H4 correlations recomputed with a permutation null; 5d 1018 published table values re-derived from results/ (7 tables, worst 5.0e-07)",
+      "summary": "5a machinery validated independently (Wilcoxon exact vs scipy, Holm vs statsmodels, Spearman vs scipy, permutation vs full enumeration, bootstrap reproducible); 5b 1 paired tests and 26 revised mean tests; 61 Holm values recomputed; 5c H4 correlations recomputed with a permutation null; 5d 1138 published table values re-derived from results/ (7 tables, worst 5.0e-07)",
       "numbers": {
         "5a_wilcoxon_exact_max_diff": 0.0,
         "5a_wilcoxon_normal_max_diff": 1.6653345369377348e-16,
@@ -389,12 +390,13 @@
             0.11330669802630018
           ]
         },
-        "5b_n_rows": 59,
+        "5b_n_rows": 71,
+        "5b_revised_mean_tests_checked": 26,
         "5b_paired_rows_checked": 1,
         "5b_p_values_checked": 1,
         "5b_worst_p_diff": 1.3671875000427025e-12,
         "5b_worst_effect_rel_diff": 0.0,
-        "5b_holm_values_checked": 37,
+        "5b_holm_values_checked": 61,
         "5b_status": "AUDITED",
         "5c_n_cells": 60,
         "5c_h4": [
@@ -402,47 +404,47 @@
             "mechanism": "material_balance",
             "outcome": "output_loss",
             "predictor": "forward_rowsum_A",
-            "rho": 0.329323,
-            "p_perm": 0.154085,
+            "rho": 0.330827,
+            "p_perm": 0.153385,
             "n": 20
           },
           {
             "mechanism": "material_balance",
             "outcome": "output_loss",
             "predictor": "forward_intermediate_share",
-            "rho": 0.512782,
-            "p_perm": 0.024298,
+            "rho": 0.496241,
+            "p_perm": 0.030197,
             "n": 20
           },
           {
             "mechanism": "material_balance",
             "outcome": "output_loss",
             "predictor": "leontief_colsum",
-            "rho": 0.019549,
-            "p_perm": 0.937306,
+            "rho": 0.031579,
+            "p_perm": 0.89821,
             "n": 20
           },
           {
             "mechanism": "material_balance",
             "outcome": "output_loss",
             "predictor": "leontief_rowsum",
-            "rho": 0.368421,
-            "p_perm": 0.108089,
+            "rho": 0.366917,
+            "p_perm": 0.111089,
             "n": 20
           },
           {
             "mechanism": "material_balance",
             "outcome": "amplification",
             "predictor": "forward_rowsum_A",
-            "rho": -0.294737,
-            "p_perm": 0.20438,
+            "rho": -0.018045,
+            "p_perm": 0.941206,
             "n": 20
           },
           {
             "mechanism": "material_balance",
             "outcome": "amplification",
             "predictor": "forward_intermediate_share",
-            "rho": 0.759398,
+            "rho": 0.902256,
             "p_perm": 0.0001,
             "n": 20
           },
@@ -450,16 +452,16 @@
             "mechanism": "material_balance",
             "outcome": "amplification",
             "predictor": "leontief_colsum",
-            "rho": 0.312782,
-            "p_perm": 0.180382,
+            "rho": 0.350376,
+            "p_perm": 0.129587,
             "n": 20
           },
           {
             "mechanism": "material_balance",
             "outcome": "amplification",
             "predictor": "leontief_rowsum",
-            "rho": -0.377444,
-            "p_perm": 0.10369,
+            "rho": -0.114286,
+            "p_perm": 0.627737,
             "n": 20
           },
           {
@@ -498,32 +500,32 @@
             "mechanism": "rationing_priority",
             "outcome": "amplification",
             "predictor": "forward_rowsum_A",
-            "rho": -0.392481,
-            "p_perm": 0.087591,
+            "rho": -0.123308,
+            "p_perm": 0.606739,
             "n": 20
           },
           {
             "mechanism": "rationing_priority",
             "outcome": "amplification",
             "predictor": "forward_intermediate_share",
-            "rho": 0.691729,
-            "p_perm": 0.0012,
+            "rho": 0.768421,
+            "p_perm": 0.0002,
             "n": 20
           },
           {
             "mechanism": "rationing_priority",
             "outcome": "amplification",
             "predictor": "leontief_colsum",
-            "rho": 0.245113,
-            "p_perm": 0.29687,
+            "rho": 0.061654,
+            "p_perm": 0.794121,
             "n": 20
           },
           {
             "mechanism": "rationing_priority",
             "outcome": "amplification",
             "predictor": "leontief_rowsum",
-            "rho": -0.46015,
-            "p_perm": 0.042396,
+            "rho": -0.120301,
+            "p_perm": 0.617338,
             "n": 20
           },
           {
@@ -562,15 +564,15 @@
             "mechanism": "tatonnement",
             "outcome": "amplification",
             "predictor": "forward_rowsum_A",
-            "rho": -0.270677,
-            "p_perm": 0.246875,
+            "rho": 0.009023,
+            "p_perm": 0.971703,
             "n": 20
           },
           {
             "mechanism": "tatonnement",
             "outcome": "amplification",
             "predictor": "forward_intermediate_share",
-            "rho": 0.803008,
+            "rho": 0.933835,
             "p_perm": 0.0001,
             "n": 20
           },
@@ -578,16 +580,16 @@
             "mechanism": "tatonnement",
             "outcome": "amplification",
             "predictor": "leontief_colsum",
-            "rho": 0.326316,
-            "p_perm": 0.160584,
+            "rho": 0.16391,
+            "p_perm": 0.490551,
             "n": 20
           },
           {
             "mechanism": "tatonnement",
             "outcome": "amplification",
             "predictor": "leontief_rowsum",
-            "rho": -0.360902,
-            "p_perm": 0.116788,
+            "rho": -0.063158,
+            "p_perm": 0.792621,
             "n": 20
           }
         ],
@@ -595,18 +597,18 @@
           {
             "mechanism": "material_balance",
             "predictor": "forward_intermediate_share",
-            "rho": 0.512782,
-            "p_perm": 0.024298,
-            "paper_p": 0.0207797,
-            "paper_p_holm": 0.166238,
+            "rho": 0.496241,
+            "p_perm": 0.030197,
+            "paper_p": 0.0260515,
+            "paper_p_holm": 0.208412,
             "paper_significant": "no"
           },
           {
             "mechanism": "material_balance",
             "predictor": "leontief_colsum",
-            "rho": 0.019549,
-            "p_perm": 0.937306,
-            "paper_p": 0.934803,
+            "rho": 0.031579,
+            "p_perm": 0.89821,
+            "paper_p": 0.894854,
             "paper_p_holm": 1.0,
             "paper_significant": "no"
           },
@@ -649,11 +651,11 @@
         ],
         "5c_status": "AUDITED",
         "5d_tables_checked": 7,
-        "5d_values_checked": 1018,
-        "5d_worst_rel_diff": 4.983533505864557e-07,
+        "5d_values_checked": 1138,
+        "5d_worst_rel_diff": 4.980304383339629e-07,
         "5d_worst_at": "robustness.csv:mean_x_over_base",
         "5d_status": "AUDITED",
-        "wall_s": 11.33
+        "wall_s": 9.46
       },
       "failures": [],
       "notes": [
@@ -663,8 +665,8 @@
     {
       "key": "claims",
       "title": "Mechanism claims for the headline interaction (Lead's target)",
-      "status": "FAIL",
-      "summary": "",
+      "status": "PASS",
+      "summary": "Interaction reproduced (1.0000 either alone vs 0.9089 together, \u03c3_obs=0.03), the inventory asymmetry exists at the goods-balance frontier (gain +0.00% / loss -8.71%) and disappears in the operating regime; labour \u00d73 removes the loss, so the explanation holds as a labour-projection effect.",
       "numbers": {
         "6a_grid": {
           "gain0.0_rounds0": {
@@ -722,8 +724,8 @@
             "sd": 0.007114084658695494
           },
           "no_capacity_estimate": {
-            "mean": 0.9040740178005819,
-            "sd": 0.008503385704784542
+            "mean": 0.9040722978988459,
+            "sd": 0.008507189547270635
           },
           "no_backlog_estimate": {
             "mean": 0.9062722807402683,
@@ -742,6 +744,7 @@
           "H1",
           "H1'",
           "H2",
+          "H3",
           "H4",
           "H5",
           "incidence",
@@ -750,22 +753,20 @@
         "6e_H3_statistic": {
           "n_cells": 20,
           "min": 0.011623730912654194,
-          "max": 0.060380297079192166,
-          "mean": 0.02934870512728242,
+          "max": 0.06036561247225945,
+          "mean": 0.02936666091071018,
           "threshold": 0.005,
           "min_ratio": 2.3247461825308386,
-          "max_ratio": 12.076059415838433,
+          "max_ratio": 12.07312249445189,
           "cells_below_threshold": 0
         },
         "6e_H3_shock_size": [
           0.5
         ],
         "6e_status": "AUDITED",
-        "wall_s": 9.79
+        "wall_s": 7.95
       },
-      "failures": [
-        "6e: the hypothesis adjudication table has no row for ['H3'] (present: ['H1', \"H1'\", 'H2', 'H4', 'H5', 'incidence', 'ladder'])"
-      ],
+      "failures": [],
       "notes": [
         "The interaction is reproduced (1.0000 either alone vs 0.9089 together). The corrected mechanism is supported: inventory estimates are irrelevant in the operating regime (r_est=0 gives 0.9069 vs 0.9089), labour x3 removes the loss (1.0000), the mechanism's own balancing calls are labour-binding (used/L = 0.992 mean, 86% of calls) and the inventory asymmetry exists only at the knife-edge goods-balance frontier (gain +0.00%, loss -8.71%), where the mechanism never operates. The earlier 'inventory-estimate asymmetry' explanation is therefore refuted (finding F4)."
       ]

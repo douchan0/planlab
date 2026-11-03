@@ -57,18 +57,19 @@ Nobody edits another owner's files; report problems in the shared task instead.
 
 * All sectoral quantities are in **constant-price value units** (millions of the
   base-year currency unit, from the source I-O table, basic prices). A sector's
-  "output" is its value added at constant prices; real-volume heterogeneity is
-  out of scope and stated as a limitation. Never mix units.
+  "output" is gross production valued at the common base-year prices. It includes
+  intermediate production. The 2020 source flows are annual and serve as a
+  scale for each model period.
 * One period = one **quarter**. `T` periods per run.
 * Per-sector balance must hold to within `1e-8 * scale` every period:
 
   `S0_i + x_i + M_i = sum_j Z_ij + C_i + G_i + I_i + S_end_i + S_i^{spoil}`
 
-  with `M_i` imports (0 unless the scenario enables trade), `I_i` investment demand,
+  with `M_i=0` in the closed simulator, `I_i` delivered investment,
   and `S_i^{spoil}` **spoilage**: output that is neither used nor storable. Storage is
   finite — `S_end_i <= max_stock_ratio * base_output_i` (default 2.0, see
-  `docs/AMENDMENTS.md` Amendment 4) — and the excess is recorded, not silently
-  accumulated. The audit is implemented once, in
+  `docs/AMENDMENTS.md` Amendment 4). Apply this limit to the total closing
+  balance, which already includes opening inventory. The excess is recorded. The audit is implemented once, in
   `planlab.core.engine.balance_residual`; import it rather than re-deriving the
   identity. This is asserted by the engine every period (raises `AccountingError`).
 

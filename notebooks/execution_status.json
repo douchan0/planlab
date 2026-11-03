@@ -11,8 +11,8 @@
    "n_code_cells": 14,
    "n_outputs": 18,
    "ok": true,
-   "seconds": 2.37,
-   "sha256": "7727cbd1ddfcbc698cb0b49ac0de05bdeca02fb7138d29534e568c817bf8e33d"
+   "seconds": 2.59,
+   "sha256": "bf78075ec81ec8508970ec5157c3c5ed7772a6e396c19de73841e939366e6c1e"
   },
   "02_delay_theorem.ipynb": {
    "cells": 22,
@@ -21,8 +21,8 @@
    "n_code_cells": 12,
    "n_outputs": 15,
    "ok": true,
-   "seconds": 1.57,
-   "sha256": "7b35b1a7faf40e2b9819be7ded098b2ff9912d317e128e6cf3fadd77e4f64bfe"
+   "seconds": 1.56,
+   "sha256": "d96e96fb7bb7e6a8ec5273a32408b4cb51f37167d02d60ae73e5af7bcb50cc41"
   },
   "03_one_period_walkthrough.ipynb": {
    "cells": 35,
@@ -32,7 +32,7 @@
    "n_outputs": 20,
    "ok": true,
    "seconds": 2.16,
-   "sha256": "8944fae9080a052281dd672967d98e60a881e3504e2c6ae5d3b9d8be4d0d653a"
+   "sha256": "d7b59320df63d4afcae13e5c9230fa586eab90a919136a246e4af9ef42446d3a"
   },
   "04_mechanism_zoo.ipynb": {
    "cells": 21,
@@ -41,8 +41,8 @@
    "n_code_cells": 11,
    "n_outputs": 14,
    "ok": true,
-   "seconds": 3.81,
-   "sha256": "ba4cd7198100e4a236133fd8dfa61f83f3aae8bdc69345562f02bc9f99fbeeb2"
+   "seconds": 3.73,
+   "sha256": "4f0a57c1054b497c16c294bab1ab2caf01f6a4c43331a24d0d3c8b78cc58ac99"
   },
   "05_dual_track_and_shadow_prices.ipynb": {
    "cells": 16,
@@ -51,8 +51,8 @@
    "n_code_cells": 8,
    "n_outputs": 11,
    "ok": true,
-   "seconds": 2.62,
-   "sha256": "01d029caec345fbf1841d1a3d76199ed549c83e266b4e7d7808e469d9ea53c40"
+   "seconds": 2.51,
+   "sha256": "af084562b570a1ee1e6f01f319a50107a11698a321e8ec699b207704509a8c29"
   },
   "06_reproduce_a_paper_table.ipynb": {
    "cells": 20,
@@ -61,11 +61,11 @@
    "n_code_cells": 10,
    "n_outputs": 12,
    "ok": true,
-   "seconds": 3.07,
-   "sha256": "f3abaec4ea2bbc3c6944972c5132ccf8b774445b48ce13d9160c8e9bba32e66f"
+   "seconds": 3.1,
+   "sha256": "a526bc438e1dda552f5de2948d47d7f0c28d46b33a723f5db7d1a690d691bb14"
   }
  },
  "platform": "macOS-15.7.7-arm64-arm-64bit",
  "python": "3.10.13",
- "total_seconds": 15.6
+ "total_seconds": 3.1
 }

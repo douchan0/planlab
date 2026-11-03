@@ -136,8 +136,8 @@ def make_lag_grid(bundle: A.ResultsBundle, out_dir: Path, written: list[dict[str
         stats = sub.groupby(["lag", "m"]).agg(
             shortage=("mean_shortage_rate", "mean"),
             shortage_sd=("mean_shortage_rate", "std"),
-            loss=("welfare_loss_vs_baseline", "mean"),
-            loss_sd=("welfare_loss_vs_baseline", "std"),
+            utility=("mean_welfare", "mean"),
+            utility_sd=("mean_welfare", "std"),
             n=("mean_shortage_rate", "size"),
         ).reset_index()
         stats = stats.sort_values("lag")
@@ -148,21 +148,21 @@ def make_lag_grid(bundle: A.ResultsBundle, out_dir: Path, written: list[dict[str
         axes[0].fill_between(x, (stats["shortage"] - 1.96 * se) * 100,
                              (stats["shortage"] + 1.96 * se) * 100,
                              color=_PALETTE[mechanism], alpha=0.15, linewidth=0)
-        se_l = (stats["loss_sd"] / np.sqrt(stats["n"].clip(lower=1))).to_numpy(dtype=float)
-        axes[1].plot(x, stats["loss"].to_numpy() * 100, marker=_MARKERS[mechanism],
+        se_l = (stats["utility_sd"] / np.sqrt(stats["n"].clip(lower=1))).to_numpy(dtype=float)
+        axes[1].plot(x, stats["utility"].to_numpy(), marker=_MARKERS[mechanism],
                      color=_PALETTE[mechanism])
-        axes[1].fill_between(x, (stats["loss"] - 1.96 * se_l) * 100,
-                             (stats["loss"] + 1.96 * se_l) * 100,
+        axes[1].fill_between(x, stats["utility"] - 1.96 * se_l,
+                             stats["utility"] + 1.96 * se_l,
                              color=_PALETTE[mechanism], alpha=0.15, linewidth=0)
     axes[0].set_xlabel("reporting lag $\\ell$ (effective delay $k=\\ell+1$)")
     axes[0].set_ylabel("mean shortage rate (per cent)")
     axes[0].set_title("(a) Shortage against delay")
     axes[1].set_xlabel("reporting lag $\\ell$ (effective delay $k=\\ell+1$)")
-    axes[1].set_ylabel("welfare loss vs baseline (per cent)")
-    axes[1].set_title("(b) Welfare loss against delay")
+    axes[1].set_ylabel("mean household utility (points)")
+    axes[1].set_title("(b) Utility against delay")
     axes[0].legend(loc="lower right", ncol=2)
     _save(fig, out_dir, "fig_lag_grid", written, block="B2",
-          what="shortage and welfare loss against the reporting lag, one line per institution (H2)")
+          what="shortage and utility against the reporting lag, one line per institution (H2)")
     make_lag_grid.lag_stats = frame  # type: ignore[attr-defined]
 
 

@@ -282,3 +282,23 @@ there would have implied an inferential procedure the protocol never specified.
 **Verification.** `verification/check6` fails if the adjudication table does not carry
 six hypothesis rows; that check now passes, and the verifier independently re-derived
 the same statistics from `results/B3/summary.csv` before the row existed.
+
+## Audit revision (2026-11-03)
+
+This revision follows the findings in [the project audit](项目审计报告.md).
+Closing inventory is capped at the total storage limit. Opening inventory is
+already included in remaining supply. A zero labour endowment now binds.
+Ordinary scenarios reject price shocks explicitly. Controlled price probes
+remain available through the experiment layer.
+
+The analysis is a revision of the historical protocol. B2 compares
+price amplitude separately by elasticity and seed at each tested reporting lag
+against lag zero. The one-sided price update cannot establish the signed scalar
+threshold. H2 compares the per-seed slopes of mean utility points at reference
+gain 0.30 and price elasticity 0.4. H3 is a descriptive threshold check with no
+p-value. B3 matches each shock to a same-seed no-shock trajectory. H4 uses the
+largest incremental output loss from periods 40 through 60 and averages the
+resulting amplification ratios over fixed sectors within each seed. The older
+base-output comparison remains in the run data. H5 compares each candidate to
+both endpoints, with Holm correction across the candidate tests. Earlier
+reference results and the process report document the previous analysis.

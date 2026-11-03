@@ -12,11 +12,11 @@
     "B8",
     "P2"
   ],
-  "generated_at": "2026-11-01T16:55:18+0800",
-  "git_commit": "f3b9b3166452be2242bd4ea324afacf6b5ef1528",
+  "generated_at": "2026-11-03T22:10:30+0800",
+  "git_commit": "984b1d60f607b03f0363d47796437b6928029248",
   "grid_fingerprint": "5d222d87c103e838",
   "how_to_reproduce": "python -m planlab.experiments.aggregate",
-  "n_tests": 59,
+  "n_tests": 71,
   "results_dir": "/Users/ceontou/Documents/code/planlab/results",
   "tables": [
     {
@@ -27,7 +27,7 @@
       "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t01_validation_b1.tex"
     },
     {
-      "caption": "The information rent of a coordination institution (block B1b): no capacity shock, no reporting lag, only measurement noise ($\\sigma=0.03$) and AR(1) demand noise (ar1 $=0.3$, $\\sigma=0.02$). Since every institution reproduces the base year exactly when information is perfect (Table~\\ref{tab:validation}), any departure here is attributable to the institution's use of information.",
+      "caption": "B1b combines measurement error and demand innovations at zero reporting lag and without an external capacity shock.",
       "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t02_noise_only_information_rent.csv",
       "rows": 6,
       "table": "t02_noise_only_information_rent",
@@ -48,7 +48,7 @@
       "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t04_gain_sweep.tex"
     },
     {
-      "caption": "Sectoral propagation (block B3): a 50 per cent capacity cut lasting eight quarters, one shocked sector at a time, 20 seeds each. $\\mathrm{Amp}^{\\mathrm{out}}$ is the peak aggregate output loss divided by the output-weighted capacity loss (the like-for-like amplification of H4); the distributional ratio divides the peak *shortage* share by the same denominator and is always larger because it compares a demand-side with a supply-side share.",
+      "caption": "Sectoral propagation (block B3): a 50 per cent capacity cut lasting eight quarters, one shocked sector at a time, 20 seeds each. Paired loss compares each run to the same-seed no-shock control. The original loss relative to base-year output is retained as a separate column.",
       "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t06_propagation.csv",
       "rows": 60,
       "table": "t06_propagation",
@@ -90,7 +90,7 @@
       "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t13_material_balance_decomposition.tex"
     },
     {
-      "caption": "The local gain of the price loop, measured sector by sector (block B7): $b_{p,j}=-\\mathrm{d}s_j/\\mathrm{d}\\log p_j$ from a $\\pm5$ per cent permanent price offset on each good, with that good's capacity permanently cut by 50 per cent and the price gain switched off. The loop gain of the mechanism is $g=\\eta\\,b_p$, so these numbers decide whether the analytic bound $g^*(m)=2\\sin(\\pi/(2(2m+1)))$ is reachable at all.",
+      "caption": "Sector-level shortage response to a price offset with feedback disabled (B7). These finite differences describe sensitivity under the probe, while stability depends on the full dynamic response and the direction of price adjustment.",
       "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t12_bp_by_sector.csv",
       "rows": 80,
       "table": "t12_bp_by_sector",
@@ -104,7 +104,7 @@
       "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t11_ladder.tex"
     },
     {
-      "caption": "Where the analytic stability boundary lies, and whether the price loop can reach it (H1). The bound is $g^*(m)=2\\sin(\\pi/(2(2m+1)))$ on the loop gain $g=\\eta\\,b_p$; the local gain $b_p$ is measured sector by sector in block B7 (table~\\ref{tab:bp_sector}). ``$g_{\\max}$'' is the largest loop gain the tested gain grid can produce, $\\eta_{\\max}b_p$, so ``$g_{\\max}/g^*$'' below one means the boundary is **not approachable** in this economy at any adjustment speed inside the grid, whatever its position.",
+      "caption": "Scalar stability benchmark and diagnostics for the simulated one-sided price rule. The sector-average price response is a descriptive proxy, not a bound on dynamic eigenvalues.",
       "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t05_stability_boundary.csv",
       "rows": 12,
       "table": "t05_stability_boundary",
@@ -113,7 +113,7 @@
     {
       "caption": "Pre-registered hypotheses and the evidence on them. Every row traces to a test in \\texttt{results/tables/tests.csv}; p-values are Holm-corrected within block.",
       "csv": "/Users/ceontou/Documents/code/planlab/results/tables/t00_hypotheses.csv",
-      "rows": 7,
+      "rows": 8,
       "table": "t00_hypotheses",
       "tex": "/Users/ceontou/Documents/code/planlab/results/tables/t00_hypotheses.tex"
     }

@@ -1,0 +1,7 @@
+Rule,Output,Household delivery,Shortage,Utility points,Spoilage
+hybrid_dual_track,0.99513,0.9873,0.01628,259.2909,0.0
+tatonnement,0.99378,0.89365,0.01564,257.22396,0.00707
+market,0.9908,0.98244,0.01619,259.19686,0.0
+rationing_priority,0.98221,0.97389,0.01646,259.01749,0.0
+lp_central,0.97096,0.96292,0.01643,258.77973,0.0
+material_balance,0.93708,0.8659,0.04692,256.82282,0.00264

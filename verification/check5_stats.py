@@ -389,6 +389,45 @@ def _audit_test_log(res: CheckResult) -> None:
                               f"5b: {comparison}: stored CI [{lo_stored}, {hi_stored}] vs "
                               f"bootstrap [{lo:.6g}, {hi:.6g}]")
 
+    # Reconstruct the revised mean-based tests from the recorded runs.
+    from scipy.stats import t as student_t
+
+    def right_tail(values, null=0.0):
+        diff = np.asarray(values, dtype=float) - null
+        se = diff.std(ddof=1) / np.sqrt(len(diff))
+        if se == 0:
+            return float(diff.mean() <= 0)
+        return float(student_t.sf(diff.mean() / se, df=len(diff) - 1))
+
+    revised_checked = 0
+    b2 = _load_block_summary("B2")
+    b3 = _load_block_summary("B3")
+    b5 = _load_block_summary("B5")
+    for row in tests.itertuples():
+        if row.hypothesis == "H2" and not b2.empty and "paired t-test" in row.test:
+            other = row.comparison.split(" vs ", 1)[1].split(":", 1)[0]
+            sample = b2[b2["gain"].eq(0.3) & b2["price_elasticity"].eq(0.4)]
+            slopes = {}
+            for (mechanism, seed), group in sample.groupby(["mechanism", "seed"]):
+                lag = group["lag"] - group["lag"].mean()
+                slopes[mechanism, seed] = -(lag * group["mean_welfare"]).sum() / (lag**2).sum()
+            paired = pd.Series(slopes).unstack(0).dropna(subset=["lp_central", other])
+            expected = right_tail(paired["lp_central"] - paired[other])
+        elif row.hypothesis == "H4" and "paired_shock_output_amplification" in b3:
+            mechanism = row.comparison.split(":", 1)[0]
+            sub = b3[b3["mechanism"] == mechanism]
+            expected = right_tail(sub.groupby("seed")["paired_shock_output_amplification"].mean(), 1)
+        elif row.hypothesis == "H5" and not b5.empty and "paired t-tests" in row.test:
+            lag = int(row.comparison.split()[1].rstrip(","))
+            wide = b5[b5["lag"] == lag].pivot(index="seed", columns="theta", values="mean_welfare")
+            expected = max(right_tail(wide[row.statistic] - wide[endpoint]) for endpoint in (0, 1))
+        else:
+            continue
+        revised_checked += 1
+        res.check(np.isclose(expected, row.p_value, rtol=1e-5, atol=1e-12),
+                  f"5b: {row.comparison}: expected revised p={expected:.8g}, got {row.p_value:.8g}")
+    res.numbers["5b_revised_mean_tests_checked"] = revised_checked
+
     # --- Holm audit: recompute within block from the raw p-values ---------
     if "p_value" in tests.columns and "p_holm" in tests.columns and "block" in tests.columns:
         for block, sub in tests.groupby("block"):
@@ -678,6 +717,7 @@ def _body(res: CheckResult) -> None:
                  "reproducible)"]
         if res.numbers.get("5b_status") == "AUDITED":
             parts.append(f"5b {res.numbers['5b_paired_rows_checked']} paired tests and "
+                         f"{res.numbers['5b_revised_mean_tests_checked']} revised mean tests; "
                          f"{res.numbers['5b_holm_values_checked']} Holm values recomputed")
         else:
             parts.append("5b skipped (no tests.csv)")

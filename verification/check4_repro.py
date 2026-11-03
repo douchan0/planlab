@@ -150,6 +150,7 @@ def _body(res: CheckResult) -> None:
     if missing_panels:
         res.note("4c/4e: per-period checks skipped for missing runs.parquet: " + ", ".join(missing_panels))
 
+    no_shock_runs = {}
     for block_name, cell_id, seed in sample:
         cell = cells_by_block.get(block_name, {}).get(cell_id)
         summ = summaries[block_name]
@@ -176,6 +177,23 @@ def _body(res: CheckResult) -> None:
 
         # ---- 4a every stored run-level metric ---------------------------
         fresh = result.run_metrics
+        if block_name == "B3" and "paired_shock_output_amplification" in summ:
+            control_key = (cell["mechanism"], seed)
+            if control_key not in no_shock_runs:
+                no_shock_runs[control_key], _ = rerun_cell(
+                    {**cell, "scenario": {**sc_dict, "shocks": []}}, seed,
+                )
+            control = no_shock_runs[control_key]
+            total = tech.base_output.sum()
+            incremental_loss = max(
+                earlier.x.sum() - later.x.sum()
+                for earlier, later in zip(control.records, result.records)
+                if 40 <= later.t <= 60
+            )
+            sector = tech.sectors.index(str(row["shock_sector"]))
+            direct_loss = (1.0 - float(row["shock_size"])) * tech.base_output[sector]
+            fresh = {**fresh, "paired_shock_output_loss": incremental_loss / total,
+                     "paired_shock_output_amplification": incremental_loss / direct_loss}
         for key in summ.columns:
             if key not in fresh:
                 continue

@@ -17,7 +17,7 @@
         "tatonnement"
       ],
       "runs_completed": 12,
-      "wall_s": 0.39
+      "wall_s": 0.29
     },
     {
       "block": "B1b",
@@ -36,7 +36,7 @@
         "tatonnement"
       ],
       "runs_completed": 120,
-      "wall_s": 4.91
+      "wall_s": 2.78
     },
     {
       "block": "B2",
@@ -55,7 +55,7 @@
         "tatonnement"
       ],
       "runs_completed": 4080,
-      "wall_s": 228.62
+      "wall_s": 70.8
     },
     {
       "block": "B3",
@@ -74,7 +74,7 @@
         "tatonnement"
       ],
       "runs_completed": 1200,
-      "wall_s": 59.81
+      "wall_s": 30.27
     },
     {
       "block": "B4",
@@ -93,7 +93,7 @@
         "tatonnement"
       ],
       "runs_completed": 120,
-      "wall_s": 4.98
+      "wall_s": 1.84
     },
     {
       "block": "B5",
@@ -112,7 +112,7 @@
         "tatonnement"
       ],
       "runs_completed": 440,
-      "wall_s": 27.74
+      "wall_s": 6.4
     },
     {
       "block": "B6",
@@ -131,7 +131,7 @@
         "tatonnement"
       ],
       "runs_completed": 520,
-      "wall_s": 34.38
+      "wall_s": 13.49
     },
     {
       "block": "B7",
@@ -150,7 +150,7 @@
         "tatonnement"
       ],
       "runs_completed": 480,
-      "wall_s": 19.78
+      "wall_s": 7.81
     },
     {
       "block": "B8",
@@ -169,7 +169,7 @@
         "tatonnement"
       ],
       "runs_completed": 192,
-      "wall_s": 21.68
+      "wall_s": 4.58
     },
     {
       "block": "B2L",
@@ -188,7 +188,7 @@
         "tatonnement"
       ],
       "runs_completed": 160,
-      "wall_s": 22.89
+      "wall_s": 6.27
     },
     {
       "block": "P2",
@@ -207,7 +207,7 @@
         "tatonnement"
       ],
       "runs_completed": 40,
-      "wall_s": 2.08
+      "wall_s": 0.59
     }
   ],
   "blocks_completed": [
@@ -237,7 +237,7 @@
     "P2"
   ],
   "cells_failed": 0,
-  "code_fingerprint": "83343c436f192205",
+  "code_fingerprint": "b9f60c3451e5dcef",
   "environment": {
     "burn_in": 30,
     "note": "docs/PROTOCOL.md \u00a74 as amended by docs/AMENDMENTS.md 1-3; the horizon T=80 is recorded as a deviation in docs/DEVIATIONS.md",
@@ -248,9 +248,9 @@
     "shock_start": 40,
     "stock_ratio": 0.1
   },
-  "generated_at": "2026-11-01T16:52:43+0800",
-  "git_commit": "f3b9b3166452be2242bd4ea324afacf6b5ef1528",
-  "git_diff_stat": " 643 files changed, 21491 insertions(+), 18057 deletions(-)",
+  "generated_at": "2026-11-03T22:01:40+0800",
+  "git_commit": "984b1d60f607b03f0363d47796437b6928029248",
+  "git_diff_stat": " 113 files changed, 9728 insertions(+), 12573 deletions(-)",
   "git_dirty": true,
   "grid_fingerprint": "d2b4b85a7ba96e98",
   "how_to_reproduce": "bash scripts/reproduce.sh   # or: make reproduce",
@@ -275,6 +275,6 @@
   },
   "planned_runs": 7364,
   "runs_completed": 7364,
-  "sum_cell_wall_time_s": 2619.45,
-  "total_wall_time_s": 471.83
+  "sum_cell_wall_time_s": 803.36,
+  "total_wall_time_s": 156.14
 }

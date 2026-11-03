@@ -1,9 +1,9 @@
-hypothesis,n_tests,n_significant_holm_05,key_statistic,key_p_value,key_p_holm,prediction
-H1,18.0,1.0,817.0,4.54747e-12,1.81899e-11,Delay destabilises the administered price loop: the measured critical price gain should track $g^*(m)/b_p$ within one lag period and the oscillation period should approach $2(2m+1)$.
-H1',7.0,5.0,0.951515,2.27985e-05,6.83956e-05,"Taut plans are self-defeating: in a capacity-constrained input-output economy the plan-revision loop is positive, so shortage rises and welfare falls with the revision gain."
-H2,7.0,6.0,0.000693875,0.0,0.0,Welfare loss rises fastest with the reporting lag for the institution that needs the freshest information (\texttt{lp\_central}).
-H3,20.0,20.0,0.011624,,,Material balance does not eliminate shortage: falsified if the mean shortage rate under a sectoral capacity shock falls below 0.5 per cent
-H4,15.0,6.0,210.0,9.53674e-07,1.43051e-05,A single-sector shock amplifies through the network: the like-for-like output amplification exceeds one on average over the twenty shocked sectors.
-H5,2.0,1.0,0.9,0.00447316,0.00894632,The dual track has an interior optimum in the plan share $\theta$: welfare is not monotone in $\theta$ over the tested grid.
-incidence,2.0,0.0,0.734683,,,
-ladder,1.0,1.0,0.0,7.84953e-15,7.84953e-15,
+hypothesis,verdict,n_tests,n_significant_holm_05,key_statistic,key_p_value,key_p_holm,prediction
+H1,Threshold not identified,0,0,,,,Delay destabilises the administered price loop: the measured critical price gain should track $g^*(m)/b_p$ within one lag period and the oscillation period should approach $2(2m+1)$.
+H1',See test log,7,5,0.951515,2.27985e-05,0.000273583,"Taut plans are self-defeating: in a capacity-constrained input-output economy the plan-revision loop is positive, so shortage rises and welfare falls with the revision gain."
+H2,Ordering not established,5,4,58.3347,3.38443e-23,5.41509e-22,Welfare loss rises fastest with the reporting lag for the institution that needs the freshest information (\texttt{lp\_central}).
+H3,Threshold met in every cell,0,0,0.0116237,,,Each shocked-sector mean shortage is at least 0.5 per cent.
+H4,3 amplification tests; 0 forward-linkage tests,15,6,90.8741,7.6664e-27,9.96632e-26,A single-sector shock amplifies through the network: the like-for-like output amplification exceeds one on average over the twenty shocked sectors.
+H5,Interior advantage not established,18,0,0.1,0.999993,1,An interior plan share improves on both endpoint shares.
+incidence,See test log,0,0,0.734679,,,
+ladder,See test log,1,1,0,7.84953e-15,7.84953e-15,

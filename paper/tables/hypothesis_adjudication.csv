@@ -1,7 +1,7 @@
-hypothesis,prediction,outcome,key_statistic
-H1,"The measured critical price gain tracks $g^\star(m)/b_p$ and the period approaches $2(2m+1)$","Not supported: no crossing claimed","1 of 18 tests survives Holm; the rule fires at 57 per cent of the predicted gain in the one reachable cell, so it is not specific"
-H1',"Taut plans are self-defeating: shortage rises and welfare falls with the revision gain","Supported","Spearman rho(gain, shortage) = 0.952, Holm p = 6.8e-5; gain 1.6 vs 0.05 = +7.8 pp, p = 9.9e-22, Cliff delta = 1.00"
-H2,"Welfare loss rises fastest with the reporting lag for the institution needing the freshest information","Supported","Welfare-loss slope per quarter: 0.00452 (lp_central, SE 6.8e-5), 0.00415 (rationing), 0.00061 (material balance), 0.00039 (tatonnement); 6 of 7 tests survive Holm"
-H3,"Material balance does not eliminate shortage: falsified if mean shortage under a capacity shock is below 0.5 per cent","Supported: falsifier not triggered in any of twenty cells","Mean shortage 1.16 to 6.04 per cent, mean 2.93 per cent across the twenty shocked sectors, i.e. 2.3 to 12.1 times the falsification threshold"
-H4,"A single-sector shock amplifies above one and amplification rises with forward-linkage centrality","Supported for two of three institutions, the third marginal after Holm","Mean output amplification 7.9 to 9.5, p = 9.5e-6; rho(forward linkage, output loss) = +0.513 (p = 0.021), +0.567 (p = 0.009), +0.414 (p = 0.070)"
-H5,"The dual track has an interior optimum in the plan share","Formally met, not economically detectable","Welfare maximum at theta = 0.9 but the whole range is 0.122 against across-seed standard deviations of 0.067 to 0.146"
+Hypothesis,Result,Tests,Holm < 0.05
+H1,Threshold not identified,0,0
+H1',See test log,7,5
+H2,Ordering not established,5,4
+H3,"Threshold met in every cell (0/20 below 0.5%; min=0.0116237, mean=0.0293667, max=0.0603656)",0,0
+H4,3 amplification tests; 0 forward-linkage tests,15,6
+H5,Interior advantage not established,18,0

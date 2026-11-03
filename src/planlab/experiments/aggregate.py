@@ -196,8 +196,8 @@ def merged_summary(
     """All run-level rows, with ``welfare_loss_vs_baseline`` added.
 
     One row per (block, cell, seed).  The loss is ``1 - cum_welfare / baseline``,
-    so 0 means "the base-year perfect-information welfare" and 0.01 means "one per
-    cent of it was lost".
+    so zero denotes the calm calibration. This historical index depends on the
+    utility scale's origin. H2 and H5 compare mean utility points instead.
     """
     names = list(blocks) if blocks is not None else bundle.blocks
     frames = [bundle.summaries[b] for b in names if b in bundle.summaries]
@@ -216,8 +216,8 @@ def merged_summary(
             import warnings
 
             warnings.warn(
-                "B1 is missing: welfare_loss_vs_baseline is NaN. Every welfare loss in "
-                "the paper is relative to results/B1/" + BASELINE_CELL + "; run the block.",
+                "B1 is missing: the historical welfare_loss_vs_baseline index is NaN. "
+                "Run B1 to populate the comparison to the calm calibration.",
                 RuntimeWarning,
                 stacklevel=2,
             )
@@ -845,23 +845,11 @@ def table_noise_only(bundle: ResultsBundle, writer: TableWriter, tests: TestLog)
         "t02_noise_only_information_rent",
         table,
         caption=(
-            "The information rent of a coordination institution (block B1b): no capacity "
-            "shock, no reporting lag, only measurement noise ($\\sigma=0.03$) and AR(1) demand "
-            "noise (ar1 $=0.3$, $\\sigma=0.02$). Since every institution reproduces the base "
-            "year exactly when information is perfect (Table~\\ref{tab:validation}), any "
-            "departure here is attributable to the institution's use of information."
+            "B1b combines measurement error and demand innovations at zero reporting lag "
+            "and without an external capacity shock."
         ),
         label="tab:noise_only",
-        notes=(
-            "20 seeds per institution, real 20-sector Eurostat 2020 substrate, "
-            "$\\bar x$ = base-year gross output. **Read the shortage column with the ratio "
-            "columns, never alone**: household demand is income-elastic in this model, so an "
-            "institution that destroys output also destroys the demand that would have been "
-            "recorded as unmet --- the shortage rate is scale-free by construction and is "
-            "near-invariant across institutions (1.56--1.64 per cent for five of six) while "
-            "output ranges over 2.4 points and welfare over 2.7. Source: "
-            "\\texttt{results/B1b/}."
-        ),
+        notes="Twenty seeds per rule. Read household shortage alongside output and delivery.",
         formatters={"mechanism": lambda v: _tex_escape(v)},
         digits=4,
     )
@@ -1068,7 +1056,7 @@ def table_gain_sweep(bundle: ResultsBundle, writer: TableWriter, tests: TestLog)
             effect_name="rho(gain, shortage)",
             effect_value=rho,
             n_units=int(len(cell)),
-            note="positive rho = taut plans raise shortage (positive feedback loop)",
+            note="Descriptive association across gain settings.",
         )
         wide = mb.pivot(index=["lag", "seed"], columns="gain", values="mean_shortage_rate")
         if 0.05 in wide and 1.6 in wide:
@@ -1255,18 +1243,12 @@ def table_bp_by_sector(bundle: ResultsBundle, writer: TableWriter, tests: TestLo
         "t12_bp_by_sector",
         table,
         caption=(
-            "The local gain of the price loop, measured sector by sector (block B7): "
-            "$b_{p,j}=-\\mathrm{d}s_j/\\mathrm{d}\\log p_j$ from a $\\pm5$ per cent permanent "
-            "price offset on each good, with that good's capacity permanently cut by 50 per cent "
-            "and the price gain switched off. The loop gain of the mechanism is "
-            "$g=\\eta\\,b_p$, so these numbers decide whether the analytic bound "
-            "$g^*(m)=2\\sin(\\pi/(2(2m+1)))$ is reachable at all."
+            "Sector-level shortage response to a price offset with feedback disabled (B7). "
+            "These finite differences describe sensitivity under the probe, while stability "
+            "depends on the full dynamic response and the direction of price adjustment."
         ),
         label="tab:bp_sector",
-        notes=(
-            "One seed, no measurement noise: the probe is deterministic. "
-            "Source: \\texttt{results/B7/}."
-        ),
+        notes="Deterministic probe trajectories at each configured price elasticity.",
         formatters={"sector": lambda v: _tex_escape(v)},
         digits=4,
     )
