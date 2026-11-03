@@ -434,31 +434,19 @@ def _linkage_predictors() -> dict[str, dict[str, float]]:
 
 
 def _amplification_by_sector() -> pd.DataFrame:
-    """Mean run-level outcome per (mechanism, shocked sector) from summary.csv.
-
-    Both H4 statistics are returned: ``loss`` (``shock_output_loss``, the paper's
-    primary statistic) and ``amp`` (``shock_output_amplification``, the ratio the
-    paper itself calls a small-denominator artefact).
-    """
-    summary = _load_summary()
-    if summary.empty or "shock_sector" not in summary.columns:
+    """Mean paired loss and amplification by mechanism and shocked sector."""
+    summary = _load_block_summary("B3")
+    if summary.empty:
+        return pd.DataFrame()
+    loss = "paired_shock_output_loss"
+    amp = "paired_shock_output_amplification"
+    if loss not in summary or amp not in summary:
         return pd.DataFrame()
     sub = summary[summary["shock_sector"].notna()]
-    if sub.empty:
-        return pd.DataFrame()
-    for col in ("shock_output_amplification", "shock_output_loss"):
-        if col not in sub.columns:
-            return pd.DataFrame()
-    # B4/B6 also shock sectors, but only a handful and at different sizes; H4 is a
-    # cross-section over the 20 sectors of B3, so keep only the block that gives each
-    # mechanism its full sector panel.
-    coverage = sub.groupby(["block", "mechanism"])["shock_sector"].nunique().reset_index()
-    keep = coverage.sort_values("shock_sector", ascending=False).drop_duplicates("mechanism")
-    sub = sub.merge(keep[["block", "mechanism"]], on=["block", "mechanism"], how="inner")
     out = (
         sub.groupby(["mechanism", "shock_sector"])
-        .agg(amp=("shock_output_amplification", "mean"),
-             loss=("shock_output_loss", "mean"),
+        .agg(amp=(amp, "mean"),
+             loss=(loss, "mean"),
              n=("seed", "nunique"))
         .reset_index()
     )
@@ -555,7 +543,9 @@ TABLE_SPECS = (
     ("propagation.csv", "B3", ["mechanism", "shock_sector"], None,
      {"output_loss": ("shock_output_loss", "mean"),
       "output_loss_sd": ("shock_output_loss", "std"),
-      "output_amplification": ("shock_output_amplification", "mean")}),
+      "output_amplification": ("shock_output_amplification", "mean"),
+      "paired_output_loss": ("paired_shock_output_loss", "mean"),
+      "paired_output_amplification": ("paired_shock_output_amplification", "mean")}),
     ("rationing_shadow.csv", "B4", ["mechanism", "shock_size"], None,
      {"mean_shortage_rate_mean": ("mean_shortage_rate", "mean"),
       "mean_welfare_mean": ("mean_welfare", "mean"),

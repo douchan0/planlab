@@ -876,6 +876,7 @@ def is_complete(out_dir: str | Path, cell: Cell) -> bool:
     return (
         meta.get("status") == "ok"
         and meta.get("cell_hash") == cell.hash()
+        and meta.get("code_fingerprint") == code_fingerprint()
         and list(meta.get("seeds", [])) == list(cell.seeds)
     )
 
@@ -900,7 +901,8 @@ def _write_shard(out_dir: Path, cell: Cell, result: Mapping[str, Any]) -> None:
         "summary_rows": list(result.get("summary_rows", [])),
         "sector_rows": list(result.get("sector_rows", [])),
     }
-    meta_path.write_text(json.dumps(meta, indent=2, sort_keys=True, default=_default), encoding="utf-8")
+    # Invalidate the old completion record before replacing its data files.
+    meta_path.unlink(missing_ok=True)
     period_rows = result.get("period_rows") or []
     if period_rows:
         pd.DataFrame(period_rows).to_parquet(data_path, index=False)
@@ -929,6 +931,9 @@ def _write_shard(out_dir: Path, cell: Cell, result: Mapping[str, Any]) -> None:
             payload[name] = np.asarray(audit[name], dtype=float)
         payload["n_sectors"] = np.asarray(audit["n_sectors"], dtype=np.int64)
         np.savez_compressed(out_dir / "cells" / f"{cell.cell_id}.audit.npz", **payload)
+    else:
+        (out_dir / "cells" / f"{cell.cell_id}.audit.npz").unlink(missing_ok=True)
+    meta_path.write_text(json.dumps(meta, indent=2, sort_keys=True, default=_default), encoding="utf-8")
 
 
 def _default(obj: Any) -> Any:

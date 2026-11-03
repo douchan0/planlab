@@ -950,15 +950,11 @@ def table_lag_mechanism(bundle: ResultsBundle, writer: TableWriter, tests: TestL
     # H2 compares slopes within a seed at the shared operating point.
     from scipy.stats import ttest_1samp
 
-    slopes = []
-    for (mechanism, seed), group in frame.groupby(["mechanism", "seed"]):
-        if group["lag"].nunique() < 2:
-            continue
+    wide = frame.pivot(index=["mechanism", "seed"], columns="lag", values="mean_welfare").dropna()
+    if not wide.empty and len(wide.columns) >= 2:
         # A negative slope of mean utility is a positive slope of utility loss.
-        slope = np.polyfit(group["lag"], -group["mean_welfare"], 1)[0]
-        slopes.append({"mechanism": mechanism, "seed": seed, "slope": slope})
-    if slopes:
-        paired = pd.DataFrame(slopes).pivot(index="seed", columns="mechanism", values="slope")
+        slopes = np.polyfit(wide.columns.to_numpy(dtype=float), -wide.to_numpy().T, 1)[0]
+        paired = pd.Series(slopes, index=wide.index).unstack("mechanism")
         if "lp_central" in paired:
             for mechanism in paired.columns.drop("lp_central"):
                 pair = paired[["lp_central", mechanism]].dropna()
@@ -1461,7 +1457,9 @@ def table_propagation(bundle: ResultsBundle, writer: TableWriter, tests: TestLog
         from scipy.stats import ttest_1samp
 
         runs = frame[frame["mechanism"] == mechanism]
-        per_seed = runs.groupby("seed")["paired_shock_output_amplification"].mean()
+        sector_panel = runs.pivot(index="seed", columns="shock_sector",
+                                  values="paired_shock_output_amplification")
+        per_seed = sector_panel.reindex(columns=list(predictors["share"])).dropna().mean(axis=1)
         fit = ttest_1samp(per_seed, 1.0, alternative="greater") if len(per_seed) > 1 else None
         tests.add(
             block=block,
@@ -1761,26 +1759,31 @@ def table_dual_track(bundle: ResultsBundle, writer: TableWriter, tests: TestLog)
     )
     # To beat both endpoints a candidate must pass both one-sided comparisons.
     # The maximum of their p-values tests that joint claim. Holm covers all candidates.
+    from scipy.stats import ttest_1samp
+
     for lag, group in frame.groupby("lag"):
         wide = group.pivot(index="seed", columns="theta", values="mean_welfare")
         if 0.0 not in wide or 1.0 not in wide:
             continue
         for theta in wide.columns[(wide.columns > 0) & (wide.columns < 1)]:
             paired = wide[[theta, 0.0, 1.0]].dropna()
-            if paired.empty:
+            if len(paired) < 2:
                 continue
-            left = paired_test(paired[theta], paired[0.0], alternative="greater")
-            right = paired_test(paired[theta], paired[1.0], alternative="greater")
+            differences = paired[[0.0, 1.0]].rsub(paired[theta], axis=0)
+            effects = differences.mean()
+            p_values = ttest_1samp(differences, 0.0, alternative="greater").pvalue
+            # Identical zero differences carry no evidence of an advantage.
+            p_left, p_right = np.where(differences.eq(0).all(), 1.0, p_values)
             tests.add(
                 block=block, hypothesis="H5", outcome="mean_welfare",
                 comparison=f"lag {lag}, theta {theta:g} vs both endpoints",
-                test="intersection of two one-sided paired Wilcoxon tests",
-                statistic=theta, p_value=max(left["p_value"], right["p_value"]),
+                test="intersection of two one-sided paired t-tests",
+                statistic=theta, p_value=max(p_left, p_right),
                 effect_name="smaller paired mean advantage",
-                effect_value=min(left["mean_diff"], right["mean_diff"]),
+                effect_value=effects.min(),
                 n_units=len(paired), n_runs=3 * len(paired),
-                note=(f"vs 0: {left['mean_diff']:.6g} (p={left['p_value']:.6g}); "
-                      f"vs 1: {right['mean_diff']:.6g} (p={right['p_value']:.6g})"),
+                note=(f"vs 0: {effects[0.0]:.6g} (p={p_left:.6g}); "
+                      f"vs 1: {effects[1.0]:.6g} (p={p_right:.6g})"),
             )
     return table
 
@@ -2057,7 +2060,6 @@ def table_hypotheses(tests: TestLog, writer: TableWriter) -> pd.DataFrame:
     }
     # tests that belong to a hypothesis but carry a sub-label are folded in
     aliases = {
-        "H1-gain": "H1",
         "H4-centrality": "H4",
         "H4-multiplier": "H4",
         "H1'-decomposition": "H1'",
@@ -2076,8 +2078,10 @@ def table_hypotheses(tests: TestLog, writer: TableWriter) -> pd.DataFrame:
         elif hypothesis == "H4":
             amplification = (sig["outcome"] == "paired_shock_output_amplification") & sig["test"].str.startswith("one-sided t-test")
             # Centrality and average amplification answer separate questions.
-            centrality = sig["outcome"] == "paired_shock_output_loss"
-            verdict = f"{int(amplification.sum())} amplification tests; {int(centrality.sum())} centrality tests"
+            centrality = (sig["outcome"] == "paired_shock_output_loss") & (
+                sig["comparison"].str.endswith("vs forward linkage")
+            )
+            verdict = f"{int(amplification.sum())} amplification tests; {int(centrality.sum())} forward-linkage tests"
         elif hypothesis == "H2":
             verdict = "LP steepest" if len(sig) == len(MECH_ORDER) - 1 else "Ordering not established"
         elif hypothesis == "H5":

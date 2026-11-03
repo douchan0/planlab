@@ -209,3 +209,16 @@ def test_failed_mechanism_is_recorded_not_raised(out_dir: Path):
     assert meta["status"] == "error" and "no_such_mechanism" in meta["error"]
     # a failed cell must not be considered complete, so the next run retries it
     assert not runner.is_complete(out_dir, cell)
+
+
+def test_resume_recomputes_a_shard_from_an_older_code_version(out_dir):
+    cell = _toy_cell("material_balance")
+    runner.run_cells([cell], out_dir, workers=1)
+    metadata = out_dir / "cells" / f"{cell.cell_id}.json"
+    saved = json.loads(metadata.read_text())
+    saved["code_fingerprint"] = "previous-version"
+    metadata.write_text(json.dumps(saved))
+
+    _, skipped, failed = runner.run_cells([cell], out_dir, workers=1)
+    assert skipped == failed == 0
+    assert runner.is_complete(out_dir, cell)
